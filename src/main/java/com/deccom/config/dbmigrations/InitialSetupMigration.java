@@ -1,16 +1,17 @@
 package com.deccom.config.dbmigrations;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.util.stream.IntStream;
+
+import org.springframework.data.mongodb.core.MongoTemplate;
+
+import com.deccom.domain.Acme;
 import com.deccom.domain.Authority;
 import com.deccom.domain.User;
 import com.deccom.security.AuthoritiesConstants;
-
 import com.github.mongobee.changeset.ChangeLog;
 import com.github.mongobee.changeset.ChangeSet;
-import org.springframework.data.mongodb.core.MongoTemplate;
-
-import java.time.Instant;
-import java.util.Arrays;
-import java.util.Collections;
 
 /**
  * Creates the initial database setup
@@ -91,6 +92,21 @@ public class InitialSetupMigration {
         userUser.setCreatedDate(Instant.now());
         userUser.getAuthorities().add(userAuthority);
         mongoTemplate.save(userUser);
+    }
+    @ChangeSet(order = "03", author = "initiator", id = "03-addAcmes")
+    public void addGames(MongoTemplate mongoTemplate) {
+    	Integer numAcmes = 40;
+        IntStream.range(0, numAcmes).forEach(
+        		index -> {
+        	    	Acme acme = new Acme();
+        	    	acme.setId("acme-"+index);
+        	    	acme.setTitle("Title acme - "+index);
+        	    	acme.setDescription("Description acme - "+index);
+        	    	acme.setPublication_date(LocalDate.now());
+        	    	acme.setRating(index % 10);
+        	        mongoTemplate.save(acme);
+        		});
+
     }
 
 }
