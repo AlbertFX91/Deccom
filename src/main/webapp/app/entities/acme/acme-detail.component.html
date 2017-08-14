@@ -1,0 +1,37 @@
+
+<div *ngIf="acme">
+    <h2><span jhiTranslate="deccomApp.acme.detail.title">Acme</span> {{acme.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="deccomApp.acme.title">Title</span></dt>
+        <dd>
+            <span>{{acme.title}}</span>
+        </dd>
+        <dt><span jhiTranslate="deccomApp.acme.description">Description</span></dt>
+        <dd>
+            <span>{{acme.description}}</span>
+        </dd>
+        <dt><span jhiTranslate="deccomApp.acme.publication_date">Publication Date</span></dt>
+        <dd>
+            <span>{{acme.publication_date | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span jhiTranslate="deccomApp.acme.rating">Rating</span></dt>
+        <dd>
+            <span>{{acme.rating}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'acme/'+ acme.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

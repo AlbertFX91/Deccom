@@ -1,0 +1,16 @@
+version: '2'
+services:
+    deccom-mongodb:
+        image: mongo:3.2.10
+        ports:
+            - "27017:27017"
+        command: mongos --configdb deccom-mongodb-config
+    deccom-mongodb-node:
+        build:
+            context: .
+            dockerfile: mongodb/MongoDB.Dockerfile
+        command: mongod --replSet rs1 --noprealloc --smallfiles
+    deccom-mongodb-config:
+        image: mongo:3.2.10
+        container_name: deccom-mongodb-config
+        command: mongod --noprealloc --smallfiles --configsvr --dbpath /data/db

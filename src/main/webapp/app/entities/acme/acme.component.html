@@ -1,0 +1,62 @@
+<div>
+    <h2>
+        <span jhiTranslate="deccomApp.acme.home.title">Acmes</span>
+        <button class="btn btn-primary float-right jh-create-entity create-acme" [routerLink]="['/', { outlets: { popup: ['acme-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="deccomApp.acme.home.createLabel">
+            Create new Acme
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="acmes">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="title"><span jhiTranslate="deccomApp.acme.title">Title</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="description"><span jhiTranslate="deccomApp.acme.description">Description</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="publication_date"><span jhiTranslate="deccomApp.acme.publication_date">Publication Date</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="rating"><span jhiTranslate="deccomApp.acme.rating">Rating</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+            <tr *ngFor="let acme of acmes ;trackBy: trackId">
+                <td><a [routerLink]="['../acme', acme.id ]">{{acme.id}}</a></td>
+                <td>{{acme.title}}</td>
+                <td>{{acme.description}}</td>
+                <td>{{acme.publication_date | date:'mediumDate'}}</td>
+                <td>{{acme.rating}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../acme', acme.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'acme/'+ acme.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'acme/'+ acme.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

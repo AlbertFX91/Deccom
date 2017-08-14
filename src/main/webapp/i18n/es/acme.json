@@ -1,0 +1,24 @@
+{
+    "deccomApp": {
+        "acme" : {
+            "home": {
+                "title": "Acmes",
+                "createLabel": "Crear nuevo Acme",
+                "createOrEditLabel": "Crear o editar Acme"
+            },
+            "created": "Un nuevo Acme ha sido creado con el identificador {{ param }}",
+            "updated": "Un Acme ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Acme ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Acme {{ id }}?"
+            },
+            "detail": {
+                "title": "Acme"
+            },
+            "title": "Title",
+            "description": "Description",
+            "publication_date": "Publication Date",
+            "rating": "Rating"
+        }
+    }
+}
