@@ -16,6 +16,7 @@
     <name>Deccom</name>
 
     <properties>
+        <spring.boot.mainclass>com.deccom.DeccomApp</spring.boot.mainclass>
         <argLine>-Djava.security.egd=file:/dev/./urandom -Xmx256m</argLine>
         <assertj.version>3.6.2</assertj.version>
         <awaitility.version>2.0.0</awaitility.version>
@@ -500,6 +501,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                	<mainClass>${spring.boot.mainclass}</mainClass>
                     <executable>true</executable>
                     <fork>true</fork>
                     <!--
@@ -582,12 +584,14 @@
         <profile>
             <id>no-liquibase</id>
             <properties>
+            	<spring.boot.mainclass>com.deccom.DeccomApp</spring.boot.mainclass>
                 <profile.no-liquibase>,no-liquibase</profile.no-liquibase>
             </properties>
         </profile>
         <profile>
             <id>swagger</id>
             <properties>
+            	<spring.boot.mainclass>com.deccom.DeccomApp</spring.boot.mainclass>
                 <profile.swagger>,swagger</profile.swagger>
             </properties>
         </profile>
@@ -654,6 +658,7 @@
             </build>
             <properties>
                 <!-- log configuration -->
+            	<spring.boot.mainclass>com.deccom.DeccomApp</spring.boot.mainclass>
                 <logback.loglevel>DEBUG</logback.loglevel>
                 <!-- default Spring profiles -->
                 <spring.profiles.active>dev${profile.no-liquibase}</spring.profiles.active>
@@ -749,6 +754,7 @@
                 </plugins>
             </build>
             <properties>
+            	<spring.boot.mainclass>com.deccom.DeccomApp</spring.boot.mainclass>
                 <!-- log configuration -->
                 <logback.loglevel>INFO</logback.loglevel>
                 <!-- default Spring profiles -->
@@ -844,6 +850,7 @@
                 </plugins>
             </build>
             <properties>
+            	<spring.boot.mainclass>com.deccom.DeccomApp</spring.boot.mainclass>
                 <!-- log configuration -->
                 <logback.loglevel>DEBUG</logback.loglevel>
                 <!-- default Spring profiles -->
