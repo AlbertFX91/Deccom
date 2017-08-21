@@ -97,8 +97,9 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 					booksArray2[2].indexOf(":") + 1).substring(1);
 			// Also, the title and the description do not need those extra
 			// quotation marks
-			books.add(new Book(id, title.substring(0, title.length() - 1),
-					description.substring(0, description.length() - 1)));
+			books.add(new Book(Integer.parseInt(id), title.substring(0,
+					title.length() - 1), description.substring(0,
+					description.length() - 1)));
 		}
 
 		// And this is how the mapped books look like

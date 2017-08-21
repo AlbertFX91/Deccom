@@ -2,21 +2,21 @@ package com.deccom.domain;
 
 public class Book {
 
-	private String id;
+	private Integer id;
 	private String title;
 	private String description;
 
-	public Book(String id, String title, String description) {
+	public Book(Integer id, String title, String description) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
 	}
 
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
