@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -67,17 +66,45 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 		}
 		in.close();
 
-		String[] booksArray = response.toString().split("}");
-		LinkedList<String> booksList = new LinkedList<String>(Arrays.asList(booksArray));
-		booksList.remove(booksList.size() - 1);
-		List<Book> books = new ArrayList<Book>();
+		// First, we divide the only string we receive into many strings, one
+		// per object
+		String[] booksArray1 = response.toString().split("}");
+		// We can work better with a list instead of an array
+		LinkedList<String> booksList1 = new LinkedList<String>(
+				Arrays.asList(booksArray1));
+		// We do not want the comma at the end of each object
+		booksList1.remove(booksList1.size() - 1);
+		String[] booksArray2 = new String[0];
+
+		// This list will include the objects after they have been mapped
+		List<Book> books = new LinkedList<Book>();
 
 		// System.out.println(response.toString());
 		// log.debug(response.toString());
-		for (String book : booksList) {
-			book = book.substring(2);
+
+		for (String book1 : booksList1) {
+			// We keep eliminating chars that are not needed
+			book1 = book1.substring(2);
+			// Now we can get each part of a book
+			booksArray2 = book1.split(",\"");
+			// We only get the value of each field, not the name of the title at
+			// the beginning as well (as an id, we want 3, not id: 3)
+			String id = booksArray2[0]
+					.substring(booksArray2[0].indexOf(":") + 1);
+			String title = booksArray2[1].substring(
+					booksArray2[1].indexOf(":") + 1).substring(1);
+			String description = booksArray2[2].substring(
+					booksArray2[2].indexOf(":") + 1).substring(1);
+			// Also, the title and the description do not need those extra
+			// quotation marks
+			books.add(new Book(id, title.substring(0, title.length() - 1),
+					description.substring(0, description.length() - 1)));
+		}
+
+		// And this is how the mapped books look like
+		for (Book book : books) {
+			System.out.println(book);
 		}
 
 	}
-
 }
