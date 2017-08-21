@@ -104,7 +104,7 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 
 		// And this is how the mapped books look like
 		for (Book book : books) {
-			System.out.println(book);
+			System.out.println("Nope, this ain't a string: " + book);
 		}
 
 	}
