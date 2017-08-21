@@ -4,15 +4,21 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.deccom.domain.Book;
 import com.deccom.service.APIRestCallsService;
 
 public class APIRestCallsServiceImpl implements APIRestCallsService {
 
-	private final Logger log = LoggerFactory.getLogger(APIRestCallsServiceImpl.class);
+	private final Logger log = LoggerFactory
+			.getLogger(APIRestCallsServiceImpl.class);
 
 	public APIRestCallsServiceImpl() {
 
@@ -31,9 +37,9 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 	// HTTP GET request
 	public void sendGet() throws Exception {
 
-		String url = "https://jsonplaceholder.typicode.com/users";
-		// String url = "https://jsonplaceholder.typicode.com/users/1";
-		// String url = "http://127.0.0.1:8080/books/";
+		// String url = "https://jsonplaceholder.typicode.com/comments";
+		// String url = "https://jsonplaceholder.typicode.com/comments/1";
+		String url = "http://127.0.0.1:8080/books/";
 		// String url = "http://127.0.0.1:8080/books/1";
 
 		URL obj = new URL(url);
@@ -61,9 +67,16 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 		}
 		in.close();
 
-		// print result
+		String[] booksArray = response.toString().split("}");
+		LinkedList<String> booksList = new LinkedList<String>(Arrays.asList(booksArray));
+		booksList.remove(booksList.size() - 1);
+		List<Book> books = new ArrayList<Book>();
+
 		// System.out.println(response.toString());
-		log.debug(response.toString());
+		// log.debug(response.toString());
+		for (String book : booksList) {
+			book = book.substring(2);
+		}
 
 	}
 
