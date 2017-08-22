@@ -346,6 +346,11 @@
 			<artifactId>spring-security-data</artifactId>
 		</dependency>
 		<!-- jhipster-needle-maven-add-dependency -->
+		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+		</dependency>
 	</dependencies>
 	<build>
 		<defaultGoal>spring-boot:run</defaultGoal>

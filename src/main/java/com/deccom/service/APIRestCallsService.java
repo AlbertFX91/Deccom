@@ -9,7 +9,7 @@ public interface APIRestCallsService {
 
 	/**
 	 * Sends a HTTP GET request to
-	 * https://jsonplaceholder.typicode.com/posts.
+	 * https://jsonplaceholder.typicode.com/posts?userId=1.
 	 */
 	void sendGetPosts() throws Exception;
 

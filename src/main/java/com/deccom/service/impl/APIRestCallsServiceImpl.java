@@ -4,16 +4,17 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.deccom.domain.Book;
 import com.deccom.domain.Post;
 import com.deccom.service.APIRestCallsService;
+import com.google.gson.Gson;
 
 public class APIRestCallsServiceImpl implements APIRestCallsService {
 
@@ -31,8 +32,8 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 		APIRestCallsServiceImpl http = new APIRestCallsServiceImpl();
 
 		System.out.println("Testing 1 - Send Http GET request");
-		// http.sendGetBooks();
-		http.sendGetPosts();
+		http.sendGetBooks();
+		// http.sendGetPosts();
 	}
 
 	// HTTP GET request
@@ -68,42 +69,11 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 		// System.out.println(response.toString());
 		// log.debug(response.toString());
 
-		// First, we divide the only string we receive into many strings, one
-		// per object
-		String[] booksArray1 = response.toString().split("}");
-		// We can work better with a sorted list instead of an array
-		LinkedList<String> booksList1 = new LinkedList<String>(
-				Arrays.asList(booksArray1));
-		// We do not want the comma at the end of each object
-		booksList1.remove(booksList1.size() - 1);
-		String[] booksArray2 = new String[0];
+		JSONArray jsonArray = new JSONArray(response.toString());
 
-		// This list will include the objects after they have been mapped
-		List<Book> books = new LinkedList<Book>();
-
-		for (String book1 : booksList1) {
-			// We keep eliminating chars that are not needed
-			book1 = book1.substring(2);
-			// Now we can get each part of a book
-			booksArray2 = book1.split(",\"");
-			// We only get the value of each field, not the name of the title at
-			// the beginning as well (as an id, we want 3, not id: 3)
-			String id = booksArray2[0]
-					.substring(booksArray2[0].indexOf(":") + 1);
-			String title = booksArray2[1].substring(
-					booksArray2[1].indexOf(":") + 1).substring(1);
-			String description = booksArray2[2].substring(
-					booksArray2[2].indexOf(":") + 1).substring(1);
-			// Also, the title and the description do not need those extra
-			// quotation marks
-			books.add(new Book(Integer.parseInt(id), title.substring(0,
-					title.length() - 1), description.substring(0,
-					description.length() - 1)));
-		}
-
-		// And this is how the mapped books look like
-		for (Book book : books) {
-			System.out.println("Nope, this ain't a string: " + book);
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject finalObject = jsonArray.getJSONObject(i);
+			System.out.println("Book: " + finalObject.toString());
 		}
 
 	}
@@ -141,44 +111,20 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 		// System.out.println(response.toString());
 		// log.debug(response.toString());
 
-		// First, we divide the only string we receive into many strings, one
-		// per object
-		String[] postsArray1 = response.toString().split("}");
-		// We can work better with a sorted list instead of an array
-		LinkedList<String> postsList1 = new LinkedList<String>(
-				Arrays.asList(postsArray1));
-		// We do not want the comma at the end of each object
-		postsList1.remove(postsList1.size() - 1);
-
-		// This list will include the objects after they have been mapped
 		List<Post> posts = new LinkedList<Post>();
 
-		for (String post1 : postsList1) {
-			// We keep eliminating chars that are not needed
-			post1 = post1.substring(2);
-			// Now we can get each part of a post
-			String[] postsArray2 = post1.split(",    \"");
-			// We only get the value of each field, not the name of the title at
-			// the beginning as well (as an id, we want 3, not id: 3)
-			String userId = postsArray2[0].substring(postsArray2[0]
-					.indexOf(":") + 2);
-			String id = postsArray2[1]
-					.substring(postsArray2[1].indexOf(":") + 2);
-			String title = postsArray2[2].substring(
-					postsArray2[2].indexOf(":") + 2).substring(1);
-			String body = postsArray2[3].substring(
-					postsArray2[3].indexOf(":") + 2).substring(1);
-			// Also, the title and the description do not
-			// need those extra quotation marks
-			posts.add(new Post(Integer.parseInt(userId), Integer.parseInt(id),
-					title.substring(0, title.length() - 1), body.substring(0,
-							body.length() - 2)));
+		JSONArray jsonArray = new JSONArray(response.toString());
+
+		Gson gson = new Gson();
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject finalObject = jsonArray.getJSONObject(i);
+			Post post = gson.fromJson(finalObject.toString(), Post.class);
+			posts.add(post);
 		}
 
 		// And this is how the mapped books look like
 		for (Post post : posts) {
-			System.out.println("Nope, this ain't a string: " + post);
+			System.out.println("User1 posts: " + post);
 		}
-
 	}
 }
