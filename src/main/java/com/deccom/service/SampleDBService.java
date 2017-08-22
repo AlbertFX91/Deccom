@@ -28,50 +28,61 @@ public class SampleDBService{
     public SampleDBService() {
     }
 
-    public List<Map<String,String>> call() {
+    public List<Map<String,String>> callNoMapping() {
     	String url = "jdbc:mysql://localhost:3306/deccom";
     	String username = "developer";
     	String password = "developer";
+    	
+    	
+    	String table = "author";
+    	String cols = "*";
+    	String query = "SELECT "+cols+" FROM `"+table+"`";
     	
     	// Checking of the driver
     	try {
     	    Class.forName("com.mysql.jdbc.Driver");
     	} 
     	catch (ClassNotFoundException e) {
-    	    // TODO Auto-generated catch block
-    	    e.printStackTrace();
-    	} 
+    		throw new IllegalStateException("Cannot find the com.mysql.jdbc.Driver Class", e);
+    	}
+    	
+    	// Data structure for the result data
     	List<Map<String, String>> res = Lists.newArrayList();
-    	// Trying the connection
+    	// Database connection
+    	Connection connection;
+    	// Result of the query execution
+    	ResultSet rs;
+    	
+    	// Database connection
     	try {
-    		Connection connection = DriverManager.getConnection(url, username, password);
+    		connection = DriverManager.getConnection(url, username, password);
         	log.debug("Database connected!");
-        	String sql = "SELECT * FROM `author`";
-        	PreparedStatement statement = connection.prepareStatement(sql);
-        	ResultSet rs = statement.executeQuery();
+    	} catch (SQLException e) {
+    	    throw new IllegalStateException("Cannot connect the database!", e);
+    	}
+    	
+    	// Query execution
+    	try {
+    		PreparedStatement statement = connection.prepareStatement(query);
+        	rs = statement.executeQuery();
+    	} catch (SQLException e) {
+    	    throw new IllegalStateException("Query execution error", e);
+    	}
+    	
+    	// Data collection
+    	try {
         	while(rs.next()) {
+        		// Getting the num of columns of the query result
         		Integer numCols = rs.getMetaData().getColumnCount();
-        		/*String s = IntStream.range(0, numCols-1)
-        				.mapToObj(i -> {
-        					try { 
-        						return rs.getString(i+1);
-        					} catch (SQLException e) {
-        						// TODO Auto-generated catch block
-        						e.printStackTrace();
-        						return null;
-        					}
-        				})
-        				.reduce("", (x,y) -> x+","+y);
-        				
-        		log.debug("Values: "+s);
-        		*/
-        		
+        		// Map with K: Column, V: Value
         		Map<String, String> data = new HashMap<>();
-        		IntStream.range(1, numCols)
+        		// We loop each column
+        		IntStream.range(1, numCols+1)
         			.forEach(i->{
         				try {
-							data.put(rs.getMetaData().getColumnName(i)
-									,rs.getString(i));
+        					String column = rs.getMetaData().getColumnName(i);
+        					String value = rs.getString(i);
+							data.put(column, value);
 						} catch (SQLException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -81,7 +92,7 @@ public class SampleDBService{
         		res.add(data);
         	}
     	} catch (SQLException e) {
-    	    throw new IllegalStateException("Cannot connect the database!", e);
+    	    throw new IllegalStateException("Data extraction error", e);
     	}
     	return res;
     }
