@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
+import com.deccom.domain.Author;
 import com.deccom.service.SampleDBService;
 
 /**
@@ -29,11 +30,19 @@ public class DBResource {
         this.sampleDBService = sampleDBService;
     }
 
-    @GetMapping("/db/nomap")
+    @GetMapping("/db/nomapping")
     @Timed
-    public ResponseEntity<List<Map<String, String>>> testDB() {
+    public ResponseEntity<List<Map<String, String>>> callDBNoMapping() {
         log.debug("REST request to test DB");
         List<Map<String, String>> res = sampleDBService.callNoMapping();
+        return ResponseEntity.ok().body(res);
+    }
+
+    @GetMapping("/db/mapping")
+    @Timed
+    public ResponseEntity<List<Author>> callDBMapping(){
+        log.debug("REST request to test DB");
+        List<Author> res = sampleDBService.callMapping();
         return ResponseEntity.ok().body(res);
     }
 
