@@ -7,6 +7,7 @@ public class Book {
 	private String description;
 
 	public Book(Integer id, String title, String description) {
+		super();
 		this.id = id;
 		this.title = title;
 		this.description = description;
