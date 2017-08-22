@@ -50,7 +50,7 @@ public class Post {
 	@Override
 	public String toString() {
 		return "Post{" + "userId=" + getUserId() + ", id='" + getId()
-				+ ", title='" + getTitle() + "'" + ", bodydy='" + getBody()
+				+ ", title='" + getTitle() + "'" + ", body='" + getBody()
 				+ "'" + "}";
 	}
 
