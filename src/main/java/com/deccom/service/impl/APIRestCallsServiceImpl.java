@@ -111,7 +111,7 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 	// HTTP GET request
 	public void sendGetPosts() throws Exception {
 
-		String url = "https://jsonplaceholder.typicode.com/posts";
+		String url = "https://jsonplaceholder.typicode.com/posts?userId=1";
 
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
