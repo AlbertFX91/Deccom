@@ -8,6 +8,14 @@ import com.deccom.domain.Post;
 public interface APIRestCallsService {
 
 	/**
+     *  Sends a HTTP GET request.
+     *
+     *  @param url the url of the web
+     *  @return the response of the request
+     */
+	String getResponse(String url) throws Exception;
+	
+	/**
 	 * Sends a HTTP GET request to http://127.0.0.1:8080/books/.
 	 * 
 	 * @return the requested books

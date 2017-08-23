@@ -33,17 +33,21 @@ public class APIRestCallsResource {
 	@GetMapping("/apirestcalls/nomapping")
 	@Timed
 	public ResponseEntity<List<Map<String, Object>>> noMapping() throws Exception {
+		
 		log.debug("REST request without mapping");
 		List<Map<String, Object>> result = apiRestCallsService.noMapping();
 		return ResponseEntity.ok().body(result);
+		
 	}
 
 	@GetMapping("/apirestcalls/mapping")
 	@Timed
 	public ResponseEntity<List<Post>> mapping() throws Exception {
+		
 		log.debug("REST request with mapping");
 		List<Post> result = apiRestCallsService.mapping();
 		return ResponseEntity.ok().body(result);
+		
 	}
 
 }

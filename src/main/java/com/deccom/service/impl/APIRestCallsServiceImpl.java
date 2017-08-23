@@ -31,61 +31,73 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 
 	}
 
-	public static void main(String[] args) throws Exception {
-
-		APIRestCallsServiceImpl http = new APIRestCallsServiceImpl();
-
-		System.out.println("Testing 1 - Send Http GET request");
-		http.noMapping();
-
-	}
-
+	// Client
 	private final String USER_AGENT = "Chrome/60.0.3112.101";
 
-	// HTTP GET request
-	public List<Map<String, Object>> noMapping() throws Exception {
+	public String getResponse(String url) throws Exception {
 
-		String url = "https://jsonplaceholder.typicode.com/posts";
-
+		// The path is transformed into an URL object to establish the
+		// connection
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
-		// optional default is GET
+		// Optional default is GET
 		con.setRequestMethod("GET");
 
-		// add request header
+		// Adding request header
 		con.setRequestProperty("User-Agent", USER_AGENT);
 
+		// Here we will know if the response is positive or not
 		int responseCode = con.getResponseCode();
 		log.debug("\nSending 'GET' request to URL : " + url);
 		log.debug("Response Code : " + responseCode);
 
+		// Now, it is time to read the data as a string using BufferedReader
 		BufferedReader in = new BufferedReader(new InputStreamReader(
 				con.getInputStream()));
 		String inputLine;
-		StringBuffer response = new StringBuffer();
+		StringBuffer result = new StringBuffer();
 
+		// This string will contain the JSON sent as response line by line
 		while ((inputLine = in.readLine()) != null) {
-			response.append(inputLine);
+			result.append(inputLine);
 		}
 		in.close();
 
-		// print result
-		System.out.println(response.toString());
+		// Here is the full response. Now we have to deal with it
+		return result.toString();
+	}
 
-		JSONArray jsonArray = new JSONArray(response.toString());
-		
+	// HTTP GET request
+	public List<Map<String, Object>> noMapping() throws Exception {
+
+		String url, response;
+
+		url = "https://jsonplaceholder.typicode.com/posts";
+		response = getResponse(url);
+
+		// This array is created from the response, and contains all the JSON
+		// objects to be returned
+		JSONArray jsonArray = new JSONArray(response);
+
+		// The data structure to be used for each document is Map<String,
+		// Object>
 		List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
 		ObjectMapper mapper = new ObjectMapper();
 
 		for (int i = 0; i < jsonArray.length(); i++) {
+			// Obtaining a JSON object from each document in the JSON array
 			JSONObject finalObject = jsonArray.getJSONObject(i);
-			Map<String, Object> map = mapper.readValue(finalObject.toString(), new TypeReference<Map<String, String>>(){});
+			// Each document is turned into a Map<String, Object>
+			Map<String, Object> map = mapper.readValue(finalObject.toString(),
+					new TypeReference<Map<String, String>>() {
+					});
+			// A list of them will contain all the documents
 			result.add(map);
 		}
-		
-		// This array is created from the response, and contains all the JSON
-		// objects to be returned
+
+		// Finally, this list contains all the maps representing the documents
+		// from the response
 		return result;
 
 	}
@@ -93,32 +105,10 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 	// HTTP GET request
 	public List<Post> mapping() throws Exception {
 
-		String url = "https://jsonplaceholder.typicode.com/posts?userId=1";
+		String url, response;
 
-		URL obj = new URL(url);
-		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
-		// optional default is GET
-		con.setRequestMethod("GET");
-
-		// add request header
-		con.setRequestProperty("User-Agent", USER_AGENT);
-
-		int responseCode = con.getResponseCode();
-		log.debug("\nSending 'GET' request to URL : " + url);
-		log.debug("Response Code : " + responseCode);
-
-		BufferedReader in = new BufferedReader(new InputStreamReader(
-				con.getInputStream()));
-		String inputLine;
-		StringBuffer response = new StringBuffer();
-
-		while ((inputLine = in.readLine()) != null) {
-			response.append(inputLine);
-		}
-		in.close();
-
-		log.debug(response.toString());
+		url = "https://jsonplaceholder.typicode.com/posts?userId=1";
+		response = getResponse(url);
 
 		// This list will contain the posts to be returned when mapped
 		List<Post> result = new LinkedList<Post>();
