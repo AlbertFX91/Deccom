@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 import com.deccom.domain.Author;
-import com.deccom.service.SampleDBService;
+import com.deccom.service.DBService;
 
 /**
  * REST controller for managing Acme.
@@ -24,17 +24,17 @@ public class DBResource {
     private final Logger log = LoggerFactory.getLogger(DBResource.class);
 
 
-    private final SampleDBService sampleDBService;
+    private final DBService dBService;
 
-    public DBResource(SampleDBService sampleDBService) {
-        this.sampleDBService = sampleDBService;
+    public DBResource(DBService dBService) {
+        this.dBService = dBService;
     }
 
     @GetMapping("/db/nomapping")
     @Timed
     public ResponseEntity<List<Map<String, String>>> callDBNoMapping() {
         log.debug("REST request to test DB");
-        List<Map<String, String>> res = sampleDBService.callNoMapping();
+        List<Map<String, String>> res = dBService.callNoMapping();
         return ResponseEntity.ok().body(res);
     }
 
@@ -42,7 +42,7 @@ public class DBResource {
     @Timed
     public ResponseEntity<List<Author>> callDBMapping(){
         log.debug("REST request to test DB");
-        List<Author> res = sampleDBService.callMapping();
+        List<Author> res = dBService.callMapping();
         return ResponseEntity.ok().body(res);
     }
 

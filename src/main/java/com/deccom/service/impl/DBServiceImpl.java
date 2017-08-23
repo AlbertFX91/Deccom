@@ -1,4 +1,4 @@
-package com.deccom.service;
+package com.deccom.service.impl;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,20 +17,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.deccom.domain.Author;
+import com.deccom.service.DBService;
 import com.google.common.collect.Lists;
 
-
-/**
- * Sample service to connect to a DB
- */
 @Service
-public class SampleDBService{
+public class DBServiceImpl implements DBService {
+	private final Logger log = LoggerFactory.getLogger(DBServiceImpl.class);
 
-    private final Logger log = LoggerFactory.getLogger(SampleDBService.class);
-
-    public SampleDBService() {
+    public DBServiceImpl() {
     }
-
+    
     public List<Map<String,String>> callNoMapping() {
     	String url = "jdbc:mysql://localhost:3306/deccom";
     	String username = "developer";
@@ -58,7 +54,7 @@ public class SampleDBService{
     	
     	return res;
     }
-
+    
     public List<Author> callMapping() {
     	String url = "jdbc:mysql://localhost:3306/deccom";
     	String username = "developer";
@@ -172,8 +168,7 @@ public class SampleDBService{
         	}
     	} catch (SQLException e) {
     	    throw new IllegalStateException("Data extraction error", e);
-    	}
+    	} 
     	return res;
     }
-    
 }
