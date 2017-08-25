@@ -3,6 +3,8 @@ package com.deccom.web.rest;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -57,7 +59,7 @@ public class DBResource {
      */
     @GetMapping("/db/query")
     @Timed
-    public ResponseEntity<List<Map<String, String>>> query(@ApiParam DBQuery query) {
+    public ResponseEntity<List<Map<String, String>>> query(@ApiParam @Valid DBQuery query) {
         log.debug("REST request to query a DB");
         List<Map<String, String>> res = dBService.query(query);
         return ResponseEntity.ok().body(res);
