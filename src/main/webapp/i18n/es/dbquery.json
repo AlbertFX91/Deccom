@@ -1,0 +1,9 @@
+{
+    "deccomApp": {
+        "dbquery" : {
+            "home": {
+                "title": "Consulta a DB"
+            }
+        }
+    }
+}
