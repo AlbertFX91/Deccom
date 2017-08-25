@@ -59,9 +59,9 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 
 			for (int i = 0; i < jsonArray.length(); i++) {
 
-				// Obtaining a JSON object from each document in the JSON array
 				JSONObject finalObject;
 				Map<String, String> map;
+				// Obtaining a JSON object from each document in the JSON array
 				finalObject = jsonArray.getJSONObject(i);
 				// Each document is turned into a Map<String, Object>
 				map = mapper.readValue(finalObject.toString(),
