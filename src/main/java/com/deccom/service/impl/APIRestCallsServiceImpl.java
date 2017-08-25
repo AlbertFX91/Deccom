@@ -34,40 +34,6 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 	// Client
 	private final String USER_AGENT = "Chrome/60.0.3112.101";
 
-	public String getResponse(String url) throws Exception {
-
-		// The path is transformed into an URL object to establish the
-		// connection
-		URL obj = new URL(url);
-		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
-		// Optional default is GET
-		con.setRequestMethod("GET");
-
-		// Adding request header
-		con.setRequestProperty("User-Agent", USER_AGENT);
-
-		// Here we will know if the response is positive or not
-		int responseCode = con.getResponseCode();
-		log.debug("\nSending 'GET' request to URL : " + url);
-		log.debug("Response Code : " + responseCode);
-
-		// Now, it is time to read the data as a string using BufferedReader
-		BufferedReader in = new BufferedReader(new InputStreamReader(
-				con.getInputStream()));
-		String inputLine;
-		StringBuffer result = new StringBuffer();
-
-		// This string will contain the JSON sent as response line by line
-		while ((inputLine = in.readLine()) != null) {
-			result.append(inputLine);
-		}
-		in.close();
-
-		// Here is the full response. Now we have to deal with it
-		return result.toString();
-	}
-
 	// HTTP GET request
 	public List<Map<String, String>> noMapping() throws Exception {
 
@@ -117,24 +83,69 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 
 		// This array is created from the response, and contains all the JSON
 		// objects to be mapped
-		JSONArray jsonArray = new JSONArray(response.toString());
+		JSONArray jsonArray = new JSONArray(response);
 
 		// This will be used for the parsing of the JSON objects
 		Gson gson = new Gson();
 		for (int i = 0; i < jsonArray.length(); i++) {
-			
+
 			// Each JSON in the array is dealed with
 			JSONObject finalObject = jsonArray.getJSONObject(i);
 			// And each one of them is mapped into a Post object
 			Post post = gson.fromJson(finalObject.toString(), Post.class);
 			// Each post is added to the list
 			result.add(post);
-			
+
 		}
 
 		// Finally, the list with the mapped posts from the JSON objects is
 		// returned
 		return result;
+
+	}
+
+	private String getResponse(String url) throws Exception {
+
+		// The path is transformed into an URL object to establish the
+		// connection
+		URL obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+		// Optional default is GET
+		con.setRequestMethod("GET");
+
+		// Adding request header
+		con.setRequestProperty("User-Agent", USER_AGENT);
+
+		// Here we will know if the response is positive or not
+		int responseCode = con.getResponseCode();
+		log.debug("\nSending 'GET' request to URL : " + url);
+		log.debug("Response Code : " + responseCode);
+
+		// Now, it is time to read the data as a string using BufferedReader
+		BufferedReader in = new BufferedReader(new InputStreamReader(
+				con.getInputStream()));
+		String inputLine;
+		StringBuffer result = new StringBuffer();
+
+		// This string will contain the JSON sent as response line by line
+		while ((inputLine = in.readLine()) != null) {
+			result.append(inputLine);
+		}
+		in.close();
+
+		// Here is the full response. Now we have to deal with it
+		return result.toString();
+
+	}
+
+	private Boolean checkResponse(String string) {
+
+		char result;
+		
+		result = string.charAt(0);
+		
+		return result == '[';
 
 	}
 
