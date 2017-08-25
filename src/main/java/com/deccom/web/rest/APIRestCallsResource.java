@@ -37,7 +37,11 @@ public class APIRestCallsResource {
 	public ResponseEntity<List<Map<String, String>>> noMapping() throws Exception {
 		
 		log.debug("REST request without mapping");
-		List<Map<String, String>> result = apiRestCallsService.noMapping();
+		
+		List<Map<String, String>> result;
+		
+		result = apiRestCallsService.noMapping();
+		
 		return ResponseEntity.ok().body(result);
 		
 	}
@@ -47,7 +51,11 @@ public class APIRestCallsResource {
 	public ResponseEntity<List<Post>> mapping() throws Exception {
 		
 		log.debug("REST request with mapping");
-		List<Post> result = apiRestCallsService.mapping();
+		
+		List<Post> result;
+		
+		result = apiRestCallsService.mapping();
+		
 		return ResponseEntity.ok().body(result);
 		
 	}
