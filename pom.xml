@@ -99,7 +99,7 @@
 	</properties>
 
 
-	<dependencies
+	<dependencies>
 		<dependency>
 			<groupId>io.github.jhipster</groupId>
 			<artifactId>jhipster</artifactId>
@@ -351,7 +351,7 @@
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 		</dependency>
-    <dependency>
+		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.6</version>
