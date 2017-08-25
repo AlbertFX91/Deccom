@@ -69,7 +69,7 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 	}
 
 	// HTTP GET request
-	public List<Map<String, Object>> noMapping() throws Exception {
+	public List<Map<String, String>> noMapping() throws Exception {
 
 		String url, response;
 
@@ -82,18 +82,20 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 
 		// The data structure to be used for each document is Map<String,
 		// Object>
-		List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
+		List<Map<String, String>> result = new ArrayList<Map<String, String>>();
 		ObjectMapper mapper = new ObjectMapper();
 
 		for (int i = 0; i < jsonArray.length(); i++) {
+
 			// Obtaining a JSON object from each document in the JSON array
 			JSONObject finalObject = jsonArray.getJSONObject(i);
 			// Each document is turned into a Map<String, Object>
-			Map<String, Object> map = mapper.readValue(finalObject.toString(),
+			Map<String, String> map = mapper.readValue(finalObject.toString(),
 					new TypeReference<Map<String, String>>() {
 					});
 			// A list of them will contain all the documents
 			result.add(map);
+
 		}
 
 		// Finally, this list contains all the maps representing the documents
@@ -120,12 +122,14 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 		// This will be used for the parsing of the JSON objects
 		Gson gson = new Gson();
 		for (int i = 0; i < jsonArray.length(); i++) {
+			
 			// Each JSON in the array is dealed with
 			JSONObject finalObject = jsonArray.getJSONObject(i);
 			// And each one of them is mapped into a Post object
 			Post post = gson.fromJson(finalObject.toString(), Post.class);
 			// Each post is added to the list
 			result.add(post);
+			
 		}
 
 		// Finally, the list with the mapped posts from the JSON objects is

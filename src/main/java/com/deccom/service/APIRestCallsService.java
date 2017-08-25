@@ -20,7 +20,7 @@ public interface APIRestCallsService {
 	 * 
 	 * @return the requested books
 	 */
-	List<Map<String, Object>> noMapping() throws Exception;
+	List<Map<String, String>> noMapping() throws Exception;
 
 	/**
 	 * Sends a HTTP GET request to

@@ -27,15 +27,17 @@ public class APIRestCallsResource {
 	private final APIRestCallsService apiRestCallsService;
 
 	public APIRestCallsResource(APIRestCallsService apiRestCallsService) {
+		
 		this.apiRestCallsService = apiRestCallsService;
+		
 	}
 
 	@GetMapping("/apirestcalls/nomapping")
 	@Timed
-	public ResponseEntity<List<Map<String, Object>>> noMapping() throws Exception {
+	public ResponseEntity<List<Map<String, String>>> noMapping() throws Exception {
 		
 		log.debug("REST request without mapping");
-		List<Map<String, Object>> result = apiRestCallsService.noMapping();
+		List<Map<String, String>> result = apiRestCallsService.noMapping();
 		return ResponseEntity.ok().body(result);
 		
 	}
