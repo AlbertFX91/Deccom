@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 import com.deccom.domain.Author;
+import com.deccom.domain.DBQuery;
 import com.deccom.service.DBService;
+
+import io.swagger.annotations.ApiParam;
 
 /**
  * REST controller for managing Acme.
@@ -46,4 +49,17 @@ public class DBResource {
         return ResponseEntity.ok().body(res);
     }
 
+    /**
+     * GET  /db/query : make a connection and a query to a database
+     *
+     * @param query the connection and query data
+     * @return the ResponseEntity with status 200 (OK) and the query's data
+     */
+    @GetMapping("/db/query")
+    @Timed
+    public ResponseEntity<List<Map<String, String>>> query(@ApiParam DBQuery query) {
+        log.debug("REST request to query a DB");
+        List<Map<String, String>> res = dBService.query(query);
+        return ResponseEntity.ok().body(res);
+    }
 }

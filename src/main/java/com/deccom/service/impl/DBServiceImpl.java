@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.deccom.domain.Author;
+import com.deccom.domain.DBQuery;
 import com.deccom.service.DBService;
 import com.google.common.collect.Lists;
 
@@ -83,6 +84,31 @@ public class DBServiceImpl implements DBService {
     	return res;
     }
 
+    public List<Map<String,String>> query(DBQuery query) {
+    	String url = query.getUrl();
+    	String username = query.getUsername();
+    	String password = query.getPassword();
+    	String q = query.getQuery();
+    	
+    	// Checking of the driver
+    	checkDriver();
+    	
+    	// Data structure for the result data
+    	List<Map<String, String>> res;
+    	
+    	// Database connection
+    	Connection connection = connect(url, username, password);
+    	
+    	// Result of the query execution
+    	ResultSet rs = executeQuery(connection, q);
+    	
+    	// Data collection
+    	res = collectAll(rs);
+    	
+    	return res;
+    }
+    
+    
     private void checkDriver() {
     	try {
     	    Class.forName("com.mysql.jdbc.Driver");
