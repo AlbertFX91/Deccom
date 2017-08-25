@@ -38,29 +38,33 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 	public List<Map<String, String>> noMapping() throws Exception {
 
 		String url, response;
+		List<Map<String, String>> result;
+		ObjectMapper mapper;
 
 		url = "https://jsonplaceholder.typicode.com/posts";
 		response = getResponse(url);
 
 		// The data structure to be used for each document is Map<String,
 		// Object>
-		List<Map<String, String>> result = new ArrayList<Map<String, String>>();
-		ObjectMapper mapper = new ObjectMapper();
+		result = new ArrayList<Map<String, String>>();
+		mapper = new ObjectMapper();
 
 		// If there is more than one JSON in the response, it is an array
 		if (checkResponse(response)) {
 
 			// This array is created from the response, and contains all the
 			// JSON objects to be returned
-			JSONArray jsonArray = new JSONArray(response);
+			JSONArray jsonArray;
+			jsonArray = new JSONArray(response);
 
 			for (int i = 0; i < jsonArray.length(); i++) {
 
 				// Obtaining a JSON object from each document in the JSON array
-				JSONObject finalObject = jsonArray.getJSONObject(i);
+				JSONObject finalObject;
+				Map<String, String> map;
+				finalObject = jsonArray.getJSONObject(i);
 				// Each document is turned into a Map<String, Object>
-				Map<String, String> map = mapper.readValue(
-						finalObject.toString(),
+				map = mapper.readValue(finalObject.toString(),
 						new TypeReference<Map<String, String>>() {
 						});
 				// A list of them will contain all the documents
@@ -70,7 +74,8 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 			// If there is only one JSON in the response, it is not an array
 		} else {
 			// The JSON is turned into a map
-			Map<String, String> map = mapper.readValue(response,
+			Map<String, String> map;
+			map = mapper.readValue(response,
 					new TypeReference<Map<String, String>>() {
 					});
 			// The single JSON is added to the returning list
@@ -87,28 +92,33 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 	public List<Post> mapping() throws Exception {
 
 		String url, response;
+		List<Post> result;
+		Gson gson;
 
 		url = "https://jsonplaceholder.typicode.com/posts";
 		response = getResponse(url);
 
 		// This list will contain the posts to be returned when mapped
-		List<Post> result = new LinkedList<Post>();
+		result = new LinkedList<Post>();
 
 		// This will be used for the parsing of the JSON objects
-		Gson gson = new Gson();
+		gson = new Gson();
 
 		// If there is more than one JSON in the response, it is an array
 		if (checkResponse(response)) {
 			// This array is created from the response, and contains all the
 			// JSON objects to be mapped
-			JSONArray jsonArray = new JSONArray(response);
+			JSONArray jsonArray;
+			jsonArray = new JSONArray(response);
 
 			for (int i = 0; i < jsonArray.length(); i++) {
 
+				JSONObject finalObject;
+				Post post;
 				// Each JSON in the array is dealed with
-				JSONObject finalObject = jsonArray.getJSONObject(i);
+				finalObject = jsonArray.getJSONObject(i);
 				// And each one of them is mapped into a Post object
-				Post post = gson.fromJson(finalObject.toString(), Post.class);
+				post = gson.fromJson(finalObject.toString(), Post.class);
 				// Each post is added to the returning list
 				result.add(post);
 
@@ -117,7 +127,8 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 		} else {
 
 			// The single JSON is mapped into a Post object
-			Post post = gson.fromJson(response, Post.class);
+			Post post;
+			post = gson.fromJson(response, Post.class);
 			// It is added to the returning list
 			result.add(post);
 
@@ -131,10 +142,16 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 
 	private String getResponse(String url) throws Exception {
 
+		URL obj;
+		HttpURLConnection con;
+		BufferedReader in;
+		String inputLine, result;
+		StringBuffer response;
+
 		// The path is transformed into an URL object to establish the
 		// connection
-		URL obj = new URL(url);
-		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		obj = new URL(url);
+		con = (HttpURLConnection) obj.openConnection();
 
 		// Optional default is GET
 		con.setRequestMethod("GET");
@@ -143,24 +160,26 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 		con.setRequestProperty("User-Agent", USER_AGENT);
 
 		// Here we will know if the response is positive or not
-		int responseCode = con.getResponseCode();
+		int responseCode;
+
+		responseCode = con.getResponseCode();
 		log.debug("\nSending 'GET' request to URL : " + url);
 		log.debug("Response Code : " + responseCode);
 
 		// Now, it is time to read the data as a string using BufferedReader
-		BufferedReader in = new BufferedReader(new InputStreamReader(
-				con.getInputStream()));
-		String inputLine;
-		StringBuffer result = new StringBuffer();
+		in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		response = new StringBuffer();
 
 		// This string will contain the JSON sent as response line by line
 		while ((inputLine = in.readLine()) != null) {
-			result.append(inputLine);
+			response.append(inputLine);
 		}
 		in.close();
 
 		// Here is the full response. Now we have to deal with it
-		return result.toString();
+		result = response.toString();
+
+		return result;
 
 	}
 
