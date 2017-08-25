@@ -38,16 +38,16 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 	public List<Map<String, String>> noMapping() throws Exception {
 
 		String url, response;
-		List<Map<String, String>> result;
 		ObjectMapper mapper;
+		List<Map<String, String>> result;
 
 		url = "https://jsonplaceholder.typicode.com/posts";
 		response = getResponse(url);
 
 		// The data structure to be used for each document is Map<String,
 		// Object>
-		result = new ArrayList<Map<String, String>>();
 		mapper = new ObjectMapper();
+		result = new ArrayList<Map<String, String>>();
 
 		// If there is more than one JSON in the response, it is an array
 		if (checkResponse(response)) {
@@ -92,17 +92,17 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 	public List<Post> mapping() throws Exception {
 
 		String url, response;
-		List<Post> result;
 		Gson gson;
+		List<Post> result;
 
 		url = "https://jsonplaceholder.typicode.com/posts";
 		response = getResponse(url);
 
-		// This list will contain the posts to be returned when mapped
-		result = new LinkedList<Post>();
-
 		// This will be used for the parsing of the JSON objects
 		gson = new Gson();
+
+		// This list will contain the posts to be returned when mapped
+		result = new LinkedList<Post>();
 
 		// If there is more than one JSON in the response, it is an array
 		if (checkResponse(response)) {
@@ -144,6 +144,7 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 
 		URL obj;
 		HttpURLConnection con;
+		int responseCode;
 		BufferedReader in;
 		String inputLine, result;
 		StringBuffer response;
@@ -160,8 +161,6 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 		con.setRequestProperty("User-Agent", USER_AGENT);
 
 		// Here we will know if the response is positive or not
-		int responseCode;
-
 		responseCode = con.getResponseCode();
 		log.debug("\nSending 'GET' request to URL : " + url);
 		log.debug("Response Code : " + responseCode);
