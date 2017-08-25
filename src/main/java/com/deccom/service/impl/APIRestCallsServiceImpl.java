@@ -48,7 +48,7 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 		ObjectMapper mapper = new ObjectMapper();
 
 		// If there is more than one JSON in the response, it is an array
-		if (checkResponse(response) == true) {
+		if (checkResponse(response)) {
 
 			// This array is created from the response, and contains all the
 			// JSON objects to be returned
@@ -98,7 +98,7 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 		Gson gson = new Gson();
 
 		// If there is more than one JSON in the response, it is an array
-		if (checkResponse(response) == true) {
+		if (checkResponse(response)) {
 			// This array is created from the response, and contains all the
 			// JSON objects to be mapped
 			JSONArray jsonArray = new JSONArray(response);
