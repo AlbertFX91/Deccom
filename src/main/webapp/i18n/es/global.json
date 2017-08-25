@@ -32,6 +32,11 @@
                 "database": "Base de datos",
                 "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)"
             },
+            "operation": {
+                "main": "Operaciones",
+                "dbQuery": "Consulta a BD",
+                "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)"
+            },
             "language": "Idioma"
         },
         "form": {

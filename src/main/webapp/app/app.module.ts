@@ -9,6 +9,7 @@ import { DeccomHomeModule } from './home/home.module';
 import { DeccomAdminModule } from './admin/admin.module';
 import { DeccomAccountModule } from './account/account.module';
 import { DeccomEntityModule } from './entities/entity.module';
+import { DeccomOperationModule } from './operations/operation.module';
 
 import { customHttpProvider } from './blocks/interceptor/http.provider';
 import { PaginationConfig } from './blocks/config/uib-pagination.config';
@@ -36,6 +37,7 @@ import {
         DeccomAdminModule,
         DeccomAccountModule,
         DeccomEntityModule,
+        DeccomOperationModule,
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [
