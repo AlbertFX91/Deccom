@@ -42,26 +42,39 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 		url = "https://jsonplaceholder.typicode.com/posts";
 		response = getResponse(url);
 
-		// This array is created from the response, and contains all the JSON
-		// objects to be returned
-		JSONArray jsonArray = new JSONArray(response);
-
 		// The data structure to be used for each document is Map<String,
 		// Object>
 		List<Map<String, String>> result = new ArrayList<Map<String, String>>();
 		ObjectMapper mapper = new ObjectMapper();
 
-		for (int i = 0; i < jsonArray.length(); i++) {
+		// If there is more than one JSON in the response, it is an array
+		if (checkResponse(response) == true) {
 
-			// Obtaining a JSON object from each document in the JSON array
-			JSONObject finalObject = jsonArray.getJSONObject(i);
-			// Each document is turned into a Map<String, Object>
-			Map<String, String> map = mapper.readValue(finalObject.toString(),
+			// This array is created from the response, and contains all the
+			// JSON objects to be returned
+			JSONArray jsonArray = new JSONArray(response);
+
+			for (int i = 0; i < jsonArray.length(); i++) {
+
+				// Obtaining a JSON object from each document in the JSON array
+				JSONObject finalObject = jsonArray.getJSONObject(i);
+				// Each document is turned into a Map<String, Object>
+				Map<String, String> map = mapper.readValue(
+						finalObject.toString(),
+						new TypeReference<Map<String, String>>() {
+						});
+				// A list of them will contain all the documents
+				result.add(map);
+
+			}
+			// If there is only one JSON in the response, it is not an array
+		} else {
+			// The JSON is turned into a map
+			Map<String, String> map = mapper.readValue(response,
 					new TypeReference<Map<String, String>>() {
 					});
-			// A list of them will contain all the documents
+			// The single JSON is added to the returning list
 			result.add(map);
-
 		}
 
 		// Finally, this list contains all the maps representing the documents
@@ -75,25 +88,37 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 
 		String url, response;
 
-		url = "https://jsonplaceholder.typicode.com/posts?userId=1";
+		url = "https://jsonplaceholder.typicode.com/posts";
 		response = getResponse(url);
 
 		// This list will contain the posts to be returned when mapped
 		List<Post> result = new LinkedList<Post>();
 
-		// This array is created from the response, and contains all the JSON
-		// objects to be mapped
-		JSONArray jsonArray = new JSONArray(response);
-
 		// This will be used for the parsing of the JSON objects
 		Gson gson = new Gson();
-		for (int i = 0; i < jsonArray.length(); i++) {
 
-			// Each JSON in the array is dealed with
-			JSONObject finalObject = jsonArray.getJSONObject(i);
-			// And each one of them is mapped into a Post object
-			Post post = gson.fromJson(finalObject.toString(), Post.class);
-			// Each post is added to the list
+		// If there is more than one JSON in the response, it is an array
+		if (checkResponse(response) == true) {
+			// This array is created from the response, and contains all the
+			// JSON objects to be mapped
+			JSONArray jsonArray = new JSONArray(response);
+
+			for (int i = 0; i < jsonArray.length(); i++) {
+
+				// Each JSON in the array is dealed with
+				JSONObject finalObject = jsonArray.getJSONObject(i);
+				// And each one of them is mapped into a Post object
+				Post post = gson.fromJson(finalObject.toString(), Post.class);
+				// Each post is added to the returning list
+				result.add(post);
+
+			}
+			// If there is only one JSON in the response, it is not an array
+		} else {
+
+			// The single JSON is mapped into a Post object
+			Post post = gson.fromJson(response, Post.class);
+			// It is added to the returning list
 			result.add(post);
 
 		}
@@ -139,13 +164,15 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 
 	}
 
-	private Boolean checkResponse(String string) {
+	// This method tells if the response contains an array with many JSON
+	// objects or just one JSON object
+	private Boolean checkResponse(String response) {
 
-		char result;
-		
-		result = string.charAt(0);
-		
-		return result == '[';
+		char character;
+
+		character = response.charAt(0);
+
+		return character == '[';
 
 	}
 
