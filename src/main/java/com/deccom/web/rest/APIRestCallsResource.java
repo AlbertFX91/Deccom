@@ -27,37 +27,38 @@ public class APIRestCallsResource {
 	private final APIRestCallsService apiRestCallsService;
 
 	public APIRestCallsResource(APIRestCallsService apiRestCallsService) {
-		
+
 		this.apiRestCallsService = apiRestCallsService;
-		
+
 	}
 
 	@GetMapping("/apirestcalls/nomapping")
 	@Timed
-	public ResponseEntity<List<Map<String, String>>> noMapping() throws Exception {
-		
+	public ResponseEntity<List<Map<String, String>>> noMapping(String url)
+			throws Exception {
+
 		log.debug("REST request without mapping");
-		
+
 		List<Map<String, String>> result;
-		
-		result = apiRestCallsService.noMapping();
-		
+
+		result = apiRestCallsService.noMapping(url);
+
 		return ResponseEntity.ok().body(result);
-		
+
 	}
 
 	@GetMapping("/apirestcalls/mapping")
 	@Timed
-	public ResponseEntity<List<Post>> mapping() throws Exception {
-		
+	public ResponseEntity<List<Post>> mapping(String url) throws Exception {
+
 		log.debug("REST request with mapping");
-		
+
 		List<Post> result;
-		
-		result = apiRestCallsService.mapping();
-		
+
+		result = apiRestCallsService.mapping(url);
+
 		return ResponseEntity.ok().body(result);
-		
+
 	}
 
 }

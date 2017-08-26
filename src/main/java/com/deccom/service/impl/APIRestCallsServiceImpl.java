@@ -35,13 +35,12 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 	private final String USER_AGENT = "Chrome/60.0.3112.101";
 
 	// HTTP GET request
-	public List<Map<String, String>> noMapping() throws Exception {
+	public List<Map<String, String>> noMapping(String url) throws Exception {
 
-		String url, response;
+		String response;
 		ObjectMapper mapper;
 		List<Map<String, String>> result;
 
-		url = "https://jsonplaceholder.typicode.com/posts";
 		response = getResponse(url);
 
 		// The data structure to be used for each document is Map<String,
@@ -89,13 +88,12 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 	}
 
 	// HTTP GET request
-	public List<Post> mapping() throws Exception {
+	public List<Post> mapping(String url) throws Exception {
 
-		String url, response;
+		String response;
 		Gson gson;
 		List<Post> result;
 
-		url = "https://jsonplaceholder.typicode.com/posts";
 		response = getResponse(url);
 
 		// This will be used for the parsing of the JSON objects

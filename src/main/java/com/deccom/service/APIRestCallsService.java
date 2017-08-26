@@ -8,18 +8,19 @@ import com.deccom.domain.Post;
 public interface APIRestCallsService {
 
 	/**
-	 * Sends a HTTP GET request to https://jsonplaceholder.typicode.com/posts
+	 * Sends a HTTP GET request to an URL
 	 * 
+	 * @param url the url to send the request to
 	 * @return the requested books
 	 */
-	List<Map<String, String>> noMapping() throws Exception;
+	List<Map<String, String>> noMapping(String url) throws Exception;
 
 	/**
-	 * Sends a HTTP GET request to
-	 * https://jsonplaceholder.typicode.com/posts?userId=1
+	 * Sends a HTTP GET request to an URL
 	 * 
+	 * @param url the url to send the request to
 	 * @return the requested posts
 	 */
-	List<Post> mapping() throws Exception;
+	List<Post> mapping(String url) throws Exception;
 
 }
