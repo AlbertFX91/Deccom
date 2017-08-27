@@ -27,9 +27,7 @@ public class APIRestCallsResource {
 	private final APIRestCallsService apiRestCallsService;
 
 	public APIRestCallsResource(APIRestCallsService apiRestCallsService) {
-
 		this.apiRestCallsService = apiRestCallsService;
-
 	}
 
 	@GetMapping("/apirestcalls/nomapping")

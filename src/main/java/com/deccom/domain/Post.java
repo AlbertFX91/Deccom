@@ -8,11 +8,13 @@ public class Post {
 	private String body;
 
 	public Post(Integer userId, Integer id, String title, String body) {
+		
 		super();
 		this.userId = userId;
 		this.id = id;
 		this.title = title;
 		this.body = body;
+		
 	}
 
 	public Integer getUserId() {
