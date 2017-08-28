@@ -12,10 +12,7 @@ export class DBQueryService {
     constructor(private http: Http) { }
 
     query(req?: DBQuery): Observable<ResponseWrapper> {
-        console.log('Query the database!');
         const options = this.createRequesQueryOption(req);
-        console.log(req);
-        console.log(options);
         return this.http.get(this.resourceUrl + 'query', options)
             .map((res: Response) => res.json());
     }

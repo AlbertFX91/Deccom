@@ -57,7 +57,7 @@
             </form>
         </div>
         <div class="row" *ngIf="queryResult">
-            {{queryResult}}
+            <jhi-dbquery-list [queryResult]="queryResult" style="width: 100%"></jhi-dbquery-list>
         </div>
     </div>
 </div>

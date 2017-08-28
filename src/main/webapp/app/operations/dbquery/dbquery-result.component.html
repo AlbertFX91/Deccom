@@ -1,0 +1,19 @@
+<div *ngIf="queryResult">
+   <div class="table-responsive" *ngIf="list()">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th *ngFor="let p of properties()">{{p}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let row of queryResult">
+                <td *ngFor="let k of properties()">{{row[k]}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="detail()">
+        To detail!
+    </div>
+</div>

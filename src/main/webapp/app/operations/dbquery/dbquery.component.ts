@@ -42,8 +42,15 @@ export class DBQueryComponent implements OnInit, OnDestroy {
 
     onQuerySuccess(res: any) {
         this.isSaving = false;
-        this.queryResult = res;
         this.eventManager.broadcast({ name: 'dbquery_success', content: 'OK'});
+
+        // It's not a list, its only a element
+        if (res.length === undefined) {
+            this.queryResult = res;
+        } else {
+            // If the list has only 1 element, we get only the element. If the list has more than 1 element, we get all the elements
+            this.queryResult = res.length === 1 ? res[0] : res
+        }
     }
 
     onQueryError(error) {
@@ -60,6 +67,9 @@ export class DBQueryComponent implements OnInit, OnDestroy {
         this.alertService.error(error.message, null, null);
     }
 
-    clear() {}
+    clear() {
+        this.dbQuery = {};
+        this.queryResult = undefined;
+    }
 
 }
