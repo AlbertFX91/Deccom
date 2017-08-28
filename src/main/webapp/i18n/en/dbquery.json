@@ -3,7 +3,11 @@
         "dbquery" : {
             "home": {
                 "title": "DB query"
-            }
+            },
+            "username": "Username",
+            "password": "Password",
+            "url": "URL",
+            "query": "Query"
         }
     }
 }

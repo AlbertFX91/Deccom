@@ -3,7 +3,11 @@
         "dbquery" : {
             "home": {
                 "title": "Consulta a DB"
-            }
+            },
+            "username": "Usuario",
+            "password": "Contraseña",
+            "url": "URL",
+            "query": "Consulta"
         }
     }
 }

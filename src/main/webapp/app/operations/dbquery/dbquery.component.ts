@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, JhiAlertService } from 'ng-jhipster';
 
-import { Acme } from '../../entities/acme/acme.model';
-import { AcmeService } from '../../entities/acme/acme.service';
+import { DBQuery } from './dbquery.model';
+import { DBQueryService } from './dbquery.service';
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 
@@ -14,16 +14,52 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 })
 export class DBQueryComponent implements OnInit, OnDestroy {
 
+    dbQuery: DBQuery = {};
+    isSaving: boolean;
+    result: any;
+    queryResult: any;
     constructor(
-        private acmeService: AcmeService,
+        private dbQueryService: DBQueryService,
         private alertService: JhiAlertService,
         private eventManager: JhiEventManager,
         private parseLinks: JhiParseLinks,
         private principal: Principal
     ) {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.isSaving = false;
+    }
 
     ngOnDestroy() {}
+
+    save() {
+        this.isSaving = true;
+        this.dbQueryService.query(this.dbQuery).subscribe(
+            (res: any) => this.onQuerySuccess(res),
+            (error: Response) => this.onQueryError(error)
+        )
+    }
+
+    onQuerySuccess(res: any) {
+        this.isSaving = false;
+        this.queryResult = res;
+        this.eventManager.broadcast({ name: 'dbquery_success', content: 'OK'});
+    }
+
+    onQueryError(error) {
+        try {
+            error.json();
+        } catch (exception) {
+            error.message = error.text();
+        }
+        this.isSaving = false;
+        this.onError(error);
+    }
+
+    private onError(error) {
+        this.alertService.error(error.message, null, null);
+    }
+
+    clear() {}
 
 }
