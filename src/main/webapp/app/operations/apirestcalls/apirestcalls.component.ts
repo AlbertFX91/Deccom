@@ -13,6 +13,7 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 }) export class APIRestCallsComponent implements OnInit, OnDestroy {
 
     isSaving: boolean;
+    url: string;
     result: any;
     response: any;
 
