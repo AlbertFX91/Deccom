@@ -1,0 +1,36 @@
+<div>
+    <h2>
+        API Rest Call
+    </h2>
+    <div class="container">
+        <div class="row">
+            <form name="apirestcallsForm" role="form" novalidate (ngSubmit)="save()" #apirestcallsForm="ngForm" style="width: 100%">
+                <jhi-alert-error></jhi-alert-error>
+                <jhi-alert></jhi-alert>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="deccomApp.apirestcalls.url" for="field_apirestcalls_url">URL</label>
+                    <input type="text" class="form-control" name="url" id="field_apirestcalls_url" [(ngModel)]="apirestcalls.url" required
+                    />
+                    <div [hidden]="!(apirestcallsForm.controls.url?.dirty && apirestcallsForm.controls.url?.invalid)">
+                        <small class="form-text text-danger" [hidden]="!apirestcallsForm.controls.url?.errors?.required" jhiTranslate="entity.validation.required">
+                                This field is required.
+                                </small>
+                    </div>
+                </div>
+
+
+                <div>
+                    <button type="button" class="btn btn-default cancel" data-dismiss="modal" (click)="clear()">
+                            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                        </button>
+                    <button type="submit" [disabled]="apirestcallsForm.form.invalid || isSaving" class="btn btn-primary">
+                            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                        </button>
+                </div>
+            </form>
+        </div>
+        <div class="row" *ngIf="response">
+            {{response}}
+        </div>
+    </div>
+</div>
