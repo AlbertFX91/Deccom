@@ -11,8 +11,17 @@ export class APIRestCallsService {
     constructor(private http: Http) { }
 
     noMapping(url: string): Observable<ResponseWrapper> {
-        return this.http.get(this.resourceUrl + 'nomapping', url)
+        const options = this.createRequestOption(url);
+        return this.http.get(this.resourceUrl + 'nomapping', options)
             .map((res: Response) => res.json());
+    }
+
+    private createRequestOption(url: string): BaseRequestOptions {
+        const options: BaseRequestOptions = new BaseRequestOptions();
+        const params: URLSearchParams = new URLSearchParams();
+        params.set('url', url);
+        options.params = params;
+        return options;
     }
 
 }
