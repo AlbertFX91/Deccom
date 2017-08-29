@@ -10,7 +10,7 @@ export class APIRestCallsService {
 
     constructor(private http: Http) { }
 
-    query(url: string): Observable<ResponseWrapper> {
+    noMapping(url: string): Observable<ResponseWrapper> {
         return this.http.get(this.resourceUrl + 'nomapping', url)
             .map((res: Response) => res.json());
     }

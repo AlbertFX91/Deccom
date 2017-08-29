@@ -1,6 +1,6 @@
 <div>
     <h2>
-        API Rest Call
+        API REST call
     </h2>
     <div class="container">
         <div class="row">
@@ -8,7 +8,7 @@
                 <jhi-alert-error></jhi-alert-error>
                 <jhi-alert></jhi-alert>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="deccomApp.apirestcalls.url" for="field_url">URL</label>
+                    <label class="form-control-label" jhiTranslate="deccomApp.apiRESTCalls.url" for="field_url">URL</label>
                     <input type="text" class="form-control" name="name" id="field_url" [(ngModel)]="url" required />
                     <div [hidden]="!(apirestcallsForm.controls.url?.dirty && apirestcallsForm.controls.url?.invalid)">
                         <small class="form-text text-danger" [hidden]="!apirestcallsForm.controls.url?.errors?.required" jhiTranslate="entity.validation.required">
@@ -16,8 +16,6 @@
                                 </small>
                     </div>
                 </div>
-
-
                 <div>
                     <button type="button" class="btn btn-default cancel" data-dismiss="modal" (click)="clear()">
                             <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>

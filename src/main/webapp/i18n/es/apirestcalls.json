@@ -1,0 +1,10 @@
+{
+    "deccomApp": {
+        "apiRESTCalls": {
+            "home": {
+                "title": "Llamada a API REST"
+            },
+            "url": "URL"
+        }
+    }
+}

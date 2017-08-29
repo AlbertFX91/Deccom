@@ -31,7 +31,7 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 
     save() {
         this.isSaving = true;
-        this.apirestcallsService.query('url').subscribe(
+        this.apirestcallsService.noMapping(this.url).subscribe(
             (data: any) => this.onSuccess(data),
             (error: Response) => this.onError(error)
         )
