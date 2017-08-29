@@ -13,7 +13,7 @@ export const apirestcallsRoute: Routes = [
         component: APIRestCallsComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'deccomApp.apirestcalls.home.title'
+            pageTitle: 'deccomApp.apiRESTCalls.home.title'
         },
         canActivate: [UserRouteAccessService]
     }
