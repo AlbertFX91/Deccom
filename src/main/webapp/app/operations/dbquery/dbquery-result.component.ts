@@ -15,8 +15,6 @@ export class DBQueryResultComponent implements OnInit, OnDestroy {
     predicate: any;
 
     constructor(
-        private parseLinks: JhiParseLinks,
-        private principal: Principal
     ) {}
 
     ngOnInit() {}
