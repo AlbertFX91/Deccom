@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites>
+ <testsuite name="account" timestamp="2017-08-30T21:49:57" hostname="localhost" time="9.284" errors="0" tests="4" skipped="0" disabled="0" failures="0">
+  <testcase classname="account" name="should fail to login with bad password" time="0.481" />
+  <testcase classname="account" name="should login successfully with admin account" time="0.682" />
+  <testcase classname="account" name="should be able to update settings" time="0.631" />
+  <testcase classname="account" name="should be able to update password" time="1.654" />
+ </testsuite>
+</testsuites>

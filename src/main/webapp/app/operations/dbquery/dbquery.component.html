@@ -1,6 +1,6 @@
 <div>
     <h2>
-        DB Query
+        <span jhiTranslate="deccomApp.dbquery.home.title">DB Query</span>
     </h2>
     <div class="container">
         <div class="row">
@@ -50,7 +50,7 @@
                     <button type="button" class="btn btn-default cancel" data-dismiss="modal" (click)="clear()">
                             <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
                         </button>
-                    <button type="submit" [disabled]="dbQueryForm.form.invalid || isSaving" class="btn btn-primary">
+                    <button type="submit" [disabled]="dbQueryForm.form.invalid || isSaving" class="btn btn-primary send-query">
                             <span class="fa fa-download"></span>&nbsp;<span jhiTranslate="entity.action.load">Load</span>
                         </button>
                 </div>

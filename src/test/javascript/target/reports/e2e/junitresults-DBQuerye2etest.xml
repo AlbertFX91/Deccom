@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites>
+ <testsuite name="DBQuery e2e test" timestamp="2017-08-30T21:50:17" hostname="localhost" time="5.663" errors="0" tests="4" skipped="0" disabled="0" failures="0">
+  <testcase classname="DBQuery e2e test" name="should load DBQuery" time="0.185" />
+  <testcase classname="DBQuery e2e test" name="should get a result list from a query with properties" time="0.962" />
+  <testcase classname="DBQuery e2e test" name="should get a result list from a query with rows" time="0.427" />
+  <testcase classname="DBQuery e2e test" name="should get a result detail from a query with one result with properties and values" time="0.999" />
+ </testsuite>
+</testsuites>
