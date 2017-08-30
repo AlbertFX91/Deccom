@@ -1,19 +1,24 @@
 <div *ngIf="queryResult">
-   <div class="table-responsive" *ngIf="list()">
+    <div class="table-responsive" *ngIf="list()">
         <table class="table table-striped">
             <thead>
-            <tr>
-                <th *ngFor="let p of properties()">{{p}}</th>
-            </tr>
+                <tr>
+                    <th *ngFor="let p of properties()">{{p}}</th>
+                </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let row of queryResult">
-                <td *ngFor="let k of properties()">{{row[k]}}</td>
-            </tr>
+                <tr *ngFor="let row of queryResult">
+                    <td *ngFor="let k of properties()">{{row[k]}}</td>
+                </tr>
             </tbody>
         </table>
     </div>
-    <div *ngIf="detail()">
-        To detail!
+    <div class="container" *ngIf="detail()">
+        <dl class="row-md jh-entity-details">
+            <div *ngFor="let p of properties()">
+                <dt><span>{{p}}</span></dt>
+                <dd><span>{{queryResult[p]}}<span></dd>
+            </div>
+        </dl>
     </div>
 </div>

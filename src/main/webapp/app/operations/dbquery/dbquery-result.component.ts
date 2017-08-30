@@ -37,7 +37,7 @@ export class DBQueryResultComponent implements OnInit, OnDestroy {
         if (this.list()) {
             return Object.keys(this.queryResult[0]).sort();
         } else {
-            return undefined;
+            return Object.keys(this.queryResult).sort();
         }
     }
 }
