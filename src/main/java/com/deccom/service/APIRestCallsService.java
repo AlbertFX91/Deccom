@@ -1,7 +1,6 @@
 package com.deccom.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.deccom.domain.Post;
 
@@ -10,15 +9,18 @@ public interface APIRestCallsService {
 	/**
 	 * Sends a HTTP GET request to an URL
 	 * 
-	 * @param url the url to send the request to
+	 * @param url
+	 *            the url to send the request to
 	 * @return the requested books
 	 */
-	List<Map<String, String>> noMapping(String url) throws Exception;
+	// List<Map<String, String>> noMapping(String url) throws Exception;
+	String noMapping(String url) throws Exception;
 
 	/**
 	 * Sends a HTTP GET request to an URL
 	 * 
-	 * @param url the url to send the request to
+	 * @param url
+	 *            the url to send the request to
 	 * @return the requested posts
 	 */
 	List<Post> mapping(String url) throws Exception;

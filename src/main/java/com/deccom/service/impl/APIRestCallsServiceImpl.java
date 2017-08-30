@@ -4,10 +4,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -17,8 +15,6 @@ import org.springframework.stereotype.Service;
 
 import com.deccom.domain.Post;
 import com.deccom.service.APIRestCallsService;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 @Service
@@ -31,22 +27,35 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 
 	}
 
+	/*
+	 * public static void main(String[] args) throws Exception {
+	 * 
+	 * APIRestCallsServiceImpl http = new APIRestCallsServiceImpl();
+	 * 
+	 * http.noMapping("https://jsonplaceholder.typicode.com/posts");
+	 * 
+	 * }
+	 */
+
 	// Client
 	private final String USER_AGENT = "Chrome/60.0.3112.101";
 
 	// HTTP GET request
-	public List<Map<String, String>> noMapping(String url) throws Exception {
+	public String noMapping(String url) throws Exception {
 
 		String response;
-		ObjectMapper mapper;
-		List<Map<String, String>> result;
+		// ObjectMapper mapper;
+		// List<Map<String, String>> result;
+		JSONArray array;
+		String result;
 
 		response = getResponse(url);
+		array = new JSONArray();
 
 		// The data structure to be used for each document is Map<String,
 		// Object>
-		mapper = new ObjectMapper();
-		result = new ArrayList<Map<String, String>>();
+		// mapper = new ObjectMapper();
+		// result = new ArrayList<Map<String, String>>();
 
 		// If there is more than one JSON in the response, it is an array
 		if (checkResponse(response)) {
@@ -59,30 +68,44 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 			for (int i = 0; i < jsonArray.length(); i++) {
 
 				JSONObject finalObject;
-				Map<String, String> map;
-				// Obtaining a JSON object from each document in the JSON array
+
 				finalObject = jsonArray.getJSONObject(i);
-				// Each document is turned into a Map<String, Object>
-				map = mapper.readValue(finalObject.toString(),
-						new TypeReference<Map<String, String>>() {
-						});
-				// A list of them will contain all the documents
-				result.add(map);
+
+				array.put(finalObject);
+
+				/*
+				 * Map<String, String> map; // Obtaining a JSON object from each
+				 * document in the JSON array finalObject =
+				 * jsonArray.getJSONObject(i); // Each document is turned into a
+				 * Map<String, Object> map =
+				 * mapper.readValue(finalObject.toString(), new
+				 * TypeReference<Map<String, String>>() { }); // A list of them
+				 * will contain all the documents result.add(map);
+				 */
 
 			}
 			// If there is only one JSON in the response, it is not an array
 		} else {
-			// The JSON is turned into a map
-			Map<String, String> map;
-			map = mapper.readValue(response,
-					new TypeReference<Map<String, String>>() {
-					});
-			// The single JSON is added to the returning list
-			result.add(map);
+
+			JSONObject finalObject;
+
+			finalObject = new JSONObject(response);
+
+			array.put(finalObject);
+
+			/*
+			 * // The JSON is turned into a map Map<String, String> map; map =
+			 * mapper.readValue(response, new TypeReference<Map<String,
+			 * String>>() { }); // The single JSON is added to the returning
+			 * list result.add(map);
+			 */
+
 		}
 
 		// Finally, this list contains all the maps representing the documents
 		// from the response
+		result = array.toString();
+
 		return result;
 
 	}

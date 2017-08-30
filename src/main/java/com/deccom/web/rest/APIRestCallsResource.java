@@ -1,7 +1,6 @@
 package com.deccom.web.rest;
 
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,12 +31,12 @@ public class APIRestCallsResource {
 
 	@GetMapping("/apirestcalls/nomapping")
 	@Timed
-	public ResponseEntity<List<Map<String, String>>> noMapping(String url)
-			throws Exception {
+	public ResponseEntity<String> noMapping(String url) throws Exception {
 
 		log.debug("REST request without mapping");
 
-		List<Map<String, String>> result;
+		// List<Map<String, String>> result;
+		String result;
 
 		result = apiRestCallsService.noMapping(url);
 
