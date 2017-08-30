@@ -4,7 +4,8 @@
             "home": {
                 "title": "API REST call"
             },
-            "url": "URL"
+            "url": "URL",
+            "wrongURL": "The URL was wrong, please try again"
         }
     }
 }
