@@ -5,6 +5,7 @@ import { DeccomSharedModule } from '../../shared';
 import {
     APIRestCallsService,
     APIRestCallsComponent,
+    APIRestCallsShowComponent,
     apirestcallsRoute,
 } from './';
 
@@ -19,12 +20,13 @@ const ENTITY_STATES = [
     ],
     declarations: [
         APIRestCallsComponent,
+        APIRestCallsShowComponent
     ],
     entryComponents: [
-        APIRestCallsComponent,
+        APIRestCallsComponent
     ],
     providers: [
-        APIRestCallsService,
+        APIRestCallsService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

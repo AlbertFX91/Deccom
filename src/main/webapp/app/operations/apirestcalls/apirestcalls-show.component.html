@@ -1,0 +1,27 @@
+<div *ngIf="response">
+    <div class="table-responsive">
+        <!-- <table class="table table-striped" *ngIf="listOrDetail() === true"> -->
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th *ngFor="let p of onSuccess()">{{p}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let row of response">
+                    <td *ngFor="let k of onSuccess()">{{row[k]}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- 
+    <div class="row-md jh-entity-details" *ngIf="listOrDetail() === false">
+        <tr>
+            <th *ngFor="let p of onSuccess()">{{p}}</th>
+        </tr>
+        <tr *ngFor="let row of response">
+            <td *ngFor="let k of onSuccess()">{{row[k]}}</td>
+        </tr>
+    </div>
+    -->
+</div>

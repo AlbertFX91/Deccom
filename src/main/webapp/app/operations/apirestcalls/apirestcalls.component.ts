@@ -57,6 +57,9 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
         this.alertService.error('deccomApp.apiRESTCalls.wrongURL', null, null);
     }
 
-    clear() { }
+    clear() {
+        this.url = '';
+        this.response = {};
+    }
 
 }
