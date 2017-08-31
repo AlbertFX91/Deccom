@@ -27,13 +27,6 @@ export class APIRestCallsShowComponent implements OnInit, OnDestroy {
     ngOnDestroy() { }
 
     onSuccess() {
-        /*
-        if (this.response.length > 1) {
-            return Object.keys(this.response[0]);
-        } else {
-            return Object.keys(this.response);
-        }
-        */
         return Object.keys(this.response[0]);
     }
 
