@@ -66,12 +66,14 @@ public class APIRestCallsResourceIntTest {
 	public void sendGETRequestJSONArray() throws Exception {
 
 		// The response contains a JSON array
-		restAPIRestCallsMockMvc.perform(get("/apirestcalls/nomapping", URL_1))
-		/*
-		 * .andExpect( content().contentType(
-		 * MediaType.APPLICATION_JSON_UTF8_VALUE))
-		 */
-		.andExpect(status().isOk());
+		restAPIRestCallsMockMvc
+				.perform(get("/apirestcalls/nomapping", URL_1))
+				/*
+				.andExpect(
+						content().contentType(
+								MediaType.APPLICATION_JSON_UTF8_VALUE))
+				*/
+				.andExpect(status().isOk());
 
 	}
 

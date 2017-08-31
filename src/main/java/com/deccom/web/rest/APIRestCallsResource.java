@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
@@ -31,6 +32,7 @@ public class APIRestCallsResource {
 
 	@GetMapping("/apirestcalls/nomapping")
 	@Timed
+	@ResponseBody
 	public ResponseEntity<String> noMapping(String url) throws Exception {
 
 		log.debug("REST request without mapping");
@@ -46,6 +48,7 @@ public class APIRestCallsResource {
 
 	@GetMapping("/apirestcalls/mapping")
 	@Timed
+	@ResponseBody
 	public ResponseEntity<List<Post>> mapping(String url) throws Exception {
 
 		log.debug("REST request with mapping");
