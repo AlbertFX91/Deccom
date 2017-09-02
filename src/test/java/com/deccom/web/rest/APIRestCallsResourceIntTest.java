@@ -30,8 +30,8 @@ import com.deccom.web.rest.errors.ExceptionTranslator;
 @SpringBootTest(classes = DeccomApp.class)
 public class APIRestCallsResourceIntTest {
 
-	private static final String URL_1 = "https://jsonplaceholder.typicode.com/posts";
-	private static final String URL_2 = "https://jsonplaceholder.typicode.com/posts/1";
+	private static final String URL_1 = "https://jsonplaceholder.typicode.com/posts/1";
+	private static final String URL_2 = "https://jsonplaceholder.typicode.com/posts";
 	private static final String URL_3 = "https://jsonplaceholder.typicode.com/users";
 
 	@Autowired
@@ -63,11 +63,38 @@ public class APIRestCallsResourceIntTest {
 	}
 
 	@Test
+	public void sendGETRequestJSON() throws Exception {
+
+		// The response contains a single JSON
+		restAPIRestCallsMockMvc
+				.perform(get("/api/apirestcalls/nomapping?url=" + URL_1))
+				.andExpect(status().isOk())
+				.andExpect(
+						content().contentType(
+								MediaType.APPLICATION_JSON_UTF8_VALUE));
+
+	}
+
+	@Test
 	public void sendGETRequestJSONArray() throws Exception {
 
 		// The response contains a JSON array
 		restAPIRestCallsMockMvc
-				.perform(get("/apirestcalls/nomapping/{url}", "https://jsonplaceholder.typicode.com/posts"))
+				.perform(get("/api/apirestcalls/nomapping?url=" + URL_2))
+				.andExpect(status().isOk())
+				.andExpect(
+						content().contentType(
+								MediaType.APPLICATION_JSON_UTF8_VALUE));
+
+	}
+
+	@Test
+	public void sendGETRequestJSONs() throws Exception {
+
+		// The response contains a JSON with attributes that are JSON objects
+		// themselves
+		restAPIRestCallsMockMvc
+				.perform(get("/api/apirestcalls/nomapping?url=" + URL_3))
 				.andExpect(status().isOk())
 				.andExpect(
 						content().contentType(

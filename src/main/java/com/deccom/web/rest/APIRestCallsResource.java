@@ -30,7 +30,7 @@ public class APIRestCallsResource {
 		this.apiRestCallsService = apiRestCallsService;
 	}
 
-	@GetMapping("/apirestcalls/nomapping/{url}")
+	@GetMapping("/apirestcalls/nomapping")
 	@Timed
 	@ResponseBody
 	public ResponseEntity<String> noMapping(String url) throws Exception {
