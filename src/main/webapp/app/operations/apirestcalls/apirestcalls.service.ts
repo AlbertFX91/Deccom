@@ -12,7 +12,8 @@ export class APIRestCallsService {
 
     noMapping(url: string): Observable<ResponseWrapper> {
         const options = this.createRequestOption(url);
-        return this.http.get(this.resourceUrl + 'nomapping', options)
+        // return this.http.get(this.resourceUrl + 'nomapping', options)
+        return this.http.get(this.resourceUrl + 'nomapping/${url}', options)
             .map((res: Response) => res.json());
     }
 

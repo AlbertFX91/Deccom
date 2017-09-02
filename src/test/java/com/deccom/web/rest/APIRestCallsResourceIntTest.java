@@ -2,7 +2,6 @@ package com.deccom.web.rest;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Before;
@@ -68,7 +67,7 @@ public class APIRestCallsResourceIntTest {
 
 		// The response contains a JSON array
 		restAPIRestCallsMockMvc
-				.perform(get("/apirestcalls/nomapping", URL_1))
+				.perform(get("/apirestcalls/nomapping/{url}", "https://jsonplaceholder.typicode.com/posts"))
 				.andExpect(status().isOk())
 				.andExpect(
 						content().contentType(
