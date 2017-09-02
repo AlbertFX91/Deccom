@@ -9,7 +9,7 @@
                 <jhi-alert></jhi-alert>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="deccomApp.apiRESTCalls.url" for="field_url">URL</label>
-                    <input type="text" class="form-control" name="name" id="field_url" [(ngModel)]="url" required />
+                    <input type="url" class="form-control" name="name" id="field_url" [(ngModel)]="url" required />
                     <div [hidden]="!(apirestcallsForm.controls.url?.dirty && apirestcallsForm.controls.url?.invalid)">
                         <small class="form-text text-danger" [hidden]="!apirestcallsForm.controls.url?.errors?.required" jhiTranslate="entity.validation.required">
                                 This field is required.
