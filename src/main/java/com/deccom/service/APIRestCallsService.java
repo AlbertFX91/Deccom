@@ -13,7 +13,6 @@ public interface APIRestCallsService {
 	 *            the url to send the request to
 	 * @return the requested JSON as a String
 	 */
-	// List<Map<String, String>> noMapping(String url) throws Exception;
 	String noMapping(String url) throws Exception;
 
 	/**

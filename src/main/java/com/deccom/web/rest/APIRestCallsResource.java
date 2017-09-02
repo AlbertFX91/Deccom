@@ -37,7 +37,6 @@ public class APIRestCallsResource {
 
 		log.debug("REST request without mapping");
 
-		// List<Map<String, String>> result;
 		String result;
 
 		result = apiRestCallsService.noMapping(url);

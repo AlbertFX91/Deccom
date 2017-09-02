@@ -27,16 +27,6 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 
 	}
 
-	/*
-	 * public static void main(String[] args) throws Exception {
-	 * 
-	 * APIRestCallsServiceImpl http = new APIRestCallsServiceImpl();
-	 * 
-	 * http.noMapping("https://jsonplaceholder.typicode.com/posts");
-	 * 
-	 * }
-	 */
-
 	// Client
 	private final String USER_AGENT = "Chrome/60.0.3112.101";
 
@@ -73,15 +63,15 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 
 				array.put(finalObject);
 
-				/*
-				 * Map<String, String> map; // Obtaining a JSON object from each
-				 * document in the JSON array finalObject =
-				 * jsonArray.getJSONObject(i); // Each document is turned into a
-				 * Map<String, Object> map =
-				 * mapper.readValue(finalObject.toString(), new
-				 * TypeReference<Map<String, String>>() { }); // A list of them
-				 * will contain all the documents result.add(map);
-				 */
+				// Map<String, String> map;
+				// Obtaining a JSON object from each document in the JSON array
+				// finalObject = jsonArray.getJSONObject(i);
+				// Each document is turned into a Map<String, Object>
+				// map = mapper.readValue(finalObject.toString(),
+				// new TypeReference<Map<String, String>>() {
+				// });
+				// A list of them will contain all the documents
+				// result.add(map);
 
 			}
 			// If there is only one JSON in the response, it is not an array
@@ -93,12 +83,13 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 
 			array.put(finalObject);
 
-			/*
-			 * // The JSON is turned into a map Map<String, String> map; map =
-			 * mapper.readValue(response, new TypeReference<Map<String,
-			 * String>>() { }); // The single JSON is added to the returning
-			 * list result.add(map);
-			 */
+			// The JSON is turned into a map
+			// Map<String, String> map;
+			// map = mapper.readValue(response,
+			// new TypeReference<Map<String, String>>() {
+			// });
+			// The single JSON is added to the returning list
+			// result.add(map);
 
 		}
 
@@ -150,7 +141,7 @@ public class APIRestCallsServiceImpl implements APIRestCallsService {
 			// The single JSON is mapped into a Post object
 			Post post;
 			post = gson.fromJson(response, Post.class);
-			// It is added to the returning list
+			// It is added to the returning object
 			result.add(post);
 
 		}
