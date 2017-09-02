@@ -2,6 +2,7 @@ package com.deccom.web.rest;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Before;
@@ -68,12 +69,10 @@ public class APIRestCallsResourceIntTest {
 		// The response contains a JSON array
 		restAPIRestCallsMockMvc
 				.perform(get("/apirestcalls/nomapping", URL_1))
-				/*
+				.andExpect(status().isOk())
 				.andExpect(
 						content().contentType(
-								MediaType.APPLICATION_JSON_UTF8_VALUE))
-				*/
-				.andExpect(status().isOk());
+								MediaType.APPLICATION_JSON_UTF8_VALUE));
 
 	}
 
