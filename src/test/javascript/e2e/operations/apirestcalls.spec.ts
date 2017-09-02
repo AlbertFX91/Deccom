@@ -49,7 +49,7 @@ describe('API REST calls e2e test', () => {
         element(by.css('[type="submit"]')).click();
 
         var container = element.all(by.css('[class="container"]'));
-        var cells = container.all(by.tagName('tr'));
+        var cells = container.all(by.tagName('dd'));
 
         expect(cells.count()).toBeLessThanOrEqual(8);
         expect(cells.count()).toBeGreaterThanOrEqual(8);
