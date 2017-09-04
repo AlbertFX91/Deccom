@@ -15,6 +15,18 @@
                                 This field is required.
                                 </small>
                     </div>
+                    <!-- <div *ngIf="apirestcallsForm.controls.url?.errors?.pattern">
+                        <span class="error" ng-show="apirestcallsForm.url.$error.url">
+                            Not valid url!
+                        </span>
+                    </div> -->
+                    <!-- <span class="error" ng-show="apirestcallsForm.url.$error.url">
+                            Not valid url!</span> -->
+                    <!-- <div *ngIf="url.errors && (url.dirty || url.touched)" class="alert alert-danger">
+                        <div [hidden]="!url.errors.pattern">
+                            Must be a valid URL.
+                        </div>
+                    </div> -->
                 </div>
                 <div>
                     <button type="button" class="btn btn-default cancel" data-dismiss="modal" (click)="clear()">
