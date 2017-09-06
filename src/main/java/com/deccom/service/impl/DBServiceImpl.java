@@ -39,7 +39,7 @@ public class DBServiceImpl implements DBService {
     	String query = "SELECT "+cols+" FROM `"+table+"`";
     	
     	// Checking of the driver
-    	checkDriver();
+    	checkDriver("com.mysql.jdbc.Driver");
     	
     	// Data structure for the result data
     	List<Map<String, String>> res;
@@ -67,7 +67,7 @@ public class DBServiceImpl implements DBService {
     	String query = "SELECT "+cols+" FROM `"+table+"`";
     	
     	// Checking of the driver
-    	checkDriver();
+    	checkDriver("com.mysql.jdbc.Driver");
     	
     	// Data structure for the result data
     	List<Author> res;
@@ -91,7 +91,7 @@ public class DBServiceImpl implements DBService {
     	String q = query.getQuery();
     	
     	// Checking of the driver
-    	checkDriver();
+    	checkDriver("com.mysql.jdbc.Driver");
     	
     	// Data structure for the result data
     	List<Map<String, String>> res;
@@ -109,12 +109,38 @@ public class DBServiceImpl implements DBService {
     }
     
     
-    private void checkDriver() {
+    public List<Map<String, String>> OracleSQLQuery(String query){
+    	String url = "jdbc:oracle:thin:@localhost:1521:orcl12";
+    	String username = "c##developer";
+    	String password = "developer";
+    	
+    	// Checking of the driver
+    	checkDriver("oracle.jdbc.driver.OracleDriver");
+    	
+    	// Data structure for the result data
+    	List<Map<String, String>> res;
+    	
+    	// Database connection
+    	Connection connection = connect(url, username, password);
+    	
+    	// Result of the query execution
+    	ResultSet rs = executeQuery(connection, query);
+    	
+    	// Data collection
+    	res = collectAll(rs);
+    	
+    	return res;
+    	
+    }
+    
+    private void checkDriver(String driver) {
     	try {
-    	    Class.forName("com.mysql.jdbc.Driver");
+    	    //Class.forName("com.mysql.jdbc.Driver");
+    		//Class.forName("oracle.jdbc.driver.OracleDriver");
+    		Class.forName(driver);
     	} 
     	catch (ClassNotFoundException e) {
-    		throw new IllegalStateException("Cannot find the com.mysql.jdbc.Driver Class", e);
+    		throw new IllegalStateException("Cannot find the "+driver+" Class", e);
     	}
     }
     

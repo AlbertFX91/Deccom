@@ -16,4 +16,7 @@ public interface DBService {
     List<Author> callMapping();
     
     List<Map<String,String>> query(DBQuery query);
+    
+    List<Map<String, String>> OracleSQLQuery(String query);
+    
 }

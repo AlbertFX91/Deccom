@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
@@ -62,6 +63,21 @@ public class DBResource {
     public ResponseEntity<List<Map<String, String>>> query(@ApiParam @Valid DBQuery query) {
         log.debug("REST request to query a DB");
         List<Map<String, String>> res = dBService.query(query);
+        return ResponseEntity.ok().body(res);
+    }
+    
+    /**
+     * GET  /db/oracle/query : make a connection and a query to a oracle sql database
+     *
+     * @param query the SQL sentence
+     * @return the ResponseEntity with status 200 (OK) and the query's data
+     */
+    @GetMapping("/db/oracle/query")
+    @Timed
+    public ResponseEntity<List<Map<String, String>>> query(@RequestParam String query) {
+        log.debug("REST request to query a Oracle SQL DB");
+        log.debug(query);
+        List<Map<String, String>> res = dBService.OracleSQLQuery(query);
         return ResponseEntity.ok().body(res);
     }
 }
