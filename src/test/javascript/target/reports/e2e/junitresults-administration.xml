@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites>
- <testsuite name="administration" timestamp="2017-09-01T15:27:11" hostname="localhost" time="13.36" errors="0" tests="6" skipped="0" disabled="0" failures="0">
-  <testcase classname="administration" name="should load user management" time="0.408" />
-  <testcase classname="administration" name="should load metrics" time="0.827" />
-  <testcase classname="administration" name="should load health" time="0.646" />
-  <testcase classname="administration" name="should load configuration" time="0.943" />
-  <testcase classname="administration" name="should load audits" time="0.648" />
-  <testcase classname="administration" name="should load logs" time="2.871" />
+ <testsuite name="administration" timestamp="2017-09-06T11:56:15" hostname="localhost" time="15.214" errors="0" tests="6" skipped="0" disabled="0" failures="0">
+  <testcase classname="administration" name="should load user management" time="0.974" />
+  <testcase classname="administration" name="should load metrics" time="0.87" />
+  <testcase classname="administration" name="should load health" time="0.854" />
+  <testcase classname="administration" name="should load configuration" time="1.327" />
+  <testcase classname="administration" name="should load audits" time="1.141" />
+  <testcase classname="administration" name="should load logs" time="3.411" />
  </testsuite>
 </testsuites>
