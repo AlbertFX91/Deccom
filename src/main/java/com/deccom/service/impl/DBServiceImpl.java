@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import com.deccom.domain.Author;
 import com.deccom.domain.DBQuery;
 import com.deccom.service.DBService;
+import com.deccom.service.impl.util.DBServiceException;
 import com.google.common.collect.Lists;
 
 @Service
@@ -140,7 +141,8 @@ public class DBServiceImpl implements DBService {
     		Class.forName(driver);
     	} 
     	catch (ClassNotFoundException e) {
-    		throw new IllegalStateException("Cannot find the "+driver+" Class", e);
+    		throw new DBServiceException("Cannot find the "+driver+" Class", "dbquery.drivernotfound", "DBService");
+    		// throw new IllegalStateException("Cannot find the "+driver+" Class", e);
     	}
     }
     
@@ -150,7 +152,8 @@ public class DBServiceImpl implements DBService {
     		connection = DriverManager.getConnection(url, username, password);
         	log.debug("Database connected!");
     	} catch (SQLException e) {
-    	    throw new IllegalStateException("Cannot connect the database!", e);
+    		throw new DBServiceException("Cannot connect with the database!", "dbquery.connectionerror", "DBService");
+    	    // throw new IllegalStateException("Cannot connect the database!", e);
     	}
     	return connection;
     }
@@ -161,7 +164,8 @@ public class DBServiceImpl implements DBService {
     		PreparedStatement statement = connection.prepareStatement(query);
     		res = statement.executeQuery();
     	} catch (SQLException e) {
-    	    throw new IllegalStateException("Query execution error", e);
+    		throw new DBServiceException("Query execution error", "dbquery.queryerror", "DBService");
+    	    // throw new IllegalStateException("Query execution error", e);
     	}
     	return res;
     }
@@ -190,7 +194,8 @@ public class DBServiceImpl implements DBService {
         		res.add(data);
         	}
     	} catch (SQLException e) {
-    	    throw new IllegalStateException("Data extraction error", e);
+    		throw new DBServiceException("Data extraction error", "dbquery.extractionerror", "DBService");
+    	    // throw new IllegalStateException("Data extraction error", e);
     	}
     	return res;
     }
@@ -219,7 +224,8 @@ public class DBServiceImpl implements DBService {
         		res.add(author);
         	}
     	} catch (SQLException e) {
-    	    throw new IllegalStateException("Data extraction error", e);
+    		throw new DBServiceException("Data extraction error", "dbquery.extractionerror", "DBService");
+    	    // throw new IllegalStateException("Data extraction error", e);
     	} 
     	return res;
     }

@@ -1,6 +1,12 @@
 {
     "error": {
         "title": "¡Página de error!",
-        "403": "No tiene permisos para acceder a la página."
+        "403": "No tiene permisos para acceder a la página.",
+        "dbquery" : {
+            "drivernotfound": "El driver para la conexión no ha podido ser lanzado",
+            "connectionerror": "No ha sido posible la conexión con la base de datos",
+            "queryerror": "La consulta SQL no ha podido ser ejectuada",
+            "extractionerror": "La información no ha podido ser recuperada"
+        }
     }
 }

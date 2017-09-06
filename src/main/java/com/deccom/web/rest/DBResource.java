@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +18,8 @@ import com.codahale.metrics.annotation.Timed;
 import com.deccom.domain.Author;
 import com.deccom.domain.DBQuery;
 import com.deccom.service.DBService;
+import com.deccom.service.impl.util.DBServiceException;
+import com.deccom.web.rest.util.HeaderUtil;
 
 import io.swagger.annotations.ApiParam;
 
@@ -62,6 +65,7 @@ public class DBResource {
     @Timed
     public ResponseEntity<List<Map<String, String>>> query(@ApiParam @Valid DBQuery query) {
         log.debug("REST request to query a DB");
+        //return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("DBResource", "exampleError", "That is an error bro")).body(null);
         List<Map<String, String>> res = dBService.query(query);
         return ResponseEntity.ok().body(res);
     }
@@ -80,4 +84,18 @@ public class DBResource {
         List<Map<String, String>> res = dBService.OracleSQLQuery(query);
         return ResponseEntity.ok().body(res);
     }
+    
+    @ExceptionHandler(DBServiceException.class)
+    public ResponseEntity<String> panic(DBServiceException oops) {
+    	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(oops.getEntity(), oops.getI18nCode(), oops.getMessage())).body(null);
+		
+    	/*ModelAndView result;
+
+		result = new ModelAndView("misc/panic");
+		result.addObject("name", ClassUtils.getShortName(oops.getClass()));
+		result.addObject("exception", oops.getMessage());
+		result.addObject("stackTrace", ExceptionUtils.getStackTrace(oops));
+
+		return result;*/
+	}	
 }
