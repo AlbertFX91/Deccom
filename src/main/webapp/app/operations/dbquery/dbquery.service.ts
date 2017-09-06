@@ -12,8 +12,8 @@ export class DBQueryService {
     constructor(private http: Http) { }
 
     query(req?: DBQuery): Observable<ResponseWrapper> {
-        const options = this.createRequesQueryOption(req);
-        return this.http.get(this.resourceUrl + 'query', options)
+        // const options = this.createRequesQueryOption(req);
+        return this.http.post(this.resourceUrl + 'query', req)
             .map((res: Response) => res.json());
     }
 

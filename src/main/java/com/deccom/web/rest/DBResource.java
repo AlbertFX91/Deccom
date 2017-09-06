@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -56,14 +58,14 @@ public class DBResource {
     }
 
     /**
-     * GET  /db/query : make a connection and a query to a database
+     * POST  /db/query : make a connection and a query to a database
      *
      * @param query the connection and query data
      * @return the ResponseEntity with status 200 (OK) and the query's data
      */
-    @GetMapping("/db/query")
+    @PostMapping("/db/query")
     @Timed
-    public ResponseEntity<List<Map<String, String>>> query(@ApiParam @Valid DBQuery query) {
+    public ResponseEntity<List<Map<String, String>>> query(@Valid @RequestBody DBQuery query) {
         log.debug("REST request to query a DB");
         //return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("DBResource", "exampleError", "That is an error bro")).body(null);
         List<Map<String, String>> res = dBService.query(query);
