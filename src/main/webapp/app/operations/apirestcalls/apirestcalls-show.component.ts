@@ -16,10 +16,7 @@ export class APIRestCallsShowComponent implements OnInit, OnDestroy {
 
     constructor(
         private apirestcallsService: APIRestCallsService,
-        private alertService: JhiAlertService,
-        private eventManager: JhiEventManager,
-        private parseLinks: JhiParseLinks,
-        private principal: Principal
+        private eventManager: JhiEventManager
     ) { }
 
     ngOnInit() { }

@@ -45,16 +45,13 @@ describe('Component Tests', () => {
         describe('OnInit', () => {
             it('Should load an array with one JSON', () => {
                 // GIVEN
-                spyOn(service, 'noMapping').and.returnValue((Observable.of('[{"id":1,"title":"sunt aut facere repellat provident occaecati excepturi optio reprehenderit","body":"quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto","userId":1}]')));
-                // comp.response = [{"id":1,"title":"sunt aut facere repellat provident occaecati excepturi optio reprehenderit","body":"quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto","userId":1}];
+                comp.response = [{"id":1,"title":"sunt aut facere repellat provident occaecati excepturi optio reprehenderit","body":"quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto","userId":1}];
 
                 // WHEN
-                comp.ngOnInit();
-                // const onSuccess = comp.onSuccess();
+                const onSuccess = comp.onSuccess();
 
                 // THEN
-                expect(service.noMapping).toHaveBeenCalledWith('https://jsonplaceholder.typicode.com/posts/1');
-                // expect(onSuccess.indexOf('id')).toBeGreaterThanOrEqual(1);
+                expect(onSuccess).not.toBeNull();
             });
         });
 
