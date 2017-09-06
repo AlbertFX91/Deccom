@@ -88,14 +88,5 @@ public class DBResource {
     @ExceptionHandler(DBServiceException.class)
     public ResponseEntity<String> panic(DBServiceException oops) {
     	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(oops.getEntity(), oops.getI18nCode(), oops.getMessage())).body(null);
-		
-    	/*ModelAndView result;
-
-		result = new ModelAndView("misc/panic");
-		result.addObject("name", ClassUtils.getShortName(oops.getClass()));
-		result.addObject("exception", oops.getMessage());
-		result.addObject("stackTrace", ExceptionUtils.getStackTrace(oops));
-
-		return result;*/
 	}	
 }
