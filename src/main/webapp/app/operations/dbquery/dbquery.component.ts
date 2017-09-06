@@ -34,6 +34,7 @@ export class DBQueryComponent implements OnInit, OnDestroy {
 
     save() {
         this.isSaving = true;
+        this.queryResult = undefined;
         this.dbQueryService.query(this.dbQuery).subscribe(
             (res: any) => this.onQuerySuccess(res),
             (error: Response) => this.onQueryError(error)

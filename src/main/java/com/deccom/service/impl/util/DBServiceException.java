@@ -8,8 +8,8 @@ public class DBServiceException extends RuntimeException{
 	private String i18nCode;
 	private String entity;
 	
-	public DBServiceException(String msg, String i18nCode, String entity) {
-		super(msg);
+	public DBServiceException(String msg, String i18nCode, String entity, Throwable cause) {
+		super(msg, cause);
 		this.i18nCode = i18nCode;
 		this.entity = entity;
 	}

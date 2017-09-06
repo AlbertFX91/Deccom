@@ -6,7 +6,8 @@
             "drivernotfound": "The driver for the connection is not installed",
             "connectionerror": "Cannot connect with the database",
             "queryerror": "The SQL query could not be executed",
-            "extractionerror": "The data result could not be recovered"
+            "extractionerror": "The data result could not be recovered",
+            "credentialserror": "The credetials were wrong"
         }
     }
 }
