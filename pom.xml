@@ -98,6 +98,31 @@
 		<yarn.version>v0.27.5</yarn.version>
 	</properties>
 
+	<!-- Added the oracle's maven repository to get the oracle jdbc driver -->
+	<!--  <repositories>
+		<repository>
+			<id>maven.oracle.com</id>
+			<name>oracle-maven-repo</name>
+			<url>https://maven.oracle.com</url>
+			<layout>default</layout>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</releases>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>maven.oracle.com</id>
+			<name>oracle-maven-repo</name>
+			<url>https://maven.oracle.com</url>
+			<layout>default</layout>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</releases>
+		</pluginRepository>
+	</pluginRepositories>-->
 
 	<dependencies>
 		<dependency>
@@ -351,12 +376,29 @@
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 		</dependency>
+
+		<!-- jdbc drivers -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.6</version>
 		</dependency>
+
+		<!-- 
+		WARNING. 
+		Local jar maven instalation. It doesnt works if the system which is building doesnt have the jdbc installed manualy
+		How install manually the ojdbc6.jar:
+		
+		Download ojbc6.jar from oracle: http://www.oracle.com/technetwork/apps-tech/jdbc-112010-090769.html
+		cmd: mvnw install:install-file -Dfile=<<path to the ojdbc6.jar file>> -DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=11.2.0 -Dpackaging=jar
+		 -->
+		<dependency>
+	        <groupId>com.oracle</groupId>
+	        <artifactId>ojdbc6</artifactId>
+	        <version>11.2.0</version>
+    	</dependency>
+
 	</dependencies>
+
 	<build>
 		<defaultGoal>spring-boot:run</defaultGoal>
 		<plugins>

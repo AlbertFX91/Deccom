@@ -17,7 +17,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.deccom.domain.Author;
+import com.deccom.domain.DBQuery;
 import com.deccom.service.DBService;
+import com.deccom.service.impl.util.DBServiceException;
 import com.google.common.collect.Lists;
 
 @Service
@@ -38,7 +40,7 @@ public class DBServiceImpl implements DBService {
     	String query = "SELECT "+cols+" FROM `"+table+"`";
     	
     	// Checking of the driver
-    	checkDriver();
+    	checkDriver("com.mysql.jdbc.Driver");
     	
     	// Data structure for the result data
     	List<Map<String, String>> res;
@@ -66,7 +68,7 @@ public class DBServiceImpl implements DBService {
     	String query = "SELECT "+cols+" FROM `"+table+"`";
     	
     	// Checking of the driver
-    	checkDriver();
+    	checkDriver("com.mysql.jdbc.Driver");
     	
     	// Data structure for the result data
     	List<Author> res;
@@ -83,12 +85,64 @@ public class DBServiceImpl implements DBService {
     	return res;
     }
 
-    private void checkDriver() {
+    public List<Map<String,String>> query(DBQuery query) {
+    	String url = query.getUrl();
+    	String username = query.getUsername();
+    	String password = query.getPassword();
+    	String q = query.getQuery();
+    	
+    	// Checking of the driver
+    	checkDriver("com.mysql.jdbc.Driver");
+    	
+    	// Data structure for the result data
+    	List<Map<String, String>> res;
+    	
+    	// Database connection
+    	Connection connection = connect(url, username, password);
+    	
+    	// Result of the query execution
+    	ResultSet rs = executeQuery(connection, q);
+    	
+    	// Data collection
+    	res = collectAll(rs);
+    	
+    	return res;
+    }
+    
+    
+    public List<Map<String, String>> OracleSQLQuery(String query){
+    	String url = "jdbc:oracle:thin:@localhost:1521:orcl12";
+    	String username = "c##developer";
+    	String password = "developer";
+    	
+    	// Checking of the driver
+    	checkDriver("oracle.jdbc.driver.OracleDriver");
+    	
+    	// Data structure for the result data
+    	List<Map<String, String>> res;
+    	
+    	// Database connection
+    	Connection connection = connect(url, username, password);
+    	
+    	// Result of the query execution
+    	ResultSet rs = executeQuery(connection, query);
+    	
+    	// Data collection
+    	res = collectAll(rs);
+    	
+    	return res;
+    	
+    }
+    
+    private void checkDriver(String driver) {
     	try {
-    	    Class.forName("com.mysql.jdbc.Driver");
+    	    //Class.forName("com.mysql.jdbc.Driver");
+    		//Class.forName("oracle.jdbc.driver.OracleDriver");
+    		Class.forName(driver);
     	} 
     	catch (ClassNotFoundException e) {
-    		throw new IllegalStateException("Cannot find the com.mysql.jdbc.Driver Class", e);
+    		throw new DBServiceException("Cannot find the "+driver+" Class", "dbquery.drivernotfound", "DBService", e);
+    		// throw new IllegalStateException("Cannot find the "+driver+" Class", e);
     	}
     }
     
@@ -98,7 +152,15 @@ public class DBServiceImpl implements DBService {
     		connection = DriverManager.getConnection(url, username, password);
         	log.debug("Database connected!");
     	} catch (SQLException e) {
-    	    throw new IllegalStateException("Cannot connect the database!", e);
+    		Integer SQLCode = e.getErrorCode();
+    		String i18nerrorCode;
+    		switch(SQLCode) {
+    			case 1045: 	i18nerrorCode = "dbquery.credentialserror"; break;
+    			case 0: 	i18nerrorCode = "dbquery.connectionerror"; break;
+    			default: 	i18nerrorCode = "dbquery.connectionerror"; break;
+    		}
+    		throw new DBServiceException("Cannot connect with the database", i18nerrorCode, "DBService", e);
+    	    // throw new IllegalStateException("Cannot connect the database!", e);
     	}
     	return connection;
     }
@@ -109,7 +171,8 @@ public class DBServiceImpl implements DBService {
     		PreparedStatement statement = connection.prepareStatement(query);
     		res = statement.executeQuery();
     	} catch (SQLException e) {
-    	    throw new IllegalStateException("Query execution error", e);
+    		throw new DBServiceException("Query execution error", "dbquery.queryerror", "DBService", e);
+    	    // throw new IllegalStateException("Query execution error", e);
     	}
     	return res;
     }
@@ -138,7 +201,8 @@ public class DBServiceImpl implements DBService {
         		res.add(data);
         	}
     	} catch (SQLException e) {
-    	    throw new IllegalStateException("Data extraction error", e);
+    		throw new DBServiceException("Data extraction error", "dbquery.extractionerror", "DBService", e);
+    	    // throw new IllegalStateException("Data extraction error", e);
     	}
     	return res;
     }
@@ -167,7 +231,8 @@ public class DBServiceImpl implements DBService {
         		res.add(author);
         	}
     	} catch (SQLException e) {
-    	    throw new IllegalStateException("Data extraction error", e);
+    		throw new DBServiceException("Data extraction error", "dbquery.extractionerror", "DBService", e);
+    	    // throw new IllegalStateException("Data extraction error", e);
     	} 
     	return res;
     }

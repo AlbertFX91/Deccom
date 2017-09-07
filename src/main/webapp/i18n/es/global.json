@@ -103,7 +103,8 @@
             "edit": "Editar",
             "open": "Open",
             "save": "Guardar",
-            "view": "Vista"
+            "view": "Vista",
+            "load": "Cargar"
         },
         "detail": {
             "field": "Campo",

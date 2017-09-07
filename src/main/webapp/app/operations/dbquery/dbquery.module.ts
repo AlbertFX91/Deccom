@@ -5,6 +5,7 @@ import { DeccomSharedModule } from '../../shared';
 import {
     DBQueryService,
     DBQueryComponent,
+    DBQueryResultComponent,
     dbqueryRoute,
 } from './';
 
@@ -19,6 +20,7 @@ const ENTITY_STATES = [
     ],
     declarations: [
         DBQueryComponent,
+        DBQueryResultComponent,
     ],
     entryComponents: [
         DBQueryComponent,
