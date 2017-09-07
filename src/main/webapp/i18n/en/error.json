@@ -2,12 +2,14 @@
     "error": {
         "title": "Error page!",
         "403": "You are not authorized to access the page.",
-        "dbquery" : {
-            "drivernotfound": "The driver for the connection is not installed",
-            "connectionerror": "Cannot connect with the database",
-            "queryerror": "The SQL query could not be executed",
-            "extractionerror": "The data result could not be recovered",
-            "credentialserror": "The credetials were wrong"
+        "operations": {
+            "dbquery": {
+                "drivernotfound": "The driver for the connection is not installed",
+                "connectionerror": "Cannot connect with the database",
+                "queryerror": "The SQL query could not be executed",
+                "extractionerror": "The data result could not be recovered",
+                "credentialserror": "The credetials were wrong"
+            }
         }
     }
 }

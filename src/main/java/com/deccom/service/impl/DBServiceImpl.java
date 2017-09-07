@@ -25,6 +25,7 @@ import com.google.common.collect.Lists;
 @Service
 public class DBServiceImpl implements DBService {
 	private final Logger log = LoggerFactory.getLogger(DBServiceImpl.class);
+	private final String i18nCodeRoot = "operations.dbquery";
 
     public DBServiceImpl() {
     }
@@ -155,9 +156,9 @@ public class DBServiceImpl implements DBService {
     		Integer SQLCode = e.getErrorCode();
     		String i18nerrorCode;
     		switch(SQLCode) {
-    			case 1045: 	i18nerrorCode = "dbquery.credentialserror"; break;
-    			case 0: 	i18nerrorCode = "dbquery.connectionerror"; break;
-    			default: 	i18nerrorCode = "dbquery.connectionerror"; break;
+    			case 1045: 	i18nerrorCode = i18nCodeRoot+".credentialserror"; break;
+    			case 0: 	i18nerrorCode = i18nCodeRoot+".connectionerror"; break;
+    			default: 	i18nerrorCode = i18nCodeRoot+".connectionerror"; break;
     		}
     		throw new DBServiceException("Cannot connect with the database", i18nerrorCode, "DBService", e);
     	    // throw new IllegalStateException("Cannot connect the database!", e);
@@ -171,7 +172,7 @@ public class DBServiceImpl implements DBService {
     		PreparedStatement statement = connection.prepareStatement(query);
     		res = statement.executeQuery();
     	} catch (SQLException e) {
-    		throw new DBServiceException("Query execution error", "dbquery.queryerror", "DBService", e);
+    		throw new DBServiceException("Query execution error", i18nCodeRoot+".queryerror", "DBService", e);
     	    // throw new IllegalStateException("Query execution error", e);
     	}
     	return res;
@@ -201,7 +202,7 @@ public class DBServiceImpl implements DBService {
         		res.add(data);
         	}
     	} catch (SQLException e) {
-    		throw new DBServiceException("Data extraction error", "dbquery.extractionerror", "DBService", e);
+    		throw new DBServiceException("Data extraction error", i18nCodeRoot+".extractionerror", "DBService", e);
     	    // throw new IllegalStateException("Data extraction error", e);
     	}
     	return res;
@@ -231,7 +232,7 @@ public class DBServiceImpl implements DBService {
         		res.add(author);
         	}
     	} catch (SQLException e) {
-    		throw new DBServiceException("Data extraction error", "dbquery.extractionerror", "DBService", e);
+    		throw new DBServiceException("Data extraction error", i18nCodeRoot+".extractionerror", "DBService", e);
     	    // throw new IllegalStateException("Data extraction error", e);
     	} 
     	return res;
