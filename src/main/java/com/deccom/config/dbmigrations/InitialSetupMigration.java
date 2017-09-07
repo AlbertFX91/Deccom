@@ -94,7 +94,7 @@ public class InitialSetupMigration {
         mongoTemplate.save(userUser);
     }
     @ChangeSet(order = "03", author = "initiator", id = "03-addAcmes")
-    public void addGames(MongoTemplate mongoTemplate) {
+    public void addAcmes(MongoTemplate mongoTemplate) {
     	Integer numAcmes = 40;
         IntStream.range(0, numAcmes).forEach(
         		index -> {

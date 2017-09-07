@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, JhiAlertService } from 'ng-jhipster';
 
-import { Acme } from '../../entities/acme/acme.model';
-import { AcmeService } from '../../entities/acme/acme.service';
+import { DBQuery } from './dbquery.model';
+import { DBQueryService } from './dbquery.service';
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 
@@ -14,91 +14,63 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 })
 export class DBQueryComponent implements OnInit, OnDestroy {
 
-    acmes: Acme[];
-    currentAccount: any;
-    eventSubscriber: Subscription;
-    itemsPerPage: number;
-    links: any;
-    page: any;
-    predicate: any;
-    queryCount: any;
-    reverse: any;
-    totalItems: number;
-
+    dbQuery: DBQuery = {};
+    isSaving: boolean;
+    result: any;
+    queryResult: any;
     constructor(
-        private acmeService: AcmeService,
+        private dbQueryService: DBQueryService,
         private alertService: JhiAlertService,
         private eventManager: JhiEventManager,
         private parseLinks: JhiParseLinks,
         private principal: Principal
-    ) {
-        this.acmes = [];
-        this.itemsPerPage = ITEMS_PER_PAGE;
-        this.page = 0;
-        this.links = {
-            last: 0
-        };
-        this.predicate = 'id';
-        this.reverse = true;
-    }
+    ) {}
 
-    loadAll() {
-        this.acmeService.query({
-            page: this.page,
-            size: this.itemsPerPage,
-            sort: this.sort()
-        }).subscribe(
-            (res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
-            (res: ResponseWrapper) => this.onError(res.json)
-        );
-    }
-
-    reset() {
-        this.page = 0;
-        this.acmes = [];
-        this.loadAll();
-    }
-
-    loadPage(page) {
-        this.page = page;
-        this.loadAll();
-    }
     ngOnInit() {
-        this.loadAll();
-        this.principal.identity().then((account) => {
-            this.currentAccount = account;
-        });
-        this.registerChangeInAcmes();
+        this.isSaving = false;
     }
 
-    ngOnDestroy() {
-        this.eventManager.destroy(this.eventSubscriber);
+    ngOnDestroy() {}
+
+    save() {
+        this.isSaving = true;
+        this.queryResult = undefined;
+        this.dbQueryService.query(this.dbQuery).subscribe(
+            (res: any) => this.onQuerySuccess(res),
+            (error: Response) => this.onQueryError(error)
+        )
     }
 
-    trackId(index: number, item: Acme) {
-        return item.id;
-    }
-    registerChangeInAcmes() {
-        this.eventSubscriber = this.eventManager.subscribe('acmeListModification', (response) => this.reset());
-    }
+    onQuerySuccess(res: any) {
+        this.isSaving = false;
+        this.eventManager.broadcast({ name: 'dbquery_success', content: 'OK'});
 
-    sort() {
-        const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
-        if (this.predicate !== 'id') {
-            result.push('id');
+        // It's not a list, its only a element
+        if (res.length === undefined) {
+            this.queryResult = res;
+        } else {
+            // If the list has only 1 element, we get only the element. If the list has more than 1 element, we get all the elements
+            this.queryResult = res.length === 1 ? res[0] : res
         }
-        return result;
     }
 
-    private onSuccess(data, headers) {
-        this.links = this.parseLinks.parse(headers.get('link'));
-        this.totalItems = headers.get('X-Total-Count');
-        for (let i = 0; i < data.length; i++) {
-            this.acmes.push(data[i]);
+    onQueryError(error) {
+        try {
+            error.json();
+        } catch (exception) {
+            error.message = error.text();
         }
+        this.isSaving = false;
+        this.onError(error);
     }
 
     private onError(error) {
         this.alertService.error(error.message, null, null);
     }
+
+    clear() {
+        this.dbQuery = {};
+        this.queryResult = undefined;
+    }
+
 }
