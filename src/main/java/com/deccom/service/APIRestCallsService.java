@@ -1,34 +1,27 @@
 package com.deccom.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.deccom.domain.Post;
 
 public interface APIRestCallsService {
 
 	/**
-	 * Sends a HTTP GET request
-	 *
+	 * Sends a HTTP GET request to an URL
+	 * 
 	 * @param url
-	 *            the url of the web
-	 * @return the response of the request
+	 *            the url to send the request to
+	 * @return the requested JSON as a String
 	 */
-	String getResponse(String url) throws Exception;
+	String noMapping(String url) throws Exception;
 
 	/**
-	 * Sends a HTTP GET request to https://jsonplaceholder.typicode.com/posts
+	 * Sends a HTTP GET request to an URL
 	 * 
-	 * @return the requested books
-	 */
-	List<Map<String, String>> noMapping() throws Exception;
-
-	/**
-	 * Sends a HTTP GET request to
-	 * https://jsonplaceholder.typicode.com/posts?userId=1
-	 * 
+	 * @param url
+	 *            the url to send the request to
 	 * @return the requested posts
 	 */
-	List<Post> mapping() throws Exception;
+	List<Post> mapping(String url) throws Exception;
 
 }

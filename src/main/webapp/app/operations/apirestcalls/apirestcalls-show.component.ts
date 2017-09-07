@@ -1,0 +1,30 @@
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Subscription } from 'rxjs/Rx';
+import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, JhiAlertService } from 'ng-jhipster';
+
+import { APIRestCallsService } from './apirestcalls.service';
+import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
+
+@Component({
+    selector: 'jhi-apirestcalls-show',
+    templateUrl: './apirestcalls-show.component.html'
+})
+export class APIRestCallsShowComponent implements OnInit, OnDestroy {
+
+    @Input()
+    response: any;
+
+    constructor(
+        private apirestcallsService: APIRestCallsService,
+        private eventManager: JhiEventManager
+    ) { }
+
+    ngOnInit() { }
+
+    ngOnDestroy() { }
+
+    onSuccess() {
+        return Object.keys(this.response[0]);
+    }
+
+}
