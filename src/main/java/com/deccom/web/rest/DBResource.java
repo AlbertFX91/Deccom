@@ -67,7 +67,6 @@ public class DBResource {
     @Timed
     public ResponseEntity<List<Map<String, String>>> query(@Valid @RequestBody DBQuery query) {
         log.debug("REST request to query a DB");
-        //return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("DBResource", "exampleError", "That is an error bro")).body(null);
         List<Map<String, String>> res = dBService.query(query);
         return ResponseEntity.ok().body(res);
     }
