@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites>
+ <testsuite name="API REST calls e2e test" timestamp="2017-09-08T10:46:55" hostname="localhost" time="16.743" errors="0" tests="3" skipped="0" disabled="0" failures="0">
+  <testcase classname="API REST calls e2e test" name="should load API REST calls" time="0.456" />
+  <testcase classname="API REST calls e2e test" name="should send a GET request for an array" time="6.177" />
+  <testcase classname="API REST calls e2e test" name="should send a GET request for a single JSON" time="3.366" />
+ </testsuite>
+</testsuites>
