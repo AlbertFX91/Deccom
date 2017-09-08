@@ -13,7 +13,7 @@ export const restcallsRoute: Routes = [
         component: RestCallsComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'deccomApp.apiRESTCalls.home.title'
+            pageTitle: 'deccomApp.RestCalls.home.title'
         },
         canActivate: [UserRouteAccessService]
     }
