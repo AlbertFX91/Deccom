@@ -33,7 +33,7 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
         this.isSaving = true;
         this.restcallsService.noMapping(this.url).subscribe(
             (data: any) => this.onSuccess(data),
-            (error: Response) => this.onErrorJSON(error)
+            (error: Response) => this.onJSONError(error)
         )
     }
 
@@ -43,7 +43,7 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
         this.eventManager.broadcast({ name: 'nomapping_success', content: 'OK' });
     }
 
-    onErrorJSON(error) {
+    onJSONError(error) {
         try {
             error.json();
         } catch (exception) {
@@ -54,7 +54,7 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
     }
 
     private onError(error) {
-        this.alertService.error('deccomApp.apiRESTCalls.wrongURL', null, null);
+        this.alertService.error(error.message, null, null);
     }
 
     clear() {

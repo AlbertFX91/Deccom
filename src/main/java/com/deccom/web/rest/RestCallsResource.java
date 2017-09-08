@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.codahale.metrics.annotation.Timed;
 import com.deccom.domain.Post;
 import com.deccom.service.RestCallsService;
+import com.deccom.service.impl.util.RestCallsServiceException;
+import com.deccom.web.rest.util.HeaderUtil;
 
 /**
  * REST controller for managing RestCalls.
@@ -57,6 +60,16 @@ public class RestCallsResource {
 
 		return ResponseEntity.ok().body(result);
 
+	}
+
+	@ExceptionHandler(RestCallsServiceException.class)
+	public ResponseEntity<String> panic(RestCallsServiceException oops) {
+		return ResponseEntity
+				.badRequest()
+				.headers(
+						HeaderUtil.createFailureAlert(oops.getEntity(),
+								oops.getI18nCode(), oops.getMessage()))
+				.body(null);
 	}
 
 }
