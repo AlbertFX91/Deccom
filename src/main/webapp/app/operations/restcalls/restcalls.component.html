@@ -9,10 +9,14 @@
                 <jhi-alert></jhi-alert>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="deccomApp.RestCalls.url" for="field_url">URL</label>
-                    <input type="url" class="form-control" name="url" id="field_url" [(ngModel)]="url" required />
+                    <input type="url" class="form-control" name="url" id="field_url" pattern="https?://.+" title="Include http://" [(ngModel)]="url"
+                        required />
                     <div [hidden]="!(restcallsForm.controls.url?.dirty && restcallsForm.controls.url?.invalid)">
                         <small class="form-text text-danger" [hidden]="!restcallsForm.controls.url?.errors?.required" jhiTranslate="entity.validation.required">
                             This field is required.
+                        </small>
+                        <small class="form-text text-danger" [hidden]="!restcallsForm.controls.url?.errors?.pattern" jhiTranslate="deccomApp.RestCalls.wrongURL">
+                            Wrong URL.
                         </small>
                     </div>
                 </div>

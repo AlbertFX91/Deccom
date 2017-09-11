@@ -5,7 +5,7 @@
                 "title": "API REST call"
             },
             "url": "URL",
-            "wrongURL": "The URL was wrong, please try again"
+            "wrongURL": "The URL format was wrong, please try again."
         }
     }
 }
