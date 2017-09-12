@@ -2,6 +2,7 @@ package com.deccom.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.deccom.domain.Post;
@@ -17,7 +18,7 @@ public interface RestCallsService {
 	 *            the options for the pagination
 	 * @return the requested JSON as a String
 	 */
-	String noMapping(String url, Pageable pageable) throws Exception;
+	Page<String> noMapping(String url, Pageable pageable) throws Exception;
 	
 	/**
 	 * Sends a HTTP GET request to an URL
@@ -28,7 +29,7 @@ public interface RestCallsService {
 	 *            the options for the pagination
 	 * @return the requested JSON as a String
 	 */
-	String noMapping(String url) throws Exception;
+	Page<String> noMapping(String url) throws Exception;
 
 	/**
 	 * Sends a HTTP GET request to an URL

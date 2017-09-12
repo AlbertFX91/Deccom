@@ -13,6 +13,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -38,19 +40,19 @@ public class RestCallsServiceImpl implements RestCallsService {
 	private final String USER_AGENT = "Chrome/60.0.3112.101";
 
 	// HTTP GET request
-	public String noMapping(String url, Pageable pageable) throws Exception {
+	public Page<String> noMapping(String url, Pageable pageable) throws Exception {
 
 		String response;
 		// ObjectMapper mapper;
 		// List<Map<String, String>> result;
-		JSONArray array;
-		String result;
+		List<String> list;
 		int pageNumber;
 		int pageSize;
 		int firstElement;
-
+		Page<String> page = null;
+		
 		response = getResponse(url);
-		array = new JSONArray();
+		list = new LinkedList<>();
 		pageNumber = pageable.getPageNumber();
 		pageSize = pageable.getPageSize();
 		firstElement = pageNumber * pageSize;
@@ -78,7 +80,7 @@ public class RestCallsServiceImpl implements RestCallsService {
 
 					finalObject = jsonArray.getJSONObject(i);
 
-					array.put(finalObject);
+					list.add(finalObject.toString());
 
 					// Map<String, String> map;
 					// Obtaining a JSON object from each document in the JSON
@@ -92,6 +94,9 @@ public class RestCallsServiceImpl implements RestCallsService {
 					// result.add(map);
 
 				}
+				
+				page = new PageImpl<>(list, null, jsonArray.length());
+				
 				// If there is only one JSON in the response, it is not an array
 			} else {
 
@@ -99,7 +104,7 @@ public class RestCallsServiceImpl implements RestCallsService {
 
 				finalObject = new JSONObject(response);
 
-				array.put(finalObject);
+				list.add(finalObject.toString());
 
 				// The JSON is turned into a map
 				// Map<String, String> map;
@@ -108,15 +113,14 @@ public class RestCallsServiceImpl implements RestCallsService {
 				// });
 				// The single JSON is added to the returning list
 				// result.add(map);
-
+				page = new PageImpl<>(list, null, 1);
 			}
 
 			// Finally, this list contains all the maps representing the
 			// documents
 			// from the response
-			result = array.toString();
 
-			return result;
+			return page;
 
 		} catch (JSONException e) {
 			throw new RestCallsServiceException("Wrong JSON format",
@@ -125,8 +129,8 @@ public class RestCallsServiceImpl implements RestCallsService {
 
 	}
 	
-	public String noMapping(String url) throws Exception {
-		String result;
+	public Page<String> noMapping(String url) throws Exception {
+		Page<String> result;
 		Pageable pageable;
 		
 		pageable = new PageRequest(0, 20);
@@ -199,7 +203,8 @@ public class RestCallsServiceImpl implements RestCallsService {
 
 		String result;
 
-		result = this.noMapping(url);
+		// result = this.noMapping(url);
+		result = this.noMapping(url).getContent().toString();
 
 		return JsonPath.parse(result).read(jsonPath).toString();
 

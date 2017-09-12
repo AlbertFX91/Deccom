@@ -1,12 +1,13 @@
 package com.deccom.web.rest;
 
-import io.swagger.annotations.ApiParam;
-
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,9 @@ import com.deccom.domain.Post;
 import com.deccom.service.RestCallsService;
 import com.deccom.service.impl.util.RestCallsServiceException;
 import com.deccom.web.rest.util.HeaderUtil;
+import com.deccom.web.rest.util.PaginationUtil;
+
+import io.swagger.annotations.ApiParam;
 
 /**
  * REST controller for managing RestCalls.
@@ -42,13 +46,10 @@ public class RestCallsResource {
 
 		log.debug("REST request without mapping");
 
-		String result;
-
-		System.out.println(pageable.toString());
-		
+		Page<String> result;
 		result = restCallsService.noMapping(url, pageable);
-
-		return ResponseEntity.ok().body(result);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(result, "/api/restcalls/nomapping");
+        return new ResponseEntity<>(result.getContent().toString(), headers, HttpStatus.OK);
 
 	}
 
