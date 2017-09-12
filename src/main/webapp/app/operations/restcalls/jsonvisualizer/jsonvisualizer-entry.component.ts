@@ -20,6 +20,9 @@ import { PaginationConfig } from '../../../blocks/config/uib-pagination.config';
     @Output()
     private selected = new EventEmitter<String>();
 
+    @Input()
+    parentType: string;
+
     key_style = {
         'number': ['fa', 'fa-circle', 'number'],
         'string': ['fa', 'fa-circle', 'string'],
@@ -75,11 +78,20 @@ import { PaginationConfig } from '../../../blocks/config/uib-pagination.config';
     }
 
     fireSelected(path: string, key: string) {
-        this.selected.emit(key + '.' + path);
+        console.log(key + ':' + this.parentType);
+        if (this.parentType === 'array') {
+            this.selected.emit('[' + key + '].' + path);
+        } else {
+            this.selected.emit(key + '.' + path);
+        }
     }
 
     startPath(key: string) {
-        this.selected.emit(key);
+        if (this.parentType === 'array') {
+            this.selected.emit('[' + key + ']');
+        } else {
+            this.selected.emit(key);
+        }
     }
 
 }
