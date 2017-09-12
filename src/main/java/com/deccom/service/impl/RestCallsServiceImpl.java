@@ -13,6 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.deccom.domain.Post;
@@ -24,7 +25,8 @@ import com.jayway.jsonpath.JsonPath;
 @Service
 public class RestCallsServiceImpl implements RestCallsService {
 
-	private final Logger log = LoggerFactory.getLogger(RestCallsServiceImpl.class);
+	private final Logger log = LoggerFactory
+			.getLogger(RestCallsServiceImpl.class);
 	private final String i18nCodeRoot = "operations.apirestcalls";
 
 	public RestCallsServiceImpl() {
@@ -35,16 +37,23 @@ public class RestCallsServiceImpl implements RestCallsService {
 	private final String USER_AGENT = "Chrome/60.0.3112.101";
 
 	// HTTP GET request
-	public String noMapping(String url) throws Exception {
+	public String noMapping(String url, Pageable pageable) throws Exception {
 
 		String response;
 		// ObjectMapper mapper;
 		// List<Map<String, String>> result;
 		JSONArray array;
 		String result;
+		int pageNumber;
+		int pageSize;
+		int firstElement;
 
 		response = getResponse(url);
 		array = new JSONArray();
+		pageNumber = pageable.getPageNumber();
+		pageSize = pageable.getPageSize();
+		firstElement = pageNumber * pageSize;
+		System.out.println(pageable.toString());
 
 		// The data structure to be used for each document is Map<String,
 		// Object>
@@ -61,7 +70,8 @@ public class RestCallsServiceImpl implements RestCallsService {
 				JSONArray jsonArray;
 				jsonArray = new JSONArray(response);
 
-				for (int i = 0; i < jsonArray.length(); i++) {
+				for (int i = firstElement; i < jsonArray.length()
+						&& i < firstElement + pageSize; i++) {
 
 					JSONObject finalObject;
 
@@ -108,8 +118,8 @@ public class RestCallsServiceImpl implements RestCallsService {
 			return result;
 
 		} catch (JSONException e) {
-			throw new RestCallsServiceException("Wrong JSON format", i18nCodeRoot + ".jsonerror", "RestCallsService",
-					e);
+			throw new RestCallsServiceException("Wrong JSON format",
+					i18nCodeRoot + ".jsonerror", "RestCallsService", e);
 		}
 
 	}
@@ -166,16 +176,19 @@ public class RestCallsServiceImpl implements RestCallsService {
 			return result;
 
 		} catch (JSONException e) {
-			throw new RestCallsServiceException("Wrong JSON format", i18nCodeRoot + ".queryerror", "RestCallsService",
-					e);
+			throw new RestCallsServiceException("Wrong JSON format",
+					i18nCodeRoot + ".queryerror", "RestCallsService", e);
 		}
 
 	}
 
 	// HTTP GET request
 	public String getByJsonPath(String url, String jsonPath) throws Exception {
+
 		String result;
-		result = this.noMapping(url);
+
+		// result = this.noMapping(url);
+		result = "";
 
 		return JsonPath.parse(result).read(jsonPath).toString();
 
@@ -223,7 +236,8 @@ public class RestCallsServiceImpl implements RestCallsService {
 			return result;
 
 		} catch (MalformedURLException e) {
-			throw new RestCallsServiceException("Wrong URL format", i18nCodeRoot + ".urlerror", "RestCallsService", e);
+			throw new RestCallsServiceException("Wrong URL format",
+					i18nCodeRoot + ".urlerror", "RestCallsService", e);
 		}
 
 	}

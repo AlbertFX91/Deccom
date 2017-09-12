@@ -1,9 +1,12 @@
 package com.deccom.web.rest;
 
+import io.swagger.annotations.ApiParam;
+
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,13 +37,14 @@ public class RestCallsResource {
 
 	@GetMapping("/restcalls/nomapping")
 	@Timed
-	public ResponseEntity<String> noMapping(@RequestParam String url) throws Exception {
+	public ResponseEntity<String> noMapping(@RequestParam String url,
+			@ApiParam Pageable pageable) throws Exception {
 
 		log.debug("REST request without mapping");
 
 		String result;
 
-		result = restCallsService.noMapping(url);
+		result = restCallsService.noMapping(url, pageable);
 
 		return ResponseEntity.ok().body(result);
 
@@ -48,7 +52,8 @@ public class RestCallsResource {
 
 	@GetMapping("/restcalls/mapping")
 	@Timed
-	public ResponseEntity<List<Post>> mapping(@RequestParam String url) throws Exception {
+	public ResponseEntity<List<Post>> mapping(@RequestParam String url)
+			throws Exception {
 
 		log.debug("REST request with mapping");
 
@@ -62,7 +67,8 @@ public class RestCallsResource {
 
 	@GetMapping("/restcalls/query")
 	@Timed
-	public ResponseEntity<String> query(@RequestParam String url, @RequestParam String jsonPath) throws Exception {
+	public ResponseEntity<String> query(@RequestParam String url,
+			@RequestParam String jsonPath) throws Exception {
 
 		log.debug("REST request with query");
 
@@ -76,8 +82,11 @@ public class RestCallsResource {
 
 	@ExceptionHandler(RestCallsServiceException.class)
 	public ResponseEntity<String> panic(RestCallsServiceException oops) {
-		return ResponseEntity.badRequest()
-				.headers(HeaderUtil.createFailureAlert(oops.getEntity(), oops.getI18nCode(), oops.getMessage()))
+		return ResponseEntity
+				.badRequest()
+				.headers(
+						HeaderUtil.createFailureAlert(oops.getEntity(),
+								oops.getI18nCode(), oops.getMessage()))
 				.body(null);
 	}
 
