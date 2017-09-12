@@ -3,11 +3,8 @@
         <div class="json-row">
             <span class="type" [ngClass]="styleByKey(k)"></span>
             <span class="key">{{k}}</span>
-            <span class="value" *ngIf="showValue(k)"> : {{valueByKey(k)}}</span>
+            <span class="value" *ngIf="showValue(k)">&nbsp;:&nbsp;{{valueByKey(k)}}</span>
         </div>
-        <!-- <div *ngIf="typeByKey(k) == 'json'">
-            <jhi-jsonvisualizer [data]="data[k]" style="margin-left:30px"></jhi-jsonvisualizer>
-        </div> -->
         <jhi-jsonvisualizer [data]="data[k]" style="margin-left:20px" *ngIf="typeByKey(k) == 'json'">
         </jhi-jsonvisualizer>
     </div>

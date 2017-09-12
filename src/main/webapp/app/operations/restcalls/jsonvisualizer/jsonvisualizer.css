@@ -14,6 +14,10 @@
     height: 30px;
 }
 
+.key {
+    font-weight: 400;
+}
+
 .number {
     color:blue;
 }
