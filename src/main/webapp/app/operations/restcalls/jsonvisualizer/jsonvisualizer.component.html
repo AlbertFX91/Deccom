@@ -1,0 +1,7 @@
+<div>
+    <div *ngFor="let k of keys()">
+        <span class="type">{{typeByKey(k)}} |</span>
+        <span class="key">{{k}}: </span>
+        <span class="value">{{data[k]}}</span>
+    </div>
+</div>

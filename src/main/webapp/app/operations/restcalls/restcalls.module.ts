@@ -2,11 +2,13 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { DeccomSharedModule } from '../../shared';
+import { JSONVisualizerComponent } from './jsonvisualizer';
+
 import {
     RestCallsService,
     RestCallsComponent,
     RestCallsShowComponent,
-    restcallsRoute,
+    restcallsRoute
 } from './';
 
 const ENTITY_STATES = [
@@ -20,7 +22,8 @@ const ENTITY_STATES = [
     ],
     declarations: [
         RestCallsComponent,
-        RestCallsShowComponent
+        RestCallsShowComponent,
+        JSONVisualizerComponent
     ],
     entryComponents: [
         RestCallsComponent
