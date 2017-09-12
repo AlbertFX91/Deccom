@@ -5,5 +5,8 @@
             <span class="key">{{k}}</span>
             <span class="value" *ngIf="showValue(k)"> : {{data[k]}}</span>
         </div>
+        <div *ngIf="typeByKey(k) == 'json'">
+            <jhi-jsonvisualizer [data]="data[k]"></jhi-jsonvisualizer>
+        </div>
     </div>
 </div>
