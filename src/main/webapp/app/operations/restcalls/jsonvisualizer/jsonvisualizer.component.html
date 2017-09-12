@@ -1,29 +1,9 @@
 <div>
     <div *ngFor="let k of keys()" style="display: flex; flex-direction: row;">
-        <div class="type" [ngSwitch]="typeByKey(k)" style="display: flex; flex-direction: row;">
-            <div *ngSwitchCase="'string'" style="display: flex; flex-direction: row; justify-content: flex-start; align-items:center">
-                <span class="fa fa-circle" style="color:blue; flex: 1;" aria-hidden="true"></span>
-                <span class="key" style="flex: 2;">{{k}}: </span>
-                <span class="value">{{data[k]}}</span>
-            </div>
-            <div *ngSwitchCase="'number'" style="display: flex; flex-direction: row; justify-content: flex-start; align-items:center">
-                <span class="fa fa-circle" style="color:red; flex: 1;" aria-hidden="true"></span>
-                <span class="key" style="flex: 2;">{{k}}: </span>
-                <span class="value">{{data[k]}}</span>
-            </div>
-            <div *ngSwitchCase="'boolean'" style="display: flex; flex-direction: row; justify-content: flex-start; align-items:center">
-                <span class="fa fa-circle" style="color:yellow; flex: 1;" aria-hidden="true"></span>
-                <span class="key" style="flex: 2;">{{k}}: </span>
-                <span class="value">{{data[k]}}</span>
-            </div>
-            <div *ngSwitchCase="'array'" style="display: flex; flex-direction: row; justify-content: flex-start; align-items:center">
-                <span class="brackets img-fluid img-rounded"></span>
-                <span class="key" style="flex: 2;">{{k}}</span>
-            </div>
-            <div *ngSwitchCase="'json'" style="display: flex; flex-direction: row; justify-content: flex-start; align-items:center">
-                <span class="keys img-fluid img-rounded"></span>
-                <span class="key" style="flex: 2;">{{k}}</span>
-            </div>
+        <div class="json-row">
+            <span class="type" [ngClass]="styleByKey(k)"></span>
+            <span class="key">{{k}}</span>
+            <span class="value" *ngIf="showValue(k)"> : {{data[k]}}</span>
         </div>
     </div>
 </div>

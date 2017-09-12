@@ -17,3 +17,31 @@ Main page styles
     width: 20px;
     height: 30px;
 }
+
+.key {
+    flex: 2;
+}
+
+.number {
+    color:blue;
+}
+
+.string {
+    color:red;
+}
+
+.boolean {
+    color:yellow;
+}
+
+.type {
+    padding: 3px;
+    margin-right: 3px;
+    flex: 1;
+}
+
+.json-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}

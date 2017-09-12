@@ -17,11 +17,21 @@ import { PaginationConfig } from '../../../blocks/config/uib-pagination.config';
     @Input()
     data: any;
 
+    key_style = {
+        'number': ['fa', 'fa-circle', 'number'],
+        'string': ['fa', 'fa-circle', 'string'],
+        'boolean': ['fa', 'fa-circle', 'boolean'],
+        'array': ['brackets', 'img-fluid'],
+        'json': ['keys', 'img-fluid']
+    };
+
     constructor() { }
 
     ngOnInit() {
         // Array test
-        this.data['dataExample'] = ['data1', 'data2', 'data3'];
+        this.data['arrayExample'] = ['data1', 'data2', 'data3'];
+        // Boolean test
+        this.data['booleanExample'] = true;
     }
 
     ngOnDestroy() { }
@@ -47,6 +57,15 @@ import { PaginationConfig } from '../../../blocks/config/uib-pagination.config';
         if (type === 'object' && value !== null) {
             return 'json';
         }
+    }
+
+    styleByKey(key: string) {
+        return this.key_style[this.typeByKey(key)];
+    }
+
+    showValue(key: string) {
+        const type = this.typeByKey(key);
+        return type !== 'array' && type !== 'json';
     }
 
 }
