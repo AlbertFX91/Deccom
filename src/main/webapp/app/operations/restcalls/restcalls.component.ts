@@ -15,8 +15,11 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
     isSaving: boolean;
     url: string;
     result: any;
-    response: any;
+    data: any;
     path: string;
+    itemsPerPage: number;
+    links: any;
+    page: any;
 
     constructor(
         private restcallsService: RestCallsService,
@@ -24,7 +27,19 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
         private eventManager: JhiEventManager,
         private parseLinks: JhiParseLinks,
         private principal: Principal
-    ) { }
+    ) {
+        this.itemsPerPage = ITEMS_PER_PAGE;
+        this.page = 0;
+        this.links = {
+            last: 0
+        };
+        this.data = [];
+    }
+
+    loadPage(page) {
+        this.page = page;
+        this.save();
+    }
 
     ngOnInit() { }
 
@@ -32,15 +47,20 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 
     save() {
         this.isSaving = true;
-        this.restcallsService.noMapping(this.url).subscribe(
-            (data: any) => this.onSuccess(data),
+        const pageSettings = {
+            page: this.page,
+            size: this.itemsPerPage
+        };
+        this.restcallsService.noMapping(this.url, pageSettings).subscribe(
+            (data: any) => this.onSuccess(data.json(), data.headers),
             (error: Response) => this.onJSONError(error)
         )
     }
 
-    onSuccess(data: any) {
+    onSuccess(data: any, headers: any) {
         this.isSaving = false;
-        this.response = data;
+        this.data = this.data.concat(data);
+        this.links = this.parseLinks.parse(headers.get('link'));
         this.eventManager.broadcast({ name: 'nomapping_success', content: 'OK' });
     }
 
@@ -60,7 +80,7 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 
     clear() {
         this.url = '';
-        this.response = {};
+        this.data = {};
         this.path = '';
     }
 

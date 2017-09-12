@@ -1,23 +1,23 @@
-<div *ngIf="response">
+<div *ngIf="data">
     <div class="table-responsive">
-        <table class="table table-striped" *ngIf="response.length > 1">
+        <table class="table table-striped" *ngIf="data.length > 1">
             <thead>
                 <tr>
                     <th *ngFor="let i of onSuccess()">{{i}}</th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let row of response">
+                <tr *ngFor="let row of data">
                     <td *ngFor="let j of onSuccess()">{{row[j]}}</td>
                 </tr>
             </tbody>
         </table>
     </div>
-    <div class="container" *ngIf="response.length == 1">
+    <div class="container" *ngIf="data.length == 1">
         <dl class="row-md jh-entity-details">
             <div *ngFor="let i of onSuccess()">
                 <dt><span>{{i}}</span></dt>
-                <tr *ngFor="let row of response">
+                <tr *ngFor="let row of data">
                     <dd><span>{{row[i]}}</span></dd>
                 </tr>
             </div>

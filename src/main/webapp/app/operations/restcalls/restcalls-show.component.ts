@@ -12,7 +12,7 @@ import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 export class RestCallsShowComponent implements OnInit, OnDestroy {
 
     @Input()
-    response: any;
+    data: any;
 
     constructor(
         private apirestcallsService: RestCallsService,
@@ -24,7 +24,7 @@ export class RestCallsShowComponent implements OnInit, OnDestroy {
     ngOnDestroy() { }
 
     onSuccess() {
-        return Object.keys(this.response[0]).sort();
+        return Object.keys(this.data[0]).sort();
     }
 
 }

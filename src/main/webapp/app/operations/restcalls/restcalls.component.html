@@ -30,10 +30,11 @@
                 </div>
             </form>
         </div>
-        <div class="row" *ngIf="response">
+        <div class="row" *ngIf="data">
             {{path}}
-            <!-- <jhi-restcalls-show [response]="response" style="width: 100%"></jhi-restcalls-show> -->
-            <jhi-jsonvisualizer [(data)]="response" style="width: 100%" (path)="createPath($event)"></jhi-jsonvisualizer>
+            <div infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDistance]="0">
+                <jhi-jsonvisualizer [(data)]="data" style="width: 100%" (path)="createPath($event)"></jhi-jsonvisualizer>
+            </div>
         </div>
     </div>
 </div>
