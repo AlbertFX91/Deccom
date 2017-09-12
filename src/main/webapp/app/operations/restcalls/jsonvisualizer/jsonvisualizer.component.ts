@@ -68,4 +68,11 @@ import { PaginationConfig } from '../../../blocks/config/uib-pagination.config';
         return type !== 'array' && type !== 'json';
     }
 
+    valueByKey(key: string) {
+        const value = this.data[key];
+        if (this.typeByKey(key) === 'string') {
+            return '"' + value + '"';
+        }
+        return value;
+    }
 }
