@@ -1,7 +1,29 @@
 <div>
     <div *ngFor="let k of keys()">
-        <span class="type">{{typeByKey(k)}} |</span>
-        <span class="key">{{k}}: </span>
-        <span class="value">{{data[k]}}</span>
+        <!-- <span class="type">{{typeByKey(k)}} |</span> -->
+        <span class="type" [ngSwitch]="typeByKey(k)">
+            <div *ngSwitchCase="'string'">
+                <span class="fa fa-circle" style="color:blue" aria-hidden="true"></span>
+        <span class="key">{{k}}: </span> {{data[k]}}
     </div>
+    <div *ngSwitchCase="'number'">
+        <span class="fa fa-circle blue" style="color:red" aria-hidden="true"></span>
+        <span class="key">{{k}}: </span> {{data[k]}}
+    </div>
+    <div *ngSwitchCase="'boolean'">
+        <span class="fa fa-circle blue" style="color:yellow" aria-hidden="true"></span>
+        <span class="key">{{k}}: </span> {{data[k]}}
+    </div>
+    <div *ngSwitchCase="'array'">
+        <img class="img-responsive" height="20px" width="30px" src="../../../../content/images/icons/brackets-icon.png" aria-hidden="true"></img>
+        <span class="key">{{k}}</span>
+    </div>
+    <div *ngSwitchCase="'json'">
+        <img class="img-responsive" height="20px" width="30px" src="../../../../content/images/icons/keys-icon.png" aria-hidden="true"></img>
+        <span class="key">{{k}}</span>
+    </div>
+    </span>
+    <!-- <span class="brackets img-fluid img-rounded" *ngSwitchCase="'array'"></span> -->
+    <!-- <span class="keys img-fluid img-rounded" *ngSwitchCase="'json'"></span> -->
+</div>
 </div>

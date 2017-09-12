@@ -1,0 +1,19 @@
+/* ==========================================================================
+Main page styles
+========================================================================== */
+
+.brackets {
+    display: inline-block;
+    width: 20px;
+    height: 30px;
+    background: url("../../../../content/images/icons/brackets-icon.png") no-repeat center top;
+    background-size: contain;
+}
+
+.keys {
+    display: inline-block;
+    width: 20px;
+    height: 30px;
+    background: url("../../../../content/images/icons/keys-icon.png") no-repeat center top;
+    background-size: contain;
+}

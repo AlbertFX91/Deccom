@@ -8,7 +8,10 @@ import { PaginationConfig } from '../../../blocks/config/uib-pagination.config';
 
 @Component({
     selector: 'jhi-jsonvisualizer',
-    templateUrl: './jsonvisualizer.component.html'
+    templateUrl: './jsonvisualizer.component.html',
+    styleUrls: [
+        'jsonvisualizer.css'
+    ]
 }) export class JSONVisualizerComponent implements OnInit, OnDestroy {
 
     @Input()
