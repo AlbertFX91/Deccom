@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, JhiAlertService } from 'ng-jhipster';
@@ -17,6 +17,9 @@ import { PaginationConfig } from '../../../blocks/config/uib-pagination.config';
     @Input()
     data: any;
 
+    @Output()
+    private selected = new EventEmitter<String>();
+
     key_style = {
         'number': ['fa', 'fa-circle', 'number'],
         'string': ['fa', 'fa-circle', 'string'],
@@ -27,12 +30,7 @@ import { PaginationConfig } from '../../../blocks/config/uib-pagination.config';
 
     constructor() { }
 
-    ngOnInit() {
-        // Array test
-        /// this.data['arrayExample'] = ['data1', 'data2', 'data3'];
-        // Boolean test
-        this.data['booleanExample'] = true;
-    }
+    ngOnInit() { }
 
     ngOnDestroy() { }
 
@@ -75,4 +73,13 @@ import { PaginationConfig } from '../../../blocks/config/uib-pagination.config';
         }
         return value;
     }
+
+    fireSelected(path: string, key: string) {
+        this.selected.emit(key + '.' + path);
+    }
+
+    startPath(key: string) {
+        this.selected.emit(key);
+    }
+
 }

@@ -1,11 +1,11 @@
 <div>
-    <div *ngFor="let k of keys()" style="display: flex; flex-direction: column;">
-        <div class="json-row">
+    <div *ngFor="let k of keys()" style="display: flex; flex-direction: column;" >
+        <div class="json-row" (click)="startPath(k)">
             <span class="type" [ngClass]="styleByKey(k)"></span>
             <span class="key">{{k}}</span>
             <span class="value" *ngIf="showValue(k)">&nbsp;:&nbsp;{{valueByKey(k)}}</span>
         </div>
-        <jhi-jsonvisualizer-entry [data]="data[k]" style="margin-left:20px" *ngIf="typeByKey(k) === 'json' || typeByKey(k) === 'array'">
+        <jhi-jsonvisualizer-entry [data]="data[k]" style="margin-left:20px" *ngIf="typeByKey(k) === 'json' || typeByKey(k) === 'array'" (selected)="fireSelected($event, k)">
         </jhi-jsonvisualizer-entry>
     </div>
 </div>

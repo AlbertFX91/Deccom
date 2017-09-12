@@ -16,6 +16,7 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
     url: string;
     result: any;
     response: any;
+    path: string;
 
     constructor(
         private restcallsService: RestCallsService,
@@ -60,6 +61,11 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
     clear() {
         this.url = '';
         this.response = {};
+        this.path = '';
+    }
+
+    createPath(path: string) {
+        this.path = path;
     }
 
 }

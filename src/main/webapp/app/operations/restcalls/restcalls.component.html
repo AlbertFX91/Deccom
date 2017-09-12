@@ -31,8 +31,9 @@
             </form>
         </div>
         <div class="row" *ngIf="response">
+            {{path}}
             <!-- <jhi-restcalls-show [response]="response" style="width: 100%"></jhi-restcalls-show> -->
-            <jhi-jsonvisualizer [(data)]="response" style="width: 100%"></jhi-jsonvisualizer>
+            <jhi-jsonvisualizer [(data)]="response" style="width: 100%" (path)="createPath($event)"></jhi-jsonvisualizer>
         </div>
     </div>
 </div>

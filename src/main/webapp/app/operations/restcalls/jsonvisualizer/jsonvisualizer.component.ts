@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, JhiAlertService } from 'ng-jhipster';
@@ -14,10 +14,17 @@ import { PaginationConfig } from '../../../blocks/config/uib-pagination.config';
     @Input()
     data: any;
 
+    @Output()
+    private path = new EventEmitter<String>();
+
     constructor() { }
 
     ngOnInit() { }
 
     ngOnDestroy() { }
+
+    constructPath(path: string) {
+        this.path.emit('$.' + path);
+    }
 
 }
