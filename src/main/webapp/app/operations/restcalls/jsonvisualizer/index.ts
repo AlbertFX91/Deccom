@@ -1,1 +1,1 @@
-export * from './jsonvisualizer-json.component';
+export * from './jsonvisualizer.component';

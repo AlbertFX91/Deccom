@@ -7,12 +7,12 @@ import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../../shared';
 import { PaginationConfig } from '../../../blocks/config/uib-pagination.config';
 
 @Component({
-    selector: 'jhi-jsonvisualizer-json',
-    templateUrl: './jsonvisualizer-json.component.html',
+    selector: 'jhi-jsonvisualizer',
+    templateUrl: './jsonvisualizer.component.html',
     styleUrls: [
-        'jsonvisualizer-json.css'
+        'jsonvisualizer.css'
     ]
-}) export class JSONVisualizerJSONComponent implements OnInit, OnDestroy {
+}) export class JSONVisualizerComponent implements OnInit, OnDestroy {
 
     @Input()
     data: any;
