@@ -29,7 +29,7 @@ import { PaginationConfig } from '../../../blocks/config/uib-pagination.config';
 
     ngOnInit() {
         // Array test
-        this.data['arrayExample'] = ['data1', 'data2', 'data3'];
+        /// this.data['arrayExample'] = ['data1', 'data2', 'data3'];
         // Boolean test
         this.data['booleanExample'] = true;
     }
