@@ -18,10 +18,6 @@ Main page styles
     height: 30px;
 }
 
-.key {
-    flex: 2;
-}
-
 .number {
     color:blue;
 }
@@ -37,7 +33,6 @@ Main page styles
 .type {
     padding: 3px;
     margin-right: 3px;
-    flex: 1;
 }
 
 .json-row {

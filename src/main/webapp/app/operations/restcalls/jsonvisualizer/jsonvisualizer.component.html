@@ -1,5 +1,5 @@
 <div>
-    <div *ngFor="let k of keys()" style="display: flex; flex-direction: row;">
+    <div *ngFor="let k of keys()" style="display: flex; flex-direction: column;">
         <div class="json-row">
             <span class="type" [ngClass]="styleByKey(k)"></span>
             <span class="key">{{k}}</span>
