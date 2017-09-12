@@ -13,6 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -123,6 +124,17 @@ public class RestCallsServiceImpl implements RestCallsService {
 		}
 
 	}
+	
+	public String noMapping(String url) throws Exception {
+		String result;
+		Pageable pageable;
+		
+		pageable = new PageRequest(0, 20);
+		
+		result = noMapping(url, pageable);
+		
+		return result;
+	}
 
 	// HTTP GET request
 	public List<Post> mapping(String url) throws Exception {
@@ -187,8 +199,7 @@ public class RestCallsServiceImpl implements RestCallsService {
 
 		String result;
 
-		// result = this.noMapping(url);
-		result = "";
+		result = this.noMapping(url);
 
 		return JsonPath.parse(result).read(jsonPath).toString();
 

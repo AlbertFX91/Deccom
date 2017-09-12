@@ -18,6 +18,17 @@ public interface RestCallsService {
 	 * @return the requested JSON as a String
 	 */
 	String noMapping(String url, Pageable pageable) throws Exception;
+	
+	/**
+	 * Sends a HTTP GET request to an URL
+	 * 
+	 * @param url
+	 *            the url to send the request to
+	 * @param pageable
+	 *            the options for the pagination
+	 * @return the requested JSON as a String
+	 */
+	String noMapping(String url) throws Exception;
 
 	/**
 	 * Sends a HTTP GET request to an URL
