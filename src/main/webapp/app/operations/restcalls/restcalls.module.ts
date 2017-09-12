@@ -2,7 +2,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { DeccomSharedModule } from '../../shared';
-import { JSONVisualizerEntryComponent } from './jsonvisualizer';
+import { DeccomJSONVisualizerModule } from './jsonvisualizer';
 
 import {
     RestCallsService,
@@ -18,12 +18,12 @@ const ENTITY_STATES = [
 @NgModule({
     imports: [
         DeccomSharedModule,
+        DeccomJSONVisualizerModule,
         RouterModule.forRoot(ENTITY_STATES, { useHash: true })
     ],
     declarations: [
         RestCallsComponent,
-        RestCallsShowComponent,
-        JSONVisualizerEntryComponent
+        RestCallsShowComponent
     ],
     entryComponents: [
         RestCallsComponent
