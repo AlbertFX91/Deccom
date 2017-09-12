@@ -41,7 +41,7 @@ import { PaginationConfig } from '../../../blocks/config/uib-pagination.config';
             return 'array';
         }
         // Get type of value when value is an object and not null or array (JSON)
-        if (type === 'object' && value != null) {
+        if (type === 'object' && value !== null) {
             return 'json';
         }
     }
