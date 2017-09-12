@@ -19,12 +19,12 @@ import com.deccom.domain.Post;
 import com.deccom.service.RestCallsService;
 import com.deccom.service.impl.util.RestCallsServiceException;
 import com.google.gson.Gson;
+import com.jayway.jsonpath.JsonPath;
 
 @Service
 public class RestCallsServiceImpl implements RestCallsService {
 
-	private final Logger log = LoggerFactory
-			.getLogger(RestCallsServiceImpl.class);
+	private final Logger log = LoggerFactory.getLogger(RestCallsServiceImpl.class);
 	private final String i18nCodeRoot = "operations.apirestcalls";
 
 	public RestCallsServiceImpl() {
@@ -108,8 +108,8 @@ public class RestCallsServiceImpl implements RestCallsService {
 			return result;
 
 		} catch (JSONException e) {
-			throw new RestCallsServiceException("Wrong JSON format",
-					i18nCodeRoot + ".jsonerror", "RestCallsService", e);
+			throw new RestCallsServiceException("Wrong JSON format", i18nCodeRoot + ".jsonerror", "RestCallsService",
+					e);
 		}
 
 	}
@@ -166,9 +166,18 @@ public class RestCallsServiceImpl implements RestCallsService {
 			return result;
 
 		} catch (JSONException e) {
-			throw new RestCallsServiceException("Wrong JSON format",
-					i18nCodeRoot + ".queryerror", "RestCallsService", e);
+			throw new RestCallsServiceException("Wrong JSON format", i18nCodeRoot + ".queryerror", "RestCallsService",
+					e);
 		}
+
+	}
+
+	// HTTP GET request
+	public String getByJsonPath(String url, String jsonPath) throws Exception {
+		String result;
+		result = this.noMapping(url);
+
+		return JsonPath.parse(result).read(jsonPath).toString();
 
 	}
 
@@ -214,8 +223,7 @@ public class RestCallsServiceImpl implements RestCallsService {
 			return result;
 
 		} catch (MalformedURLException e) {
-			throw new RestCallsServiceException("Wrong URL format",
-					i18nCodeRoot + ".urlerror", "RestCallsService", e);
+			throw new RestCallsServiceException("Wrong URL format", i18nCodeRoot + ".urlerror", "RestCallsService", e);
 		}
 
 	}

@@ -61,6 +61,22 @@ public class RestCallsResource {
 		return ResponseEntity.ok().body(result);
 
 	}
+	
+	@GetMapping("/restcalls/query")
+	@Timed
+	public ResponseEntity<String> query(@RequestParam String url, @RequestParam String jsonPath)
+			throws Exception {
+
+		log.debug("REST request with query");
+
+		String result;
+
+		result = restCallsService.getByJsonPath(url, jsonPath);
+
+		return ResponseEntity.ok().body(result);
+
+	}
+
 
 	@ExceptionHandler(RestCallsServiceException.class)
 	public ResponseEntity<String> panic(RestCallsServiceException oops) {
