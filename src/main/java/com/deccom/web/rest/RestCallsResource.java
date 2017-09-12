@@ -34,8 +34,7 @@ public class RestCallsResource {
 
 	@GetMapping("/restcalls/nomapping")
 	@Timed
-	public ResponseEntity<String> noMapping(@RequestParam String url)
-			throws Exception {
+	public ResponseEntity<String> noMapping(@RequestParam String url) throws Exception {
 
 		log.debug("REST request without mapping");
 
@@ -49,8 +48,7 @@ public class RestCallsResource {
 
 	@GetMapping("/restcalls/mapping")
 	@Timed
-	public ResponseEntity<List<Post>> mapping(@RequestParam String url)
-			throws Exception {
+	public ResponseEntity<List<Post>> mapping(@RequestParam String url) throws Exception {
 
 		log.debug("REST request with mapping");
 
@@ -61,11 +59,10 @@ public class RestCallsResource {
 		return ResponseEntity.ok().body(result);
 
 	}
-	
+
 	@GetMapping("/restcalls/query")
 	@Timed
-	public ResponseEntity<String> query(@RequestParam String url, @RequestParam String jsonPath)
-			throws Exception {
+	public ResponseEntity<String> query(@RequestParam String url, @RequestParam String jsonPath) throws Exception {
 
 		log.debug("REST request with query");
 
@@ -77,14 +74,10 @@ public class RestCallsResource {
 
 	}
 
-
 	@ExceptionHandler(RestCallsServiceException.class)
 	public ResponseEntity<String> panic(RestCallsServiceException oops) {
-		return ResponseEntity
-				.badRequest()
-				.headers(
-						HeaderUtil.createFailureAlert(oops.getEntity(),
-								oops.getI18nCode(), oops.getMessage()))
+		return ResponseEntity.badRequest()
+				.headers(HeaderUtil.createFailureAlert(oops.getEntity(), oops.getI18nCode(), oops.getMessage()))
 				.body(null);
 	}
 

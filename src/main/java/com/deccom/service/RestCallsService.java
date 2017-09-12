@@ -23,9 +23,10 @@ public interface RestCallsService {
 	 * @return the requested posts
 	 */
 	List<Post> mapping(String url) throws Exception;
-	
+
 	/**
 	 * Send a HTTP Get to an URL and capture the data by a JSONPath
+	 * 
 	 * @param url
 	 *            the url to send the request to
 	 * @param jsonPath
