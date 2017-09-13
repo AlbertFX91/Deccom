@@ -34,6 +34,7 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
             last: 0
         };
         this.data = [];
+        this.path = '';
     }
 
     loadPage(page) {
@@ -52,6 +53,7 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
             last: 0
         };
         this.data = [];
+        this.path = '';
         this.save();
     }
 
