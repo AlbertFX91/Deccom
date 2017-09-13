@@ -45,6 +45,16 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 
     ngOnDestroy() { }
 
+    onSubmit() {
+        this.itemsPerPage = ITEMS_PER_PAGE;
+        this.page = 0;
+        this.links = {
+            last: 0
+        };
+        this.data = [];
+        this.save();
+    }
+
     save() {
         this.isSaving = true;
         const pageSettings = {
