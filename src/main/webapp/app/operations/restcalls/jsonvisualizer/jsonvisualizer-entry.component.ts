@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, OnChanges, SimpleChanges  } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, SimpleChanges  } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, JhiAlertService } from 'ng-jhipster';
@@ -12,7 +12,7 @@ import { PaginationConfig } from '../../../blocks/config/uib-pagination.config';
     styleUrls: [
         'jsonvisualizer-entry.css'
     ],
-}) export class JSONVisualizerEntryComponent implements OnInit, OnDestroy, OnChanges  {
+}) export class JSONVisualizerEntryComponent implements OnInit, OnDestroy  {
 
     @Input()
     data: any;
@@ -40,18 +40,6 @@ import { PaginationConfig } from '../../../blocks/config/uib-pagination.config';
     ngOnInit() { }
 
     ngOnDestroy() { }
-
-    ngOnChanges(changes: SimpleChanges) {
-        if (changes.data) {
-            const new_data = changes.data.currentValue;
-            Object.keys(new_data).forEach((key) => {
-                const type = this.typeByKey(key);
-                if (type === 'array' || type === 'json') {
-                    this.states[key] = 'out';
-                }
-            });
-        }
-    }
 
     keys() {
         return Object.keys(this.data);
@@ -116,10 +104,19 @@ import { PaginationConfig } from '../../../blocks/config/uib-pagination.config';
     }
 
     toggleVisualization(key: string) {
-        if (this.states[key]) {
-            console.log(this.states[key]);
-            this.states[key] = this.states[key] === 'out' ? 'in' : 'out';
+        const type = this.typeByKey(key);
+        if (type === 'json') {
+            if (this.states[key]) {
+                this.states[key] = this.states[key] === 'out' ? 'in' : 'out';
+            }else {
+                this.states[key] = 'in';
+            }
         }
     }
 
+    cantBeVisualized(key: string) {
+        const type = this.typeByKey(key);
+        // It can be visualized if its a json or and array, and if the object has been setted to visible because it has been clicked
+        return (type === 'json' || type === 'array') && this.states[key] === 'in';
+    }
 }

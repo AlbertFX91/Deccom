@@ -7,8 +7,7 @@
         </div>
         
         <jhi-jsonvisualizer-entry [parentType]="typeByKey(k)" [data]="data[k]" style="margin-left:20px" 
-            *ngIf="(typeByKey(k) === 'json' || typeByKey(k) === 'array') && states[k] === 'in'"
-                (selected)="fireSelected($event, k)">
+            *ngIf="cantBeVisualized(k)" (selected)="fireSelected($event, k)">
         </jhi-jsonvisualizer-entry>
         
     </div>
