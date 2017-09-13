@@ -30,8 +30,8 @@
                 </div>
             </form>
         </div>
-        <div class="row" *ngIf="data">
-            {{path}}
+        <div class="row" *ngIf="data" style="flex-direction: column;">
+            <div>{{path}}</div>
             <div infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDistance]="0">
                 <jhi-jsonvisualizer [(data)]="data" style="width: 100%" (path)="createPath($event)"></jhi-jsonvisualizer>
             </div>

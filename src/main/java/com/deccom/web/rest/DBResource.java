@@ -23,8 +23,6 @@ import com.deccom.service.DBService;
 import com.deccom.service.impl.util.DBServiceException;
 import com.deccom.web.rest.util.HeaderUtil;
 
-import io.swagger.annotations.ApiParam;
-
 /**
  * REST controller for managing Acme.
  */
