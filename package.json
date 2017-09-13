@@ -8,6 +8,7 @@
     "node_modules"
   ],
   "dependencies": {
+  	"@angular/animations": "4.2.6",
     "@angular/common": "4.2.6",
     "@angular/compiler": "4.2.6",
     "@angular/core": "4.2.6",

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, OnChanges, SimpleChanges  } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, JhiAlertService } from 'ng-jhipster';
@@ -11,8 +11,8 @@ import { PaginationConfig } from '../../../blocks/config/uib-pagination.config';
     templateUrl: './jsonvisualizer-entry.component.html',
     styleUrls: [
         'jsonvisualizer-entry.css'
-    ]
-}) export class JSONVisualizerEntryComponent implements OnInit, OnDestroy {
+    ],
+}) export class JSONVisualizerEntryComponent implements OnInit, OnDestroy, OnChanges  {
 
     @Input()
     data: any;
@@ -23,6 +23,8 @@ import { PaginationConfig } from '../../../blocks/config/uib-pagination.config';
     @Input()
     parentType: string;
 
+    states: any;
+
     key_style = {
         'number': ['fa', 'fa-circle', 'number'],
         'string': ['fa', 'fa-circle', 'string'],
@@ -31,11 +33,25 @@ import { PaginationConfig } from '../../../blocks/config/uib-pagination.config';
         'json': ['keys', 'img-fluid']
     };
 
-    constructor() { }
+    constructor() {
+        this.states = {};
+     }
 
     ngOnInit() { }
 
     ngOnDestroy() { }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.data) {
+            const new_data = changes.data.currentValue;
+            Object.keys(new_data).forEach((key) => {
+                const type = this.typeByKey(key);
+                if (type === 'array' || type === 'json') {
+                    this.states[key] = 'out';
+                }
+            });
+        }
+    }
 
     keys() {
         return Object.keys(this.data);
@@ -86,11 +102,23 @@ import { PaginationConfig } from '../../../blocks/config/uib-pagination.config';
         }
     }
 
+    rowClicked(key: string) {
+        this.toggleVisualization(key);
+        this.startPath(key);
+    }
+
     startPath(key: string) {
         if (this.parentType === 'array') {
             this.selected.emit('[' + key + ']');
         } else {
             this.selected.emit(key);
+        }
+    }
+
+    toggleVisualization(key: string) {
+        if (this.states[key]) {
+            console.log(this.states[key]);
+            this.states[key] = this.states[key] === 'out' ? 'in' : 'out';
         }
     }
 
