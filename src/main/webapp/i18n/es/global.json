@@ -35,7 +35,7 @@
             "operation": {
                 "main": "Operaciones",
                 "dbQuery": "Consulta a BD",
-                "apiRESTCalls": "Llamada a API REST",
+                "RestCalls": "Llamada a API REST",
                 "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)"
             },
             "language": "Idioma"
@@ -63,7 +63,7 @@
                 }
             },
             "error": {
-                "dontmatch" : "¡La contraseña y la confirmación de contraseña no coinciden!"
+                "dontmatch": "¡La contraseña y la confirmación de contraseña no coinciden!"
             },
             "validate": {
                 "newpassword": {
@@ -86,10 +86,10 @@
             }
         },
         "field": {
-            "id" : "ID"
+            "id": "ID"
         },
         "ribbon": {
-            "dev":"Development"
+            "dev": "Development"
         },
         "item-count": "Monstrando {{first}} - {{second}} de {{total}} artículos."
     },

@@ -1,0 +1,11 @@
+{
+    "deccomApp": {
+        "RestCalls": {
+            "home": {
+                "title": "Llamada a API REST"
+            },
+            "url": "URL",
+            "wrongURL": "La URL introducida es incorrecta. Por favor, inténtelo de nuevo."
+        }
+    }
+}

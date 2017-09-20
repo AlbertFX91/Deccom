@@ -35,7 +35,7 @@
             "operation": {
                 "main": "Operations",
                 "dbQuery": "DB query",
-                "apiRESTCalls": "API REST call",
+                "RestCalls": "API REST call",
                 "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)"
             },
             "language": "Language"
@@ -89,7 +89,7 @@
             "id": "ID"
         },
         "ribbon": {
-            "dev":"Development"
+            "dev": "Development"
         },
         "item-count": "Showing {{first}} - {{second}} of {{total}} items."
     },
