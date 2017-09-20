@@ -170,7 +170,6 @@
 		<dependency>
 			<groupId>com.jayway.jsonpath</groupId>
 			<artifactId>json-path</artifactId>
-			<scope>test</scope>
 			<!-- parent POM declares this dependency in default (compile) scope -->
 		</dependency>
 		<dependency>
