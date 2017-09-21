@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, JhiAlertService } from 'ng-jhipster';
 import { DBResponse, DBField } from './dbquery.model'
@@ -16,6 +16,9 @@ export class DBQueryResultComponent implements OnInit, OnDestroy {
     @Input()
     dbResponse: DBResponse;
 
+    @Output()
+    private selected = new EventEmitter<any>();
+
     fieldSelected: any = {};
 
     constructor(
@@ -29,13 +32,15 @@ export class DBQueryResultComponent implements OnInit, OnDestroy {
         return this.dbResponse.metadata.fields;
     }
 
-    onFieldClick(index: number, field: DBField) {
-        this.fieldSelected.index = index;
+    onFieldClick(row: any, field: DBField) {
+        this.fieldSelected.row = row;
         this.fieldSelected.field = field;
+        console.log(this.fieldSelected);
+        this.selected.emit(this.fieldSelected);
     }
 
-    isFieldSelected(index: number, field: DBField) {
-        return this.fieldSelected.index === index &&
+    isFieldSelected(row: any, field: DBField) {
+        return this.fieldSelected.row === row &&
             this.fieldSelected.field === field;
     }
 }

@@ -10,12 +10,12 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let row of dbResponse.data; let i = index">
+                <tr *ngFor="let row of dbResponse.data">
                     <td class="field-value" 
                     *ngFor="let field of fields()" 
-                    (click)="onFieldClick(i, field)"
-                    [class.field-selected]="isFieldSelected(i, field)"
-                    [class.field-hover]="!isFieldSelected(i, field)">{{row[field.name]}}</td>
+                    (click)="onFieldClick(row, field)"
+                    [class.field-selected]="isFieldSelected(row, field)"
+                    [class.field-hover]="!isFieldSelected(row, field)">{{row[field.name]}}</td>
                 </tr>
             </tbody>
         </table>

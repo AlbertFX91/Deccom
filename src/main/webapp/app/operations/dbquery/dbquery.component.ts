@@ -18,6 +18,7 @@ export class DBQueryComponent implements OnInit, OnDestroy {
     isSaving: boolean;
     result: any;
     dbResponse: DBResponse;
+    sqlQueryResult: string;
     constructor(
         private dbQueryService: DBQueryService,
         private alertService: JhiAlertService,
@@ -28,6 +29,7 @@ export class DBQueryComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.isSaving = false;
+        this.sqlQueryResult = '';
     }
 
     ngOnDestroy() {}
@@ -35,6 +37,7 @@ export class DBQueryComponent implements OnInit, OnDestroy {
     save() {
         this.isSaving = true;
         this.dbResponse = undefined;
+        this.sqlQueryResult = '';
         this.dbQueryService.query(this.dbQuery).subscribe(
             (res: any) => this.onQuerySuccess(res),
             (error: Response) => this.onQueryError(error)
@@ -64,6 +67,39 @@ export class DBQueryComponent implements OnInit, OnDestroy {
     clear() {
         this.dbQuery = {};
         this.dbResponse = undefined;
+        this.sqlQueryResult = '';
+    }
+
+    constructQuery(selected: any) {
+        console.log(selected);
+        const row: any = selected.row;
+        const field = selected.field;
+        const metadata = this.dbResponse.metadata;
+        let sql = this.dbQuery.query.toLowerCase();
+        // Removing from SELECT to FROM and adding the field name
+        sql = sql.substr(0, sql.indexOf('select ') + 'select'.length)
+            + ' '
+            + field.name
+            + ' '
+            + sql.substr(sql.indexOf(' from '));
+
+        // Adding WHERE plus primary keys if where doesnt exist on the SQL
+        if (sql.indexOf(' where ') === -1) {
+            let sqlpks = ' where ';
+            metadata.fields
+                .filter((f) => f.isPrimaryKey)
+                .forEach((f, i) => {
+                    sqlpks +=
+                        (i > 0 ? ' and' : '')
+                        + ' '
+                        + f.name
+                        + '='
+                        + row['' + f.name];
+                });
+            sql = sql + sqlpks;
+        }
+        this.sqlQueryResult = sql;
+
     }
 
 }

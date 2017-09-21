@@ -56,8 +56,9 @@
                 </div>
             </form>
         </div>
+        {{sqlQueryResult}}
         <div class="row" *ngIf="dbResponse">
-            <jhi-dbquery-list [dbResponse]="dbResponse" style="width: 100%"></jhi-dbquery-list>
+            <jhi-dbquery-list [dbResponse]="dbResponse" (selected)="constructQuery($event)" style="width: 100%"></jhi-dbquery-list>
         </div>
     </div>
 </div>
