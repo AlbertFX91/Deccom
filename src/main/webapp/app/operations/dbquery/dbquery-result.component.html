@@ -1,24 +1,19 @@
-<div *ngIf="queryResult">
-    <div class="table-responsive query-result" *ngIf="list()">
+<div *ngIf="dbResponse">
+    <div class="table-responsive query-result" >
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th *ngFor="let p of properties()">{{p}}</th>
+                    <th *ngFor="let field of fields()">
+                        {{field.name}}
+                        <i class="fa fa-key" aria-hidden="true" *ngIf="field.isPrimaryKey"></i>                        
+                    </th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let row of queryResult">
-                    <td *ngFor="let k of properties()">{{row[k]}}</td>
+                <tr *ngFor="let row of dbResponse.data">
+                    <td *ngFor="let field of fields()">{{row[field.name]}}</td>
                 </tr>
             </tbody>
         </table>
-    </div>
-    <div class="container" *ngIf="detail()">
-        <dl class="row-md jh-entity-details query-result">
-            <div *ngFor="let p of properties()">
-                <dt><span>{{p}}</span></dt>
-                <dd><span>{{queryResult[p]}}<span></dd>
-            </div>
-        </dl>
     </div>
 </div>
