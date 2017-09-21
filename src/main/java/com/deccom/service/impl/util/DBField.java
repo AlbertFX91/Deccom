@@ -1,14 +1,23 @@
 package com.deccom.service.impl.util;
 
-public class DBField {
+import java.io.Serializable;
+
+public class DBField implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3374346576811481976L;
 	private String name;
-	private String type;
-	private Boolean primaryKey;
+	private Boolean isPrimaryKey;
 	
-	public DBField(String name, String type, Boolean primaryKey) {
+	public DBField() {
+		this.name = "";
+		this.isPrimaryKey = false;
+	}
+	
+	public DBField(String name, Boolean isPrimaryKey) {
 		this.name = name;
-		this.type = type;
-		this.primaryKey = primaryKey;
+		this.isPrimaryKey = isPrimaryKey;
 	}
 
 	public String getName() {
@@ -19,25 +28,17 @@ public class DBField {
 		this.name = name;
 	}
 
-	public String getType() {
-		return type;
+	public Boolean getIsPrimaryKey() {
+		return isPrimaryKey;
 	}
 
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public Boolean getPrimaryKey() {
-		return primaryKey;
-	}
-
-	public void setPrimaryKey(Boolean primaryKey) {
-		this.primaryKey = primaryKey;
+	public void setIsPrimaryKey(Boolean isPrimaryKey) {
+		this.isPrimaryKey = isPrimaryKey;
 	}
 
 	@Override
 	public String toString() {
-		return "DBField [name=" + name + ", type=" + type + ", primaryKey=" + primaryKey + "]";
+		return "DBField [name=" + name + ", isPrimaryKey=" + isPrimaryKey + "]";
 	}
 	
 	

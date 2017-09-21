@@ -1,9 +1,14 @@
 package com.deccom.service.impl.util;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DBMetadata {
+public class DBMetadata implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2901949619902445718L;
 	private List<String> tables;
 	private List<DBField> fields;
 	
@@ -22,7 +27,7 @@ public class DBMetadata {
 	}
 	
 	public List<DBField> getFields() {
-		return this.getFields();
+		return this.fields;
 	}
 	
 	public void setTables(List<String> tables) {

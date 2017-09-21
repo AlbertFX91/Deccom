@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.slf4j.Logger;
@@ -25,6 +26,7 @@ import com.deccom.domain.DBQuery;
 import com.deccom.service.DBService;
 import com.deccom.service.impl.util.DBField;
 import com.deccom.service.impl.util.DBMetadata;
+import com.deccom.service.impl.util.DBResponse;
 import com.deccom.service.impl.util.DBServiceException;
 import com.google.common.collect.Lists;
 
@@ -90,17 +92,19 @@ public class DBServiceImpl implements DBService {
 		return res;
 	}
 
-	public List<Map<String, String>> query(DBQuery query) {
+	public DBResponse query(DBQuery query) {
 		String url = query.getUrl();
 		String username = query.getUsername();
 		String password = query.getPassword();
 		String q = query.getQuery();
-
+		DBMetadata dbMetadata;
+		DBResponse dbResponse;
+		
 		// Checking of the driver
 		checkDriver("com.mysql.jdbc.Driver");
 
 		// Data structure for the result data
-		List<Map<String, String>> res;
+		List<Map<String, String>> data;
 
 		// Database connection
 		Connection connection = connect(url, username, password);
@@ -109,11 +113,12 @@ public class DBServiceImpl implements DBService {
 		ResultSet rs = executeQuery(connection, q);
 
 		// Data collection
-		res = collectAll(rs);
+		data = collectAll(rs);
 
-		getDBMetadata(connection, rs);
+		dbMetadata = getDBMetadata(connection, rs);
+		
 
-		return res;
+		return new DBResponse(dbMetadata, data);
 	}
 
 	public List<Map<String, String>> OracleSQLQuery(String query) {
@@ -199,20 +204,13 @@ public class DBServiceImpl implements DBService {
 			tableNames = getTableNames(rs);
 			primaryKeys = getPrimaryKeys(tableNames, connection);
 			fields = getFields(rs);
-			for(String field: fields) {
-				DBField dbfield = new DBField(field, "", primaryKeys.contains(field));
-				dbfields.add(dbfield);
-			}
-			log.debug(tableNames.toString());
-			log.debug(primaryKeys.toString());
-			log.debug(fields.toString());
-
+			dbfields = fields.stream().map((field) -> new DBField(field, primaryKeys.contains(field)))
+					.collect(Collectors.toList());
+			res.setTables(tableNames);
+			res.setFields(dbfields);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		// log.debug(collectAll(rs.getMetaData().getTableName(1)));
 
 		return res;
 	}
@@ -234,23 +232,23 @@ public class DBServiceImpl implements DBService {
 		return res;
 	}
 
-	private List<String> getTableNames(ResultSet rs) throws SQLException {
-		List<String> res = Lists.newArrayList();
-		ResultSetMetaData metadata = rs.getMetaData();
+	private List<String> getTableNames(ResultSet rs) {
+		Set<String> res = new HashSet<>();
 		String table = "";
 		Integer i = 1;
 
-		table = metadata.getTableName(i);
-		while (!res.contains(table)) {
-			try {
+		try {
+			ResultSetMetaData metadata = rs.getMetaData();
+			table = metadata.getTableName(i);
+			while (true) {
 				i++;
 				res.add(table);
 				table = metadata.getTableName(i);
-			} catch (SQLException e) {
-				break;
 			}
+		} catch (SQLException e) {
+			return new ArrayList<>(res);
 		}
-		return res;
+
 	}
 
 	private List<String> getPrimaryKeys(List<String> tableNames, Connection connection) throws SQLException {

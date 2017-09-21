@@ -20,6 +20,7 @@ import com.codahale.metrics.annotation.Timed;
 import com.deccom.domain.Author;
 import com.deccom.domain.DBQuery;
 import com.deccom.service.DBService;
+import com.deccom.service.impl.util.DBResponse;
 import com.deccom.service.impl.util.DBServiceException;
 import com.deccom.web.rest.util.HeaderUtil;
 
@@ -63,9 +64,9 @@ public class DBResource {
      */
     @PostMapping("/db/query")
     @Timed
-    public ResponseEntity<List<Map<String, String>>> query(@Valid @RequestBody DBQuery query) {
+    public ResponseEntity<DBResponse> query(@Valid @RequestBody DBQuery query) {
         log.debug("REST request to query a DB");
-        List<Map<String, String>> res = dBService.query(query);
+        DBResponse res = dBService.query(query);
         return ResponseEntity.ok().body(res);
     }
     
