@@ -4,4 +4,5 @@
 }
 .field-selected {
     background-color: lightgreen;
+    font-weight: 500;
 }

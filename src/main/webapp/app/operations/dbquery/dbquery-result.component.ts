@@ -35,7 +35,7 @@ export class DBQueryResultComponent implements OnInit, OnDestroy {
     }
 
     isFieldSelected(index: number, field: DBField) {
-        return this.fieldSelected.index ===index &&
+        return this.fieldSelected.index === index &&
             this.fieldSelected.field === field;
     }
 }
