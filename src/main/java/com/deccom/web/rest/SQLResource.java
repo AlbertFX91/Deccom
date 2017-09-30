@@ -8,8 +8,10 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 import com.deccom.domain.Author;
+import com.deccom.domain.SQLDataRecover;
 import com.deccom.domain.SQLQuery;
 import com.deccom.service.SQLService;
 import com.deccom.service.impl.util.SQLResponse;
@@ -84,6 +87,20 @@ public class SQLResource {
 		log.debug(query);
 		List<Map<String, String>> res = sqlService.OracleSQLQuery(query);
 		return ResponseEntity.ok().body(res);
+	}
+	
+	/**
+	 * POST /db/datarecover : create a new control var
+	 *
+	 * @param dataRecover
+	 *            the data necessary to create a new data recover
+	 * @return the ResponseEntity with status 200 (OK) and the controlvar's id
+	 */
+	@PostMapping("/sql/datarecover/")
+	@Timed
+	public ResponseEntity<Void> sqlDataRecover(@Valid @RequestBody SQLDataRecover dataRecover) {
+		log.debug("REST request to create a control var for SQL");
+		return ResponseEntity.ok().headers(HeaderUtil.createAlert("SQLDataRecover", "OK")).build();
 	}
 
 	@ExceptionHandler(SQLServiceException.class)
