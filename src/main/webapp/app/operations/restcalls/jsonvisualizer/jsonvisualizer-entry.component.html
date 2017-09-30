@@ -1,0 +1,14 @@
+<div>
+    <div *ngFor="let k of keys()" style="display: flex; flex-direction: column;">
+        <div class="json-row" (click)="rowClicked(k)">
+            <span class="type" [ngClass]="styleByKey(k)"></span>
+            <span class="key">{{k}}</span>
+            <span class="value" *ngIf="showValue(k)">&nbsp;:&nbsp;{{valueByKey(k)}}</span>
+        </div>
+        
+        <jhi-jsonvisualizer-entry [parentType]="typeByKey(k)" [data]="data[k]" style="margin-left:20px" 
+            *ngIf="cantBeVisualized(k)" (selected)="fireSelected($event, k)">
+        </jhi-jsonvisualizer-entry>
+        
+    </div>
+</div>

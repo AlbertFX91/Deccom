@@ -1,0 +1,64 @@
+<div>
+    <h2>
+        <span jhiTranslate="deccomApp.dbquery.home.title">DB Query</span>
+    </h2>
+    <div class="container">
+        <div class="row">
+            <form name="dbQueryForm" role="form" novalidate (ngSubmit)="save()" #dbQueryForm="ngForm" style="width: 100%">
+                <jhi-alert-error></jhi-alert-error>
+                <jhi-alert></jhi-alert>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="deccomApp.dbquery.username" for="field_dbquery_username">Username</label>
+                    <input type="text" class="form-control" name="username" id="field_dbquery_username" [(ngModel)]="dbQuery.username" required
+                    />
+                    <div [hidden]="!(dbQueryForm.controls.username?.dirty && dbQueryForm.controls.username?.invalid)">
+                        <small class="form-text text-danger" [hidden]="!dbQueryForm.controls.username?.errors?.required" jhiTranslate="entity.validation.required">
+                                This field is required.
+                                </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="deccomApp.dbquery.password" for="field_dbquery_password">Password</label>
+                    <input type="password" class="form-control" name="password" id="field_dbquery_password" [(ngModel)]="dbQuery.password" required
+                    />
+                    <div [hidden]="!(dbQueryForm.controls.password?.dirty && dbQueryForm.controls.password?.invalid)">
+                        <small class="form-text text-danger" [hidden]="!dbQueryForm.controls.password?.errors?.required" jhiTranslate="entity.validation.required">
+                                    This field is required.
+                                    </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="deccomApp.dbquery.url" for="field_dbquery_url">URL</label>
+                    <input type="url" class="form-control" name="url" id="field_dbquery_url" [(ngModel)]="dbQuery.url" required />
+                    <div [hidden]="!(dbQueryForm.controls.url?.dirty && dbQueryForm.controls.url?.invalid)">
+                        <small class="form-text text-danger" [hidden]="!dbQueryForm.controls.url?.errors?.required" jhiTranslate="entity.validation.required">
+                                    This field is required.
+                                    </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="deccomApp.dbquery.query" for="field_dbquery_query">Query</label>
+                    <input type="text" class="form-control" name="query" id="field_dbquery_query" [(ngModel)]="dbQuery.query" required />
+                    <div [hidden]="!(dbQueryForm.controls.query?.dirty && dbQueryForm.controls.query?.invalid)">
+                        <small class="form-text text-danger" [hidden]="!dbQueryForm.controls.query?.errors?.required" jhiTranslate="entity.validation.required">
+                                This field is required.
+                                </small>
+                    </div>
+                </div>
+
+                <div>
+                    <button type="button" class="btn btn-default cancel" data-dismiss="modal" (click)="clear()">
+                            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                        </button>
+                    <button type="submit" [disabled]="dbQueryForm.form.invalid || isSaving" class="btn btn-primary send-query">
+                            <span class="fa fa-download"></span>&nbsp;<span jhiTranslate="entity.action.load">Load</span>
+                        </button>
+                </div>
+            </form>
+        </div>
+        {{sqlQueryResult}}
+        <div class="row" *ngIf="dbResponse">
+            <jhi-dbquery-list [dbResponse]="dbResponse" (selected)="constructQuery($event)" style="width: 100%"></jhi-dbquery-list>
+        </div>
+    </div>
+</div>

@@ -32,6 +32,12 @@
                 "database": "Base de datos",
                 "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)"
             },
+            "operation": {
+                "main": "Operaciones",
+                "dbQuery": "Consulta a BD",
+                "RestCalls": "Llamada a API REST",
+                "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)"
+            },
             "language": "Idioma"
         },
         "form": {
@@ -57,7 +63,7 @@
                 }
             },
             "error": {
-                "dontmatch" : "¡La contraseña y la confirmación de contraseña no coinciden!"
+                "dontmatch": "¡La contraseña y la confirmación de contraseña no coinciden!"
             },
             "validate": {
                 "newpassword": {
@@ -80,10 +86,10 @@
             }
         },
         "field": {
-            "id" : "ID"
+            "id": "ID"
         },
         "ribbon": {
-            "dev":"Development"
+            "dev": "Development"
         },
         "item-count": "Monstrando {{first}} - {{second}} de {{total}} artículos."
     },
@@ -97,7 +103,8 @@
             "edit": "Editar",
             "open": "Open",
             "save": "Guardar",
-            "view": "Vista"
+            "view": "Vista",
+            "load": "Cargar"
         },
         "detail": {
             "field": "Campo",

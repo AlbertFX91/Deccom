@@ -2,6 +2,7 @@ import './vendor.ts';
 
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Ng2Webstorage } from 'ng2-webstorage';
 
 import { DeccomSharedModule, UserRouteAccessService } from './shared';
@@ -9,6 +10,7 @@ import { DeccomHomeModule } from './home/home.module';
 import { DeccomAdminModule } from './admin/admin.module';
 import { DeccomAccountModule } from './account/account.module';
 import { DeccomEntityModule } from './entities/entity.module';
+import { DeccomOperationModule } from './operations/operation.module';
 
 import { customHttpProvider } from './blocks/interceptor/http.provider';
 import { PaginationConfig } from './blocks/config/uib-pagination.config';
@@ -29,6 +31,7 @@ import {
 @NgModule({
     imports: [
         BrowserModule,
+        BrowserAnimationsModule,
         LayoutRoutingModule,
         Ng2Webstorage.forRoot({ prefix: 'jhi', separator: '-'}),
         DeccomSharedModule,
@@ -36,6 +39,7 @@ import {
         DeccomAdminModule,
         DeccomAccountModule,
         DeccomEntityModule,
+        DeccomOperationModule,
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [

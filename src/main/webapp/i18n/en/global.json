@@ -32,6 +32,12 @@
                 "database": "Database",
                 "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)"
             },
+            "operation": {
+                "main": "Operations",
+                "dbQuery": "DB query",
+                "RestCalls": "API REST call",
+                "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)"
+            },
             "language": "Language"
         },
         "form": {
@@ -83,7 +89,7 @@
             "id": "ID"
         },
         "ribbon": {
-            "dev":"Development"
+            "dev": "Development"
         },
         "item-count": "Showing {{first}} - {{second}} of {{total}} items."
     },
@@ -97,7 +103,8 @@
             "edit": "Edit",
             "open": "Open",
             "save": "Save",
-            "view": "View"
+            "view": "View",
+            "load": "Load"
         },
         "detail": {
             "field": "Field",

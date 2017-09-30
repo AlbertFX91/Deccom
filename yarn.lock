@@ -2,6 +2,12 @@
 # yarn lockfile v1
 
 
+"@angular/animations@4.2.6":
+  version "4.2.6"
+  resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-4.2.6.tgz#9d9c80a119b0c03693cbd23bbaf728b1531fffc7"
+  dependencies:
+    tslib "^1.7.1"
+
 "@angular/cli@1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@angular/cli/-/cli-1.2.0.tgz#dfd8b8983ec37c2b6d7f902ead60396d7b571597"
