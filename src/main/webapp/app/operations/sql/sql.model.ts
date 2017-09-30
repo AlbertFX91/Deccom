@@ -30,3 +30,21 @@ export class SQLField {
     ) {
     }
 }
+
+export class SQLConnection {
+    constructor(
+        public username?: String,
+        public password?: String,
+        public url?: String
+    ) {
+    }
+}
+
+export class SQLDataRecover {
+    constructor(
+        public query?: String,
+        public controlVarName?: String,
+        public connection?: SQLConnection
+    ) {
+    }
+}
