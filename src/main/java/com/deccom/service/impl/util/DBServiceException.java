@@ -21,4 +21,5 @@ public class DBServiceException extends RuntimeException{
 	public String getEntity() {
 		return this.entity;
 	}
+	
 }

@@ -1,18 +1,25 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, JhiAlertService } from 'ng-jhipster';
-
+import { DBResponse, DBField } from './dbquery.model'
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 
 @Component({
     selector: 'jhi-dbquery-list',
-    templateUrl: './dbquery-result.component.html'
+    templateUrl: './dbquery-result.component.html',
+    styleUrls: [
+        'dbquery-result.css'
+    ],
 })
 export class DBQueryResultComponent implements OnInit, OnDestroy {
 
     @Input()
-    queryResult: any;
-    predicate: any;
+    dbResponse: DBResponse;
+
+    @Output()
+    private selected = new EventEmitter<any>();
+
+    fieldSelected: any = {};
 
     constructor(
     ) {}
@@ -21,21 +28,19 @@ export class DBQueryResultComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {}
 
-    list() {
-        return this.queryResult.length > 1;
+    fields() {
+        return this.dbResponse.metadata.fields;
     }
 
-    detail() {
-        return this.queryResult.length === undefined;
+    onFieldClick(row: any, field: DBField) {
+        this.fieldSelected.row = row;
+        this.fieldSelected.field = field;
+        console.log(this.fieldSelected);
+        this.selected.emit(this.fieldSelected);
     }
 
-    properties() {
-        // If its a list, we get one element from the list and we get all the keys
-        // After get it, we sort it to get always the same order of the keys.
-        if (this.list()) {
-            return Object.keys(this.queryResult[0]).sort();
-        } else {
-            return Object.keys(this.queryResult).sort();
-        }
+    isFieldSelected(row: any, field: DBField) {
+        return this.fieldSelected.row === row &&
+            this.fieldSelected.field === field;
     }
 }

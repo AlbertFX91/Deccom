@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, JhiAlertService } from 'ng-jhipster';
 
-import { DBQuery } from './dbquery.model';
+import { DBQuery, DBResponse } from './dbquery.model';
 import { DBQueryService } from './dbquery.service';
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
@@ -17,7 +17,8 @@ export class DBQueryComponent implements OnInit, OnDestroy {
     dbQuery: DBQuery = {};
     isSaving: boolean;
     result: any;
-    queryResult: any;
+    dbResponse: DBResponse;
+    sqlQueryResult: string;
     constructor(
         private dbQueryService: DBQueryService,
         private alertService: JhiAlertService,
@@ -28,13 +29,15 @@ export class DBQueryComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.isSaving = false;
+        this.sqlQueryResult = '';
     }
 
     ngOnDestroy() {}
 
     save() {
         this.isSaving = true;
-        this.queryResult = undefined;
+        this.dbResponse = undefined;
+        this.sqlQueryResult = '';
         this.dbQueryService.query(this.dbQuery).subscribe(
             (res: any) => this.onQuerySuccess(res),
             (error: Response) => this.onQueryError(error)
@@ -44,14 +47,7 @@ export class DBQueryComponent implements OnInit, OnDestroy {
     onQuerySuccess(res: any) {
         this.isSaving = false;
         this.eventManager.broadcast({ name: 'dbquery_success', content: 'OK'});
-
-        // It's not a list, its only a element
-        if (res.length === undefined) {
-            this.queryResult = res;
-        } else {
-            // If the list has only 1 element, we get only the element. If the list has more than 1 element, we get all the elements
-            this.queryResult = res.length === 1 ? res[0] : res
-        }
+        this.dbResponse = res;
     }
 
     onQueryError(error) {
@@ -70,7 +66,40 @@ export class DBQueryComponent implements OnInit, OnDestroy {
 
     clear() {
         this.dbQuery = {};
-        this.queryResult = undefined;
+        this.dbResponse = undefined;
+        this.sqlQueryResult = '';
+    }
+
+    constructQuery(selected: any) {
+        console.log(selected);
+        const row: any = selected.row;
+        const field = selected.field;
+        const metadata = this.dbResponse.metadata;
+        let sql = this.dbQuery.query.toLowerCase();
+        // Removing from SELECT to FROM and adding the field name
+        sql = sql.substr(0, sql.indexOf('select ') + 'select'.length)
+            + ' '
+            + field.name
+            + ' '
+            + sql.substr(sql.indexOf(' from '));
+
+        // Adding WHERE plus primary keys if where doesnt exist on the SQL
+        if (sql.indexOf(' where ') === -1) {
+            let sqlpks = ' where ';
+            metadata.fields
+                .filter((f) => f.isPrimaryKey)
+                .forEach((f, i) => {
+                    sqlpks +=
+                        (i > 0 ? ' and' : '')
+                        + ' '
+                        + f.name
+                        + '='
+                        + row['' + f.name];
+                });
+            sql = sql + sqlpks;
+        }
+        this.sqlQueryResult = sql;
+
     }
 
 }

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.deccom.domain.Author;
 import com.deccom.domain.DBQuery;
+import com.deccom.service.impl.util.DBResponse;
 
 /**
  * Service Interface for DB connection
@@ -15,7 +16,7 @@ public interface DBService {
     
     List<Author> callMapping();
     
-    List<Map<String,String>> query(DBQuery query);
+    DBResponse query(DBQuery query);
     
     List<Map<String, String>> OracleSQLQuery(String query);
     
