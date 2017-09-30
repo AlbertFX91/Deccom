@@ -29,7 +29,7 @@ describe('Component Tests', () => {
                     JhiEventManager,
                 ]
             }).overrideTemplate(DBQueryResultComponent, '')
-            .compileComponents();
+                .compileComponents();
         }));
 
         beforeEach(() => {
@@ -39,45 +39,34 @@ describe('Component Tests', () => {
         });
 
         describe('properties', () => {
-            it('Should load properties with an array as queryResult', () => {
+            it('Should load properties with an array as DBResponse', () => {
                 // GIVEN
-                comp.queryResult = [{'id': 1, 'name': 'nametest1', 'surname': 'surnametest1'},
-                {'id': 2, 'name': 'nametest2', 'surname': 'surnametest2'}];
+                comp.dbResponse = {
+                    'data': [{ 'id': 1, 'name': 'nametest1' },
+                    { 'id': 2, 'name': 'nametest2' }],
+                    'metadata': {
+                        'tables': ["users"],
+                        'fields': [
+                            {
+                                'name': 'id',
+                                'isPrimaryKey': true
+                            },
+                            {
+                                'name': 'name',
+                                'isPrimaryKey': false
+                            }
+                        ]
+                    }
+                };
 
                 // WHEN
-                const properties = comp.properties();
+                const fields = comp.fields();
 
                 // THEN
-                expect(properties.indexOf('id')).toBeGreaterThan(-1);
-                expect(properties.indexOf('name')).toBeGreaterThan(-1);
-                expect(properties.indexOf('surname')).toBeGreaterThan(-1);
+                expect(fields[0].name).toBe('id');
+                expect(fields[1].name).toBe('name');
             });
 
-            it('Should load properties with one element as queryResult', () => {
-                // GIVEN
-                comp.queryResult = {'id': 1, 'name': 'nametest1', 'surname': 'surnametest1'}
-
-                // WHEN
-                const properties = comp.properties();
-
-                // THEN
-                expect(properties.indexOf('id')).toBeGreaterThan(-1);
-                expect(properties.indexOf('name')).toBeGreaterThan(-1);
-                expect(properties.indexOf('surname')).toBeGreaterThan(-1);
-            });
-
-            it('Should load properties sorted', () => {
-                // GIVEN
-                comp.queryResult = {'id': 1, 'name': 'nametest1', 'surname': 'surnametest1'}
-
-                // WHEN
-                const properties = comp.properties();
-
-                // THEN
-                expect(properties.indexOf('id')).toBe(0);
-                expect(properties.indexOf('name')).toBe(1);
-                expect(properties.indexOf('surname')).toBe(2);
-            });
         });
     });
 
