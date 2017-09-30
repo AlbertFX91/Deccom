@@ -4,20 +4,20 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DBMetadata implements Serializable {
+public class SQLMetadata implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2901949619902445718L;
 	private List<String> tables;
-	private List<DBField> fields;
+	private List<SQLField> fields;
 	
-	public DBMetadata() {
+	public SQLMetadata() {
 		this.tables = new ArrayList<>();
 		this.fields = new ArrayList<>();
 	}
 	
-	public DBMetadata(List<String> tables, List<DBField> fields) {
+	public SQLMetadata(List<String> tables, List<SQLField> fields) {
 		this.tables = tables;
 		this.fields = fields;
 	}
@@ -26,7 +26,7 @@ public class DBMetadata implements Serializable {
 		return this.tables;
 	}
 	
-	public List<DBField> getFields() {
+	public List<SQLField> getFields() {
 		return this.fields;
 	}
 	
@@ -34,7 +34,7 @@ public class DBMetadata implements Serializable {
 		this.tables = tables;
 	}
 
-	public void setFields(List<DBField> fields) {
+	public void setFields(List<SQLField> fields) {
 		this.fields = fields;
 	}
 

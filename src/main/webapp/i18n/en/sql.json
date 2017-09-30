@@ -1,8 +1,8 @@
 {
     "deccomApp": {
-        "dbquery" : {
+        "sql" : {
             "home": {
-                "title": "DB query"
+                "title": "SQL query"
             },
             "username": "Username",
             "password": "Password",

@@ -1,20 +1,20 @@
 import { Component, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, JhiAlertService } from 'ng-jhipster';
-import { DBResponse, DBField } from './dbquery.model'
+import { SQLResponse, SQLField } from './sql.model'
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 
 @Component({
-    selector: 'jhi-dbquery-list',
-    templateUrl: './dbquery-result.component.html',
+    selector: 'jhi-sql-list',
+    templateUrl: './sql-result.component.html',
     styleUrls: [
-        'dbquery-result.css'
+        'sql-result.css'
     ],
 })
-export class DBQueryResultComponent implements OnInit, OnDestroy {
+export class SQLResultComponent implements OnInit, OnDestroy {
 
     @Input()
-    dbResponse: DBResponse;
+    sqlResponse: SQLResponse;
 
     @Output()
     private selected = new EventEmitter<any>();
@@ -29,17 +29,17 @@ export class DBQueryResultComponent implements OnInit, OnDestroy {
     ngOnDestroy() {}
 
     fields() {
-        return this.dbResponse.metadata.fields;
+        return this.sqlResponse.metadata.fields;
     }
 
-    onFieldClick(row: any, field: DBField) {
+    onFieldClick(row: any, field: SQLField) {
         this.fieldSelected.row = row;
         this.fieldSelected.field = field;
         console.log(this.fieldSelected);
         this.selected.emit(this.fieldSelected);
     }
 
-    isFieldSelected(row: any, field: DBField) {
+    isFieldSelected(row: any, field: SQLField) {
         return this.fieldSelected.row === row &&
             this.fieldSelected.field === field;
     }

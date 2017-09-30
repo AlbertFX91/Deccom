@@ -4,19 +4,19 @@ import java.util.List;
 import java.util.Map;
 
 import com.deccom.domain.Author;
-import com.deccom.domain.DBQuery;
-import com.deccom.service.impl.util.DBResponse;
+import com.deccom.domain.SQLQuery;
+import com.deccom.service.impl.util.SQLResponse;
 
 /**
  * Service Interface for DB connection
  */
-public interface DBService {
+public interface SQLService {
 
     List<Map<String, String>> callNoMapping();
     
     List<Author> callMapping();
     
-    DBResponse query(DBQuery query);
+    SQLResponse query(SQLQuery query);
     
     List<Map<String, String>> OracleSQLQuery(String query);
     

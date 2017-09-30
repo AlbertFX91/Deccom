@@ -1,8 +1,8 @@
 {
     "deccomApp": {
-        "dbquery" : {
+        "sql" : {
             "home": {
-                "title": "Consulta a DB"
+                "title": "Consulta SQL"
             },
             "username": "Usuario",
             "password": "Contraseña",

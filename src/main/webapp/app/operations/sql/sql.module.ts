@@ -3,14 +3,14 @@ import { RouterModule } from '@angular/router';
 
 import { DeccomSharedModule } from '../../shared';
 import {
-    DBQueryService,
-    DBQueryComponent,
-    DBQueryResultComponent,
-    dbqueryRoute,
+    SQLService,
+    SQLComponent,
+    SQLResultComponent,
+    sqlRoute,
 } from './';
 
 const ENTITY_STATES = [
-    ...dbqueryRoute,
+    ...sqlRoute,
 ];
 
 @NgModule({
@@ -19,15 +19,15 @@ const ENTITY_STATES = [
         RouterModule.forRoot(ENTITY_STATES, { useHash: true })
     ],
     declarations: [
-        DBQueryComponent,
-        DBQueryResultComponent,
+        SQLComponent,
+        SQLResultComponent,
     ],
     entryComponents: [
-        DBQueryComponent,
+        SQLComponent,
     ],
     providers: [
-        DBQueryService,
+        SQLService,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class DeccomDBQueryModule {}
+export class DeccomSQLModule {}

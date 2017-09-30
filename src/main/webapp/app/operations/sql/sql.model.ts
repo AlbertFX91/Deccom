@@ -1,4 +1,4 @@
-export class DBQuery {
+export class SQLQuery {
     constructor(
         public username?: string,
         public password?: string,
@@ -8,22 +8,22 @@ export class DBQuery {
     }
 }
 
-export class DBResponse {
+export class SQLResponse {
     constructor(
-        public metadata?: DBMetadata,
+        public metadata?: SQLMetadata,
         public data?: any,
     ) {
     }
 }
-export class DBMetadata {
+export class SQLMetadata {
     constructor(
         public tables?: String[],
-        public fields?: DBField[],
+        public fields?: SQLField[],
     ) {
     }
 }
 
-export class DBField {
+export class SQLField {
     constructor(
         public name?: String,
         public isPrimaryKey?: Boolean,

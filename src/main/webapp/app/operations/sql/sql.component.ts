@@ -3,24 +3,24 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, JhiAlertService } from 'ng-jhipster';
 
-import { DBQuery, DBResponse } from './dbquery.model';
-import { DBQueryService } from './dbquery.service';
+import { SQLQuery, SQLResponse } from './sql.model';
+import { SQLService } from './sql.service';
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 
 @Component({
-    selector: 'jhi-dbquery',
-    templateUrl: './dbquery.component.html'
+    selector: 'jhi-sql',
+    templateUrl: './sql.component.html'
 })
-export class DBQueryComponent implements OnInit, OnDestroy {
+export class SQLComponent implements OnInit, OnDestroy {
 
-    dbQuery: DBQuery = {};
+    sqlQuery: SQLQuery = {};
     isSaving: boolean;
     result: any;
-    dbResponse: DBResponse;
+    sqlResponse: SQLResponse;
     sqlQueryResult: string;
     constructor(
-        private dbQueryService: DBQueryService,
+        private sqlQueryService: SQLService,
         private alertService: JhiAlertService,
         private eventManager: JhiEventManager,
         private parseLinks: JhiParseLinks,
@@ -36,9 +36,9 @@ export class DBQueryComponent implements OnInit, OnDestroy {
 
     save() {
         this.isSaving = true;
-        this.dbResponse = undefined;
+        this.sqlResponse = undefined;
         this.sqlQueryResult = '';
-        this.dbQueryService.query(this.dbQuery).subscribe(
+        this.sqlQueryService.query(this.sqlQuery).subscribe(
             (res: any) => this.onQuerySuccess(res),
             (error: Response) => this.onQueryError(error)
         )
@@ -46,8 +46,8 @@ export class DBQueryComponent implements OnInit, OnDestroy {
 
     onQuerySuccess(res: any) {
         this.isSaving = false;
-        this.eventManager.broadcast({ name: 'dbquery_success', content: 'OK'});
-        this.dbResponse = res;
+        this.eventManager.broadcast({ name: 'sql_success', content: 'OK'});
+        this.sqlResponse = res;
     }
 
     onQueryError(error) {
@@ -65,17 +65,16 @@ export class DBQueryComponent implements OnInit, OnDestroy {
     }
 
     clear() {
-        this.dbQuery = {};
-        this.dbResponse = undefined;
+        this.sqlQuery = {};
+        this.sqlResponse = undefined;
         this.sqlQueryResult = '';
     }
 
     constructQuery(selected: any) {
-        console.log(selected);
         const row: any = selected.row;
         const field = selected.field;
-        const metadata = this.dbResponse.metadata;
-        let sql = this.dbQuery.query.toLowerCase();
+        const metadata = this.sqlResponse.metadata;
+        let sql = this.sqlQuery.query.toLowerCase();
         // Removing from SELECT to FROM and adding the field name
         sql = sql.substr(0, sql.indexOf('select ') + 'select'.length)
             + ' '

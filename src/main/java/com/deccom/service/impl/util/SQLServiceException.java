@@ -1,6 +1,6 @@
 package com.deccom.service.impl.util;
 
-public class DBServiceException extends RuntimeException{
+public class SQLServiceException extends RuntimeException{
 	/**
 	 * 
 	 */
@@ -8,7 +8,7 @@ public class DBServiceException extends RuntimeException{
 	private String i18nCode;
 	private String entity;
 	
-	public DBServiceException(String msg, String i18nCode, String entity, Throwable cause) {
+	public SQLServiceException(String msg, String i18nCode, String entity, Throwable cause) {
 		super(msg, cause);
 		this.i18nCode = i18nCode;
 		this.entity = entity;

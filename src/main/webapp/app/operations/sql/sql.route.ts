@@ -4,15 +4,15 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes, CanActiva
 import { UserRouteAccessService } from '../../shared';
 import { JhiPaginationUtil } from 'ng-jhipster';
 
-import { DBQueryComponent } from './dbquery.component';
+import { SQLComponent } from './sql.component';
 
-export const dbqueryRoute: Routes = [
+export const sqlRoute: Routes = [
     {
-        path: 'dbquery',
-        component: DBQueryComponent,
+        path: 'sql',
+        component: SQLComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'deccomApp.dbquery.home.title'
+            pageTitle: 'deccomApp.sql.home.title'
         },
         canActivate: [UserRouteAccessService]
     }

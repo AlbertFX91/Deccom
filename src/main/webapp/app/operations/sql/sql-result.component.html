@@ -1,4 +1,5 @@
-<div *ngIf="dbResponse">
+
+<div *ngIf="sqlResponse">
     <div class="table-responsive query-result" >
         <table class="table table-striped">
             <thead>
@@ -10,7 +11,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let row of dbResponse.data">
+                <tr *ngFor="let row of sqlResponse.data">
                     <td class="field-value" 
                     *ngFor="let field of fields()" 
                     (click)="onFieldClick(row, field)"

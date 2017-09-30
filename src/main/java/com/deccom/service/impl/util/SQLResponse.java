@@ -5,29 +5,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class DBResponse implements Serializable {
+public class SQLResponse implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3490475895498731175L;
-	private DBMetadata metadata;
+	private SQLMetadata metadata;
 	private List<Map<String, String>> data;
 	
-	public DBResponse() {
-		this.metadata = new DBMetadata();
+	public SQLResponse() {
+		this.metadata = new SQLMetadata();
 		this.data = new ArrayList<>();
 	}
 	
-	public DBResponse(DBMetadata metadata, List<Map<String, String>> data) {
+	public SQLResponse(SQLMetadata metadata, List<Map<String, String>> data) {
 		this.metadata = metadata;
 		this.data = data;
 	}
 
-	public DBMetadata getMetadata() {
+	public SQLMetadata getMetadata() {
 		return metadata;
 	}
 
-	public void setDbMetadata(DBMetadata metadata) {
+	public void setDbMetadata(SQLMetadata metadata) {
 		this.metadata = metadata;
 	}
 
