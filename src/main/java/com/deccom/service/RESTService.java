@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 import com.deccom.domain.Post;
 
-public interface RestCallsService {
+public interface RESTService {
 
 	/**
 	 * Sends a HTTP GET request to an URL
@@ -19,7 +19,7 @@ public interface RestCallsService {
 	 * @return the requested JSON as a String
 	 */
 	Page<String> noMapping(String url, Pageable pageable) throws Exception;
-	
+
 	/**
 	 * Sends a HTTP GET request to an URL
 	 * 

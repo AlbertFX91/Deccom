@@ -20,19 +20,18 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.deccom.domain.Post;
-import com.deccom.service.RestCallsService;
-import com.deccom.service.impl.util.RestCallsServiceException;
+import com.deccom.service.RESTService;
+import com.deccom.service.impl.util.RESTServiceException;
 import com.google.gson.Gson;
 import com.jayway.jsonpath.JsonPath;
 
 @Service
-public class RestCallsServiceImpl implements RestCallsService {
+public class RESTServiceImpl implements RESTService {
 
-	private final Logger log = LoggerFactory
-			.getLogger(RestCallsServiceImpl.class);
-	private final String i18nCodeRoot = "operations.apirestcalls";
+	private final Logger log = LoggerFactory.getLogger(RESTServiceImpl.class);
+	private final String i18nCodeRoot = "operations.REST";
 
-	public RestCallsServiceImpl() {
+	public RESTServiceImpl() {
 
 	}
 
@@ -40,7 +39,8 @@ public class RestCallsServiceImpl implements RestCallsService {
 	private final String USER_AGENT = "Chrome/60.0.3112.101";
 
 	// HTTP GET request
-	public Page<String> noMapping(String url, Pageable pageable) throws Exception {
+	public Page<String> noMapping(String url, Pageable pageable)
+			throws Exception {
 
 		String response;
 		// ObjectMapper mapper;
@@ -50,7 +50,7 @@ public class RestCallsServiceImpl implements RestCallsService {
 		int pageSize;
 		int firstElement;
 		Page<String> page = null;
-		
+
 		response = getResponse(url);
 		list = new LinkedList<>();
 		pageNumber = pageable.getPageNumber();
@@ -94,9 +94,9 @@ public class RestCallsServiceImpl implements RestCallsService {
 					// result.add(map);
 
 				}
-				
+
 				page = new PageImpl<>(list, null, jsonArray.length());
-				
+
 				// If there is only one JSON in the response, it is not an array
 			} else {
 
@@ -123,20 +123,20 @@ public class RestCallsServiceImpl implements RestCallsService {
 			return page;
 
 		} catch (JSONException e) {
-			throw new RestCallsServiceException("Wrong JSON format",
-					i18nCodeRoot + ".jsonerror", "RestCallsService", e);
+			throw new RESTServiceException("Wrong JSON format", i18nCodeRoot
+					+ ".jsonerror", "RESTService", e);
 		}
 
 	}
-	
+
 	public Page<String> noMapping(String url) throws Exception {
 		Page<String> result;
 		Pageable pageable;
-		
+
 		pageable = new PageRequest(0, 20);
-		
+
 		result = noMapping(url, pageable);
-		
+
 		return result;
 	}
 
@@ -192,8 +192,8 @@ public class RestCallsServiceImpl implements RestCallsService {
 			return result;
 
 		} catch (JSONException e) {
-			throw new RestCallsServiceException("Wrong JSON format",
-					i18nCodeRoot + ".queryerror", "RestCallsService", e);
+			throw new RESTServiceException("Wrong JSON format", i18nCodeRoot
+					+ ".queryerror", "RESTService", e);
 		}
 
 	}
@@ -252,8 +252,8 @@ public class RestCallsServiceImpl implements RestCallsService {
 			return result;
 
 		} catch (MalformedURLException e) {
-			throw new RestCallsServiceException("Wrong URL format",
-					i18nCodeRoot + ".urlerror", "RestCallsService", e);
+			throw new RESTServiceException("Wrong URL format", i18nCodeRoot
+					+ ".urlerror", "RESTService", e);
 		}
 
 	}

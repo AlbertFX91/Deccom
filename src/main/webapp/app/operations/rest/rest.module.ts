@@ -6,14 +6,13 @@ import { DeccomSharedModule } from '../../shared';
 import { DeccomJSONVisualizerModule } from './jsonvisualizer';
 
 import {
-    RestCallsService,
-    RestCallsComponent,
-    RestCallsShowComponent,
-    restcallsRoute
+    RESTService,
+    RESTComponent,
+    restRoute
 } from './';
 
 const ENTITY_STATES = [
-    ...restcallsRoute,
+    ...restRoute,
 ];
 
 @NgModule({
@@ -24,15 +23,14 @@ const ENTITY_STATES = [
         RouterModule.forRoot(ENTITY_STATES, { useHash: true })
     ],
     declarations: [
-        RestCallsComponent,
-        RestCallsShowComponent
+        RESTComponent
     ],
     entryComponents: [
-        RestCallsComponent
+        RESTComponent
     ],
     providers: [
-        RestCallsService
+        RESTService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class DeccomRestCallsModule { }
+export class DeccomRESTModule { }

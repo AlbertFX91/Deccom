@@ -10,7 +10,7 @@
                 "extractionerror": "La información no ha podido ser recuperada",
                 "credentialserror": "Las credenciales son erroneas"
             },
-            "apirestcalls": {
+            "REST": {
                 "urlerror": "El formato de la URL no es correcto. Por favor, no olvide el protocolo HTTP o HTTPS",
                 "jsonerror": "La URL no tiene un formato de JSON correcto"
             }

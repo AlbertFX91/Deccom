@@ -4,9 +4,9 @@ import { Observable } from 'rxjs/Rx';
 import { ResponseWrapper, createRequestOption } from '../../shared';
 
 @Injectable()
-export class RestCallsService {
+export class RESTService {
 
-    private resourceUrl = 'api/restcalls/';
+    private resourceUrl = 'api/rest/';
 
     constructor(private http: Http) { }
 

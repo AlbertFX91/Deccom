@@ -1,6 +1,6 @@
 import { browser, element, by, $ } from 'protractor';
 
-describe('API REST calls e2e test', () => {
+describe('REST e2e test', () => {
 
     const username = element(by.id('username'));
     const password = element(by.id('password'));
@@ -22,10 +22,10 @@ describe('API REST calls e2e test', () => {
         browser.waitForAngular();
     });
 
-    it('should load API REST calls', () => {
+    it('should load REST calls', () => {
         operationMenu.click();
-        element.all(by.css('[routerLink="restcalls"]')).first().click().then(() => {
-            const expectVal = /deccomApp.RestCalls.home.title/;
+        element.all(by.css('[routerLink="rest"]')).first().click().then(() => {
+            const expectVal = /deccomApp.REST.home.title/;
             element.all(by.css('h2 span')).first().getAttribute('jhiTranslate').then((value) => {
                 expect(value).toMatch(expectVal);
             });

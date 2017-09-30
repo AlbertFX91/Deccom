@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 import com.deccom.domain.Post;
-import com.deccom.service.RestCallsService;
-import com.deccom.service.impl.util.RestCallsServiceException;
+import com.deccom.service.RESTService;
+import com.deccom.service.impl.util.RESTServiceException;
 import com.deccom.web.rest.util.HeaderUtil;
 import com.deccom.web.rest.util.PaginationUtil;
 
@@ -29,17 +29,17 @@ import io.swagger.annotations.ApiParam;
  */
 @RestController
 @RequestMapping("/api")
-public class RestCallsResource {
+public class RESTResource {
 
-	private final Logger log = LoggerFactory.getLogger(RestCallsResource.class);
+	private final Logger log = LoggerFactory.getLogger(RESTResource.class);
 
-	private final RestCallsService restCallsService;
+	private final RESTService restService;
 
-	public RestCallsResource(RestCallsService restCallsService) {
-		this.restCallsService = restCallsService;
+	public RESTResource(RESTService restCallsService) {
+		this.restService = restCallsService;
 	}
 
-	@GetMapping("/restcalls/nomapping")
+	@GetMapping("/rest/nomapping")
 	@Timed
 	public ResponseEntity<String> noMapping(@RequestParam String url,
 			@ApiParam Pageable pageable) throws Exception {
@@ -47,13 +47,15 @@ public class RestCallsResource {
 		log.debug("REST request without mapping");
 
 		Page<String> result;
-		result = restCallsService.noMapping(url, pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(result, "/api/restcalls/nomapping");
-        return new ResponseEntity<>(result.getContent().toString(), headers, HttpStatus.OK);
+		result = restService.noMapping(url, pageable);
+		HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(
+				result, "/api/rest/nomapping");
+		return new ResponseEntity<>(result.getContent().toString(), headers,
+				HttpStatus.OK);
 
 	}
 
-	@GetMapping("/restcalls/mapping")
+	@GetMapping("/rest/mapping")
 	@Timed
 	public ResponseEntity<List<Post>> mapping(@RequestParam String url)
 			throws Exception {
@@ -62,13 +64,13 @@ public class RestCallsResource {
 
 		List<Post> result;
 
-		result = restCallsService.mapping(url);
+		result = restService.mapping(url);
 
 		return ResponseEntity.ok().body(result);
 
 	}
 
-	@GetMapping("/restcalls/query")
+	@GetMapping("/rest/query")
 	@Timed
 	public ResponseEntity<String> query(@RequestParam String url,
 			@RequestParam String jsonPath) throws Exception {
@@ -77,14 +79,14 @@ public class RestCallsResource {
 
 		String result;
 
-		result = restCallsService.getByJsonPath(url, jsonPath);
+		result = restService.getByJsonPath(url, jsonPath);
 
 		return ResponseEntity.ok().body(result);
 
 	}
 
-	@ExceptionHandler(RestCallsServiceException.class)
-	public ResponseEntity<String> panic(RestCallsServiceException oops) {
+	@ExceptionHandler(RESTServiceException.class)
+	public ResponseEntity<String> panic(RESTServiceException oops) {
 		return ResponseEntity
 				.badRequest()
 				.headers(

@@ -1,6 +1,6 @@
 {
     "deccomApp": {
-        "RestCalls": {
+        "REST": {
             "home": {
                 "title": "Llamada a API REST"
             },
