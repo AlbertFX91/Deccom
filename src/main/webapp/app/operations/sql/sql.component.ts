@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, JhiAlertService } from 'ng-jhipster';
 
-import { SQLQuery, SQLResponse } from './sql.model';
+import { SQLQuery, SQLResponse, SQLDataRecover } from './sql.model';
 import { SQLService } from './sql.service';
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
@@ -18,7 +18,7 @@ export class SQLComponent implements OnInit, OnDestroy {
     isSaving: boolean;
     result: any;
     sqlResponse: SQLResponse;
-    sqlQueryResult: string;
+    sqlDataRecover: SQLDataRecover;
     constructor(
         private sqlQueryService: SQLService,
         private alertService: JhiAlertService,
@@ -29,15 +29,15 @@ export class SQLComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.isSaving = false;
-        this.sqlQueryResult = '';
+        this.sqlDataRecover = {};
     }
 
     ngOnDestroy() {}
 
-    save() {
+    sendQuery() {
         this.isSaving = true;
         this.sqlResponse = undefined;
-        this.sqlQueryResult = '';
+        this.sqlDataRecover = {};
         this.sqlQueryService.query(this.sqlQuery).subscribe(
             (res: any) => this.onQuerySuccess(res),
             (error: Response) => this.onQueryError(error)
@@ -48,6 +48,12 @@ export class SQLComponent implements OnInit, OnDestroy {
         this.isSaving = false;
         this.eventManager.broadcast({ name: 'sql_success', content: 'OK'});
         this.sqlResponse = res;
+        this.sqlDataRecover.query = this.sqlQuery.query;
+        this.sqlDataRecover.connection = {
+            'username': this.sqlQuery.username,
+            'password': this.sqlQuery.password,
+            'url': this.sqlQuery.url
+        }
     }
 
     onQueryError(error) {
@@ -67,7 +73,11 @@ export class SQLComponent implements OnInit, OnDestroy {
     clear() {
         this.sqlQuery = {};
         this.sqlResponse = undefined;
-        this.sqlQueryResult = '';
+        this.sqlDataRecover = {};
+    }
+    clearControlVar() {
+        this.sqlDataRecover = {};
+        this.sqlResponse = undefined;
     }
 
     constructQuery(selected: any) {
@@ -97,8 +107,30 @@ export class SQLComponent implements OnInit, OnDestroy {
                 });
             sql = sql + sqlpks;
         }
-        this.sqlQueryResult = sql;
+        this.sqlDataRecover.query = sql;
 
+    }
+
+    sendControlVar() {
+        this.isSaving = true;
+        this.sqlQueryService.dataRecover(this.sqlDataRecover).subscribe(
+            (res: any) => this.onDataRecoverSuccess(res),
+            (error: Response) => this.onDataRecoverError(error)
+        )
+    }
+
+    onDataRecoverSuccess(res: any) {
+        this.isSaving = false;
+    }
+
+    onDataRecoverError(error) {
+        try {
+            error.json();
+        } catch (exception) {
+            error.message = error.text();
+        }
+        this.isSaving = false;
+        this.onError(error);
     }
 
 }

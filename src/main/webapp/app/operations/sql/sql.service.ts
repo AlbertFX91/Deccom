@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, URLSearchParams, BaseRequestOptions  } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { SQLQuery } from './sql.model';
+import { SQLQuery, SQLDataRecover } from './sql.model';
 import { ResponseWrapper } from '../../shared';
 
 @Injectable()
@@ -14,6 +14,11 @@ export class SQLService {
     query(req?: SQLQuery): Observable<ResponseWrapper> {
         return this.http.post(this.resourceUrl + 'query', req)
             .map((res: Response) => res.json());
+    }
+
+    dataRecover(req?: SQLDataRecover ): Observable<ResponseWrapper> {
+        return this.http.post(this.resourceUrl + 'datarecover', req)
+            .map((res: Response) => res);
     }
 
     private createRequesQueryOption(req?: any): BaseRequestOptions {

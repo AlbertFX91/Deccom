@@ -35,7 +35,6 @@ export class SQLResultComponent implements OnInit, OnDestroy {
     onFieldClick(row: any, field: SQLField) {
         this.fieldSelected.row = row;
         this.fieldSelected.field = field;
-        console.log(this.fieldSelected);
         this.selected.emit(this.fieldSelected);
     }
 

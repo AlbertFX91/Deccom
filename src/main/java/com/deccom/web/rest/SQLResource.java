@@ -96,11 +96,11 @@ public class SQLResource {
 	 *            the data necessary to create a new data recover
 	 * @return the ResponseEntity with status 200 (OK) and the controlvar's id
 	 */
-	@PostMapping("/sql/datarecover/")
+	@PostMapping("/sql/datarecover")
 	@Timed
 	public ResponseEntity<Void> sqlDataRecover(@Valid @RequestBody SQLDataRecover dataRecover) {
 		log.debug("REST request to create a control var for SQL");
-		return ResponseEntity.ok().headers(HeaderUtil.createAlert("SQLDataRecover", "OK")).build();
+		return ResponseEntity.ok().build();
 	}
 
 	@ExceptionHandler(SQLServiceException.class)
