@@ -23,6 +23,8 @@ public class RESTDataRecover {
 	
 	public RESTDataRecover() {
 		
+		super();
+		
 	}
 
 	public String getQuery() {
