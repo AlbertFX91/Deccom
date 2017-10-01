@@ -2,6 +2,8 @@ package com.deccom.web.rest;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -11,12 +13,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 import com.deccom.domain.Post;
+import com.deccom.domain.RESTDataRecover;
 import com.deccom.service.RESTService;
 import com.deccom.service.impl.util.RESTServiceException;
 import com.deccom.web.rest.util.HeaderUtil;
@@ -82,6 +87,17 @@ public class RESTResource {
 		result = restService.getByJsonPath(url, jsonPath);
 
 		return ResponseEntity.ok().body(result);
+
+	}
+
+	@PostMapping("/rest/datarecover")
+	@Timed
+	public ResponseEntity<Void> restDataRecover(
+			@Valid @RequestBody RESTDataRecover restDataRecover) {
+
+		log.debug("REST request to save RESTDataRecover : {}", restDataRecover);
+
+		return ResponseEntity.ok().build();
 
 	}
 

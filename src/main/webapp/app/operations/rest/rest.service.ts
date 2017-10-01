@@ -16,6 +16,12 @@ export class RESTService {
             .map((res: Response) => res);
     }
 
+    restDataRecover(url: string, pageSettings: any): Observable<ResponseWrapper> {
+        const options = this.createRequestOption(url, pageSettings);
+        return this.http.get(this.resourceUrl + 'nomapping', options)
+            .map((res: Response) => res);
+    }
+
     private createRequestOption(url: string, pageSettings: any): BaseRequestOptions {
         const options: BaseRequestOptions = createRequestOption(pageSettings);
         // const params: URLSearchParams = new URLSearchParams();

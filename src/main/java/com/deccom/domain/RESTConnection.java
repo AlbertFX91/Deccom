@@ -13,6 +13,12 @@ public class RESTConnection {
 		this.url = url;
 
 	}
+	
+	public RESTConnection() {
+		
+		super();
+		
+	}
 
 	public String getUrl() {
 		return url;

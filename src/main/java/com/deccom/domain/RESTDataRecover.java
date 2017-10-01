@@ -20,6 +20,10 @@ public class RESTDataRecover {
 		this.restConnection = restConnection;
 
 	}
+	
+	public RESTDataRecover() {
+		
+	}
 
 	public String getQuery() {
 		return query;
