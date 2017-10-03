@@ -2,9 +2,15 @@ package com.deccom.domain;
 
 import javax.validation.constraints.NotNull;
 
+import org.springframework.data.mongodb.core.mapping.Field;
+
+/**
+ * A RESTConnection.
+ */
 public class RESTConnection {
 
 	@NotNull
+	@Field("url")
 	private String url;
 
 	public RESTConnection(String url) {

@@ -2,12 +2,17 @@ package com.deccom.domain;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * A RESTDataRecover.
+ */
 public class RESTDataRecover {
 
 	@NotNull
 	private String query;
+	
 	@NotNull
 	private String controlVarName;
+	
 	@NotNull
 	private RESTConnection restConnection;
 
