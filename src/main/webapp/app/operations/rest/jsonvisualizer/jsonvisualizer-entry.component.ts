@@ -82,7 +82,6 @@ import { PaginationConfig } from '../../../blocks/config/uib-pagination.config';
     }
 
     fireSelected(path: string, key: string) {
-        console.log(key + ':' + this.parentType);
         if (this.parentType === 'array') {
             this.selected.emit('[' + key + '].' + path);
         } else {

@@ -5,7 +5,10 @@
                 "title": "API REST call"
             },
             "url": "URL",
-            "wrongURL": "The URL format was wrong, please try again."
+            "wrongURL": "The URL format was wrong, please try again.",
+            "restDataRecover": {
+                "controlVarName": "Control variable name"
+            }
         }
     }
 }

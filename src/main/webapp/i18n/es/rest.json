@@ -5,7 +5,10 @@
                 "title": "Llamada a API REST"
             },
             "url": "URL",
-            "wrongURL": "La URL introducida es incorrecta. Por favor, inténtelo de nuevo."
+            "wrongURL": "La URL introducida es incorrecta. Por favor, inténtelo de nuevo.",
+            "restDataRecover": {
+                "controlVarName": "Nombre de la variable de control"
+            }
         }
     }
 }

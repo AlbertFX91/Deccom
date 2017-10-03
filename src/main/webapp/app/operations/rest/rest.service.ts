@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response, URLSearchParams, BaseRequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { ResponseWrapper, createRequestOption } from '../../shared';
+import { RESTDataRecover } from './rest.model';
 
 @Injectable()
 export class RESTService {
@@ -16,9 +17,8 @@ export class RESTService {
             .map((res: Response) => res);
     }
 
-    restDataRecover(url: string, pageSettings: any): Observable<ResponseWrapper> {
-        const options = this.createRequestOption(url, pageSettings);
-        return this.http.get(this.resourceUrl + 'nomapping', options)
+    restDataRecover(req?: RESTDataRecover): Observable<ResponseWrapper> {
+        return this.http.post(this.resourceUrl + 'datarecover', req)
             .map((res: Response) => res);
     }
 

@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, JhiAlertService } from 'ng-jhipster';
 
+import { RESTDataRecover, RESTConnection } from './rest.model';
 import { RESTService } from './rest.service';
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
@@ -20,6 +21,7 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
     itemsPerPage: number;
     links: any;
     page: any;
+    restDataRecover: RESTDataRecover;
 
     constructor(
         private restService: RESTService,
@@ -42,7 +44,10 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
         this.save();
     }
 
-    ngOnInit() { }
+    ngOnInit() {
+        this.isSaving = false;
+        this.restDataRecover = {};
+    }
 
     ngOnDestroy() { }
 
@@ -59,6 +64,7 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 
     save() {
         this.isSaving = true;
+        this.restDataRecover = {};
         const pageSettings = {
             page: this.page,
             size: this.itemsPerPage
@@ -74,6 +80,27 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
         this.data = this.data.concat(data);
         this.links = this.parseLinks.parse(headers.get('link'));
         this.eventManager.broadcast({ name: 'nomapping_success', content: 'OK' });
+        this.restDataRecover.query = this.path;
+        this.restDataRecover.restConnection = {
+            'url': this.url
+        }
+    }
+
+    createControlVar() {
+        this.isSaving = true;
+        this.restService.restDataRecover(this.restDataRecover).subscribe(
+            (res: any) => this.createRESTDataRecover(res),
+            (error: Response) => this.onJSONError(error)
+        )
+    }
+
+    clearControlVar() {
+        this.restDataRecover = {};
+    }
+
+    createRESTDataRecover(res: any) {
+        this.isSaving = true;
+        this.eventManager.broadcast({ name: 'restdatarecover_success', content: 'OK' });
     }
 
     onJSONError(error) {
@@ -94,6 +121,7 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
         this.url = '';
         this.data = {};
         this.path = '';
+        this.restDataRecover = {};
     }
 
     createPath(path: string) {
