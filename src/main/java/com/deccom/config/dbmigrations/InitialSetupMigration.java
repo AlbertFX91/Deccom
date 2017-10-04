@@ -8,10 +8,14 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 
 import com.deccom.domain.Acme;
 import com.deccom.domain.Authority;
+import com.deccom.domain.SQLConnection;
+import com.deccom.domain.SQLControlVar;
+import com.deccom.domain.SQLControlVarEntry;
 import com.deccom.domain.User;
 import com.deccom.security.AuthoritiesConstants;
 import com.github.mongobee.changeset.ChangeLog;
 import com.github.mongobee.changeset.ChangeSet;
+import com.google.common.collect.Lists;
 
 /**
  * Creates the initial database setup
@@ -105,6 +109,29 @@ public class InitialSetupMigration {
         	    	acme.setPublication_date(LocalDate.now());
         	    	acme.setRating(index % 10);
         	        mongoTemplate.save(acme);
+        		});
+
+    }
+    
+    @ChangeSet(order = "04", author = "initiator", id = "04-addSQLControlVar")
+    public void addSQLControlVar(MongoTemplate mongoTemplate) {
+    	Integer numSQLControlVars = 10;
+        IntStream.range(0, numSQLControlVars).forEach(
+        		index -> {
+        	    	SQLControlVar cv = new SQLControlVar();
+        	    	cv.setId("SQLControlVar-"+index);
+        	    	cv.setCreationMoment(LocalDate.now());
+        	    	cv.setName("name-"+index);
+        	    	cv.setQuery("query-"+index);
+        	    	cv.setSqlConnection(new SQLConnection("username-"+index, "password-"+index, "url-"+index));
+        	    	cv.setSqlControlVarEntries(Lists.newArrayList(
+        	    			new SQLControlVarEntry("value-"+index+"-1", LocalDate.now()),
+        	    			new SQLControlVarEntry("value-"+index+"-2", LocalDate.now()),
+        	    			new SQLControlVarEntry("value-"+index+"-3", LocalDate.now()),
+        	    			new SQLControlVarEntry("value-"+index+"-4", LocalDate.now()),
+        	    			new SQLControlVarEntry("value-"+index+"-5", LocalDate.now())
+        	    			));
+        	        mongoTemplate.save(cv);
         		});
 
     }

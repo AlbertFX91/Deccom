@@ -10,6 +10,17 @@ public class SQLConnection {
 	@NotNull
 	private String url;
 	
+	public SQLConnection(String username, String password, String url) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.url = url;
+	}
+	
+	public SQLConnection() {
+		super();
+	}
+	
 	public String getUsername() {
 		return username;
 	}
@@ -42,6 +53,8 @@ public class SQLConnection {
 		this.url = url;
 		return this;
 	}
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -51,6 +64,7 @@ public class SQLConnection {
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -77,6 +91,7 @@ public class SQLConnection {
 			return false;
 		return true;
 	}
+	
 	@Override
 	public String toString() {
 		return "SQLConnection [username=" + username + ", password=" + password + ", url=" + url + "]";
