@@ -103,7 +103,8 @@ export class SQLComponent implements OnInit, OnDestroy {
                         + ' '
                         + f.name
                         + '='
-                        + row['' + f.name];
+                        // Always as string attributes
+                        + '\''+row['' + f.name] + '\'';
                 });
             sql = sql + sqlpks;
         }

@@ -119,7 +119,7 @@ public class InitialSetupMigration {
         cv.setId("SQLControlVar-1");
         cv.setCreationMoment(LocalDate.now());
         cv.setName("controlvar-1");
-        cv.setQuery("select age  from author where  idauthor=1 and name=name-1");
+        cv.setQuery("select age  from author where  idauthor='1' and name='name-1'");
         cv.setSqlConnection(new SQLConnection("developer", "developer", "jdbc:mysql://localhost:3306/deccom"));
         cv.setSqlControlVarEntries(Lists.newArrayList(
         		new SQLControlVarEntry("16", LocalDate.now()),
