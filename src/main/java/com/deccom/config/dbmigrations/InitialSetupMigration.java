@@ -115,25 +115,18 @@ public class InitialSetupMigration {
     
     @ChangeSet(order = "04", author = "initiator", id = "04-addSQLControlVar")
     public void addSQLControlVar(MongoTemplate mongoTemplate) {
-    	Integer numSQLControlVars = 10;
-        IntStream.range(0, numSQLControlVars).forEach(
-        		index -> {
-        	    	SQLControlVar cv = new SQLControlVar();
-        	    	cv.setId("SQLControlVar-"+index);
-        	    	cv.setCreationMoment(LocalDate.now());
-        	    	cv.setName("name-"+index);
-        	    	cv.setQuery("query-"+index);
-        	    	cv.setSqlConnection(new SQLConnection("username-"+index, "password-"+index, "url-"+index));
-        	    	cv.setSqlControlVarEntries(Lists.newArrayList(
-        	    			new SQLControlVarEntry("value-"+index+"-1", LocalDate.now()),
-        	    			new SQLControlVarEntry("value-"+index+"-2", LocalDate.now()),
-        	    			new SQLControlVarEntry("value-"+index+"-3", LocalDate.now()),
-        	    			new SQLControlVarEntry("value-"+index+"-4", LocalDate.now()),
-        	    			new SQLControlVarEntry("value-"+index+"-5", LocalDate.now())
-        	    			));
-        	        mongoTemplate.save(cv);
-        		});
-
+    	SQLControlVar cv = new SQLControlVar();
+        cv.setId("SQLControlVar-1");
+        cv.setCreationMoment(LocalDate.now());
+        cv.setName("controlvar-1");
+        cv.setQuery("select age  from author where  idauthor=1 and name=name-1");
+        cv.setSqlConnection(new SQLConnection("developer", "developer", "jdbc:mysql://localhost:3306/deccom"));
+        cv.setSqlControlVarEntries(Lists.newArrayList(
+        		new SQLControlVarEntry("16", LocalDate.now()),
+        	    new SQLControlVarEntry("17", LocalDate.now()),
+        	    new SQLControlVarEntry("18", LocalDate.now())
+        ));
+        mongoTemplate.save(cv);
     }
 
 }
