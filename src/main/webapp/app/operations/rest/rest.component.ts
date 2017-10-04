@@ -89,7 +89,7 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
     createControlVar() {
         this.isSaving = true;
         this.restService.restDataRecover(this.restDataRecover).subscribe(
-            (res: any) => this.createRESTDataRecover(res),
+            (res: any) => this.onRESTDataRecoverSuccess(res),
             (error: Response) => this.onJSONError(error)
         )
     }
@@ -98,8 +98,8 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
         this.restDataRecover = {};
     }
 
-    createRESTDataRecover(res: any) {
-        this.isSaving = true;
+    onRESTDataRecoverSuccess(res: any) {
+        this.isSaving = false;
         this.eventManager.broadcast({ name: 'restdatarecover_success', content: 'OK' });
     }
 

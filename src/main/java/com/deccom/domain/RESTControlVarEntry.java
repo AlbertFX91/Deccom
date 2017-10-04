@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public class RESTControlVarEntry {
 
 	@NotNull
+	@Field("value")
 	private String value;
 
 	@NotNull

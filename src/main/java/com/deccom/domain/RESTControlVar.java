@@ -41,12 +41,11 @@ public class RESTControlVar implements Serializable {
 	@Field("restControlVarEntries")
 	private List<RESTControlVarEntry> restControlVarEntries;
 
-	public RESTControlVar(String id, String name, String query,
-			LocalDate creationMoment, RESTConnection restConnection,
+	public RESTControlVar(String name, String query, LocalDate creationMoment,
+			RESTConnection restConnection,
 			List<RESTControlVarEntry> restControlVarEntries) {
 
 		super();
-		this.id = id;
 		this.name = name;
 		this.query = query;
 		this.creationMoment = creationMoment;

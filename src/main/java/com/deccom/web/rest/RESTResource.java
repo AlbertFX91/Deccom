@@ -1,5 +1,7 @@
 package com.deccom.web.rest;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -21,7 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 import com.deccom.domain.Post;
+import com.deccom.domain.RESTControlVar;
 import com.deccom.domain.RESTDataRecover;
+import com.deccom.service.RESTControlVarService;
 import com.deccom.service.RESTService;
 import com.deccom.service.impl.util.RESTServiceException;
 import com.deccom.web.rest.util.HeaderUtil;
@@ -40,8 +44,12 @@ public class RESTResource {
 
 	private final RESTService restService;
 
-	public RESTResource(RESTService restCallsService) {
-		this.restService = restCallsService;
+	private final RESTControlVarService restControlVarService;
+
+	public RESTResource(RESTService restService,
+			RESTControlVarService restControlVarService) {
+		this.restService = restService;
+		this.restControlVarService = restControlVarService;
 	}
 
 	@GetMapping("/rest/nomapping")
@@ -92,12 +100,25 @@ public class RESTResource {
 
 	@PostMapping("/rest/datarecover")
 	@Timed
-	public ResponseEntity<Void> restDataRecover(
-			@Valid @RequestBody RESTDataRecover restDataRecover) {
+	public ResponseEntity<RESTControlVar> restDataRecover(
+			@Valid @RequestBody RESTDataRecover restDataRecover)
+			throws URISyntaxException {
 
 		log.debug("REST request to save RESTDataRecover : {}", restDataRecover);
 
-		return ResponseEntity.ok().build();
+		RESTControlVar result;
+
+		RESTControlVar aux = restControlVarService.create(restDataRecover);
+
+		result = restControlVarService.save(aux);
+
+		// return ResponseEntity.ok().build();
+
+		return ResponseEntity
+				.created(new URI("/api/rest/datarecover/" + result.getId()))
+				.headers(
+						HeaderUtil.createEntityCreationAlert("RESTControlVar",
+								result.getId().toString())).body(result);
 
 	}
 
