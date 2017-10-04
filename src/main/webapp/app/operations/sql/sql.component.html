@@ -58,6 +58,8 @@
         </div>
         <hr />
         <div class="row" *ngIf="sqlDataRecover.connection">
+            <jhi-alert-error></jhi-alert-error>
+            <jhi-alert></jhi-alert>
             <form name="sqlcontrolvarForm" role="form" novalidate (ngSubmit)="sendControlVar()" #sqlControlVarForm="ngForm" style="width: 100%">
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="deccomApp.sql.query" for="field_sql_finalQuery">Final query</label>

@@ -8,7 +8,8 @@
             "password": "Password",
             "url": "URL",
             "query": "Query",
-            "controlVarName": "Control variable's name"
+            "controlVarName": "Control variable's name",
+            "created": "A new Control variable has been created with identifier {{ param }}"
         }
     }
 }

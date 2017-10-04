@@ -1,5 +1,7 @@
 package com.deccom.web.rest;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Map;
 
@@ -8,10 +10,8 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 import com.deccom.domain.Author;
+import com.deccom.domain.SQLControlVar;
 import com.deccom.domain.SQLDataRecover;
 import com.deccom.domain.SQLQuery;
+import com.deccom.service.SQLControlVarService;
 import com.deccom.service.SQLService;
 import com.deccom.service.impl.util.SQLResponse;
 import com.deccom.service.impl.util.SQLServiceException;
@@ -37,9 +39,11 @@ public class SQLResource {
 	private final Logger log = LoggerFactory.getLogger(SQLResource.class);
 
 	private final SQLService sqlService;
+	private final SQLControlVarService sqlControlVarService;
 
-	public SQLResource(SQLService dBService) {
-		this.sqlService = dBService;
+	public SQLResource(SQLService sqlService, SQLControlVarService sqlControlVarService) {
+		this.sqlService = sqlService;
+		this.sqlControlVarService = sqlControlVarService;
 	}
 
 	@GetMapping("/sql/nomapping")
@@ -95,12 +99,19 @@ public class SQLResource {
 	 * @param dataRecover
 	 *            the data necessary to create a new data recover
 	 * @return the ResponseEntity with status 200 (OK) and the controlvar's id
+	 * @throws URISyntaxException 
 	 */
 	@PostMapping("/sql/datarecover")
 	@Timed
-	public ResponseEntity<Void> sqlDataRecover(@Valid @RequestBody SQLDataRecover dataRecover) {
+	public ResponseEntity<SQLControlVar> sqlDataRecover(@Valid @RequestBody SQLDataRecover dataRecover) throws URISyntaxException {
 		log.debug("REST request to create a control var for SQL");
-		return ResponseEntity.ok().build();
+		
+		SQLControlVar aux = sqlControlVarService.create(dataRecover);
+		SQLControlVar result = sqlControlVarService.save(aux);
+		
+		return ResponseEntity.created(new URI("/api/sql/datarecover" + result.getId()))
+	            .headers(HeaderUtil.createEntityCreationAlert("sql", result.getId().toString()))
+	            .body(result);
 	}
 
 	@ExceptionHandler(SQLServiceException.class)

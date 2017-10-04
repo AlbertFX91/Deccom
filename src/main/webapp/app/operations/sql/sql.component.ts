@@ -120,7 +120,9 @@ export class SQLComponent implements OnInit, OnDestroy {
     }
 
     onDataRecoverSuccess(res: any) {
+        console.log("NICE!");
         this.isSaving = false;
+        this.clear();
     }
 
     onDataRecoverError(error) {

@@ -1,16 +1,10 @@
 package com.deccom.web.rest;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -26,7 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.deccom.DeccomApp;
-import com.deccom.domain.Acme;
+import com.deccom.service.SQLControlVarService;
 import com.deccom.service.SQLService;
 import com.deccom.web.rest.errors.ExceptionTranslator;
 
@@ -46,6 +40,9 @@ public class DBResourceIntTest {
 
     @Autowired
     private SQLService dbService;
+    
+    @Autowired
+    private SQLControlVarService sqlControlVarService;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -62,7 +59,7 @@ public class DBResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        SQLResource dbResource = new SQLResource(dbService);
+        SQLResource dbResource = new SQLResource(dbService, sqlControlVarService);
         this.restAcmeMockMvc = MockMvcBuilders.standaloneSetup(dbResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

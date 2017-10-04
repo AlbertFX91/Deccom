@@ -8,7 +8,8 @@
             "password": "Contraseña",
             "url": "URL",
             "query": "Consulta",
-            "controlVarName": "Nombre de variable de control"
+            "controlVarName": "Nombre de variable de control",
+            "created": "Una nueva variable de control ha sido creada con el identificador {{ param }}"
         }
     }
 }
