@@ -64,7 +64,6 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 
     save() {
         this.isSaving = true;
-        this.restDataRecover = {};
         const pageSettings = {
             page: this.page,
             size: this.itemsPerPage
@@ -101,6 +100,7 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
     onRESTDataRecoverSuccess(res: any) {
         this.isSaving = false;
         this.eventManager.broadcast({ name: 'restdatarecover_success', content: 'OK' });
+        this.clear();
     }
 
     onJSONError(error) {
@@ -119,9 +119,13 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 
     clear() {
         this.url = '';
-        this.data = {};
-        this.path = '';
         this.restDataRecover = {};
+        this.page = 0;
+        this.links = {
+            last: 0
+        };
+        this.data = [];
+        this.path = '';
     }
 
     createPath(path: string) {

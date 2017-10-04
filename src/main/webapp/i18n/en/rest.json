@@ -11,6 +11,9 @@
             "query": "Query",
             "controlVarName": "Control variable name",
             "restConnection": "Conection"
+        },
+        "RESTControlVar": {
+            "created": "A new control variable is created with identifier {{ param }}"
         }
     }
 }

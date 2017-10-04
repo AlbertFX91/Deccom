@@ -32,7 +32,7 @@
         </div>
         <div class="row" *ngIf="data" style="flex-direction: column;">
             <div>{{path}}</div>
-            <div infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDistance]="0">
+            <div infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="data" [infiniteScrollDistance]="0">
                 <jhi-jsonvisualizer [(data)]="data" style="width: 100%" (path)="createPath($event)"></jhi-jsonvisualizer>
             </div>
         </div>
@@ -49,7 +49,7 @@
                     </div>
                 </div>
                 <div>
-                    <button type="button" class="btn btn-default cancel" data-dismiss="modal" (click)="clear()">
+                    <button type="button" class="btn btn-default cancel" data-dismiss="modal" (click)="clearControlVar()">
                         <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
                     </button>
                     <button type="submit" [disabled]="controlVarNameForm.form.invalid || isSaving" class="btn btn-success" *ngIf="restDataRecover">
