@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.deccom.DeccomApp;
+import com.deccom.service.RESTControlVarService;
 import com.deccom.service.RESTService;
 import com.deccom.web.rest.errors.ExceptionTranslator;
 
@@ -38,6 +39,9 @@ public class RESTResourceIntTest {
 	private RESTService restService;
 
 	@Autowired
+	private RESTControlVarService restControlVarService;
+
+	@Autowired
 	private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
 	@Autowired
@@ -52,7 +56,8 @@ public class RESTResourceIntTest {
 	public void setup() {
 
 		MockitoAnnotations.initMocks(this);
-		RESTResource restResource = new RESTResource(restService);
+		RESTResource restResource = new RESTResource(restService,
+				restControlVarService);
 		this.restRestCallsMockMvc = MockMvcBuilders
 				.standaloneSetup(restResource)
 				.setCustomArgumentResolvers(pageableArgumentResolver)

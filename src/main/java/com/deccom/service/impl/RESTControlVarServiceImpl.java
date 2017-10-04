@@ -1,5 +1,6 @@
 package com.deccom.service.impl;
 
+import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.deccom.domain.RESTConnection;
@@ -16,6 +18,7 @@ import com.deccom.domain.RESTControlVarEntry;
 import com.deccom.domain.RESTDataRecover;
 import com.deccom.repository.RESTControlVarRepository;
 import com.deccom.service.RESTControlVarService;
+import com.deccom.service.RESTService;
 
 /**
  * Service Implementation for managing RESTControlVar.
@@ -28,11 +31,17 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 
 	private final RESTControlVarRepository restControlVarRepository;
 
+	private final RESTService restService;
+
 	public RESTControlVarServiceImpl(
-			RESTControlVarRepository restControlVarRepository) {
+			RESTControlVarRepository restControlVarRepository,
+			RESTService restService) {
+
 		this.restControlVarRepository = restControlVarRepository;
+		this.restService = restService;
+
 	}
-	
+
 	/**
 	 * Create a restControlVar.
 	 *
@@ -72,6 +81,7 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 	public RESTControlVar save(RESTControlVar restControlVar) {
 
 		log.debug("Request to save RESTControlVar : {}", restControlVar);
+
 		return restControlVarRepository.save(restControlVar);
 
 	}
@@ -85,8 +95,11 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 	 */
 	@Override
 	public Page<RESTControlVar> findAll(Pageable pageable) {
+
 		log.debug("Request to get all RESTControlVarServices");
+
 		return restControlVarRepository.findAll(pageable);
+
 	}
 
 	/**
@@ -98,7 +111,9 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 	 */
 	@Override
 	public RESTControlVar findOne(String id) {
+
 		log.debug("Request to get RESTControlVarService : {}", id);
+
 		return restControlVarRepository.findOne(id);
 	}
 
@@ -110,8 +125,42 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 	 */
 	@Override
 	public void delete(String id) {
+
 		log.debug("Request to delete RESTControlVarService : {}", id);
+
 		restControlVarRepository.delete(id);
+
+	}
+
+	@Scheduled(fixedRate = 1000 * 30)
+	public void monitorize() {
+
+		List<RESTControlVar> restControlVars;
+
+		restControlVars = restControlVarRepository.findAll();
+
+		restControlVars.forEach((x) -> executeMonitorize(x));
+
+	}
+
+	public void executeMonitorize(RESTControlVar restControlVar)
+			throws Exception {
+
+		String value;
+		String query;
+		LocalDate creationMoment;
+		RESTConnection restConnection;
+		String url;
+		String connection;
+		ResultSet resultSet;
+
+		value = restControlVar.getName();
+		query = restControlVar.getQuery();
+		creationMoment = LocalDate.now();
+		restConnection = restControlVar.getRestConnection();
+		url = restConnection.getUrl();
+		connection = restService.getByJsonPath(url, query);
+
 	}
 
 }

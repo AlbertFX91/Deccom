@@ -52,6 +52,15 @@ public class RESTResource {
 		this.restControlVarService = restControlVarService;
 	}
 
+	/**
+	 * GET /nomapping : send a HTTP GET request to an URL.
+	 *
+	 * @param url
+	 *            the url to send the request to
+	 * @param pageable
+	 *            the pagination information
+	 * @return the ResponseEntity with status 200 (OK) and the json in body
+	 */
 	@GetMapping("/rest/nomapping")
 	@Timed
 	public ResponseEntity<String> noMapping(@RequestParam String url,
@@ -68,6 +77,13 @@ public class RESTResource {
 
 	}
 
+	/**
+	 * GET /mapping : send a HTTP GET request to an URL.
+	 *
+	 * @param url
+	 *            the url to send the request to
+	 * @return the ResponseEntity with status 200 (OK) and the json in body
+	 */
 	@GetMapping("/rest/mapping")
 	@Timed
 	public ResponseEntity<List<Post>> mapping(@RequestParam String url)
@@ -83,6 +99,15 @@ public class RESTResource {
 
 	}
 
+	/**
+	 * GET /query : get a query from a JSON.
+	 *
+	 * @param url
+	 *            the url where the JSON came from
+	 * @param jsonPath
+	 *            the path to create the query
+	 * @return the ResponseEntity with status 200 (OK) and the query in body
+	 */
 	@GetMapping("/rest/query")
 	@Timed
 	public ResponseEntity<String> query(@RequestParam String url,
@@ -98,6 +123,14 @@ public class RESTResource {
 
 	}
 
+	/**
+	 * POST /datarecover : create a new RESTControlVar.
+	 *
+	 * @param restDataRecover
+	 *            the RESTDataRecover to create the new RESTControlVar from
+	 * @return the ResponseEntity with status 200 (OK) and the RESTControlVar in
+	 *         body
+	 */
 	@PostMapping("/rest/datarecover")
 	@Timed
 	public ResponseEntity<RESTControlVar> restDataRecover(
@@ -120,6 +153,23 @@ public class RESTResource {
 						HeaderUtil.createEntityCreationAlert("RESTControlVar",
 								result.getId().toString())).body(result);
 
+	}
+
+	/**
+	 * GET /atomic : check the status of a variable creating new entries
+	 *
+	 * @param query
+	 *            the sentence from the connection
+	 * @return the ResponseEntity with status 200 (OK) and the query's data
+	 */
+	@GetMapping("/rest/atomic")
+	@Timed
+	public ResponseEntity<String> atomic() {
+		
+		log.debug("REST request to atomic");
+		restControlVarService.monitorize();
+		return ResponseEntity.ok().body("OK");
+		
 	}
 
 	@ExceptionHandler(RESTServiceException.class)
