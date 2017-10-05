@@ -125,6 +125,19 @@ export class SQLComponent implements OnInit, OnDestroy {
         this.sqlDataRecover.query = sql;
     }
 
+    testControlVar() {
+        this.isSaving = true;
+        const tempQuery = new SQLQuery();
+        tempQuery.password = this.sqlDataRecover.connection.password;
+        tempQuery.username = this.sqlDataRecover.connection.username;
+        tempQuery.url = this.sqlDataRecover.connection.url;
+        tempQuery.query = this.sqlDataRecover.query;
+        this.sqlQueryService.query(tempQuery).subscribe(
+            (res: any) => this.sendControlVar(),
+            (error: Response) => this.onQueryError(error)
+        )
+    }
+
     sendControlVar() {
         this.isSaving = true;
         this.sqlQueryService.dataRecover(this.sqlDataRecover).subscribe(

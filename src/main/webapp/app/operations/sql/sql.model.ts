@@ -17,7 +17,7 @@ export class SQLResponse {
 }
 export class SQLMetadata {
     constructor(
-        public tables?: String[],
+        public tables?: string[],
         public fields?: SQLField[],
     ) {
     }
@@ -25,7 +25,7 @@ export class SQLMetadata {
 
 export class SQLField {
     constructor(
-        public name?: String,
+        public name?: string,
         public isPrimaryKey?: Boolean,
     ) {
     }
@@ -33,17 +33,17 @@ export class SQLField {
 
 export class SQLConnection {
     constructor(
-        public username?: String,
-        public password?: String,
-        public url?: String
+        public username?: string,
+        public password?: string,
+        public url?: string
     ) {
     }
 }
 
 export class SQLDataRecover {
     constructor(
-        public query?: String,
-        public controlVarName?: String,
+        public query?: string,
+        public controlVarName?: string,
         public connection?: SQLConnection
     ) {
     }
