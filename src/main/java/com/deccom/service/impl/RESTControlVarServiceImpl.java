@@ -1,6 +1,5 @@
 package com.deccom.service.impl;
 
-import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -133,33 +132,42 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 	}
 
 	@Scheduled(fixedRate = 1000 * 30)
-	public void monitorize() {
+	public void monitorize() throws Exception {
 
 		List<RESTControlVar> restControlVars;
 
 		restControlVars = restControlVarRepository.findAll();
 
-		restControlVars.forEach((x) -> executeMonitorize(x));
+		// restControlVars.forEach((x) -> executeMonitorize(x));
+
+		for (RESTControlVar restControlVar : restControlVars) {
+			executeMonitorize(restControlVar);
+		}
 
 	}
 
 	public void executeMonitorize(RESTControlVar restControlVar)
 			throws Exception {
 
-		String value;
 		String query;
 		LocalDate creationMoment;
 		RESTConnection restConnection;
 		String url;
-		String connection;
-		ResultSet resultSet;
+		String value;
+		RESTControlVarEntry restControlVarEntry;
+		List<RESTControlVarEntry> restControlVarEntries;
 
-		value = restControlVar.getName();
 		query = restControlVar.getQuery();
 		creationMoment = LocalDate.now();
 		restConnection = restControlVar.getRestConnection();
 		url = restConnection.getUrl();
-		connection = restService.getByJsonPath(url, query);
+		value = restService.getByJsonPath(url, query);
+		restControlVarEntry = new RESTControlVarEntry(value, creationMoment);
+		restControlVarEntries = restControlVar.getRestControlVarEntries();
+
+		restControlVarEntries.add(restControlVarEntry);
+
+		save(restControlVar);
 
 	}
 

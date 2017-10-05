@@ -139,19 +139,22 @@ public class RESTResource {
 
 		log.debug("REST request to save RESTDataRecover : {}", restDataRecover);
 
-		RESTControlVar result;
+		RESTControlVar restControlVar;
 
 		RESTControlVar aux = restControlVarService.create(restDataRecover);
 
-		result = restControlVarService.save(aux);
+		restControlVar = restControlVarService.save(aux);
 
 		// return ResponseEntity.ok().build();
 
 		return ResponseEntity
-				.created(new URI("/api/rest/datarecover/" + result.getId()))
+				.created(
+						new URI("/api/rest/datarecover/"
+								+ restControlVar.getId()))
 				.headers(
 						HeaderUtil.createEntityCreationAlert("RESTControlVar",
-								result.getId().toString())).body(result);
+								restControlVar.getId().toString()))
+				.body(restControlVar);
 
 	}
 
@@ -164,12 +167,12 @@ public class RESTResource {
 	 */
 	@GetMapping("/rest/atomic")
 	@Timed
-	public ResponseEntity<String> atomic() {
-		
+	public ResponseEntity<String> atomic() throws Exception {
+
 		log.debug("REST request to atomic");
 		restControlVarService.monitorize();
 		return ResponseEntity.ok().body("OK");
-		
+
 	}
 
 	@ExceptionHandler(RESTServiceException.class)

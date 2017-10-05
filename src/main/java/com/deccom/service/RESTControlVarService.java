@@ -54,10 +54,10 @@ public interface RESTControlVarService {
 	 *            the id of the entity
 	 */
 	void delete(String id);
-	
+
 	/**
-     *  Check the value of an existing entry.
-     */
-	void monitorize();
+	 * Check the value of an existing entry.
+	 */
+	void monitorize() throws Exception;
 
 }

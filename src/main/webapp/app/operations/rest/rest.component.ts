@@ -79,13 +79,13 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
         this.data = this.data.concat(data);
         this.links = this.parseLinks.parse(headers.get('link'));
         this.eventManager.broadcast({ name: 'nomapping_success', content: 'OK' });
-        this.restDataRecover.query = this.path;
         this.restDataRecover.restConnection = {
             'url': this.url
         }
     }
 
     createControlVar() {
+        this.restDataRecover.query = this.path;
         this.isSaving = true;
         this.restService.restDataRecover(this.restDataRecover).subscribe(
             (res: any) => this.onRESTDataRecoverSuccess(res),

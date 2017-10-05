@@ -205,6 +205,16 @@ public class RESTServiceImpl implements RESTService {
 
 		// result = this.noMapping(url);
 		result = this.noMapping(url).getContent().toString();
+		
+		/*
+		 try {
+			result = this.noMapping(url).getContent().toString();
+		} catch (Exception e) {
+			throw new RESTServiceException(
+					"There was an error when obtaining the value", i18nCodeRoot
+							+ ".valueerror", "RESTService", e);
+		}
+		 */
 
 		return JsonPath.parse(result).read(jsonPath).toString();
 

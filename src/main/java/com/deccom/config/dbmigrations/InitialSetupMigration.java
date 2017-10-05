@@ -118,25 +118,31 @@ public class InitialSetupMigration {
 
 	@ChangeSet(order = "04", author = "initiator", id = "04-RESTControlVars")
 	public void addRESTControlVars(MongoTemplate mongoTemplate) {
-		Integer numRESTControlVars = 40;
-		IntStream.range(0, numRESTControlVars)
-				.forEach(
-						index -> {
-							RESTControlVar r = new RESTControlVar();
-							r.setId("RESTControlVar-" + index);
-							r.setCreationMoment(LocalDate.now());
-							r.setName("name-" + index);
-							r.setQuery("query-" + index);
-							r.setRestConnection(new RESTConnection("url-"
-									+ index));
-							r.setRestControlVarEntries(Lists.newArrayList(
-									new RESTControlVarEntry("value-1",
-											LocalDate.now()),
-									new RESTControlVarEntry("value-2",
-											LocalDate.now())));
+		RESTControlVar r = new RESTControlVar();
+		r.setId("restControlVarId");
+		r.setCreationMoment(LocalDate.now());
+		r.setName("website");
+		r.setQuery("$.[0].website");
+		r.setRestConnection(new RESTConnection(
+				"https://jsonplaceholder.typicode.com/users"));
+		r.setRestControlVarEntries(Lists.newArrayList(new RESTControlVarEntry(
+				"value-1", LocalDate.now()), new RESTControlVarEntry("value-2",
+				LocalDate.now())));
 
-							mongoTemplate.save(r);
-						});
+		mongoTemplate.save(r);
+		/*
+		 * Integer numRESTControlVars = 40; IntStream.range(0,
+		 * numRESTControlVars) .forEach( index -> { RESTControlVar r = new
+		 * RESTControlVar(); r.setId("RESTControlVar-" + index);
+		 * r.setCreationMoment(LocalDate.now()); r.setName("name-" + "website");
+		 * r.setQuery("query-" + "$.[0].website"); r.setRestConnection(new
+		 * RESTConnection("url-" + "$.[0].website"));
+		 * r.setRestControlVarEntries(Lists.newArrayList( new
+		 * RESTControlVarEntry("value-1", LocalDate.now()), new
+		 * RESTControlVarEntry("value-2", LocalDate.now())));
+		 * 
+		 * mongoTemplate.save(r); });
+		 */
 
 	}
 
