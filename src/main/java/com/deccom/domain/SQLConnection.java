@@ -94,7 +94,7 @@ public class SQLConnection {
 	
 	@Override
 	public String toString() {
-		return "SQLConnection [username=" + username + ", password=" + password + ", url=" + url + "]";
+		return "SQLConnection [username=" + username + ", url=" + url + "]";
 	}
 	
 	

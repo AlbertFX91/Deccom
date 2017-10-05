@@ -118,7 +118,7 @@ public class SQLControlVar implements Serializable{
 	@Override
 	public String toString() {
 		return "SQLControlVar [id=" + id + ", name=" + name + ", query=" + query + ", creationMoment=" + creationMoment
-				+ ", sqlConnection=" + sqlConnection + ", sqlControlVarEntries=" + sqlControlVarEntries + "]";
+				+ ", sqlConnection=" + sqlConnection + "]";
 	}
 
 	
