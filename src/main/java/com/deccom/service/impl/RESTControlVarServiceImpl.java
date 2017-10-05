@@ -1,6 +1,6 @@
 package com.deccom.service.impl;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,13 +53,13 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 		RESTControlVar result;
 		String name;
 		String query;
-		LocalDate creationMoment;
+		LocalDateTime creationMoment;
 		RESTConnection restConnection;
 		List<RESTControlVarEntry> restControlVarEntries;
 
 		name = restDataRecover.getControlVarName();
 		query = restDataRecover.getQuery();
-		creationMoment = LocalDate.now();
+		creationMoment = LocalDateTime.now();
 		restConnection = restDataRecover.getRestConnection();
 		restControlVarEntries = new ArrayList<>();
 		result = new RESTControlVar(name, query, creationMoment,
@@ -150,7 +150,7 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 			throws Exception {
 
 		String query;
-		LocalDate creationMoment;
+		LocalDateTime creationMoment;
 		RESTConnection restConnection;
 		String url;
 		String value;
@@ -158,7 +158,7 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 		List<RESTControlVarEntry> restControlVarEntries;
 
 		query = restControlVar.getQuery();
-		creationMoment = LocalDate.now();
+		creationMoment = LocalDateTime.now();
 		restConnection = restControlVar.getRestConnection();
 		url = restConnection.getUrl();
 		value = restService.getByJsonPath(url, query);

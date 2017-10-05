@@ -1,6 +1,6 @@
 package com.deccom.domain;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.validation.constraints.NotNull;
 
@@ -17,9 +17,9 @@ public class RESTControlVarEntry {
 
 	@NotNull
 	@Field("creationMoment")
-	private LocalDate creationMoment;
+	private LocalDateTime creationMoment;
 
-	public RESTControlVarEntry(String value, LocalDate creationMoment) {
+	public RESTControlVarEntry(String value, LocalDateTime creationMoment) {
 
 		super();
 		this.value = value;
@@ -41,11 +41,11 @@ public class RESTControlVarEntry {
 		this.value = value;
 	}
 
-	public LocalDate getCreationMoment() {
+	public LocalDateTime getCreationMoment() {
 		return creationMoment;
 	}
 
-	public void setCreationMoment(LocalDate creationMoment) {
+	public void setCreationMoment(LocalDateTime creationMoment) {
 		this.creationMoment = creationMoment;
 	}
 

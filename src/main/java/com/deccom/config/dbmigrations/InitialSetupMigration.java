@@ -2,6 +2,7 @@ package com.deccom.config.dbmigrations;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.stream.IntStream;
 
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -120,14 +121,14 @@ public class InitialSetupMigration {
 	public void addRESTControlVars(MongoTemplate mongoTemplate) {
 		RESTControlVar r = new RESTControlVar();
 		r.setId("restControlVarId");
-		r.setCreationMoment(LocalDate.now());
-		r.setName("website");
-		r.setQuery("$.[0].website");
+		r.setCreationMoment(LocalDateTime.now());
+		r.setName("thumbnailUrl");
+		r.setQuery("$.[0].thumbnailUrl");
 		r.setRestConnection(new RESTConnection(
-				"https://jsonplaceholder.typicode.com/users"));
+				"https://jsonplaceholder.typicode.com/photos"));
 		r.setRestControlVarEntries(Lists.newArrayList(new RESTControlVarEntry(
-				"value-1", LocalDate.now()), new RESTControlVarEntry("value-2",
-				LocalDate.now())));
+				"value-1", LocalDateTime.now()), new RESTControlVarEntry(
+				"value-2", LocalDateTime.now())));
 
 		mongoTemplate.save(r);
 		/*

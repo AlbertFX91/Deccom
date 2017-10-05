@@ -1,7 +1,7 @@
 package com.deccom.domain;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,7 +31,7 @@ public class RESTControlVar implements Serializable {
 
 	@NotNull
 	@Field("creationMoment")
-	private LocalDate creationMoment;
+	private LocalDateTime creationMoment;
 
 	@NotNull
 	@Field("restConnection")
@@ -41,8 +41,8 @@ public class RESTControlVar implements Serializable {
 	@Field("restControlVarEntries")
 	private List<RESTControlVarEntry> restControlVarEntries;
 
-	public RESTControlVar(String name, String query, LocalDate creationMoment,
-			RESTConnection restConnection,
+	public RESTControlVar(String name, String query,
+			LocalDateTime creationMoment, RESTConnection restConnection,
 			List<RESTControlVarEntry> restControlVarEntries) {
 
 		super();
@@ -84,11 +84,11 @@ public class RESTControlVar implements Serializable {
 		this.query = query;
 	}
 
-	public LocalDate getCreationMoment() {
+	public LocalDateTime getCreationMoment() {
 		return creationMoment;
 	}
 
-	public void setCreationMoment(LocalDate creationMoment) {
+	public void setCreationMoment(LocalDateTime creationMoment) {
 		this.creationMoment = creationMoment;
 	}
 
