@@ -56,7 +56,6 @@
                 </div>
             </form>
         </div>
-        <hr />
         <div class="row" *ngIf="sqlDataRecover.connection">
             <jhi-alert-error></jhi-alert-error>
             <jhi-alert></jhi-alert>
@@ -91,7 +90,7 @@
                 </div>
             </form>
         </div>
-
+        
         <div class="row" *ngIf="sqlResponse">
             <jhi-sql-list [sqlResponse]="sqlResponse" (selected)="constructQuery($event)" style="width: 100%"></jhi-sql-list>
         </div>

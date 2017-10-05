@@ -89,11 +89,25 @@ export class SQLComponent implements OnInit, OnDestroy {
         sql = sql.substr(0, sql.indexOf('select ') + 'select'.length)
             + ' '
             + field.name
-            + ' '
             + sql.substr(sql.indexOf(' from '));
 
-        // Adding WHERE plus primary keys if where doesnt exist on the SQL
-        if (sql.indexOf(' where ') === -1) {
+         // Adding  primary keys if wheres exist in the query
+        if (sql.indexOf(' where ') > -1) {
+            let sqlpks = '';
+            metadata.fields
+                .filter((f) => f.isPrimaryKey)
+                .filter((f) => sql.indexOf('' + f.name) === -1)
+                .forEach((f, i) => {
+                    sqlpks += ' and'
+                        + ' '
+                        + f.name
+                        + '='
+                        // Always as string attributes
+                        + '\'' + row['' + f.name] + '\'';
+                });
+            sql = sql + sqlpks;
+        } else {
+             // Adding WHERE plus primary keys if where doesnt exist in the query
             let sqlpks = ' where ';
             metadata.fields
                 .filter((f) => f.isPrimaryKey)
@@ -104,12 +118,11 @@ export class SQLComponent implements OnInit, OnDestroy {
                         + f.name
                         + '='
                         // Always as string attributes
-                        + '\''+row['' + f.name] + '\'';
+                        + '\'' + row['' + f.name] + '\'';
                 });
             sql = sql + sqlpks;
         }
         this.sqlDataRecover.query = sql;
-
     }
 
     sendControlVar() {
@@ -121,7 +134,6 @@ export class SQLComponent implements OnInit, OnDestroy {
     }
 
     onDataRecoverSuccess(res: any) {
-        console.log("NICE!");
         this.isSaving = false;
         this.clear();
     }
