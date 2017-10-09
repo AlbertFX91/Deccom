@@ -1,7 +1,7 @@
 package com.deccom.domain;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.validation.constraints.NotNull;
@@ -28,7 +28,7 @@ public class SQLControlVar implements Serializable{
 	
 	@NotNull
 	@Field("creationMoment")
-	private LocalDate creationMoment;
+	private LocalDateTime creationMoment;
 	
 	@NotNull
 	@Field("sqlConnection")
@@ -66,11 +66,11 @@ public class SQLControlVar implements Serializable{
 		this.query = query;
 	}
 
-	public LocalDate getCreationMoment() {
+	public LocalDateTime getCreationMoment() {
 		return creationMoment;
 	}
 
-	public void setCreationMoment(LocalDate creationMoment) {
+	public void setCreationMoment(LocalDateTime creationMoment) {
 		this.creationMoment = creationMoment;
 	}
 

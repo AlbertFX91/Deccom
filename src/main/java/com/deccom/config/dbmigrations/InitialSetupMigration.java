@@ -2,6 +2,7 @@ package com.deccom.config.dbmigrations;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.stream.IntStream;
 
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -115,16 +116,16 @@ public class InitialSetupMigration {
     
     @ChangeSet(order = "04", author = "initiator", id = "04-addSQLControlVar")
     public void addSQLControlVar(MongoTemplate mongoTemplate) {
-    	SQLControlVar cv = new SQLControlVar();
+    	SQLControlVar cv = new SQLControlVar(); 
         cv.setId("SQLControlVar-1");
-        cv.setCreationMoment(LocalDate.now());
+        cv.setCreationMoment(LocalDateTime.now());
         cv.setName("controlvar-1");
         cv.setQuery("select age  from author where  idauthor='1' and name='name-1'");
         cv.setSqlConnection(new SQLConnection("developer", "developer", "jdbc:mysql://localhost:3306/deccom"));
         cv.setSqlControlVarEntries(Lists.newArrayList(
-        		new SQLControlVarEntry("16", LocalDate.now()),
-        	    new SQLControlVarEntry("17", LocalDate.now()),
-        	    new SQLControlVarEntry("18", LocalDate.now())
+        		new SQLControlVarEntry("16", LocalDateTime.now()),
+        	    new SQLControlVarEntry("17", LocalDateTime.now()),
+        	    new SQLControlVarEntry("18", LocalDateTime.now())
         ));
         mongoTemplate.save(cv);
     }

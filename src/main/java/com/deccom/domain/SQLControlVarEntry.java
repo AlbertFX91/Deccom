@@ -1,6 +1,6 @@
 package com.deccom.domain;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.validation.constraints.NotNull;
 
@@ -14,10 +14,10 @@ public class SQLControlVarEntry {
 
 	@NotNull
 	@Field("creationMoment")
-	private LocalDate creationMoment;
+	private LocalDateTime creationMoment;
 
 	
-	public SQLControlVarEntry(String value, LocalDate creationMoment) {
+	public SQLControlVarEntry(String value, LocalDateTime creationMoment) {
 		super();
 		this.value = value;
 		this.creationMoment = creationMoment;
@@ -35,11 +35,11 @@ public class SQLControlVarEntry {
 		this.value = value;
 	}
 
-	public LocalDate getCreationMoment() {
+	public LocalDateTime getCreationMoment() {
 		return creationMoment;
 	}
 
-	public void setCreationMoment(LocalDate creationMoment) {
+	public void setCreationMoment(LocalDateTime creationMoment) {
 		this.creationMoment = creationMoment;
 	}
 

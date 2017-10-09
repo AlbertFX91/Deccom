@@ -2,7 +2,7 @@ package com.deccom.service.impl;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -48,7 +48,7 @@ public class SQLControlVarServiceImpl implements SQLControlVarService{
     	SQLControlVar res;
     	
     	res = new SQLControlVar();
-    	res.setCreationMoment(LocalDate.now());
+    	res.setCreationMoment(LocalDateTime.now());
     	res.setName(sqlDataRecover.getControlVarName());
     	res.setQuery(sqlDataRecover.getQuery());
     	res.setSqlConnection(sqlDataRecover.getConnection());
@@ -136,7 +136,7 @@ public class SQLControlVarServiceImpl implements SQLControlVarService{
     	}
     	
     	value = new ArrayList<>(entry.values()).get(0);
-    	controlVarEntry = new SQLControlVarEntry(value, LocalDate.now());
+    	controlVarEntry = new SQLControlVarEntry(value, LocalDateTime.now());
     	controlVar.getSqlControlVarEntries().add(controlVarEntry);
     	save(controlVar);
     	
