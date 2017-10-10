@@ -104,7 +104,7 @@ import { PaginationConfig } from '../../../blocks/config/uib-pagination.config';
 
     toggleVisualization(key: string) {
         const type = this.typeByKey(key);
-        if (type === 'json') {
+        if (type === 'json' || type === 'array') {
             if (this.states[key]) {
                 this.states[key] = this.states[key] === 'out' ? 'in' : 'out';
             }else {
