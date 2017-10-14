@@ -13,7 +13,8 @@
             "REST": {
                 "urlerror": "The URL format is not correct. Please mind the HTTP or HTTPS protocol",
                 "jsonerror": "The URL does not have a correct JSON format",
-                "valueerror": "There was an error extracting the value"
+                "valueerror": "There was an error extracting the value",
+                "unreachableurl": "The URL is unreachable"
             }
         }
     }
