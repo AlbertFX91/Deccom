@@ -5,15 +5,15 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes, CanActiva
 import { UserRouteAccessService } from '../../shared';
 import { JhiPaginationUtil } from 'ng-jhipster';
 
-import { RestCallsComponent } from './restcalls.component';
+import { RESTComponent } from './rest.component';
 
-export const restcallsRoute: Routes = [
+export const restRoute: Routes = [
     {
-        path: 'restcalls',
-        component: RestCallsComponent,
+        path: 'rest',
+        component: RESTComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'deccomApp.RestCalls.home.title'
+            pageTitle: 'deccomApp.REST.home.title'
         },
         canActivate: [UserRouteAccessService]
     }
