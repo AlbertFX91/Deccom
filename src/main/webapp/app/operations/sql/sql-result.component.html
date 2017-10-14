@@ -1,0 +1,24 @@
+
+<div *ngIf="sqlResponse">
+    <div class="table-responsive query-result" >
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th *ngFor="let field of fields()">
+                        {{field.name}}
+                        <i class="fa fa-key" aria-hidden="true" *ngIf="field.isPrimaryKey"></i>                        
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let row of sqlResponse.data">
+                    <td class="field-value" 
+                    *ngFor="let field of fields()" 
+                    (click)="onFieldClick(row, field)"
+                    [class.field-selected]="isFieldSelected(row, field)"
+                    [class.field-hover]="!isFieldSelected(row, field)">{{row[field.name]}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

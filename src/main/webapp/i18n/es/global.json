@@ -34,8 +34,8 @@
             },
             "operation": {
                 "main": "Operaciones",
-                "dbQuery": "Consulta a BD",
-                "RestCalls": "Llamada a API REST",
+                "sql": "Consulta SQL",
+                "rest": "Llamada a API REST",
                 "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)"
             },
             "language": "Idioma"

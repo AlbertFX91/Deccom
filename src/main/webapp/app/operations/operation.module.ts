@@ -1,14 +1,14 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-import { DeccomDBQueryModule } from './dbquery/dbquery.module';
+import { DeccomSQLModule } from './sql/sql.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
-import { DeccomRestCallsModule } from './restcalls/restcalls.module';
+import { DeccomRESTModule } from './rest/rest.module';
 
 @NgModule({
     imports: [
-        DeccomDBQueryModule,
+        DeccomSQLModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
-        DeccomRestCallsModule
+        DeccomRESTModule
     ],
     declarations: [],
     entryComponents: [],

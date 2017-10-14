@@ -3,16 +3,17 @@
         "title": "¡Página de error!",
         "403": "No tiene permisos para acceder a la página.",
         "operations": {
-            "dbquery": {
+            "sql": {
                 "drivernotfound": "El driver para la conexión no ha podido ser lanzado",
                 "connectionerror": "No ha sido posible la conexión con la base de datos",
                 "queryerror": "La consulta SQL no ha podido ser ejectuada",
                 "extractionerror": "La información no ha podido ser recuperada",
                 "credentialserror": "Las credenciales son erroneas"
             },
-            "apirestcalls": {
+            "REST": {
                 "urlerror": "El formato de la URL no es correcto. Por favor, no olvide el protocolo HTTP o HTTPS",
-                "jsonerror": "La URL no tiene un formato de JSON correcto"
+                "jsonerror": "La URL no tiene un formato de JSON correcto",
+                "valueerror": "Se ha producido un error al extraer el valor"
             }
         }
     }

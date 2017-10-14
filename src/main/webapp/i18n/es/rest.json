@@ -1,0 +1,19 @@
+{
+    "deccomApp": {
+        "REST": {
+            "home": {
+                "title": "Llamada a API REST"
+            },
+            "url": "URL",
+            "wrongURL": "La URL introducida es incorrecta. Por favor, inténtelo de nuevo."
+        },
+        "RESTDataRecover": {
+            "query": "Consulta",
+            "controlVarName": "Nombre de la variable de control",
+            "restConnection": "Conexión"
+        },
+        "RESTControlVar": {
+            "created": "Una nueva variable de control ha sido creada con el identificador {{ param }}"
+        }
+    }
+}
