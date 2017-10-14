@@ -35,7 +35,7 @@
             "operation": {
                 "main": "Operations",
                 "sql": "SQL query",
-                "RestCalls": "API REST call",
+                "rest": "API REST call",
                 "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)"
             },
             "language": "Language"

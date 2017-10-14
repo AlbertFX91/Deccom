@@ -3,14 +3,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, JhiAlertService } from 'ng-jhipster';
 
-import { RestCallsService } from './restcalls.service';
+import { RESTDataRecover, RESTConnection } from './rest.model';
+import { RESTService } from './rest.service';
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 
 @Component({
-    selector: 'jhi-restcalls',
-    templateUrl: './restcalls.component.html'
-}) export class RestCallsComponent implements OnInit, OnDestroy {
+    selector: 'jhi-rest',
+    templateUrl: './rest.component.html'
+}) export class RESTComponent implements OnInit, OnDestroy {
 
     isSaving: boolean;
     url: string;
@@ -20,9 +21,10 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
     itemsPerPage: number;
     links: any;
     page: any;
+    restDataRecover: RESTDataRecover;
 
     constructor(
-        private restcallsService: RestCallsService,
+        private restService: RESTService,
         private alertService: JhiAlertService,
         private eventManager: JhiEventManager,
         private parseLinks: JhiParseLinks,
@@ -42,7 +44,10 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
         this.save();
     }
 
-    ngOnInit() { }
+    ngOnInit() {
+        this.isSaving = false;
+        this.restDataRecover = {};
+    }
 
     ngOnDestroy() { }
 
@@ -63,7 +68,7 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
             page: this.page,
             size: this.itemsPerPage
         };
-        this.restcallsService.noMapping(this.url, pageSettings).subscribe(
+        this.restService.noMapping(this.url, pageSettings).subscribe(
             (data: any) => this.onSuccess(data.json(), data.headers),
             (error: Response) => this.onJSONError(error)
         )
@@ -74,6 +79,28 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
         this.data = this.data.concat(data);
         this.links = this.parseLinks.parse(headers.get('link'));
         this.eventManager.broadcast({ name: 'nomapping_success', content: 'OK' });
+        this.restDataRecover.restConnection = {
+            'url': this.url
+        }
+    }
+
+    createControlVar() {
+        this.restDataRecover.query = this.path;
+        this.isSaving = true;
+        this.restService.restDataRecover(this.restDataRecover).subscribe(
+            (res: any) => this.onRESTDataRecoverSuccess(res),
+            (error: Response) => this.onJSONError(error)
+        )
+    }
+
+    clearControlVar() {
+        this.restDataRecover = {};
+    }
+
+    onRESTDataRecoverSuccess(res: any) {
+        this.isSaving = false;
+        this.eventManager.broadcast({ name: 'restdatarecover_success', content: 'OK' });
+        this.clear();
     }
 
     onJSONError(error) {
@@ -92,7 +119,12 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 
     clear() {
         this.url = '';
-        this.data = {};
+        this.restDataRecover = {};
+        this.page = 0;
+        this.links = {
+            last: 0
+        };
+        this.data = [];
         this.path = '';
     }
 
