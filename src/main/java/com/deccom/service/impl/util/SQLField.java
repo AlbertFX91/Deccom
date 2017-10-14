@@ -2,7 +2,7 @@ package com.deccom.service.impl.util;
 
 import java.io.Serializable;
 
-public class DBField implements Serializable{
+public class SQLField implements Serializable{
 	/**
 	 * 
 	 */
@@ -10,12 +10,12 @@ public class DBField implements Serializable{
 	private String name;
 	private Boolean isPrimaryKey;
 	
-	public DBField() {
+	public SQLField() {
 		this.name = "";
 		this.isPrimaryKey = false;
 	}
 	
-	public DBField(String name, Boolean isPrimaryKey) {
+	public SQLField(String name, Boolean isPrimaryKey) {
 		this.name = name;
 		this.isPrimaryKey = isPrimaryKey;
 	}

@@ -2,7 +2,7 @@ package com.deccom.domain;
 
 import javax.validation.constraints.NotNull;
 
-public class DBQuery {
+public class SQLQuery {
 	
 	@NotNull
 	private String username;
@@ -19,7 +19,7 @@ public class DBQuery {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public DBQuery username(String username){
+	public SQLQuery username(String username){
 		this.username = username;
 		return this;
 	}
@@ -30,7 +30,7 @@ public class DBQuery {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public DBQuery password(String password) {
+	public SQLQuery password(String password) {
 		this.password = password;
 		return this;
 	}
@@ -41,7 +41,7 @@ public class DBQuery {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	public DBQuery url(String url) {
+	public SQLQuery url(String url) {
 		this.url = url;
 		return this;
 	}
@@ -52,7 +52,7 @@ public class DBQuery {
 	public void setQuery(String query) {
 		this.query = query;
 	}
-	public DBQuery query(String query) {
+	public SQLQuery query(String query) {
 		this.query = query;
 		return this;
 	}
@@ -76,7 +76,7 @@ public class DBQuery {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		DBQuery other = (DBQuery) obj;
+		SQLQuery other = (SQLQuery) obj;
 		if (password == null) {
 			if (other.password != null)
 				return false;

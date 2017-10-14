@@ -13,20 +13,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.deccom.domain.Author;
-import com.deccom.domain.DBQuery;
-import com.deccom.service.DBService;
-import com.deccom.service.impl.util.DBMetadata;
-import com.deccom.service.impl.util.DBResponse;
-import com.deccom.service.impl.util.DBServiceException;
-import com.deccom.service.impl.util.DBUtil;
+import com.deccom.domain.SQLQuery;
+import com.deccom.service.SQLService;
+import com.deccom.service.impl.util.SQLMetadata;
+import com.deccom.service.impl.util.SQLResponse;
+import com.deccom.service.impl.util.SQLServiceException;
+import com.deccom.service.impl.util.SQLUtil;
 import com.google.common.collect.Lists;
 
 @Service
-public class DBServiceImpl implements DBService {
-	private final Logger log = LoggerFactory.getLogger(DBServiceImpl.class);
+public class SQLServiceImpl implements SQLService {
+	private final Logger log = LoggerFactory.getLogger(SQLServiceImpl.class);
 	private final String i18nCodeRoot = "operations.dbquery";
 
-	public DBServiceImpl() {
+	public SQLServiceImpl() {
 	}
 
 	public List<Map<String, String>> callNoMapping() {
@@ -39,19 +39,19 @@ public class DBServiceImpl implements DBService {
 		String query = "SELECT " + cols + " FROM `" + table + "`";
 
 		// Checking of the driver
-		DBUtil.checkDriver("com.mysql.jdbc.Driver");
+		SQLUtil.checkDriver("com.mysql.jdbc.Driver");
 
 		// Data structure for the result data
 		List<Map<String, String>> res;
 
 		// Database connection
-		Connection connection = DBUtil.connect(url, username, password);
+		Connection connection = SQLUtil.connect(url, username, password);
 
 		// Result of the query execution
-		ResultSet rs = DBUtil.executeQuery(connection, query);
+		ResultSet rs = SQLUtil.executeQuery(connection, query);
 
 		// Data collection
-		res = DBUtil.collectAll(rs);
+		res = SQLUtil.collectAll(rs);
 
 		return res;
 	}
@@ -66,16 +66,16 @@ public class DBServiceImpl implements DBService {
 		String query = "SELECT " + cols + " FROM `" + table + "`";
 
 		// Checking of the driver
-		DBUtil.checkDriver("com.mysql.jdbc.Driver");
+		SQLUtil.checkDriver("com.mysql.jdbc.Driver");
 
 		// Data structure for the result data
 		List<Author> res;
 
 		// Database connection
-		Connection connection = DBUtil.connect(url, username, password);
+		Connection connection = SQLUtil.connect(url, username, password);
 
 		// Result of the query execution
-		ResultSet rs = DBUtil.executeQuery(connection, query);
+		ResultSet rs = SQLUtil.executeQuery(connection, query);
 
 		// Data collection
 		res = collectAsAuthor(rs);
@@ -83,32 +83,32 @@ public class DBServiceImpl implements DBService {
 		return res;
 	}
 
-	public DBResponse query(DBQuery query) {
+	public SQLResponse query(SQLQuery query) {
 		String url = query.getUrl();
 		String username = query.getUsername();
 		String password = query.getPassword();
 		String q = query.getQuery();
-		DBMetadata dbMetadata;
+		SQLMetadata dbMetadata;
 		
 		// Checking of the driver
-		DBUtil.checkDriver("com.mysql.jdbc.Driver");
+		SQLUtil.checkDriver("com.mysql.jdbc.Driver");
 
 		// Data structure for the result data
 		List<Map<String, String>> data;
 
 		// Database connection
-		Connection connection = DBUtil.connect(url, username, password);
+		Connection connection = SQLUtil.connect(url, username, password);
 
 		// Result of the query execution
-		ResultSet rs = DBUtil.executeQuery(connection, q);
+		ResultSet rs = SQLUtil.executeQuery(connection, q);
 
 		// Data collection
-		data = DBUtil.collectAll(rs);
+		data = SQLUtil.collectAll(rs);
 
 		// Get the metadata from the query
-		dbMetadata = DBUtil.getDBMetadata(connection, rs);
+		dbMetadata = SQLUtil.getDBMetadata(connection, rs);
 
-		return new DBResponse(dbMetadata, data);
+		return new SQLResponse(dbMetadata, data);
 	}
 
 	public List<Map<String, String>> OracleSQLQuery(String query) {
@@ -117,19 +117,19 @@ public class DBServiceImpl implements DBService {
 		String password = "developer";
 
 		// Checking of the driver
-		DBUtil.checkDriver("oracle.jdbc.driver.OracleDriver");
+		SQLUtil.checkDriver("oracle.jdbc.driver.OracleDriver");
 
 		// Data structure for the result data
 		List<Map<String, String>> res;
 
 		// Database connection
-		Connection connection = DBUtil.connect(url, username, password);
+		Connection connection = SQLUtil.connect(url, username, password);
 
 		// Result of the query execution
-		ResultSet rs = DBUtil.executeQuery(connection, query);
+		ResultSet rs = SQLUtil.executeQuery(connection, query);
 
 		// Data collection
-		res = DBUtil.collectAll(rs);
+		res = SQLUtil.collectAll(rs);
 
 		return res;
 
@@ -158,7 +158,7 @@ public class DBServiceImpl implements DBService {
 				res.add(author);
 			}
 		} catch (SQLException e) {
-			throw new DBServiceException("Data extraction error", i18nCodeRoot + ".extractionerror", "DBService", e);
+			throw new SQLServiceException("Data extraction error", i18nCodeRoot + ".extractionerror", "DBService", e);
 		}
 		return res;
 	}

@@ -7,41 +7,41 @@ import { Observable } from 'rxjs/Rx';
 import { JhiDateUtils, JhiDataUtils, JhiEventManager, JhiParseLinks } from 'ng-jhipster';
 import { DeccomTestModule } from '../../../test.module';
 import { MockActivatedRoute } from '../../../helpers/mock-route.service';
-import { DBQueryResultComponent } from '../../../../../../main/webapp/app/operations/dbquery/dbquery-result.component';
-import { DBQueryService } from '../../../../../../main/webapp/app/operations/dbquery/dbquery.service';
-import { DBQuery } from '../../../../../../main/webapp/app/operations/dbquery/dbquery.model';
+import { SQLResultComponent } from '../../../../../../main/webapp/app/operations/sql/sql-result.component';
+import { SQLService } from '../../../../../../main/webapp/app/operations/sql/sql.service';
+import { SQLQuery } from '../../../../../../main/webapp/app/operations/sql/sql.model';
 import { Principal } from '../../../../../../main/webapp/app/shared';
 
 describe('Component Tests', () => {
 
-    describe('DBQuery Result Component', () => {
-        let comp: DBQueryResultComponent;
-        let fixture: ComponentFixture<DBQueryResultComponent>;
-        let service: DBQueryService;
+    describe('SQL Result Component', () => {
+        let comp: SQLResultComponent;
+        let fixture: ComponentFixture<SQLResultComponent>;
+        let service: SQLService;
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
                 imports: [DeccomTestModule],
-                declarations: [DBQueryResultComponent],
+                declarations: [SQLResultComponent],
                 providers: [
                     JhiDateUtils,
-                    DBQueryService,
+                    SQLService,
                     JhiEventManager,
                 ]
-            }).overrideTemplate(DBQueryResultComponent, '')
+            }).overrideTemplate(SQLResultComponent, '')
                 .compileComponents();
         }));
 
         beforeEach(() => {
-            fixture = TestBed.createComponent(DBQueryResultComponent);
+            fixture = TestBed.createComponent(SQLResultComponent);
             comp = fixture.componentInstance;
-            service = fixture.debugElement.injector.get(DBQueryService);
+            service = fixture.debugElement.injector.get(SQLService);
         });
 
         describe('properties', () => {
             it('Should load properties with an array as DBResponse', () => {
                 // GIVEN
-                comp.dbResponse = {
+                comp.sqlResponse = {
                     'data': [{ 'id': 1, 'name': 'nametest1' },
                     { 'id': 2, 'name': 'nametest2' }],
                     'metadata': {

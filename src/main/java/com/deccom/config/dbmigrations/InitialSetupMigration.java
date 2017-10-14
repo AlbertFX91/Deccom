@@ -9,6 +9,9 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 
 import com.deccom.domain.Acme;
 import com.deccom.domain.Authority;
+import com.deccom.domain.SQLConnection;
+import com.deccom.domain.SQLControlVar;
+import com.deccom.domain.SQLControlVarEntry;
 import com.deccom.domain.RESTConnection;
 import com.deccom.domain.RESTControlVar;
 import com.deccom.domain.RESTControlVarEntry;
@@ -117,13 +120,29 @@ public class InitialSetupMigration {
 
 	}
 
-	@ChangeSet(order = "04", author = "initiator", id = "04-RESTControlVars")
+	@ChangeSet(order = "04", author = "initiator", id = "04-addSQLControlVars")
+	public void addSQLControlVars(MongoTemplate mongoTemplate) {
+		SQLControlVar cv = new SQLControlVar();
+		cv.setId("SQLControlVar-1");
+		cv.setCreationMoment(LocalDateTime.now());
+		cv.setName("controlvar-1");
+		cv.setQuery("select age  from author where  idauthor='1' and name='name-1'");
+		cv.setSqlConnection(new SQLConnection("developer", "developer",
+				"jdbc:mysql://localhost:3306/deccom"));
+		cv.setSqlControlVarEntries(Lists.newArrayList(new SQLControlVarEntry(
+				"16", LocalDateTime.now()), new SQLControlVarEntry("17",
+				LocalDateTime.now()), new SQLControlVarEntry("18",
+				LocalDateTime.now())));
+		mongoTemplate.save(cv);
+	}
+
+	@ChangeSet(order = "05", author = "initiator", id = "05-addRestControlVars")
 	public void addRESTControlVars(MongoTemplate mongoTemplate) {
 		RESTControlVar r = new RESTControlVar();
 		r.setId("restControlVarId");
 		r.setCreationMoment(LocalDateTime.now());
-		r.setName("thumbnailUrl");
-		r.setQuery("$.[0].thumbnailUrl");
+		r.setName("id");
+		r.setQuery("$.[0].id");
 		r.setRestConnection(new RESTConnection(
 				"https://jsonplaceholder.typicode.com/photos"));
 		r.setRestControlVarEntries(Lists.newArrayList(new RESTControlVarEntry(
@@ -131,19 +150,6 @@ public class InitialSetupMigration {
 				"value-2", LocalDateTime.now())));
 
 		mongoTemplate.save(r);
-		/*
-		 * Integer numRESTControlVars = 40; IntStream.range(0,
-		 * numRESTControlVars) .forEach( index -> { RESTControlVar r = new
-		 * RESTControlVar(); r.setId("RESTControlVar-" + index);
-		 * r.setCreationMoment(LocalDate.now()); r.setName("name-" + "website");
-		 * r.setQuery("query-" + "$.[0].website"); r.setRestConnection(new
-		 * RESTConnection("url-" + "$.[0].website"));
-		 * r.setRestControlVarEntries(Lists.newArrayList( new
-		 * RESTControlVarEntry("value-1", LocalDate.now()), new
-		 * RESTControlVarEntry("value-2", LocalDate.now())));
-		 * 
-		 * mongoTemplate.save(r); });
-		 */
 
 	}
 

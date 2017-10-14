@@ -18,13 +18,13 @@ import java.util.stream.IntStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.deccom.service.impl.DBServiceImpl;
+import com.deccom.service.impl.SQLServiceImpl;
 import com.google.common.collect.Lists;
 
-public class DBUtil {
+public class SQLUtil {
 
-	public static final String i18nCodeRoot = "operations.dbquery";
-	private final static Logger log = LoggerFactory.getLogger(DBServiceImpl.class);
+	public static final String i18nCodeRoot = "operations.sql";
+	private final static Logger log = LoggerFactory.getLogger(SQLServiceImpl.class);
 
 	/**
 	 * This function create an object DBMetadata with:
@@ -34,12 +34,12 @@ public class DBUtil {
 	 * @param rs The resultSet of the query execution
 	 * @return the DBMetadata result object
 	 */
-	public static DBMetadata getDBMetadata(Connection connection, ResultSet rs) {
-		DBMetadata res = new DBMetadata();
+	public static SQLMetadata getDBMetadata(Connection connection, ResultSet rs) {
+		SQLMetadata res = new SQLMetadata();
 		List<String> tableNames;
 		List<String> primaryKeys;
 		List<String> fields;
-		List<DBField> dbfields = new ArrayList<>();
+		List<SQLField> dbfields = new ArrayList<>();
 		try {
 			// Return the table names involved in the query
 			tableNames = getTableNames(rs);
@@ -48,7 +48,7 @@ public class DBUtil {
 			// Return all the fields involved in the queries
 			fields = getFields(rs);
 			// Create all the DBFields by the primary keys and the fields
-			dbfields = fields.stream().map((field) -> new DBField(field, primaryKeys.contains(field)))
+			dbfields = fields.stream().map((field) -> new SQLField(field, primaryKeys.contains(field)))
 					.collect(Collectors.toList());
 			// Construct the final DBMetadata object
 			res.setTables(tableNames);
@@ -157,7 +157,7 @@ public class DBUtil {
 				res.add(data);
 			}
 		} catch (SQLException e) {
-			throw ThrowDBException("Data extraction error", "extractionerror", "DBService", e);
+			throw ThrowDBException("Data extraction error", "extractionerror", "SQLService", e);
 		}
 		return res;
 	}
@@ -167,7 +167,7 @@ public class DBUtil {
 	 * @param e the SQLException error
 	 * @return a DBServiceException with a custom msg
 	 */
-	public static DBServiceException ExceptionHandle(SQLException e) {
+	public static SQLServiceException ExceptionHandle(SQLException e) {
 		Integer SQLCode = e.getErrorCode();
 		String i18nerrorCode;
 		switch (SQLCode) {
@@ -181,7 +181,7 @@ public class DBUtil {
 			i18nerrorCode = "connectionerror";
 			break;
 		}
-		return ThrowDBException("Cannot connect with the database", i18nerrorCode, "DBService", e);
+		return ThrowDBException("Cannot connect with the database", i18nerrorCode, "SQLService", e);
 	}
 	
 	/**
@@ -192,8 +192,8 @@ public class DBUtil {
 	 * @param e the father error
 	 * @return the new DBServiceException
 	 */
-	public static DBServiceException ThrowDBException(String msg, String i18nCode, String entity, Throwable e) {
-		return new DBServiceException(msg, i18nCodeRoot + "." + i18nCode, entity, e);
+	public static SQLServiceException ThrowDBException(String msg, String i18nCode, String entity, Throwable e) {
+		return new SQLServiceException(msg, i18nCodeRoot + "." + i18nCode, entity, e);
 
 	}
 	
@@ -210,7 +210,7 @@ public class DBUtil {
 			 */
 			Class.forName(driver);
 		} catch (ClassNotFoundException e) {
-			throw ThrowDBException("Cannot find the " + driver + " Class", "drivernotfound", "DBService",e);
+			throw ThrowDBException("Cannot find the " + driver + " Class", "drivernotfound", "SQLService",e);
 		}
 	}
 
@@ -227,7 +227,7 @@ public class DBUtil {
 			connection = DriverManager.getConnection(url, username, password);
 			log.debug("Database connected");
 		} catch (SQLException e) {
-			throw DBUtil.ExceptionHandle(e);
+			throw SQLUtil.ExceptionHandle(e);
 		}
 		return connection;
 	}
@@ -244,7 +244,7 @@ public class DBUtil {
 			PreparedStatement statement = connection.prepareStatement(query);
 			res = statement.executeQuery();
 		} catch (SQLException e) {
-			throw DBUtil.ThrowDBException("Query execution error", "queryerror", "DBService", e);
+			throw SQLUtil.ThrowDBException("Query execution error", "queryerror", "SQLService", e);
 			// throw new IllegalStateException("Query execution error", e);
 		}
 		return res;

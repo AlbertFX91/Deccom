@@ -1,0 +1,15 @@
+{
+    "deccomApp": {
+        "sql" : {
+            "home": {
+                "title": "SQL query"
+            },
+            "username": "Username",
+            "password": "Password",
+            "url": "URL",
+            "query": "Query",
+            "controlVarName": "Control variable's name",
+            "created": "A new Control variable has been created with identifier {{ param }}"
+        }
+    }
+}
