@@ -1,7 +1,7 @@
 export class RESTDataRecover {
     constructor(
-        public query?: String,
-        public controlVarName?: String,
+        public query?: string,
+        public controlVarName?: string,
         public restConnection?: RESTConnection
     ) {
     }
@@ -9,7 +9,7 @@ export class RESTDataRecover {
 
 export class RESTConnection {
     constructor(
-        public url?: String
+        public url?: string
     ) {
     }
 }
