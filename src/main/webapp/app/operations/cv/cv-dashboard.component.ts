@@ -14,11 +14,15 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
     styleUrls: ['./cv-dashboard.component.css']
 }) export class CVDashboardComponent implements OnInit, OnDestroy {
 
+    cvCardLists: CVCardList[];
+
     constructor(
         private cvService: CVService,
     ) { }
 
-    ngOnInit() { }
+    ngOnInit() { 
+        this.cvCardLists = this.cvService.getCards();
+    }
 
     ngOnDestroy() { }
 

@@ -1,0 +1,12 @@
+{
+    "deccomApp": {
+        "ControlVar": {
+            "home": {
+                "title": "Control variables"
+            },
+            "running": "Running",
+            "paused": "Paused",
+            "blocked": "Blocked"
+        }
+    }
+}
