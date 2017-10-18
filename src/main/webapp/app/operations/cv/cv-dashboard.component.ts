@@ -20,7 +20,7 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
         private cvService: CVService,
     ) { }
 
-    ngOnInit() { 
+    ngOnInit() {
         this.cvCardLists = this.cvService.getCards();
     }
 

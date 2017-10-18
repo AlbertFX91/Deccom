@@ -7,11 +7,11 @@ import { DeccomSharedModule } from '../../shared';
 import {
     CVService,
     CVDashboardComponent,
-    restRoute
+    cvRoute
 } from './';
 
 const ENTITY_STATES = [
-    ...restRoute,
+    ...cvRoute,
 ];
 
 @NgModule({
@@ -31,4 +31,4 @@ const ENTITY_STATES = [
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class DeccomRESTModule { }
+export class DeccomCVModule { }
