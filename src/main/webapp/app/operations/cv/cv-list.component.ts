@@ -1,6 +1,7 @@
 import { Component, HostListener, Input, OnInit, OnDestroy } from '@angular/core';
 import { CVCard, CVCardList } from './cv.model';
 import { CVService } from './cv.service';
+import { CardStore } from './cardstore';
 
 @Component({
     selector: 'jhi-cv-list',
@@ -12,9 +13,12 @@ export class CVListComponent implements OnInit, OnDestroy {
     @Input()
     cvCardList: CVCardList;
     @Input()
-    cvService: CVService;
+    cardStore: CardStore;
 
-    constructor() { }
+    constructor(public cvService: CVService) {
+        this.cvCardList = this.cvService.cvCardLists[0];
+        this.cardStore = new CardStore();
+    }
 
     ngOnInit(): void { }
 
@@ -36,7 +40,6 @@ export class CVListComponent implements OnInit, OnDestroy {
         }
         target = target.querySelector('.cards');
 
-        /*
         if (targetClassName === 'card') {
             $event.target.parentNode.insertBefore(document.getElementById(data), $event.target);
         } else if (targetClassName === 'list__title') {
@@ -48,7 +51,6 @@ export class CVListComponent implements OnInit, OnDestroy {
         } else {
             target.appendChild(document.getElementById(data));
         }
-        */
 
     }
 

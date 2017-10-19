@@ -30,11 +30,33 @@ export class CVService {
             },
             {
                 name: 'deccomApp.ControlVar.paused',
-                cvCards: []
+                cvCards: [
+                    {
+                        'id': 'cvCardId2',
+                        'logo_url': 'https://cdn-images-1.medium.com/max/599/1*uHzooF1EtgcKn9_XiSST4w.png',
+                        'name': 'Friends',
+                        'value': '10',
+                        'num_entries': 1,
+                        'frequency': '20 days',
+                        'last_update': '11/11/2016 10:30',
+                        'status': 'Paused'
+                    }
+                ]
             },
             {
                 name: 'deccomApp.ControlVar.blocked',
-                cvCards: []
+                cvCards: [
+                    {
+                        'id': 'cvCardId3',
+                        'logo_url': 'https://cdn-images-1.medium.com/max/599/1*uHzooF1EtgcKn9_XiSST4w.png',
+                        'name': 'Contacts',
+                        'value': '40',
+                        'num_entries': 3,
+                        'frequency': '8 days',
+                        'last_update': '12/12/2015 10:30',
+                        'status': 'Blocked'
+                    }
+                ]
             }
         ]
         this.cvCardLists = cvCardLists;

@@ -3,6 +3,6 @@
         <strong>{{cvCardList.name}}</strong>
     </p>
     <div class="cards">
-        <app-card *ngFor="let cardId of cvCardList.cards" [cvCard]="cvService.getCard(cvCardId)"></app-card>
+        <jhi-cv-card *ngFor="let cvCardId of cvCardList.cvCards" [cvCard]="cardStore.getCard(cvCardId)"></jhi-cv-card>
     </div>
 </div>
