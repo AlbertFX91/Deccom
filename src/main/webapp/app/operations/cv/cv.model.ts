@@ -15,7 +15,7 @@ export class CVCard {
 export class CVCardList {
     constructor(
         name: string,
-        cvCards: string[]
+        cvCards: CVCard[]
     ) {
     }
 }

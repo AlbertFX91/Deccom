@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { CVCard } from './cv.model';
+import { CVService } from './cv.service';
 
 @Component({
     selector: 'jhi-cv-card',
@@ -11,7 +12,7 @@ export class CVCardComponent implements OnInit, OnDestroy {
     @Input()
     cvCard: CVCard;
 
-    constructor() { }
+    constructor( ) { }
 
     ngOnInit() { }
 

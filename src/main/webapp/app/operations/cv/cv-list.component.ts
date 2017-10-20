@@ -20,7 +20,7 @@ export class CVListComponent implements OnInit, OnDestroy {
         this.cardStore = new CardStore();
     }
 
-    ngOnInit(): void { }
+    ngOnInit() { }
 
     ngOnDestroy() { }
 

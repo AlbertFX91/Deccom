@@ -6,8 +6,9 @@ import { DeccomSharedModule } from '../../shared';
 
 import {
     CVService,
-    // CVDashboardComponent,
+    CVDashboardComponent,
     CVListComponent,
+    CVCardComponent,
     cvRoute
 } from './';
 
@@ -22,12 +23,14 @@ const ENTITY_STATES = [
         RouterModule.forRoot(ENTITY_STATES, { useHash: true })
     ],
     declarations: [
-        // CVDashboardComponent
-        CVListComponent
+        CVDashboardComponent,
+        CVListComponent,
+        CVCardComponent
     ],
     entryComponents: [
-        // CVDashboardComponent
-        CVListComponent
+        CVDashboardComponent,
+        CVListComponent,
+        CVCardComponent
     ],
     providers: [
         CVService
