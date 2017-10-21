@@ -1,3 +1,4 @@
+/*
 import { CVCard } from './cv.model';
 
 export class CardStore {
@@ -21,3 +22,5 @@ export class CardStore {
     }
 
 }
+
+*/

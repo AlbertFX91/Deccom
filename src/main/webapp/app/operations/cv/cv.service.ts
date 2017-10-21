@@ -12,7 +12,7 @@ export class CVService {
     cvCardLists: CVCardList[];
 
     constructor(private http: Http) {
-        const cvCardLists: CVCardList[] = [
+        this.cvCardLists = [
             {
                 name: 'deccomApp.ControlVar.running',
                 cvCards: [
@@ -59,7 +59,6 @@ export class CVService {
                 ]
             }
         ]
-        this.cvCardLists = cvCardLists;
     }
 
     getCards() {

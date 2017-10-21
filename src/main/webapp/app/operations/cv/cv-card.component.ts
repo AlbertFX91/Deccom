@@ -12,7 +12,9 @@ export class CVCardComponent implements OnInit, OnDestroy {
     @Input()
     cvCard: CVCard;
 
-    constructor( ) { }
+    constructor(
+        public cvService: CVService
+    ) { }
 
     ngOnInit() { }
 

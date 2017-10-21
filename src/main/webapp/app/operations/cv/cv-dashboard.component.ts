@@ -7,7 +7,7 @@ import { CVService } from './cv.service';
 import { CVCard, CVCardList } from './cv.model';
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
-import { CardStore } from './cardstore';
+// import { CardStore } from './cardstore';
 
 @Component({
     selector: 'jhi-cv-dashboard',
@@ -15,14 +15,14 @@ import { CardStore } from './cardstore';
     styleUrls: ['./cv-dashboard.component.css']
 }) export class CVDashboardComponent implements OnInit, OnDestroy {
 
-    cardStore: CardStore;
+    // cardStore: CardStore;
     cvCardLists: CVCardList[];
 
     constructor(
-        public cvService: CVService,
+        public cvService: CVService
     ) {
         this.cvCardLists = cvService.cvCardLists;
-        this.cardStore = new CardStore();
+        // this.cardStore = new CardStore();
     }
 
     ngOnInit() { }
