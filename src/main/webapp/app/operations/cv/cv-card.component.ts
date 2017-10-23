@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CVCard } from './cv.model';
 import { CVService } from './cv.service';
 
@@ -13,7 +14,7 @@ export class CVCardComponent implements OnInit, OnDestroy {
     cvCard: CVCard;
 
     constructor(
-        public cvService: CVService
+        private cvService: CVService
     ) { }
 
     ngOnInit() { }

@@ -14,8 +14,8 @@ export class CVCard {
 
 export class CVCardList {
     constructor(
-        name?: string,
-        cvCards?: string[]
+        public name?: string,
+        public cvCards?: CVCard[]
     ) {
     }
 }

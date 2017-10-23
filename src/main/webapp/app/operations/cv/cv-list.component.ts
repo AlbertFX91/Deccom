@@ -1,7 +1,7 @@
 import { Component, HostListener, Input, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CVCard, CVCardList } from './cv.model';
 import { CVService } from './cv.service';
-// import { CardStore } from './cardstore';
 
 @Component({
     selector: 'jhi-cv-list',
@@ -12,16 +12,12 @@ export class CVListComponent implements OnInit, OnDestroy {
 
     @Input()
     cvCardList: CVCardList;
-    /*
-    @Input()
-    cardStore: CardStore;
-    */
+
+    cvCard: CVCard;
 
     constructor(
         public cvService: CVService
-    ) {
-        // this.cvCardList = this.cvService.cvCardLists[0];
-    }
+    ) { }
 
     ngOnInit() { }
 

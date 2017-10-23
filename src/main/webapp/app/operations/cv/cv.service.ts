@@ -65,8 +65,8 @@ export class CVService {
         return this.cvCardLists;
     }
 
-    getCard(cvCardId: string) {
-        return this.cvCardLists[cvCardId];
+    getCard(cvCards: CVCard[], cvCardId: string) {
+        return cvCards.filter((cvCard) => cvCard.id === cvCardId)[0];
     }
 
 }
