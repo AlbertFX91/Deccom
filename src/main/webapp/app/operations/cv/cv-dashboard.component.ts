@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs/Rx';
 import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, JhiAlertService } from 'ng-jhipster';
 
 import { CVService } from './cv.service';
-import { CVCard, CVCardList } from './cv.model';
+import { CVCard } from './cv.model';
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 
@@ -14,12 +14,20 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
     styleUrls: ['./cv-dashboard.component.css']
 }) export class CVDashboardComponent implements OnInit, OnDestroy {
 
-    cvCardLists: CVCardList[];
+    /*
+    runningCards: CVCard[];
+    pausedCards: CVCard[];
+    blockedCards: CVCard[];
+    */
 
     constructor(
         public cvService: CVService
     ) {
-        this.cvCardLists = cvService.cvCardLists;
+        /*
+        this.runningCards = cvService.getRunningCards();
+        this.pausedCards = cvService.getPausedCards();
+        this.blockedCards = cvService.getBlockedCards();
+        */
     }
 
     ngOnInit() { }

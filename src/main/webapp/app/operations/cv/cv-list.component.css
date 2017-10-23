@@ -17,11 +17,19 @@
     text-decoration: none;
 }
  
-input {
+.input {
   width: 248px;
   padding: 5px;
   border: 2px solid orange;
   outline: 0;
   background: #fff;
   box-shadow:none;
+}
+
+.center-in-bar {
+    text-align:center;
+}
+
+.cv-cols-container > .col {
+    margin: 0 5px;
 }

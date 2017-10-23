@@ -11,11 +11,3 @@ export class CVCard {
     ) {
     }
 }
-
-export class CVCardList {
-    constructor(
-        public name?: string,
-        public cvCards?: CVCard[]
-    ) {
-    }
-}

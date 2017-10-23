@@ -1,6 +1,6 @@
 import { Component, HostListener, Input, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CVCard, CVCardList } from './cv.model';
+import { CVCard } from './cv.model';
 import { CVService } from './cv.service';
 
 @Component({
@@ -11,9 +11,7 @@ import { CVService } from './cv.service';
 export class CVListComponent implements OnInit, OnDestroy {
 
     @Input()
-    cvCardList: CVCardList;
-
-    cvCard: CVCard;
+    cvCards: CVCard[];
 
     constructor(
         public cvService: CVService

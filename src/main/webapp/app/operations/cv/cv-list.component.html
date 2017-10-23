@@ -1,8 +1,39 @@
+<!--
 <div class="list" (dragover)="allowDrop($event)" (drop)="drop($event)">
     <p class="list__title">
-        <strong>{{cvCardList.name}}</strong>
+        <strong>{{cvCards[0].name}}</strong>
     </p>
+
     <div class="cards">
         <jhi-cv-card *ngFor="let cvCard of cvCardList.cvCards" [cvCard]="cvService.getCard(cvCardList, cvCard.id)"></jhi-cv-card>
+    </div>
+</div>
+-->
+<div class="container">
+    <div class="row cv-cols-container">
+        <div class="col container" style="background-color: lightgreen">
+            <strong>
+                <div class="center-in-bar" jhiTranslate="deccomApp.ControlVar.running"></div>
+            </strong>
+            <div class="row" *ngFor="let cvCard of cvService.getRunningCards()">
+                <jhi-cv-card [cvCard]="cvCard"></jhi-cv-card>
+            </div>
+        </div>
+        <div class="col container" style="background-color: lightsalmon">
+            <div class="center-in-bar">
+                <strong jhiTranslate="deccomApp.ControlVar.paused">Paused</strong>
+            </div>
+            <div class="row" *ngFor="let cvCard of cvService.getPausedCards()">
+                <jhi-cv-card [cvCard]="cvCard"></jhi-cv-card>
+            </div>
+        </div>
+        <div class="col container" style="background-color: lightcoral">
+            <strong>
+                <div class="center-in-bar" jhiTranslate="deccomApp.ControlVar.blocked"></div>
+            </strong>
+            <div class="row" *ngFor="let cvCard of cvService.getBlockedCards()">
+                <jhi-cv-card [cvCard]="cvCard"></jhi-cv-card>
+            </div>
+        </div>
     </div>
 </div>
