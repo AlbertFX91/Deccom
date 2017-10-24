@@ -16,15 +16,16 @@ import net.logstash.logback.encoder.org.apache.commons.lang.ClassUtils;
 
 public class DeccomClassNavigationMain {
 
-	public static void main(String[] args) {
-		System.out.println("All interfaces from: " + DeccomFacebookDataRecover.class.getName());
+	public static void main(String[] args) throws InstantiationException, IllegalAccessException {
+			
+		System.out.println("All interfaces which this class extends: " + DeccomFacebookDataRecover.class.getName());
 		for(Class<?> c: getAllInterfaces(DeccomFacebookDataRecover.class)) {
 			System.out.println("+ " + c.getName());
 		}
 		
 		System.out.println("------------------------------------------------");
 		
-		System.out.println("All SubInterfacesOf: " + DeccomDataRecover.class.getName());
+		System.out.println("All interfaces which extends from: " + DeccomDataRecover.class.getName());
 		Set<Class<? extends DeccomDataRecover>> interfaces = getSubInterfacesOf(DeccomDataRecover.class);
 		for(Class<?> c: interfaces) {
 			System.out.println("+ " + c.getName());
@@ -32,7 +33,7 @@ public class DeccomClassNavigationMain {
 		
 		System.out.println("------------------------------------------------");
 		
-		System.out.println("All SubInterfacesOf: " + DeccomDataRecover.class.getName());
+		System.out.println("All subclases which extends from: " + DeccomDataRecover.class.getName());
 		Set<Class<? extends DeccomDataRecover>> classes = getSubClassesOf(DeccomDataRecover.class);
 		for(Class<?> c: classes) {
 			System.out.println("+ "+c.getName()+": " + Arrays.toString(c.getInterfaces()));
@@ -42,8 +43,9 @@ public class DeccomClassNavigationMain {
 		
 		System.out.println("All Classes + Interfaces implemented: " + DeccomDataRecover.class.getName());
 		Map<Class<? extends DeccomDataRecover>, List<Class<?>>> map = getClassInterface(DeccomDataRecover.class);
-		for(Class<?> c: map.keySet()) {
+		for(Class<? extends DeccomDataRecover> c: map.keySet()) {
 			System.out.println("+ " + c.getName() + ": " +map.get(c));
+			System.out.println("+ getData: " + c.newInstance().getData());
 		}
 		
 		

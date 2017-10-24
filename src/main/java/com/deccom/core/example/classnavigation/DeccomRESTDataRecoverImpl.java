@@ -35,7 +35,7 @@ public class DeccomRESTDataRecoverImpl implements DeccomRESTDataRecover{
 	
 	@Override
 	public String getData() {
-		return "RESTDataExample";
+		return this.xpath + "->[Object]";
 	}
 
 	@Override
