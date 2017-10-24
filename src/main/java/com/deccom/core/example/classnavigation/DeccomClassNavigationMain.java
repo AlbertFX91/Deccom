@@ -17,7 +17,7 @@ import net.logstash.logback.encoder.org.apache.commons.lang.ClassUtils;
 public class DeccomClassNavigationMain {
 
 	public static void main(String[] args) throws InstantiationException, IllegalAccessException {
-			
+		
 		System.out.println("All interfaces which this class extends: " + DeccomFacebookDataRecover.class.getName());
 		for(Class<?> c: getAllInterfaces(DeccomFacebookDataRecover.class)) {
 			System.out.println("+ " + c.getName());
