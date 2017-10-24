@@ -15,30 +15,30 @@ export class CVService {
         this.cvCards = [
             {
                 'id': 'cvCardId1',
-                'logo_url': 'https://cdn-images-1.medium.com/max/599/1*uHzooF1EtgcKn9_XiSST4w.png',
+                'logo_url': 'resources/images/rest.png',
                 'name': 'Followers',
                 'value': '160',
-                'num_entries': 1,
+                'entries': 1,
                 'frequency': '10 days',
                 'last_update': '05/05/2017 10:30',
                 'status': 'Running'
             },
             {
                 'id': 'cvCardId2',
-                'logo_url': 'https://cdn-images-1.medium.com/max/599/1*uHzooF1EtgcKn9_XiSST4w.png',
+                'logo_url': 'resources/images/sql.png',
                 'name': 'Following',
                 'value': '100',
-                'num_entries': 1,
+                'entries': 1,
                 'frequency': '20 days',
                 'last_update': '05/05/2017 10:30',
                 'status': 'Running'
             },
             {
                 'id': 'cvCardId3',
-                'logo_url': 'https://cdn-images-1.medium.com/max/599/1*uHzooF1EtgcKn9_XiSST4w.png',
+                'logo_url': 'resources/images/rest.png',
                 'name': 'Friends',
                 'value': '10',
-                'num_entries': 1,
+                'entries': 1,
                 'frequency': '20 days',
                 'last_update': '11/11/2016 10:30',
                 'status': 'Paused'
@@ -46,10 +46,10 @@ export class CVService {
             },
             {
                 'id': 'cvCardId4',
-                'logo_url': 'https://cdn-images-1.medium.com/max/599/1*uHzooF1EtgcKn9_XiSST4w.png',
+                'logo_url': 'resources/images/sql.png',
                 'name': 'Contacts',
                 'value': '40',
-                'num_entries': 3,
+                'entries': 3,
                 'frequency': '8 days',
                 'last_update': '12/12/2015 10:30',
                 'status': 'Blocked'

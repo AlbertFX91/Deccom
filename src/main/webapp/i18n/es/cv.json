@@ -4,6 +4,10 @@
             "home": {
                 "title": "Variables de control"
             },
+            "value": "Valor",
+            "entries": "Entradas",
+            "frequency": "Frecuencia",
+            "last_update": "Última actualización",
             "running": "Funcionando",
             "paused": "En pausa",
             "blocked": "Bloqueado"

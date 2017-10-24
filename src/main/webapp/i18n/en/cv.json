@@ -4,6 +4,10 @@
             "home": {
                 "title": "Control variables"
             },
+            "value": "Value",
+            "entries": "Entries",
+            "frequency": "Frequency",
+            "last_update": "Last update",
             "running": "Running",
             "paused": "Paused",
             "blocked": "Blocked"
