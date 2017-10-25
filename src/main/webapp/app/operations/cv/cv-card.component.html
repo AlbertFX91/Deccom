@@ -1,36 +1,17 @@
-<!--
-<p class="cvCard" draggable="true" (dragstart)="dragStart($event)" id="{{cvCard.id}}">
-    Name: {{cvCard.name}}<br>
-    Value: {{cvCard.value}}
-</p>
--->
-<!--
-<div class="card" style="width: 20rem;">
-    <img class="img-responsive" src="resources/images/rest.png" alt="Card image cap" height="42" width="42">
-    <div class="card-block">
-        <h4 class="card-title">{{cvCard.name}}</h4>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <img class="img-responsive" src="resources/images/green_light.png" alt="Card image cap" height="42" width="42">
-    </div>
-</div>
--->
-<div class="card" style="width: 20rem;">
-    <img class="card-img-top" src="resources/images/rest.png" alt="Card image cap" height="42" width="42">
-    <div class="card-block">
-        <h4 class="card-title">{{cvCard.name}}</h4>
-        <p class="card-text">
-            <label jhiTranslate="deccomApp.ControlVar.value"></label>: {{cvCard.value}}</p>
-    </div>
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-            <label jhiTranslate="deccomApp.ControlVar.entries"></label>: {{cvCard.entries}}</li>
-        <li class="list-group-item">
-            <label jhiTranslate="deccomApp.ControlVar.frequency"></label>: {{cvCard.frequency}}</li>
-        <li class="list-group-item">
-            <label jhiTranslate="deccomApp.ControlVar.last_update"></label>: {{cvCard.last_update}}</li>
-    </ul>
-    <div class="card-block">
-        <img class="img-responsive" src="resources/images/green_light.png" alt="Card image cap" height="42" width="42">
-        <img class="img-responsive" src="resources/images/rest.png" alt="Card image cap" height="42" width="42">
+<div id="mainbox">
+    <div class="card">
+        <!--
+        <img src="resources/images/rest.png" alt="" />
+        <h1>{{cvCard.name}} | {{cvCard.value}}</h1>
+        <img src="resources/images/collapse.png" alt="" />
+        -->
+        <div class="flex-item">
+            <img src="resources/images/rest.png" class="img1" alt="">
+            <span style="font-size: x-large" margin-top="-20px">{{cvCard.name}} | {{cvCard.value}}</span>
+            <img src="resources/images/collapse.png" class="img1" alt="">
+        </div>
+        <p><label jhiTranslate="deccomApp.ControlVar.entries"></label>: {{cvCard.entries}}</p>
+        <p><label jhiTranslate="deccomApp.ControlVar.last_update"></label>: {{cvCard.last_update}}</p>
+        <img src="resources/images/graph.png" class="img2" alt="">
     </div>
 </div>

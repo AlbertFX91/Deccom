@@ -30,7 +30,7 @@ export class CVService {
                 'value': '100',
                 'entries': 1,
                 'frequency': '20 days',
-                'last_update': '05/05/2017 10:30',
+                'last_update': '05/05/2017 11:30',
                 'status': 'Running'
             },
             {
@@ -40,7 +40,7 @@ export class CVService {
                 'value': '10',
                 'entries': 1,
                 'frequency': '20 days',
-                'last_update': '11/11/2016 10:30',
+                'last_update': '11/11/2016 12:30',
                 'status': 'Paused'
 
             },
@@ -51,7 +51,7 @@ export class CVService {
                 'value': '40',
                 'entries': 3,
                 'frequency': '8 days',
-                'last_update': '12/12/2015 10:30',
+                'last_update': '12/12/2015 9:30',
                 'status': 'Blocked'
             }
         ]
