@@ -14,7 +14,8 @@
         "lib": ["es6", "dom"],
         "typeRoots": [
             "node_modules/@types"
-        ]
+        ],
+        "allowJs": true
     },
     "include": [
         "src/main/webapp/app",

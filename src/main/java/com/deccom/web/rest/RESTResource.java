@@ -2,7 +2,6 @@ package com.deccom.web.rest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 
 import javax.validation.Valid;
 
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
-import com.deccom.domain.Post;
 import com.deccom.domain.RESTControlVar;
 import com.deccom.domain.RESTDataRecover;
 import com.deccom.service.RESTControlVarService;
@@ -78,52 +76,6 @@ public class RESTResource {
 	}
 
 	/**
-	 * GET /mapping : send a HTTP GET request to an URL.
-	 *
-	 * @param url
-	 *            the url to send the request to
-	 * @return the ResponseEntity with status 200 (OK) and the json in body
-	 */
-	@GetMapping("/rest/mapping")
-	@Timed
-	public ResponseEntity<List<Post>> mapping(@RequestParam String url)
-			throws Exception {
-
-		log.debug("REST request with mapping");
-
-		List<Post> result;
-
-		result = restService.mapping(url);
-
-		return ResponseEntity.ok().body(result);
-
-	}
-
-	/**
-	 * GET /query : get a query from a JSON.
-	 *
-	 * @param url
-	 *            the url where the JSON came from
-	 * @param jsonPath
-	 *            the path to create the query
-	 * @return the ResponseEntity with status 200 (OK) and the query in body
-	 */
-	@GetMapping("/rest/query")
-	@Timed
-	public ResponseEntity<String> query(@RequestParam String url,
-			@RequestParam String jsonPath) throws Exception {
-
-		log.debug("REST request with query");
-
-		String result;
-
-		result = restService.getByJsonPath(url, jsonPath);
-
-		return ResponseEntity.ok().body(result);
-
-	}
-
-	/**
 	 * POST /datarecover : create a new RESTControlVar.
 	 *
 	 * @param restDataRecover
@@ -159,17 +111,15 @@ public class RESTResource {
 	}
 
 	/**
-	 * GET /atomic : check the status of a variable creating new entries
+	 * GET /test : test a method
 	 *
-	 * @param query
-	 *            the sentence from the connection
-	 * @return the ResponseEntity with status 200 (OK) and the query's data
+	 * @return the ResponseEntity with status 200 (OK)
 	 */
-	@GetMapping("/rest/atomic")
+	@GetMapping("/rest/test")
 	@Timed
-	public ResponseEntity<String> atomic() throws Exception {
+	public ResponseEntity<String> test() throws Exception {
 
-		log.debug("REST request to atomic");
+		log.debug("REST request to test");
 		restControlVarService.monitorize();
 		return ResponseEntity.ok().body("OK");
 

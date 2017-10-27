@@ -14,6 +14,11 @@
         },
         "RESTControlVar": {
             "created": "A new control variable is created with identifier {{ param }}"
+        },
+        "ControlVar": {
+            "running": "Running",
+            "paused": "Paused",
+            "blocked": "Blocked"
         }
     }
 }
