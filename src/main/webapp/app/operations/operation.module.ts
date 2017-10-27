@@ -1,14 +1,16 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-import { DeccomSQLModule } from './sql/sql.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
+import { DeccomSQLModule } from './sql/sql.module';
 import { DeccomRESTModule } from './rest/rest.module';
+import { DeccomCVModule } from './cv/cv.module';
 
 @NgModule({
     imports: [
-        DeccomSQLModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
-        DeccomRESTModule
+        DeccomSQLModule,
+        DeccomRESTModule,
+        DeccomCVModule
     ],
     declarations: [],
     entryComponents: [],

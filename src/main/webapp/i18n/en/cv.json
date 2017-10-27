@@ -1,0 +1,16 @@
+{
+    "deccomApp": {
+        "ControlVar": {
+            "home": {
+                "title": "Control variables"
+            },
+            "value": "Value",
+            "entries": "Records",
+            "creation_moment": "Since",
+            "last_update": "Last",
+            "running": "Running",
+            "paused": "Paused",
+            "blocked": "Blocked"
+        }
+    }
+}
