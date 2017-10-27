@@ -6,8 +6,8 @@
             },
             "value": "Valor",
             "entries": "Entradas",
-            "frequency": "Frecuencia",
-            "last_update": "Última actualización",
+            "creation_moment": "Desde",
+            "last_update": "Última",
             "running": "Funcionando",
             "paused": "En pausa",
             "blocked": "Bloqueado"

@@ -5,9 +5,9 @@
                 "title": "Control variables"
             },
             "value": "Value",
-            "entries": "Entries",
-            "frequency": "Frequency",
-            "last_update": "Last update",
+            "entries": "Records",
+            "creation_moment": "Since",
+            "last_update": "Last",
             "running": "Running",
             "paused": "Paused",
             "blocked": "Blocked"

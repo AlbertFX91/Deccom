@@ -5,7 +5,7 @@ export class CVCard {
         public name?: string,
         public value?: string,
         public entries?: number,
-        public frequency?: string,
+        public creation_moment?: any,
         public last_update?: any,
         public status?: string
     ) {

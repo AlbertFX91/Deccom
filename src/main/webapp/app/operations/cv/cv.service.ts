@@ -15,42 +15,42 @@ export class CVService {
         this.cvCards = [
             {
                 'id': 'cvCardId1',
-                'logo_url': 'resources/images/rest.png',
+                'logo_url': 'src/main/webapp/content/images/sql.png',
                 'name': 'Followers',
                 'value': '160',
                 'entries': 1,
-                'frequency': '10 days',
+                'creation_moment': '02/02/2017 8:15',
                 'last_update': '05/05/2017 10:30',
                 'status': 'Running'
             },
             {
                 'id': 'cvCardId2',
-                'logo_url': 'resources/images/sql.png',
+                // 'logo_url': '#/src/main/webapp/content/images/rest.png',
                 'name': 'Following',
                 'value': '100',
                 'entries': 1,
-                'frequency': '20 days',
+                'creation_moment': '01/01/2016 10:15',
                 'last_update': '05/05/2017 11:30',
                 'status': 'Running'
             },
             {
                 'id': 'cvCardId3',
-                'logo_url': 'resources/images/rest.png',
+                // 'logo_url': '#/src/main/webapp/content/images/rest.png',
                 'name': 'Friends',
                 'value': '10',
                 'entries': 1,
-                'frequency': '20 days',
+                'creation_moment': '10/10/2016 8:45',
                 'last_update': '11/11/2016 12:30',
                 'status': 'Paused'
 
             },
             {
                 'id': 'cvCardId4',
-                'logo_url': 'resources/images/sql.png',
+                // 'logo_url': '#/src/main/webapp/content/images/rest.png',
                 'name': 'Contacts',
                 'value': '40',
                 'entries': 3,
-                'frequency': '8 days',
+                'creation_moment': '02/02/2014 8:15',
                 'last_update': '12/12/2015 9:30',
                 'status': 'Blocked'
             }
