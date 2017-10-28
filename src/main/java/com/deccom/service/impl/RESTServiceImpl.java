@@ -8,14 +8,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.deccom.service.RESTService;
 import com.deccom.service.impl.util.RESTServiceException;
 import com.deccom.service.impl.util.RESTUtil;
-import com.jayway.jsonpath.JsonPath;
 
 @Service
 public class RESTServiceImpl implements RESTService {
@@ -80,37 +78,12 @@ public class RESTServiceImpl implements RESTService {
 
 			// Finally, this list contains all the maps representing the
 			// documents from the response
-
 			return page;
 
 		} catch (JSONException e) {
 			throw new RESTServiceException("Wrong JSON format", i18nCodeRoot
 					+ ".jsonerror", "RESTService", e);
 		}
-
-	}
-
-	public Page<String> noMapping(String url) throws Exception {
-		
-		Page<String> result;
-		Pageable pageable;
-
-		pageable = new PageRequest(0, 20);
-
-		result = noMapping(url, pageable);
-
-		return result;
-
-	}
-
-	// HTTP GET request
-	public String getByJSONPath(String url, String jsonPath) throws Exception {
-
-		String result;
-
-		result = this.noMapping(url).getContent().toString();
-
-		return JsonPath.parse(result).read(jsonPath).toString();
 
 	}
 

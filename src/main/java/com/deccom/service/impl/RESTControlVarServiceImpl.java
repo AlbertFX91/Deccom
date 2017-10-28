@@ -17,7 +17,7 @@ import com.deccom.domain.RESTControlVarEntry;
 import com.deccom.domain.RESTDataRecover;
 import com.deccom.repository.RESTControlVarRepository;
 import com.deccom.service.RESTControlVarService;
-import com.deccom.service.RESTService;
+import com.deccom.service.impl.util.RESTUtil;
 
 /**
  * Service Implementation for managing RESTControlVar.
@@ -30,14 +30,10 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 
 	private final RESTControlVarRepository restControlVarRepository;
 
-	private final RESTService restService;
-
 	public RESTControlVarServiceImpl(
-			RESTControlVarRepository restControlVarRepository,
-			RESTService restService) {
+			RESTControlVarRepository restControlVarRepository) {
 
 		this.restControlVarRepository = restControlVarRepository;
-		this.restService = restService;
 
 	}
 
@@ -161,7 +157,7 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 		creationMoment = LocalDateTime.now();
 		restConnection = restControlVar.getRestConnection();
 		url = restConnection.getUrl();
-		value = restService.getByJSONPath(url, query);
+		value = RESTUtil.getByJSONPath(url, query);
 		restControlVarEntry = new RESTControlVarEntry(value, creationMoment);
 		restControlVarEntries = restControlVar.getRestControlVarEntries();
 

@@ -16,15 +16,4 @@ public interface RESTService {
 	 */
 	Page<String> noMapping(String url, Pageable pageable) throws Exception;
 
-	/**
-	 * Send a HTTP Get to an URL and capture the data by a JSONPath.
-	 * 
-	 * @param url
-	 *            the URL to send the request to
-	 * @param jsonPath
-	 *            the JSONPath query to capture the data
-	 * @return the data captured
-	 */
-	String getByJSONPath(String url, String jsonPath) throws Exception;
-
 }
