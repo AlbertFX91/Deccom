@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 public interface RESTService {
 
 	/**
-	 * Sends a HTTP GET request to an URL
+	 * Requests a JSON response.
 	 * 
 	 * @param url
 	 *            the url to send the request to
@@ -17,7 +17,7 @@ public interface RESTService {
 	Page<String> noMapping(String url, Pageable pageable) throws Exception;
 
 	/**
-	 * Send a HTTP Get to an URL and capture the data by a JSONPath
+	 * Send a HTTP Get to an URL and capture the data by a JSONPath.
 	 * 
 	 * @param url
 	 *            the url to send the request to
