@@ -1,17 +1,11 @@
 <div id="mainbox">
     <div class="card">
-        <!--
-        <section class="container">
-            <img src="resources/images/rest.png" class="img1" alt="">
-            <strong style="font-size: x-large">{{cvCard.name}}: {{cvCard.value}}</strong>
-        </section>
-    -->
         <div class="fondo">
             <div class="running">
                 &nbsp;
             </div>
             <div class="logo" style="flex-grow: 3; justify-content: center; align-items: center; display:flex;">
-                <img src="{{cvCard.logo_url}}" style="height: 30px;" />
+                <img [src]="cvCard.logo" style="height: 30px;" />
             </div>
             <div class="title" style="flex-grow: 8; font-weight: 700; display:flex; align-items: center; border-color: black; border-width: 0 1px 0 0; border-style: solid; border-top-right-radius: 6px;
                     border-bottom-right-radius: 6px;">
@@ -33,6 +27,6 @@
             <span jhiTranslate="deccomApp.ControlVar.entries"></span>: {{cvCard.entries}}</p>
         <p>
             <span jhiTranslate="deccomApp.ControlVar.last_update"></span>: {{cvCard.last_update}}</p>
-        <img src="resources/images/graph.png" class="img2" alt="">
+        <img src="../../../content/images/icons/graph.png" class="img1" alt="">
     </div>
 </div>
