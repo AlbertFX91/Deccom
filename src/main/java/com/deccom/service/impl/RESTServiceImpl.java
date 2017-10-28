@@ -104,7 +104,7 @@ public class RESTServiceImpl implements RESTService {
 	}
 
 	// HTTP GET request
-	public String getByJsonPath(String url, String jsonPath) throws Exception {
+	public String getByJSONPath(String url, String jsonPath) throws Exception {
 
 		String result;
 

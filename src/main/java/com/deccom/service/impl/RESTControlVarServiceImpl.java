@@ -161,7 +161,7 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 		creationMoment = LocalDateTime.now();
 		restConnection = restControlVar.getRestConnection();
 		url = restConnection.getUrl();
-		value = restService.getByJsonPath(url, query);
+		value = restService.getByJSONPath(url, query);
 		restControlVarEntry = new RESTControlVarEntry(value, creationMoment);
 		restControlVarEntries = restControlVar.getRestControlVarEntries();
 
