@@ -8,11 +8,7 @@ import java.net.URL;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 
-import com.deccom.service.RESTService;
 import com.deccom.service.impl.RESTServiceImpl;
 import com.jayway.jsonpath.JsonPath;
 
@@ -21,8 +17,6 @@ public class RESTUtil {
 	private static final Logger log = LoggerFactory
 			.getLogger(RESTServiceImpl.class);
 	private static final String i18nCodeRoot = "operations.REST";
-
-	private static RESTService restService;
 
 	// Client
 	public static final String USER_AGENT = "Chrome/60.0.3112.101";
@@ -106,28 +100,6 @@ public class RESTUtil {
 	}
 
 	/**
-	 * Requests a JSON response.
-	 * 
-	 * @param url
-	 *            the URL to send the request to
-	 * @param pageable
-	 *            the pagination options
-	 * @return the requested JSON as a String
-	 */
-	public static Page<String> noMapping(String url) throws Exception {
-
-		Page<String> result;
-		Pageable pageable;
-
-		pageable = new PageRequest(0, 20);
-
-		result = restService.noMapping(url, pageable);
-
-		return result;
-
-	}
-
-	/**
 	 * Sends a HTTP GET request to an URL and captures the data using a
 	 * JSONPath.
 	 * 
@@ -137,15 +109,10 @@ public class RESTUtil {
 	 *            the JSONPath query to capture the data
 	 * @return the data captured
 	 */
-	// HTTP GET request
-	public static String getByJSONPath(String url, String jsonPath)
+	public static String getByJSONPath(String value, String jsonPath)
 			throws Exception {
 
-		String result;
-
-		result = noMapping(url).getContent().toString();
-
-		return JsonPath.parse(result).read(jsonPath).toString();
+		return JsonPath.parse(value).read(jsonPath).toString();
 
 	}
 

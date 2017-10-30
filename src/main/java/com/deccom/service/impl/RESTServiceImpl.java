@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -84,6 +85,19 @@ public class RESTServiceImpl implements RESTService {
 			throw new RESTServiceException("Wrong JSON format", i18nCodeRoot
 					+ ".jsonerror", "RESTService", e);
 		}
+
+	}
+
+	public Page<String> noMapping(String url) throws Exception {
+
+		Page<String> result;
+		Pageable pageable;
+
+		pageable = new PageRequest(0, 20);
+
+		result = noMapping(url, pageable);
+
+		return result;
 
 	}
 

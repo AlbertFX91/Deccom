@@ -17,6 +17,7 @@ import com.deccom.domain.RESTControlVarEntry;
 import com.deccom.domain.RESTDataRecover;
 import com.deccom.repository.RESTControlVarRepository;
 import com.deccom.service.RESTControlVarService;
+import com.deccom.service.RESTService;
 import com.deccom.service.impl.util.RESTUtil;
 
 /**
@@ -30,10 +31,14 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 
 	private final RESTControlVarRepository restControlVarRepository;
 
+	private final RESTService restService;
+
 	public RESTControlVarServiceImpl(
-			RESTControlVarRepository restControlVarRepository) {
+			RESTControlVarRepository restControlVarRepository,
+			RESTService restService) {
 
 		this.restControlVarRepository = restControlVarRepository;
+		this.restService = restService;
 
 	}
 
@@ -149,6 +154,7 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 		LocalDateTime creationMoment;
 		RESTConnection restConnection;
 		String url;
+		String aux;
 		String value;
 		RESTControlVarEntry restControlVarEntry;
 		List<RESTControlVarEntry> restControlVarEntries;
@@ -157,7 +163,8 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 		creationMoment = LocalDateTime.now();
 		restConnection = restControlVar.getRestConnection();
 		url = restConnection.getUrl();
-		value = RESTUtil.getByJSONPath(url, query);
+		aux = restService.noMapping(url).getContent().toString();
+		value = RESTUtil.getByJSONPath(aux, query);
 		restControlVarEntry = new RESTControlVarEntry(value, creationMoment);
 		restControlVarEntries = restControlVar.getRestControlVarEntries();
 
