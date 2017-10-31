@@ -1,8 +1,5 @@
 package com.deccom.config;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -11,13 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.Trigger;
-import org.springframework.scheduling.TriggerContext;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
-import com.deccom.DeccomApp;
 import com.deccom.domain.RESTControlVar;
 import com.deccom.service.RESTControlVarService;
 
@@ -35,6 +29,13 @@ public class DeccomSchedulingConfigurer implements SchedulingConfigurer{
 	public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
 		log.info("Scheduled ControlVar tasks initialization");
 		taskRegistrar.setScheduler(taskExecutor());
+		for(RESTControlVar r: restCvService.findAll()) {
+			taskRegistrar.addTriggerTask(
+					// Runnable object
+					new DeccomSaveTask(r.getId(), restCvService), 
+					// Trigger object
+					new DeccomCustomTrigger(10));
+    	}
 		
 		/*
 		taskRegistrar.addTriggerTask(
@@ -53,11 +54,7 @@ public class DeccomSchedulingConfigurer implements SchedulingConfigurer{
 		            }
 		        });
 		*/
-		for(RESTControlVar r: restCvService.findAll()) {
-			taskRegistrar.addTriggerTask(
-					new MyTask(r.getId()),
-					new DeccomCustomTrigger(10));
-    	}
+		
 		/*
 		for(int i = 1; i <= 10; i++) {
 			taskRegistrar.addTriggerTask(

@@ -104,7 +104,7 @@ public class SQLControlVarServiceImpl implements SQLControlVarService{
         sqlControlVarRepository.delete(id);
     }
     
-    @Scheduled(fixedRate = 1000 * 30)
+    // @Scheduled(fixedRate = 1000 * 30)
     public void monitorize() {
     	List<SQLControlVar> controlVars = sqlControlVarRepository.findAll();
     	
