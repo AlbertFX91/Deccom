@@ -1,5 +1,7 @@
 package com.deccom.service;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -60,4 +62,10 @@ public interface RESTControlVarService {
 	 */
 	void monitorize() throws Exception;
 
+
+    void sayHello();
+    
+
+    List<RESTControlVar> findAll();
+	
 }

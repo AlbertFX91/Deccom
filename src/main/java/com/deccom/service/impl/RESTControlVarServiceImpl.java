@@ -131,7 +131,7 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 
 	}
 
-	@Scheduled(fixedRate = 1000 * 30)
+	// @Scheduled(fixedRate = 1000 * 30)
 	public void monitorize() throws Exception {
 
 		List<RESTControlVar> restControlVars;
@@ -144,6 +144,18 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 			executeMonitorize(restControlVar);
 		}
 
+	}
+	
+	@Scheduled(fixedRate=2000)
+	public void sayHello() {
+		for(int i = 1; i <= 5; i++) {
+			try {
+				Thread.sleep(1000);
+			} catch(InterruptedException e) {
+				e.printStackTrace();
+			}
+			log.info("Hello from ComponentA " + i);
+		}
 	}
 
 	public void executeMonitorize(RESTControlVar restControlVar)
@@ -169,6 +181,14 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 
 		save(restControlVar);
 
+	}
+
+	@Override
+	public List<RESTControlVar> findAll() {
+		// TODO Auto-generated method stub
+		log.debug("Request to get all RESTControlVarServices");
+
+		return restControlVarRepository.findAll();
 	}
 
 }
