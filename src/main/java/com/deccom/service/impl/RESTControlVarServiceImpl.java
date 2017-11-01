@@ -17,7 +17,6 @@ import com.deccom.domain.RESTControlVarEntry;
 import com.deccom.domain.RESTDataRecover;
 import com.deccom.repository.RESTControlVarRepository;
 import com.deccom.service.RESTControlVarService;
-import com.deccom.service.RESTService;
 import com.deccom.service.impl.util.RESTUtil;
 
 /**
@@ -31,14 +30,10 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 
 	private final RESTControlVarRepository restControlVarRepository;
 
-	private final RESTService restService;
-
 	public RESTControlVarServiceImpl(
-			RESTControlVarRepository restControlVarRepository,
-			RESTService restService) {
+			RESTControlVarRepository restControlVarRepository) {
 
 		this.restControlVarRepository = restControlVarRepository;
-		this.restService = restService;
 
 	}
 
@@ -132,8 +127,8 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 
 	}
 
-	// @Scheduled(fixedRate = 1000 * 30)
-	public void monitorize() throws Exception {
+	@Scheduled(fixedRate = 1000 * 30)
+	public void monitorize() {
 
 		List<RESTControlVar> restControlVars;
 
@@ -146,21 +141,8 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 		}
 
 	}
-	
-	@Scheduled(fixedRate=2000)
-	public void sayHello() {
-		for(int i = 1; i <= 5; i++) {
-			try {
-				Thread.sleep(1000);
-			} catch(InterruptedException e) {
-				e.printStackTrace();
-			}
-			log.info("Hello from ComponentA " + i);
-		}
-	}
 
-	public void executeMonitorize(RESTControlVar restControlVar)
-			throws Exception {
+	public void executeMonitorize(RESTControlVar restControlVar) {
 
 		String query;
 		LocalDateTime creationMoment;
@@ -175,7 +157,7 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 		creationMoment = LocalDateTime.now();
 		restConnection = restControlVar.getRestConnection();
 		url = restConnection.getUrl();
-		aux = restService.noMapping(url).getContent().toString();
+		aux = RESTUtil.getResponse(url);
 		value = RESTUtil.getByJSONPath(aux, query);
 		restControlVarEntry = new RESTControlVarEntry(value, creationMoment);
 		restControlVarEntries = restControlVar.getRestControlVarEntries();
@@ -188,7 +170,6 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 
 	@Override
 	public List<RESTControlVar> findAll() {
-		// TODO Auto-generated method stub
 		log.debug("Request to get all RESTControlVarServices");
 
 		return restControlVarRepository.findAll();
