@@ -1,6 +1,7 @@
 package com.deccom.service.impl.util;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -28,7 +29,7 @@ public class RESTUtil {
 	 *            the url to send the request to
 	 * @return the requested JSON as a String
 	 */
-	public static String getResponse(String url) throws Exception {
+	public static String getResponse(String url){
 
 		URL obj;
 		HttpURLConnection con;
@@ -77,6 +78,9 @@ public class RESTUtil {
 		catch (java.net.UnknownHostException | java.io.FileNotFoundException e) {
 			throw new RESTServiceException("Unreachable URL", i18nCodeRoot
 					+ ".unreachableurl", "RESTService", e);
+		} catch (IOException e) {
+			throw new RESTServiceException("Data cannot be readed", i18nCodeRoot
+					+ ".dataunreadable", "RESTService", e);
 		}
 
 	}
@@ -109,8 +113,7 @@ public class RESTUtil {
 	 *            the JSONPath query to capture the data
 	 * @return the data captured
 	 */
-	public static String getByJSONPath(String value, String jsonPath)
-			throws Exception {
+	public static String getByJSONPath(String value, String jsonPath){
 
 		return JsonPath.parse(value).read(jsonPath).toString();
 
