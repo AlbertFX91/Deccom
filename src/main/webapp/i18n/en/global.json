@@ -33,10 +33,11 @@
                 "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)"
             },
             "operation": {
+                "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)",
                 "main": "Operations",
                 "sql": "SQL query",
                 "rest": "API REST call",
-                "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)"
+                "cv": "Control variables"
             },
             "language": "Language"
         },
