@@ -58,11 +58,15 @@ public interface RESTControlVarService {
 	void delete(String id);
 
 	/**
-	 * Check the value of an existing entry.
+	 * Get the data to monitor by a RESTControlVar and save the new entry in the object
+	 * @param controlVar
 	 */
-	void monitorize() throws Exception;
-    
-
+	void executeMonitorize(RESTControlVar controlVar);
+	
+	/**
+	 * Get all RESTControlVars
+	 * @return
+	 */
     List<RESTControlVar> findAll();
 	
 }

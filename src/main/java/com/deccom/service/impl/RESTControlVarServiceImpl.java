@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.deccom.domain.RESTConnection;
@@ -124,21 +123,6 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 		log.debug("Request to delete RESTControlVarService : {}", id);
 
 		restControlVarRepository.delete(id);
-
-	}
-
-	@Scheduled(fixedRate = 1000 * 30)
-	public void monitorize() {
-
-		List<RESTControlVar> restControlVars;
-
-		restControlVars = restControlVarRepository.findAll();
-
-		// restControlVars.forEach((x) -> executeMonitorize(x));
-
-		for (RESTControlVar restControlVar : restControlVars) {
-			executeMonitorize(restControlVar);
-		}
 
 	}
 

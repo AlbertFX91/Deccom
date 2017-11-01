@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.deccom.domain.SQLConnection;
@@ -104,13 +103,6 @@ public class SQLControlVarServiceImpl implements SQLControlVarService{
         sqlControlVarRepository.delete(id);
     }
     
-    // @Scheduled(fixedRate = 1000 * 30)
-    public void monitorize() {
-    	List<SQLControlVar> controlVars = sqlControlVarRepository.findAll();
-    	
-    	controlVars.forEach((x)->executeMonitorize(x));
-
-    }
     public void executeMonitorize(SQLControlVar controlVar) {
     	String value;
     	SQLControlVarEntry controlVarEntry;
@@ -141,4 +133,10 @@ public class SQLControlVarServiceImpl implements SQLControlVarService{
     	save(controlVar);
     	
     }
+
+
+	@Override
+	public List<SQLControlVar> findAll() {
+		return sqlControlVarRepository.findAll();
+	}
 }
