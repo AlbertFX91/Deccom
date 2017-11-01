@@ -6,10 +6,10 @@ import org.springframework.scheduling.Trigger;
 import org.springframework.scheduling.TriggerContext;
 import org.springframework.scheduling.support.CronTrigger;
 
-public class DeccomCustomTrigger implements Trigger {
+public class DeccomSecondTrigger implements Trigger {
 	private String cronExpresion;
 	
-	public DeccomCustomTrigger(Integer seconds) {
+	public DeccomSecondTrigger(Integer seconds) {
 		this.cronExpresion = "*/"+seconds+" * * * * *";
 	}
 

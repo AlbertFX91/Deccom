@@ -110,21 +110,6 @@ public class RESTResource {
 
 	}
 
-	/**
-	 * GET /test : test a method
-	 *
-	 * @return the ResponseEntity with status 200 (OK)
-	 */
-	@GetMapping("/rest/test")
-	@Timed
-	public ResponseEntity<String> test() throws Exception {
-
-		log.debug("REST request to test");
-		restControlVarService.monitorize();
-		return ResponseEntity.ok().body("OK");
-
-	}
-
 	@ExceptionHandler(RESTServiceException.class)
 	public ResponseEntity<String> panic(RESTServiceException oops) {
 		return ResponseEntity

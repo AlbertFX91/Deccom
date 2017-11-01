@@ -13,7 +13,9 @@ import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
 import com.deccom.domain.RESTControlVar;
+import com.deccom.domain.SQLControlVar;
 import com.deccom.service.RESTControlVarService;
+import com.deccom.service.SQLControlVarService;
 
 @Configuration
 @EnableScheduling
@@ -24,43 +26,38 @@ public class DeccomSchedulingConfigurer implements SchedulingConfigurer{
 	
 	@Autowired
     private RESTControlVarService restCvService;
+	@Autowired
+    private SQLControlVarService sqlCvService;
 	
 	@Override
 	public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
-		log.info("Scheduled ControlVar tasks initialization");
+		log.debug("Scheduled ControlVar tasks initialization");
 		taskRegistrar.setScheduler(taskExecutor());
-		for(RESTControlVar r: restCvService.findAll()) {
+		
+
+		log.debug("Scheduled RESTControlVar tasks");
+		for(RESTControlVar cv: restCvService.findAll()) {
 			taskRegistrar.addTriggerTask(
 					// Runnable object
-					new DeccomSaveTask(r.getId(), restCvService), 
+					new DeccomRESTControlVarMonitorTask(cv, restCvService), 
 					// Trigger object
-					new DeccomCustomTrigger(10));
+					new DeccomSecondTrigger(
+							// Example dynamic period to test the parallel execution
+							cv.getName().equals("id1") ? 5 : 10
+							));
     	}
-		
-		/*
-		taskRegistrar.addTriggerTask(
-				new Runnable() {
-                    @Override public void run() {
-                        myBean().run();
-                    }
-                },
-				new Trigger() {
-					@Override public Date nextExecutionTime(TriggerContext triggerContext) {
-                        Calendar nextExecutionTime =  new GregorianCalendar();
-                        Date lastActualExecutionTime = triggerContext.lastActualExecutionTime();
-                        nextExecutionTime.setTime(lastActualExecutionTime != null ? lastActualExecutionTime : new Date());
-                        nextExecutionTime.add(Calendar.MILLISECOND, 2000); //you can get the value from wherever you want
-                        return nextExecutionTime.getTime();
-		            }
-		        });
-		*/
-		
-		/*
-		for(int i = 1; i <= 10; i++) {
+	
+		log.debug("Scheduled SQLControlVar tasks");
+		for(SQLControlVar cv: sqlCvService.findAll()) {
 			taskRegistrar.addTriggerTask(
-					new MyTask(i),
-					new DeccomCustomTrigger(i));
-		}*/
+					// Runnable object
+					new DeccomSQLControlVarMonitorTask(cv, sqlCvService), 
+					// Trigger object
+					new DeccomSecondTrigger(
+							// Example dynamic period to test the parallel execution
+							cv.getName().equals("controlvar-1") ? 5 : 10
+							));
+    	}
 	}
 	
 	@Bean(destroyMethod="shutdown")
