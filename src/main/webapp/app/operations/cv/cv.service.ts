@@ -15,7 +15,7 @@ export class CVService {
         this.cvCards = [
             {
                 'id': 'cvCardId1',
-                'logo': '../../../content/images/icons/sql.png',
+                'source': 'SQL',
                 'name': 'Followers',
                 'value': '160',
                 'entries': 1,
@@ -25,7 +25,7 @@ export class CVService {
             },
             {
                 'id': 'cvCardId2',
-                // 'logo': 'rest.png',
+                'source': 'REST',
                 'name': 'Following',
                 'value': '100',
                 'entries': 1,
@@ -35,7 +35,7 @@ export class CVService {
             },
             {
                 'id': 'cvCardId3',
-                // 'logo': '../../../content/images/icons/rest.png',
+                'source': 'REST',
                 'name': 'Friends',
                 'value': '10',
                 'entries': 1,
@@ -46,7 +46,7 @@ export class CVService {
             },
             {
                 'id': 'cvCardId4',
-                // 'logo': 'src/main/webapp/content/images/icons/rest.png',
+                'source': 'REST',
                 'name': 'Contacts',
                 'value': '40',
                 'entries': 3,

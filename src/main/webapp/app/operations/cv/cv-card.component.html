@@ -5,7 +5,12 @@
                 &nbsp;
             </div>
             <div class="logo" style="flex-grow: 3; justify-content: center; align-items: center; display:flex;">
-                <img [src]="cvCard.logo" style="height: 30px;" />
+                <div *ngIf="cvCard.source=='REST'">
+                    <img src="../../../content/images/icons/rest.png" style="height: 30px;" />
+                </div>
+                <div *ngIf="cvCard.source=='SQL'">
+                    <img src="../../../content/images/icons/sql.png" style="height: 30px;" />
+                </div>
             </div>
             <div class="title" style="flex-grow: 8; font-weight: 700; display:flex; align-items: center; border-color: black; border-width: 0 1px 0 0; border-style: solid; border-top-right-radius: 6px;
                     border-bottom-right-radius: 6px;">
@@ -17,7 +22,7 @@
                     <strong style="font-size: x-large">{{cvCard.value}}</strong>
                 </div>
                 <div style="flex-grow: 1; cursor:pointer;">
-                    -
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"></button>
                 </div>
             </div>
         </div>
@@ -27,6 +32,9 @@
             <span jhiTranslate="deccomApp.ControlVar.entries"></span>: {{cvCard.entries}}</p>
         <p>
             <span jhiTranslate="deccomApp.ControlVar.last_update"></span>: {{cvCard.last_update}}</p>
-        <img src="../../../content/images/icons/graph.png" class="img1" alt="">
+
+        <p>
+            <img src="../../../content/images/icons/graph.png" class="img1" alt="">
+        </p>
     </div>
 </div>

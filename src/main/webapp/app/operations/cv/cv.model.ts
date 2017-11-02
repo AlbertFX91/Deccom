@@ -1,7 +1,7 @@
 export class CVCard {
     constructor(
         public id?: string,
-        public logo?: string,
+        public source?: string,
         public name?: string,
         public value?: string,
         public entries?: number,
