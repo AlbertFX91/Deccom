@@ -15,7 +15,7 @@ export class CVService {
         this.cvCards = [
             {
                 'id': 'cvCardId1',
-                'source': 'SQL',
+                'logo_url': 'http://www.iconhot.com/icon/png/coded/512/sql-1.png',
                 'name': 'Followers',
                 'value': '160',
                 'entries': 1,
@@ -25,7 +25,7 @@ export class CVService {
             },
             {
                 'id': 'cvCardId2',
-                'source': 'REST',
+                'logo_url': 'https://www.vera.com/wp-content/uploads/2016/04/apps-sdk_03_rest_api_275.png',
                 'name': 'Following',
                 'value': '100',
                 'entries': 1,
@@ -35,7 +35,7 @@ export class CVService {
             },
             {
                 'id': 'cvCardId3',
-                'source': 'REST',
+                'logo_url': 'https://www.vera.com/wp-content/uploads/2016/04/apps-sdk_03_rest_api_275.png',
                 'name': 'Friends',
                 'value': '10',
                 'entries': 1,
@@ -46,7 +46,7 @@ export class CVService {
             },
             {
                 'id': 'cvCardId4',
-                'source': 'REST',
+                'logo_url': 'http://www.freeiconspng.com/uploads/images-facebook-f-logo-png-transparent-background-page-2-29.png',
                 'name': 'Contacts',
                 'value': '40',
                 'entries': 3,
