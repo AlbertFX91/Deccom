@@ -55,9 +55,23 @@ p {
   cursor: pointer;
 }
 
-.running {
+.Running {
   background-color: #44AA44;
   flex-grow: 0.3; 
   border-top-left-radius: 6px;
   border-bottom-left-radius: 6px;
 }
+
+.Paused {
+    background-color: #F2EF35;
+    flex-grow: 0.3; 
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+  }
+
+.Blocked {
+    background-color: #CC240A;
+    flex-grow: 0.3; 
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+  }

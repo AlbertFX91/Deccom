@@ -1,7 +1,7 @@
 <div id="mainbox">
     <div class="card">
         <div class="fondo">
-            <div class="running">
+            <div [ngClass]="cvCard.status">
                 &nbsp;
             </div>
             <div class="logo" style="flex-grow: 3; justify-content: center; align-items: center; display:flex;">
@@ -11,6 +11,9 @@
                 <div *ngIf="cvCard.source=='SQL'">
                     <img src="../../../content/images/icons/sql.png" style="height: 30px;" />
                 </div>
+                <!--
+                    <img [src]="image(cvCard.source)" style="height: 30px;" />
+                -->
             </div>
             <div class="title" style="flex-grow: 8; font-weight: 700; display:flex; align-items: center; border-color: black; border-width: 0 1px 0 0; border-style: solid; border-top-right-radius: 6px;
                     border-bottom-right-radius: 6px;">

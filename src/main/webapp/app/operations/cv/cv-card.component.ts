@@ -13,6 +13,11 @@ export class CVCardComponent implements OnInit, OnDestroy {
     @Input()
     cvCard: CVCard;
 
+    source = {
+        'REST': '../../../content/images/icons/rest.png',
+        'SQL': '../../../content/images/icons/sql.png'
+    };
+
     constructor(
         private cvService: CVService
     ) { }
@@ -23,6 +28,10 @@ export class CVCardComponent implements OnInit, OnDestroy {
 
     dragStart(ev) {
         ev.dataTransfer.setData('text', ev.target.id);
+    }
+
+    image(key: string) {
+        return this.source[this.cvCard.source];
     }
 
 }
