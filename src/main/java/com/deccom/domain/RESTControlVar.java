@@ -33,6 +33,11 @@ public class RESTControlVar implements Serializable {
 	@Field("creationMoment")
 	private LocalDateTime creationMoment;
 
+
+	@NotNull
+	@Field("frequency_sec")
+	private Integer frequency_sec;
+	
 	@NotNull
 	@Field("restConnection")
 	private RESTConnection restConnection;
@@ -42,13 +47,14 @@ public class RESTControlVar implements Serializable {
 	private List<RESTControlVarEntry> restControlVarEntries;
 
 	public RESTControlVar(String name, String query,
-			LocalDateTime creationMoment, RESTConnection restConnection,
-			List<RESTControlVarEntry> restControlVarEntries) {
+			LocalDateTime creationMoment, Integer frequency_sec,
+			RESTConnection restConnection, List<RESTControlVarEntry> restControlVarEntries) {
 
 		super();
 		this.name = name;
 		this.query = query;
 		this.creationMoment = creationMoment;
+		this.frequency_sec = frequency_sec;
 		this.restConnection = restConnection;
 		this.restControlVarEntries = restControlVarEntries;
 
@@ -90,6 +96,14 @@ public class RESTControlVar implements Serializable {
 
 	public void setCreationMoment(LocalDateTime creationMoment) {
 		this.creationMoment = creationMoment;
+	}
+	
+	public Integer getFrequency_sec() {
+		return frequency_sec;
+	}
+
+	public void setFrequency_sec(Integer frequency_sec) {
+		this.frequency_sec = frequency_sec;
 	}
 
 	public RESTConnection getRestConnection() {
@@ -135,8 +149,8 @@ public class RESTControlVar implements Serializable {
 	public String toString() {
 		return "RESTControlVar [id=" + id + ", name=" + name + ", query="
 				+ query + ", creationMoment=" + creationMoment
-				+ ", restConnection=" + restConnection
-				+ ", restControlVarEntries=" + restControlVarEntries + "]";
+				+ ", frequency_sec=" + frequency_sec
+				+ ", restConnection=" + restConnection + "]";
 	}
 
 }

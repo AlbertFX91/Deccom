@@ -50,6 +50,7 @@ public class SQLControlVarServiceImpl implements SQLControlVarService{
     	res.setCreationMoment(LocalDateTime.now());
     	res.setName(sqlDataRecover.getControlVarName());
     	res.setQuery(sqlDataRecover.getQuery());
+    	res.setFrequency_sec(sqlDataRecover.getFrequency_sec());
     	res.setSqlConnection(sqlDataRecover.getConnection());
     	res.setSqlControlVarEntries(new ArrayList<>());
     	

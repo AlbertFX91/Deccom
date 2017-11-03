@@ -127,6 +127,7 @@ public class InitialSetupMigration {
 		cv.setCreationMoment(LocalDateTime.now());
 		cv.setName("controlvar-1");
 		cv.setQuery("select age  from author where  idauthor='1' and name='name-1'");
+		cv.setFrequency_sec(5);
 		cv.setSqlConnection(new SQLConnection("developer", "developer",
 				"jdbc:mysql://localhost:3306/deccom"));
 		cv.setSqlControlVarEntries(Lists.newArrayList(new SQLControlVarEntry(
@@ -140,6 +141,7 @@ public class InitialSetupMigration {
 		cv.setCreationMoment(LocalDateTime.now());
 		cv.setName("controlvar-2");
 		cv.setQuery("select age  from author where  idauthor='2' and name='name-2'");
+		cv.setFrequency_sec(10);
 		cv.setSqlConnection(new SQLConnection("developer", "developer",
 				"jdbc:mysql://localhost:3306/deccom"));
 		cv.setSqlControlVarEntries(Lists.newArrayList(new SQLControlVarEntry(
@@ -156,6 +158,7 @@ public class InitialSetupMigration {
 		r.setCreationMoment(LocalDateTime.now());
 		r.setName("id1");
 		r.setQuery("$.[0].id");
+		r.setFrequency_sec(5);
 		r.setRestConnection(new RESTConnection(
 				"https://jsonplaceholder.typicode.com/photos"));
 		r.setRestControlVarEntries(Lists.newArrayList(new RESTControlVarEntry(
@@ -169,6 +172,7 @@ public class InitialSetupMigration {
 		r.setCreationMoment(LocalDateTime.now());
 		r.setName("id2");
 		r.setQuery("$.[5].id");
+		r.setFrequency_sec(10);
 		r.setRestConnection(new RESTConnection(
 				"https://jsonplaceholder.typicode.com/photos"));
 		r.setRestControlVarEntries(Lists.newArrayList(new RESTControlVarEntry(

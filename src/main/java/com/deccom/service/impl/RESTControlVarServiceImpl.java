@@ -48,16 +48,18 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 		RESTControlVar result;
 		String name;
 		String query;
+		Integer frequency_sec;
 		LocalDateTime creationMoment;
 		RESTConnection restConnection;
 		List<RESTControlVarEntry> restControlVarEntries;
 
 		name = restDataRecover.getControlVarName();
 		query = restDataRecover.getQuery();
+		frequency_sec = restDataRecover.getFrequency_sec();
 		creationMoment = LocalDateTime.now();
 		restConnection = restDataRecover.getRestConnection();
 		restControlVarEntries = new ArrayList<>();
-		result = new RESTControlVar(name, query, creationMoment,
+		result = new RESTControlVar(name, query, creationMoment, frequency_sec,
 				restConnection, restControlVarEntries);
 
 		return result;
