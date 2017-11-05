@@ -1,6 +1,6 @@
 .brackets {
     display: inline-block;
-    background: url("../../../../content/images/icons/brackets-icon.png") no-repeat center top;
+    background: url("../../../content/images/icons/brackets-icon.png") no-repeat center top;
     background-size: contain;
     width: 20px;
     height: 30px;
@@ -8,7 +8,7 @@
 
 .keys {
     display: inline-block;
-    background: url("../../../../content/images/icons/keys-icon.png") no-repeat center top;
+    background: url("../../../content/images/icons/keys-icon.png") no-repeat center top;
     background-size: contain;
     width: 20px;
     height: 30px;
