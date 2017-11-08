@@ -13,9 +13,13 @@ export class CVCardComponent implements OnInit, OnDestroy {
     @Input()
     cvCard: CVCard;
 
+    public isCollapsed;
+
     constructor(
         private cvService: CVService
-    ) { }
+    ) {
+        this.isCollapsed = true;
+    }
 
     ngOnInit() { }
 
