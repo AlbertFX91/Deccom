@@ -13,8 +13,6 @@ import java.net.URLEncoder;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import net.minidev.json.JSONValue;
-
 import org.apache.commons.codec.binary.Base64;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,10 +44,13 @@ public class RESTUtil {
 		HttpURLConnection con;
 		int responseCode;
 		BufferedReader in;
-		String inputLine, result;
+		String twitterApiEndpoint, bearerToken, inputLine, result;
 		StringBuffer response;
 
 		try {
+			twitterApiEndpoint = "https://api.twitter.com/oauth2/token";
+			bearerToken = requestBearerToken(twitterApiEndpoint);
+
 			// The path is transformed into an URL object to establish the
 			// connection
 			obj = new URL(url);
@@ -60,6 +61,9 @@ public class RESTUtil {
 
 			// Adding request header
 			con.setRequestProperty("User-Agent", USER_AGENT);
+
+			// con.setRequestProperty("Host", "api.twitter.com");
+			con.setRequestProperty("Authorization", "Bearer " + bearerToken);
 
 			// Here we will know if the response is positive or not
 			responseCode = con.getResponseCode();
@@ -128,7 +132,15 @@ public class RESTUtil {
 
 	}
 
-	// Encodes the consumer key and secret to create the basic authorization key
+	/**
+	 * Encodes the consumer key and secret.
+	 * 
+	 * @param consumerKey
+	 *            the user's API Key
+	 * @param consumerSecret
+	 *            the user's API Secret
+	 * @return the basic authorization key
+	 */
 	private static String encodeKeys(String consumerKey, String consumerSecret) {
 		try {
 			String encodedConsumerKey = URLEncoder.encode(consumerKey, "UTF-8");
@@ -143,23 +155,22 @@ public class RESTUtil {
 
 	}
 
-	// Constructs the request for requesting a bearer token and returns that
-	// token as a string
+	/**
+	 * Constructs the request for requesting a bearer token.
+	 * 
+	 * @param endPointUrl
+	 *            the URL to request the token
+	 * @return the bearer token as a string
+	 */
 	private static String requestBearerToken(String endPointUrl)
 			throws IOException {
 		HttpsURLConnection connection = null;
-		String encodedCredentials = encodeKeys("<consumerkey>",
-				"<consumersecret>");
+		String encodedCredentials = encodeKeys("consumerKey",
+				"consumerSecret");
 
 		try {
 			URL url = new URL(endPointUrl);
 			connection = (HttpsURLConnection) url.openConnection();
-			/*
-			 * String twitterApiEndpoint =
-			 * "https://api.twitter.com/oauth2/token"; URL url = new
-			 * URL(twitterApiEndpoint); connection = (HttpsURLConnection)
-			 * url.openConnection();
-			 */
 			connection.setDoOutput(true);
 			connection.setDoInput(true);
 			connection.setRequestMethod("POST");
@@ -176,21 +187,32 @@ public class RESTUtil {
 
 			// Parse the JSON response into a JSON mapped object to fetch fields
 			// from.
-			JSONObject obj = (JSONObject) JSONValue
-					.parse(readResponse(connection));
+			/*
+			 * JSONObject obj = (JSONObject) JSONValue
+			 * .parse(readResponse(connection));
+			 */
 
-			if (obj != null) {
-				try {
-					String tokenType = (String) obj.get("token_type");
-					String token = (String) obj.get("access_token");
+			try {
+				JSONObject obj = new JSONObject(readResponse(connection));
 
-					return ((tokenType.equals("bearer")) && (token != null)) ? token
-							: "";
-				} catch (JSONException e) {
-					return new String();
+				if (obj != null) {
+					try {
+						String tokenType = (String) obj.get("token_type");
+						String token = (String) obj.get("access_token");
+
+						return ((tokenType.equals("bearer")) && (token != null)) ? token
+								: "";
+					} catch (JSONException e) {
+						throw new RESTServiceException("Wrong JSON format",
+								i18nCodeRoot + ".jsonerror", "RESTService", e);
+					}
+
 				}
-
+			} catch (JSONException e) {
+				throw new RESTServiceException("Wrong JSON format",
+						i18nCodeRoot + ".jsonerror", "RESTService", e);
 			}
+
 			return new String();
 		} catch (MalformedURLException e) {
 			throw new IOException("Invalid endpoint URL specified.", e);
@@ -201,6 +223,15 @@ public class RESTUtil {
 		}
 	}
 
+	/**
+	 * Writes a request to a connection.
+	 * 
+	 * @param connection
+	 *            the connection to write the request to
+	 * @param textBody
+	 *            the body of the request
+	 * @return tells if the request was properly sent or not
+	 */
 	// Writes a request to a connection
 	private static boolean writeRequest(HttpsURLConnection connection,
 			String textBody) {
@@ -212,23 +243,33 @@ public class RESTUtil {
 			wr.close();
 
 			return true;
+			
 		} catch (IOException e) {
 			return false;
 		}
 	}
 
+	/**
+	 * Reads a response for a given connection.
+	 * 
+	 * @param connection
+	 *            the connection that the response was for
+	 * @return the response as a string
+	 */
 	// Reads a response for a given connection and returns it as a string.
 	private static String readResponse(HttpsURLConnection connection) {
 		try {
 			StringBuilder str = new StringBuilder();
-
 			BufferedReader br = new BufferedReader(new InputStreamReader(
 					connection.getInputStream()));
 			String line = "";
+			
 			while ((line = br.readLine()) != null) {
 				str.append(line + System.getProperty("line.separator"));
 			}
+			
 			return str.toString();
+			
 		} catch (IOException e) {
 			return new String();
 		}
