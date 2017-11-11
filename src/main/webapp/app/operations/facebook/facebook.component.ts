@@ -37,7 +37,7 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
         };
         this.data = [];
         this.path = '';
-        this.url = 'https://jsonplaceholder.typicode.com/users';
+        this.url = 'https://api.twitter.com/1.1/followers/list.json?screen_name=deccom2018';
     }
 
     loadPage(page) {

@@ -165,8 +165,7 @@ public class RESTUtil {
 	private static String requestBearerToken(String endPointUrl)
 			throws IOException {
 		HttpsURLConnection connection = null;
-		String encodedCredentials = encodeKeys("consumerKey",
-				"consumerSecret");
+		String encodedCredentials = encodeKeys("consumerKey", "consumerSecret");
 
 		try {
 			URL url = new URL(endPointUrl);
@@ -243,7 +242,7 @@ public class RESTUtil {
 			wr.close();
 
 			return true;
-			
+
 		} catch (IOException e) {
 			return false;
 		}
@@ -263,13 +262,13 @@ public class RESTUtil {
 			BufferedReader br = new BufferedReader(new InputStreamReader(
 					connection.getInputStream()));
 			String line = "";
-			
+
 			while ((line = br.readLine()) != null) {
 				str.append(line + System.getProperty("line.separator"));
 			}
-			
+
 			return str.toString();
-			
+
 		} catch (IOException e) {
 			return new String();
 		}
