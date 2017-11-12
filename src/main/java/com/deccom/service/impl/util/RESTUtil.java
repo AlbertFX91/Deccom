@@ -202,14 +202,15 @@ public class RESTUtil {
 						return ((tokenType.equals("bearer")) && (token != null)) ? token
 								: "";
 					} catch (JSONException e) {
-						throw new RESTServiceException("Wrong JSON format",
-								i18nCodeRoot + ".jsonerror", "RESTService", e);
+						throw new RESTServiceException("Wrong credentials",
+								i18nCodeRoot + ".wrongcredentials",
+								"RESTService", e);
 					}
 
 				}
 			} catch (JSONException e) {
-				throw new RESTServiceException("Wrong JSON format",
-						i18nCodeRoot + ".jsonerror", "RESTService", e);
+				throw new RESTServiceException("Wrong credentials",
+						i18nCodeRoot + ".wrongcredentials", "RESTService", e);
 			}
 
 			return new String();

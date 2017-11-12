@@ -1,10 +1,10 @@
 <div>
     <h2>
-        <span jhiTranslate="deccomApp.Facebook.home.title">Extract Facebook data</span>
+        <span jhiTranslate="deccomApp.Twitter.home.title">Extract Twitter data</span>
     </h2>
     <div class="container">
         <div class="row">
-            <form name="facebookForm" role="form" novalidate (ngSubmit)="onSubmit()" #facebookForm="ngForm" style="width: 100%">
+            <form name="twitterForm" role="form" novalidate (ngSubmit)="onSubmit()" #twitterForm="ngForm" style="width: 100%">
                 <jhi-alert-error></jhi-alert-error>
                 <jhi-alert></jhi-alert>
                 <!--
@@ -12,11 +12,11 @@
                     <label class="form-control-label" jhiTranslate="deccomApp.REST.url" for="field_url">URL</label>
                     <input type="url" class="form-control" name="url" id="field_url" pattern="https?://.+" title="Include http://" [(ngModel)]="url"
                         required />
-                    <div [hidden]="!(facebookForm.controls.url?.dirty && facebookForm.controls.url?.invalid)">
-                        <small class="form-text text-danger" [hidden]="!facebookForm.controls.url?.errors?.required" jhiTranslate="entity.validation.required">
+                    <div [hidden]="!(twitterForm.controls.url?.dirty && twitterForm.controls.url?.invalid)">
+                        <small class="form-text text-danger" [hidden]="!twitterForm.controls.url?.errors?.required" jhiTranslate="entity.validation.required">
                             This field is required.
                         </small>
-                        <small class="form-text text-danger" [hidden]="!facebookForm.controls.url?.errors?.pattern" jhiTranslate="deccomApp.REST.wrongURL">
+                        <small class="form-text text-danger" [hidden]="!twitterForm.controls.url?.errors?.pattern" jhiTranslate="deccomApp.REST.wrongURL">
                             Wrong URL.
                         </small>
                     </div>
@@ -27,7 +27,7 @@
                         <span class="fa fa-ban"></span>&nbsp;
                         <span jhiTranslate="entity.action.cancel">Cancel</span>
                     </button>
-                    <button type="submit" [disabled]="facebookForm.form.invalid || isSaving" class="btn btn-primary">
+                    <button type="submit" [disabled]="twitterForm.form.invalid || isSaving" class="btn btn-primary">
                         <span class="fa fa-download"></span>&nbsp;
                         <span jhiTranslate="entity.action.load">Load</span>
                     </button>

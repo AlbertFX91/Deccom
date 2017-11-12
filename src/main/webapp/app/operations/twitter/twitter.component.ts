@@ -9,9 +9,9 @@ import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 
 @Component({
-    selector: 'jhi-facebook',
-    templateUrl: './facebook.component.html'
-}) export class FacebookComponent implements OnInit, OnDestroy {
+    selector: 'jhi-twitter',
+    templateUrl: './twitter.component.html'
+}) export class TwitterComponent implements OnInit, OnDestroy {
 
     isSaving: boolean;
     url: string;

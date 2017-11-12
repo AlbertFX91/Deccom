@@ -4,15 +4,15 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes, CanActiva
 import { UserRouteAccessService } from '../../shared';
 import { JhiPaginationUtil } from 'ng-jhipster';
 
-import { FacebookComponent } from './facebook.component';
+import { TwitterComponent } from './twitter.component';
 
-export const facebookRoute: Routes = [
+export const twitterRoute: Routes = [
     {
-        path: 'facebook',
-        component: FacebookComponent,
+        path: 'twitter',
+        component: TwitterComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'deccomApp.Facebook.home.title'
+            pageTitle: 'deccomApp.Twitter.home.title'
         },
         canActivate: [UserRouteAccessService]
     }

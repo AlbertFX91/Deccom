@@ -1,8 +1,8 @@
 {
     "deccomApp": {
-        "Facebook": {
+        "Twitter": {
             "home": {
-                "title": "Extract Facebook data"
+                "title": "Extract Twitter data"
             }
         }
     }

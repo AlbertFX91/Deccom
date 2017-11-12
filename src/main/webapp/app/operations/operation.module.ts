@@ -4,7 +4,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { DeccomSQLModule } from './sql/sql.module';
 import { DeccomRESTModule } from './rest/rest.module';
 import { DeccomCVModule } from './cv/cv.module';
-import { DeccomFacebookModule } from './facebook/facebook.module';
+import { DeccomTwitterModule } from './twitter/twitter.module';
 
 @NgModule({
     imports: [
@@ -12,7 +12,7 @@ import { DeccomFacebookModule } from './facebook/facebook.module';
         DeccomSQLModule,
         DeccomRESTModule,
         DeccomCVModule,
-        DeccomFacebookModule
+        DeccomTwitterModule
     ],
     declarations: [],
     entryComponents: [],
