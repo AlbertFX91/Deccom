@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,9 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 
 	private final RESTControlVarRepository restControlVarRepository;
 
+	@Autowired
+	private DeccomSchedulingService schedulingService;
+	
 	public RESTControlVarServiceImpl(
 			RESTControlVarRepository restControlVarRepository) {
 
@@ -78,7 +82,28 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 
 		log.debug("Request to save RESTControlVar : {}", restControlVar);
 
-		return restControlVarRepository.save(restControlVar);
+		RESTControlVar res = restControlVarRepository.save(restControlVar);
+		
+		schedulingService.newJob(res);
+		
+		return res;
+
+	}
+	
+	/**
+	 * Update a restControlVar.
+	 *
+	 * @param restControlVar
+	 *            the entity to save
+	 * @return the persisted entity
+	 */
+	public RESTControlVar update(RESTControlVar restControlVar) {
+
+		log.debug("Request to update RESTControlVar : {}", restControlVar);
+
+		RESTControlVar res = restControlVarRepository.save(restControlVar);
+		
+		return res;
 
 	}
 
@@ -150,7 +175,7 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 
 		restControlVarEntries.add(restControlVarEntry);
 
-		save(restControlVar);
+		update(restControlVar);
 
 	}
 

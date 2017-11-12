@@ -1,7 +1,7 @@
 package com.deccom.config;
 
-import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,10 +12,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
-import com.deccom.domain.RESTControlVar;
-import com.deccom.domain.SQLControlVar;
-import com.deccom.service.RESTControlVarService;
-import com.deccom.service.SQLControlVarService;
+import com.deccom.service.impl.DeccomSchedulingService;
 
 @Configuration
 @EnableScheduling
@@ -24,36 +21,18 @@ public class DeccomSchedulingConfigurer implements SchedulingConfigurer {
 	private static final Logger log = LoggerFactory.getLogger(DeccomSchedulingConfigurer.class);
 
 	@Autowired
-	private RESTControlVarService restCvService;
-	@Autowired
-	private SQLControlVarService sqlCvService;
-
+	private DeccomSchedulingService schedulingService;
+	
 	@Override
 	public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
 		log.debug("Scheduled ControlVar tasks initialization");
-		taskRegistrar.setScheduler(taskExecutor());
-
-		log.debug("Scheduled RESTControlVar tasks");
-		for (RESTControlVar cv : restCvService.findAll()) {
-			taskRegistrar.addTriggerTask(
-					// Runnable object
-					new DeccomRESTControlVarMonitorTask(cv, restCvService),
-					// Trigger object
-					new DeccomSecondTrigger(cv.getFrequency_sec()));
-		}
-
-		log.debug("Scheduled SQLControlVar tasks");
-		for (SQLControlVar cv : sqlCvService.findAll()) {
-			taskRegistrar.addTriggerTask(
-					// Runnable object
-					new DeccomSQLControlVarMonitorTask(cv, sqlCvService),
-					// Trigger object
-					new DeccomSecondTrigger(cv.getFrequency_sec()));
-		}
+		ScheduledExecutorService str = taskExecutor();
+		taskRegistrar.setScheduler(str);
+		schedulingService.startJobs(str);
 	}
 
 	@Bean(destroyMethod = "shutdown")
-	public Executor taskExecutor() {
+	public ScheduledExecutorService taskExecutor() {
 		// 1000 scheluded tasks throw in parallel
 		return Executors.newScheduledThreadPool(1000);
 	}
