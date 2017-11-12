@@ -31,6 +31,10 @@ public class SQLControlVar implements Serializable{
 	private LocalDateTime creationMoment;
 	
 	@NotNull
+	@Field("frequency_sec")
+	private Integer frequency_sec;
+	
+	@NotNull
 	@Field("sqlConnection")
 	private SQLConnection sqlConnection;
 
@@ -72,6 +76,14 @@ public class SQLControlVar implements Serializable{
 
 	public void setCreationMoment(LocalDateTime creationMoment) {
 		this.creationMoment = creationMoment;
+	}
+	
+	public Integer getFrequency_sec() {
+		return frequency_sec;
+	}
+
+	public void setFrequency_sec(Integer frequency_sec) {
+		this.frequency_sec = frequency_sec;
 	}
 
 	public SQLConnection getSqlConnection() {
@@ -118,6 +130,7 @@ public class SQLControlVar implements Serializable{
 	@Override
 	public String toString() {
 		return "SQLControlVar [id=" + id + ", name=" + name + ", query=" + query + ", creationMoment=" + creationMoment
+				+ ", frequency_sec=" + frequency_sec
 				+ ", sqlConnection=" + sqlConnection + "]";
 	}
 

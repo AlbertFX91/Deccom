@@ -6,9 +6,9 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.deccom.domain.RESTConnection;
@@ -17,7 +17,7 @@ import com.deccom.domain.RESTControlVarEntry;
 import com.deccom.domain.RESTDataRecover;
 import com.deccom.repository.RESTControlVarRepository;
 import com.deccom.service.RESTControlVarService;
-import com.deccom.service.RESTService;
+import com.deccom.service.impl.util.RESTUtil;
 
 /**
  * Service Implementation for managing RESTControlVar.
@@ -30,14 +30,13 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 
 	private final RESTControlVarRepository restControlVarRepository;
 
-	private final RESTService restService;
-
+	@Autowired
+	private DeccomSchedulingService schedulingService;
+	
 	public RESTControlVarServiceImpl(
-			RESTControlVarRepository restControlVarRepository,
-			RESTService restService) {
+			RESTControlVarRepository restControlVarRepository) {
 
 		this.restControlVarRepository = restControlVarRepository;
-		this.restService = restService;
 
 	}
 
@@ -53,16 +52,18 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 		RESTControlVar result;
 		String name;
 		String query;
+		Integer frequency_sec;
 		LocalDateTime creationMoment;
 		RESTConnection restConnection;
 		List<RESTControlVarEntry> restControlVarEntries;
 
 		name = restDataRecover.getControlVarName();
 		query = restDataRecover.getQuery();
+		frequency_sec = restDataRecover.getFrequency_sec();
 		creationMoment = LocalDateTime.now();
 		restConnection = restDataRecover.getRestConnection();
 		restControlVarEntries = new ArrayList<>();
-		result = new RESTControlVar(name, query, creationMoment,
+		result = new RESTControlVar(name, query, creationMoment, frequency_sec,
 				restConnection, restControlVarEntries);
 
 		return result;
@@ -81,7 +82,28 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 
 		log.debug("Request to save RESTControlVar : {}", restControlVar);
 
-		return restControlVarRepository.save(restControlVar);
+		RESTControlVar res = restControlVarRepository.save(restControlVar);
+		
+		schedulingService.newJob(res);
+		
+		return res;
+
+	}
+	
+	/**
+	 * Update a restControlVar.
+	 *
+	 * @param restControlVar
+	 *            the entity to save
+	 * @return the persisted entity
+	 */
+	public RESTControlVar update(RESTControlVar restControlVar) {
+
+		log.debug("Request to update RESTControlVar : {}", restControlVar);
+
+		RESTControlVar res = restControlVarRepository.save(restControlVar);
+		
+		return res;
 
 	}
 
@@ -131,28 +153,13 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 
 	}
 
-	@Scheduled(fixedRate = 1000 * 30)
-	public void monitorize() throws Exception {
-
-		List<RESTControlVar> restControlVars;
-
-		restControlVars = restControlVarRepository.findAll();
-
-		// restControlVars.forEach((x) -> executeMonitorize(x));
-
-		for (RESTControlVar restControlVar : restControlVars) {
-			executeMonitorize(restControlVar);
-		}
-
-	}
-
-	public void executeMonitorize(RESTControlVar restControlVar)
-			throws Exception {
+	public void executeMonitorize(RESTControlVar restControlVar) {
 
 		String query;
 		LocalDateTime creationMoment;
 		RESTConnection restConnection;
 		String url;
+		String aux;
 		String value;
 		RESTControlVarEntry restControlVarEntry;
 		List<RESTControlVarEntry> restControlVarEntries;
@@ -161,14 +168,22 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 		creationMoment = LocalDateTime.now();
 		restConnection = restControlVar.getRestConnection();
 		url = restConnection.getUrl();
-		value = restService.getByJsonPath(url, query);
+		aux = RESTUtil.getResponse(url);
+		value = RESTUtil.getByJSONPath(aux, query);
 		restControlVarEntry = new RESTControlVarEntry(value, creationMoment);
 		restControlVarEntries = restControlVar.getRestControlVarEntries();
 
 		restControlVarEntries.add(restControlVarEntry);
 
-		save(restControlVar);
+		update(restControlVar);
 
+	}
+
+	@Override
+	public List<RESTControlVar> findAll() {
+		log.debug("Request to get all RESTControlVarServices");
+
+		return restControlVarRepository.findAll();
 	}
 
 }
