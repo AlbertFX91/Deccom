@@ -21,19 +21,4 @@ export class TwitterService {
             .map((res: Response) => res);
     }
 
-    /*
-    restDataRecover(req?: RESTDataRecover): Observable<ResponseWrapper> {
-        return this.http.post(this.resourceUrl + 'datarecover', req)
-            .map((res: Response) => res);
-    }
-
-    private createRequestOption(url: string, pageSettings: any): BaseRequestOptions {
-        const options: BaseRequestOptions = createRequestOption(pageSettings);
-        // const params: URLSearchParams = new URLSearchParams();
-        options.params.set('url', url);
-        // options.params = params;
-        return options;
-    }
-    */
-
 }
