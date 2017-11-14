@@ -4,12 +4,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 /**
- * Service Interface for managing REST.
+ * Service Interface for managing Twitter.
  */
-public interface RESTService {
+public interface TwitterService {
 
 	/**
-	 * Requests a JSON response.
+	 * Requests a JSON response for Twitter data.
 	 * 
 	 * @param url
 	 *            the URL to send the request to

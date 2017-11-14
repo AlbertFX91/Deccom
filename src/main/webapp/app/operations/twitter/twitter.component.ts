@@ -5,6 +5,7 @@ import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, 
 
 import { RESTDataRecover, RESTConnection } from '../rest/rest.model';
 import { RESTService } from '../rest/rest.service';
+import { TwitterService } from './twitter.service';
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 
@@ -25,6 +26,7 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 
     constructor(
         private restService: RESTService,
+        private twitterService: TwitterService,
         private alertService: JhiAlertService,
         private eventManager: JhiEventManager,
         private parseLinks: JhiParseLinks,
@@ -69,7 +71,7 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
             page: this.page,
             size: this.itemsPerPage
         };
-        this.restService.noMapping(this.url, pageSettings).subscribe(
+        this.twitterService.noMapping(this.url, pageSettings).subscribe(
             (data: any) => this.onSuccess(data.json(), data.headers),
             (error: Response) => this.onJSONError(error)
         )

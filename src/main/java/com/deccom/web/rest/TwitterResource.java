@@ -5,6 +5,8 @@ import java.net.URISyntaxException;
 
 import javax.validation.Valid;
 
+import io.swagger.annotations.ApiParam;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -24,34 +26,32 @@ import com.codahale.metrics.annotation.Timed;
 import com.deccom.domain.RESTControlVar;
 import com.deccom.domain.RESTDataRecover;
 import com.deccom.service.RESTControlVarService;
-import com.deccom.service.RESTService;
+import com.deccom.service.TwitterService;
 import com.deccom.service.impl.util.RESTServiceException;
 import com.deccom.web.rest.util.HeaderUtil;
 import com.deccom.web.rest.util.PaginationUtil;
 
-import io.swagger.annotations.ApiParam;
-
 /**
- * REST controller for managing REST.
+ * REST controller for managing Twitter.
  */
 @RestController
 @RequestMapping("/api")
-public class RESTResource {
+public class TwitterResource {
 
-	private final Logger log = LoggerFactory.getLogger(RESTResource.class);
+	private final Logger log = LoggerFactory.getLogger(TwitterResource.class);
 
-	private final RESTService restService;
+	private final TwitterService twitterService;
 
 	private final RESTControlVarService restControlVarService;
 
-	public RESTResource(RESTService restService,
+	public TwitterResource(TwitterService twitterService,
 			RESTControlVarService restControlVarService) {
-		this.restService = restService;
+		this.twitterService = twitterService;
 		this.restControlVarService = restControlVarService;
 	}
 
 	/**
-	 * GET /nomapping : send a HTTP GET request to an URL.
+	 * GET /nomapping : send a HTTP GET request to an URL for Twitter data.
 	 *
 	 * @param url
 	 *            the url to send the request to
@@ -59,31 +59,31 @@ public class RESTResource {
 	 *            the pagination information
 	 * @return the ResponseEntity with status 200 (OK) and the json in body
 	 */
-	@GetMapping("/rest/nomapping")
+	@GetMapping("/twitter/nomapping")
 	@Timed
 	public ResponseEntity<String> noMapping(@RequestParam String url,
 			@ApiParam Pageable pageable) throws Exception {
 
-		log.debug("REST request without mapping");
+		log.debug("Twitter request without mapping");
 
 		Page<String> result;
-		result = restService.noMapping(url, pageable);
+		result = twitterService.noMapping(url, pageable);
 		HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(
-				result, "/api/rest/nomapping");
+				result, "/api/twitter/nomapping");
 		return new ResponseEntity<>(result.getContent().toString(), headers,
 				HttpStatus.OK);
 
 	}
 
 	/**
-	 * POST /datarecover : create a new RESTControlVar.
+	 * POST /datarecover : create a new RESTControlVar for Twitter data.
 	 *
 	 * @param restDataRecover
 	 *            the RESTDataRecover to create the new RESTControlVar from
 	 * @return the ResponseEntity with status 200 (OK) and the RESTControlVar in
 	 *         body
 	 */
-	@PostMapping("/rest/datarecover")
+	@PostMapping("/twitter/datarecover")
 	@Timed
 	public ResponseEntity<RESTControlVar> restDataRecover(
 			@Valid @RequestBody RESTDataRecover restDataRecover)
@@ -115,11 +115,11 @@ public class RESTResource {
 	 *
 	 * @return the ResponseEntity with status 200 (OK)
 	 */
-	@GetMapping("/rest/test")
+	@GetMapping("/twitter/test")
 	@Timed
 	public ResponseEntity<String> test() throws Exception {
 
-		log.debug("REST request to test");
+		log.debug("Twitter request to test");
 		restControlVarService.monitorize();
 		return ResponseEntity.ok().body("OK");
 

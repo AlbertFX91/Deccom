@@ -15,7 +15,8 @@
                 "jsonerror": "The URL does not have a correct JSON format",
                 "valueerror": "There was an error extracting the value",
                 "unreachableurl": "The URL is unreachable",
-                "wrongcredentials": "The provided credentials are wrong"
+                "nocredentials": "Authorization credentials are required to access this URL",
+                "wrongcredentials": "The provided authentication credentials are wrong"
             }
         }
     }
