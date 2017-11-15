@@ -59,6 +59,14 @@ public class RESTUtil {
 			// Adding request header
 			con.setRequestProperty("User-Agent", USER_AGENT);
 
+			if (url.contains("https://api.twitter.com/1.1/")) {
+				con.setRequestProperty("Host", "api.twitter.com");
+				String bearerToken;
+
+				bearerToken = requestBearerToken("https://api.twitter.com/oauth2/token");
+				con.setRequestProperty("Authorization", "Bearer " + bearerToken);
+			}
+
 			// Here we will know if the response is positive or not
 			responseCode = con.getResponseCode();
 			log.debug("\nSending 'GET' request to URL : " + url);
@@ -93,71 +101,6 @@ public class RESTUtil {
 			throw new RESTServiceException(
 					"Authorization credentials are required to access this URL",
 					i18nCodeRoot + ".nocredentials", "RESTService", e);
-		}
-
-	}
-
-	/**
-	 * Sends a HTTP GET request to the Twitter API, including authentication.
-	 * 
-	 * @param url
-	 *            the url to send the request to
-	 * @return the requested JSON as a String
-	 */
-	public static String getTwitterResponse(String url) throws Exception {
-
-		URL obj;
-		HttpURLConnection con;
-		int responseCode;
-		BufferedReader in;
-		String bearerToken, inputLine, result;
-		StringBuffer response;
-
-		try {
-			bearerToken = requestBearerToken("https://api.twitter.com/oauth2/token");
-
-			// The path is transformed into an URL object to establish the
-			// connection
-			obj = new URL(url);
-			con = (HttpURLConnection) obj.openConnection();
-
-			// Optional default is GET
-			con.setRequestMethod("GET");
-
-			// Adding request header
-			con.setRequestProperty("User-Agent", USER_AGENT);
-
-			// con.setRequestProperty("Host", "api.twitter.com");
-			con.setRequestProperty("Authorization", "Bearer " + bearerToken);
-
-			// Here we will know if the response is positive or not
-			responseCode = con.getResponseCode();
-			log.debug("\nSending 'GET' request to URL : " + url);
-			log.debug("Response Code : " + responseCode);
-
-			// Now, it is time to read the data as a string using BufferedReader
-			in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-			response = new StringBuffer();
-
-			// This string will contain the JSON sent as response line by line
-			while ((inputLine = in.readLine()) != null) {
-				response.append(inputLine);
-			}
-			in.close();
-
-			// Here is the full response. Now we have to deal with it
-			result = response.toString();
-
-			return result;
-
-		} catch (MalformedURLException e) {
-			throw new RESTServiceException("Wrong URL format", i18nCodeRoot
-					+ ".urlerror", "RESTService", e);
-		}
-
-		catch (java.net.UnknownHostException | java.io.FileNotFoundException e) {
-			throw new RESTServiceException("Unreachable URL", i18nCodeRoot
-					+ ".unreachableurl", "RESTService", e);
 		}
 
 	}

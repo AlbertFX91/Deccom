@@ -4,7 +4,6 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { DeccomSharedModule } from '../../shared';
 import { DeccomJSONVisualizerModule } from '../jsonvisualizer';
-import { TwitterService } from './twitter.service';
 
 import {
     TwitterComponent,
@@ -29,7 +28,6 @@ const ENTITY_STATES = [
         TwitterComponent
     ],
     providers: [
-        TwitterService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
