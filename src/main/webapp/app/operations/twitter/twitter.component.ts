@@ -39,7 +39,7 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
         };
         this.data = [];
         this.path = '';
-        this.url = 'https://api.twitter.com/1.1/followers/list.json?screen_name=deccom2018';
+        this.url = 'https://api.twitter.com/1.1/users/lookup.json?screen_name=deccom2018';
     }
 
     loadPage(page) {
