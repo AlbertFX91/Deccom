@@ -110,12 +110,11 @@ public class RESTUtil {
 		HttpURLConnection con;
 		int responseCode;
 		BufferedReader in;
-		String twitterApiEndpoint, bearerToken, inputLine, result;
+		String bearerToken, inputLine, result;
 		StringBuffer response;
 
 		try {
-			twitterApiEndpoint = "https://api.twitter.com/oauth2/token";
-			bearerToken = requestBearerToken(twitterApiEndpoint);
+			bearerToken = requestBearerToken("https://api.twitter.com/oauth2/token");
 
 			// The path is transformed into an URL object to establish the
 			// connection
