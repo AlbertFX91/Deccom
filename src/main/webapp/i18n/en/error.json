@@ -17,7 +17,8 @@
                 "unreachableurl": "The URL is unreachable",
                 "nocredentials": "Authorization credentials are required to access this URL",
                 "wrongcredentials": "The provided authentication credentials are wrong",
-                "invalidendpointURLspecified": "Invalid endpoint URL specified"
+                "invalidendpointURLspecified": "Invalid endpoint URL specified",
+                "monitoringerror": "An error occurred while checking the variable value"
             }
         }
     }

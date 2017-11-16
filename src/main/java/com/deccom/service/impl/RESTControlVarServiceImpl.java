@@ -18,6 +18,7 @@ import com.deccom.domain.RESTDataRecover;
 import com.deccom.repository.RESTControlVarRepository;
 import com.deccom.service.RESTControlVarService;
 import com.deccom.service.RESTService;
+import com.deccom.service.impl.util.RESTServiceException;
 import com.deccom.service.impl.util.RESTUtil;
 
 /**
@@ -28,6 +29,7 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 
 	private final Logger log = LoggerFactory
 			.getLogger(RESTControlVarServiceImpl.class);
+	private static final String i18nCodeRoot = "operations.REST";
 
 	private final RESTControlVarRepository restControlVarRepository;
 
@@ -133,22 +135,17 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 	}
 
 	@Scheduled(fixedRate = 1000 * 30)
-	public void monitorize() throws Exception {
+	public void monitorize() {
 
 		List<RESTControlVar> restControlVars;
 
 		restControlVars = restControlVarRepository.findAll();
 
-		// restControlVars.forEach((x) -> executeMonitorize(x));
-
-		for (RESTControlVar restControlVar : restControlVars) {
-			executeMonitorize(restControlVar);
-		}
+		restControlVars.forEach((x) -> executeMonitorize(x));
 
 	}
 
-	public void executeMonitorize(RESTControlVar restControlVar)
-			throws Exception {
+	public void executeMonitorize(RESTControlVar restControlVar) {
 
 		String query;
 		LocalDateTime creationMoment;
@@ -163,14 +160,20 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 		creationMoment = LocalDateTime.now();
 		restConnection = restControlVar.getRestConnection();
 		url = restConnection.getUrl();
-		aux = restService.noMapping(url).getContent().toString();
-		value = RESTUtil.getByJSONPath(aux, query);
-		restControlVarEntry = new RESTControlVarEntry(value, creationMoment);
-		restControlVarEntries = restControlVar.getRestControlVarEntries();
+		try {
+			aux = restService.noMapping(url).getContent().toString();
+			value = RESTUtil.getByJSONPath(aux, query);
+			restControlVarEntry = new RESTControlVarEntry(value, creationMoment);
+			restControlVarEntries = restControlVar.getRestControlVarEntries();
 
-		restControlVarEntries.add(restControlVarEntry);
+			restControlVarEntries.add(restControlVarEntry);
 
-		save(restControlVar);
+			save(restControlVar);
+		} catch (Exception e) {
+			throw new RESTServiceException(
+					"An error occurred while checking the variable value",
+					i18nCodeRoot + ".monitoringerror", "RESTService", e);
+		}
 
 	}
 

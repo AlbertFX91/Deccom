@@ -58,6 +58,6 @@ public interface RESTControlVarService {
 	/**
 	 * Check the value of an existing entry.
 	 */
-	void monitorize() throws Exception;
+	void monitorize();
 
 }
