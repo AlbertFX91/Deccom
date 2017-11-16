@@ -223,7 +223,9 @@ public class RESTUtil {
 
 			return new String();
 		} catch (MalformedURLException e) {
-			throw new IOException("Invalid endpoint URL specified.", e);
+			throw new RESTServiceException("Invalid endpoint URL specified",
+					i18nCodeRoot + ".invalidendpointURLspecified",
+					"RESTService", e);
 		} finally {
 			if (connection != null) {
 				connection.disconnect();

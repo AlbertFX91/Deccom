@@ -16,7 +16,8 @@
                 "valueerror": "Se ha producido un error al extraer el valor",
                 "unreachableurl": "La URL es inalcanzable",
                 "nocredentials": "Se requieren credenciales de autorización para acceder a esta URL",
-                "wrongcredentials": "Las credenciales de autenticación proporcionadas son incorrectas"
+                "wrongcredentials": "Las credenciales de autenticación proporcionadas son incorrectas",
+                "invalidendpointURLspecified": "La URL final no es válida"
             }
         }
     }

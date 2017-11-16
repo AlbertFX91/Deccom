@@ -16,7 +16,8 @@
                 "valueerror": "There was an error extracting the value",
                 "unreachableurl": "The URL is unreachable",
                 "nocredentials": "Authorization credentials are required to access this URL",
-                "wrongcredentials": "The provided authentication credentials are wrong"
+                "wrongcredentials": "The provided authentication credentials are wrong",
+                "invalidendpointURLspecified": "Invalid endpoint URL specified"
             }
         }
     }
