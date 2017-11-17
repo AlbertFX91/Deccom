@@ -61,6 +61,7 @@ public interface RESTControlVarService {
 	 * Get the data to monitor by a RESTControlVar and save the new entry in the object
 	 * @param controlVar
 	 */
+  
 	void executeMonitorize(RESTControlVar controlVar);
 	
 	/**
@@ -68,5 +69,4 @@ public interface RESTControlVarService {
 	 * @return
 	 */
     List<RESTControlVar> findAll();
-	
 }

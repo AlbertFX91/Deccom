@@ -6,13 +6,12 @@ import { DeccomSharedModule } from '../../shared';
 import { DeccomJSONVisualizerModule } from '../jsonvisualizer';
 
 import {
-    RESTService,
-    RESTComponent,
-    restRoute
+    TwitterComponent,
+    twitterRoute
 } from './';
 
 const ENTITY_STATES = [
-    ...restRoute,
+    ...twitterRoute,
 ];
 
 @NgModule({
@@ -23,14 +22,13 @@ const ENTITY_STATES = [
         RouterModule.forRoot(ENTITY_STATES, { useHash: true })
     ],
     declarations: [
-        RESTComponent
+        TwitterComponent
     ],
     entryComponents: [
-        RESTComponent
+        TwitterComponent
     ],
     providers: [
-        RESTService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class DeccomRESTModule { }
+export class DeccomTwitterModule { }

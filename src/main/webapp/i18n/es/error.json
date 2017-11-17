@@ -14,7 +14,11 @@
                 "urlerror": "El formato de la URL no es correcto. Por favor, no olvide el protocolo HTTP o HTTPS",
                 "jsonerror": "La URL no tiene un formato de JSON correcto",
                 "valueerror": "Se ha producido un error al extraer el valor",
-                "unreachableurl": "La URL es inalcanzable"
+                "unreachableurl": "La URL es inalcanzable",
+                "nocredentials": "Se requieren credenciales de autorización para acceder a esta URL",
+                "wrongcredentials": "Las credenciales de autenticación proporcionadas son incorrectas",
+                "invalidendpointURLspecified": "La URL final no es válida",
+                "monitoringerror": "Se produjo un error al comprobar el valor de la variable"
             }
         }
     }

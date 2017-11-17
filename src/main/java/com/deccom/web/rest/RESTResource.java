@@ -32,7 +32,7 @@ import com.deccom.web.rest.util.PaginationUtil;
 import io.swagger.annotations.ApiParam;
 
 /**
- * REST controller for managing RestCalls.
+ * REST controller for managing REST.
  */
 @RestController
 @RequestMapping("/api")

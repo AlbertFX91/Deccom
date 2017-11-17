@@ -27,6 +27,7 @@ public class RESTControlVarServiceImpl implements RESTControlVarService {
 
 	private final Logger log = LoggerFactory
 			.getLogger(RESTControlVarServiceImpl.class);
+	private static final String i18nCodeRoot = "operations.REST";
 
 	private final RESTControlVarRepository restControlVarRepository;
 

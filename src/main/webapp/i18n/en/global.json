@@ -37,7 +37,8 @@
                 "main": "Operations",
                 "sql": "SQL query",
                 "rest": "API REST call",
-                "cv": "Control variables"
+                "cv": "Control variables",
+                "twitter": "Extract Twitter data"
             },
             "language": "Language"
         },
