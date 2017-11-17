@@ -1,11 +1,11 @@
 <div id="mainbox">
     <div class="card">
         <div class="fondo">
-            <div class="running">
+            <div [ngClass]="cvCard.status">
                 &nbsp;
             </div>
             <div class="logo" style="flex-grow: 3; justify-content: center; align-items: center; display:flex;">
-                <img [src]="cvCard.logo" style="height: 30px;" />
+                <img [src]="cvCard.logo_url" style="height: 30px;" />
             </div>
             <div class="title" style="flex-grow: 8; font-weight: 700; display:flex; align-items: center; border-color: black; border-width: 0 1px 0 0; border-style: solid; border-top-right-radius: 6px;
                     border-bottom-right-radius: 6px;">
@@ -17,16 +17,26 @@
                     <strong style="font-size: x-large">{{cvCard.value}}</strong>
                 </div>
                 <div style="flex-grow: 1; cursor:pointer;">
-                    -
+                    <p>
+                        <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
+                            aria-controls="collapseExample">
+                            <div style="color:#000000" *ngIf="isCollapsed">+</div>
+                            <div style="color:#000000" *ngIf="!isCollapsed">-</div>
+                        </button>
+                    </p>
                 </div>
             </div>
         </div>
-        <p>
-            <span jhiTranslate="deccomApp.ControlVar.creation_moment"></span>: {{cvCard.creation_moment}}</p>
-        <p>
-            <span jhiTranslate="deccomApp.ControlVar.entries"></span>: {{cvCard.entries}}</p>
-        <p>
-            <span jhiTranslate="deccomApp.ControlVar.last_update"></span>: {{cvCard.last_update}}</p>
-        <img src="../../../content/images/icons/graph.png" class="img1" alt="">
+        <div id="collapseExample" [ngbCollapse]="isCollapsed">
+            <p>
+                <span jhiTranslate="deccomApp.ControlVar.creation_moment"></span>: {{cvCard.creation_moment}}</p>
+            <p>
+                <span jhiTranslate="deccomApp.ControlVar.entries"></span>: {{cvCard.entries}}</p>
+            <p>
+                <span jhiTranslate="deccomApp.ControlVar.last_update"></span>: {{cvCard.last_update}}</p>
+            <p>
+                <img src="../../../content/images/icons/graph.png" class="img1" alt="">
+            </p>
+        </div>
     </div>
 </div>
