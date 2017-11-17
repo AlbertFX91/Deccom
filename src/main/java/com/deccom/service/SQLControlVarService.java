@@ -1,5 +1,7 @@
 package com.deccom.service;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -48,8 +50,18 @@ public interface SQLControlVarService {
      *  @param id the id of the entity
      */
     void delete(String id);
-
     
-    void monitorize();
+    /**
+     *  Get all the sqlControlVars.
+     *
+     *  @return the list of entities
+     */
+    List<SQLControlVar> findAll();
+    
+	/**
+	 * Get the data to monitor by a SQLControlVar and save the new entry in the object
+	 * @param controlVar
+	 */
+	void executeMonitorize(SQLControlVar controlVar);
     
 }

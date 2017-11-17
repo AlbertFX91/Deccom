@@ -48,6 +48,16 @@
                         </small>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="deccomApp.RESTDataRecover.frequency_sec" for="frequency_sec">Frequency (in seconds)</label>
+                    <input type="number" class="form-control" name="restDataRecover_frequency_sec" id="field_restDataRecover_frequency_sec" [(ngModel)]="restDataRecover.frequency_sec"
+                        required />
+                    <div [hidden]="!(controlVarNameForm.controls.frequency_sec?.dirty && controlVarNameForm.controls.frequency_sec?.invalid)">
+                        <small class="form-text text-danger" [hidden]="!controlVarNameForm.controls.frequency_sec?.errors?.required" jhiTranslate="entity.validation.required">
+                            This field is required.
+                        </small>
+                    </div>
+                </div>
                 <div>
                     <button type="button" class="btn btn-default cancel" data-dismiss="modal" (click)="clearControlVar()">
                         <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>

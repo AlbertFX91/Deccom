@@ -1,5 +1,7 @@
 package com.deccom.service;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -56,8 +58,15 @@ public interface RESTControlVarService {
 	void delete(String id);
 
 	/**
-	 * Check the value of an existing entry.
+	 * Get the data to monitor by a RESTControlVar and save the new entry in the object
+	 * @param controlVar
 	 */
-	void monitorize();
-
+  
+	void executeMonitorize(RESTControlVar controlVar);
+	
+	/**
+	 * Get all RESTControlVars
+	 * @return
+	 */
+    List<RESTControlVar> findAll();
 }

@@ -28,6 +28,6 @@ public interface RESTService {
 	 *            the pagination options
 	 * @return the requested JSON as a String
 	 */
-	Page<String> noMapping(String url) throws Exception;
+	Page<String> noMapping(String url);
 
 }

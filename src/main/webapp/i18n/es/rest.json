@@ -10,7 +10,8 @@
         "RESTDataRecover": {
             "query": "Consulta",
             "controlVarName": "Nombre de la variable de control",
-            "restConnection": "Conexión"
+            "restConnection": "Conexión",
+            "frequency_sec": "Frecuencia (en segundos)"
         },
         "RESTControlVar": {
             "created": "Una nueva variable de control ha sido creada con el identificador {{ param }}"
