@@ -9,7 +9,8 @@
             "url": "URL",
             "query": "Consulta",
             "controlVarName": "Nombre de variable de control",
-            "created": "Una nueva variable de control ha sido creada con el identificador {{ param }}"
+            "created": "Una nueva variable de control ha sido creada con el identificador {{ param }}",
+            "frequency_sec": "Frecuencia (en segundos)"
         }
     }
 }

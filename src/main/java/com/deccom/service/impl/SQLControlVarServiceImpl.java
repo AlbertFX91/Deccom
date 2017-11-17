@@ -9,9 +9,9 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.deccom.domain.SQLConnection;
@@ -32,7 +32,10 @@ public class SQLControlVarServiceImpl implements SQLControlVarService{
     private final Logger log = LoggerFactory.getLogger(SQLControlVarServiceImpl.class);
 
     private final SQLControlVarRepository sqlControlVarRepository;
-
+    
+    @Autowired
+    private DeccomSchedulingService schedulingService;
+    
     public SQLControlVarServiceImpl(SQLControlVarRepository sqlControlVarRepository) {
         this.sqlControlVarRepository = sqlControlVarRepository;
     }
@@ -51,6 +54,7 @@ public class SQLControlVarServiceImpl implements SQLControlVarService{
     	res.setCreationMoment(LocalDateTime.now());
     	res.setName(sqlDataRecover.getControlVarName());
     	res.setQuery(sqlDataRecover.getQuery());
+    	res.setFrequency_sec(sqlDataRecover.getFrequency_sec());
     	res.setSqlConnection(sqlDataRecover.getConnection());
     	res.setSqlControlVarEntries(new ArrayList<>());
     	
@@ -66,7 +70,24 @@ public class SQLControlVarServiceImpl implements SQLControlVarService{
     @Override
     public SQLControlVar save(SQLControlVar sqlControlVar) {
         log.debug("Request to save SQLControlVar : {}", sqlControlVar);
-        return sqlControlVarRepository.save(sqlControlVar);
+        SQLControlVar res = sqlControlVarRepository.save(sqlControlVar);
+        
+        schedulingService.newJob(res);
+        
+        return res;
+    }
+    
+    /**
+     * Update a sqlControlVar.
+     *
+     * @param sqlControlVar the entity to save
+     * @return the persisted entity
+     */
+    public SQLControlVar update(SQLControlVar sqlControlVar) {
+        log.debug("Request to save SQLControlVar : {}", sqlControlVar);
+        SQLControlVar res = sqlControlVarRepository.save(sqlControlVar);
+        
+        return res;
     }
 
     /**
@@ -104,13 +125,6 @@ public class SQLControlVarServiceImpl implements SQLControlVarService{
         sqlControlVarRepository.delete(id);
     }
     
-    @Scheduled(fixedRate = 1000 * 30)
-    public void monitorize() {
-    	List<SQLControlVar> controlVars = sqlControlVarRepository.findAll();
-    	
-    	controlVars.forEach((x)->executeMonitorize(x));
-
-    }
     public void executeMonitorize(SQLControlVar controlVar) {
     	String value;
     	SQLControlVarEntry controlVarEntry;
@@ -138,7 +152,13 @@ public class SQLControlVarServiceImpl implements SQLControlVarService{
     	value = new ArrayList<>(entry.values()).get(0);
     	controlVarEntry = new SQLControlVarEntry(value, LocalDateTime.now());
     	controlVar.getSqlControlVarEntries().add(controlVarEntry);
-    	save(controlVar);
+    	update(controlVar);
     	
     }
+
+
+	@Override
+	public List<SQLControlVar> findAll() {
+		return sqlControlVarRepository.findAll();
+	}
 }

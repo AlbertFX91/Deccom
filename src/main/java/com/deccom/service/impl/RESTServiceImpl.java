@@ -26,8 +26,7 @@ public class RESTServiceImpl implements RESTService {
 	}
 
 	// HTTP GET request
-	public Page<String> noMapping(String url, Pageable pageable)
-			throws Exception {
+	public Page<String> noMapping(String url, Pageable pageable){
 
 		String response;
 		List<String> list;
@@ -88,7 +87,7 @@ public class RESTServiceImpl implements RESTService {
 
 	}
 
-	public Page<String> noMapping(String url) throws Exception {
+	public Page<String> noMapping(String url){
 
 		Page<String> result;
 		Pageable pageable;

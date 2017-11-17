@@ -9,7 +9,8 @@
             "url": "URL",
             "query": "Query",
             "controlVarName": "Control variable's name",
-            "created": "A new Control variable has been created with identifier {{ param }}"
+            "created": "A new Control variable has been created with identifier {{ param }}",
+            "frequency_sec": "Frequency (in seconds)"
         }
     }
 }

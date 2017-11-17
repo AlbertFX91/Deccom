@@ -3,6 +3,9 @@ package com.deccom.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+/**
+ * Service Interface for managing REST.
+ */
 public interface RESTService {
 
 	/**
@@ -25,6 +28,6 @@ public interface RESTService {
 	 *            the pagination options
 	 * @return the requested JSON as a String
 	 */
-	Page<String> noMapping(String url) throws Exception;
+	Page<String> noMapping(String url);
 
 }
