@@ -17,19 +17,26 @@
                     <strong style="font-size: x-large">{{cvCard.value}}</strong>
                 </div>
                 <div style="flex-grow: 1; cursor:pointer;">
-                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"></button>
+                    <p>
+                        <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
+                            aria-controls="collapseExample">
+                            <div style="color:#000000" *ngIf="isCollapsed">+</div>
+                            <div style="color:#000000" *ngIf="!isCollapsed">-</div>
+                        </button>
+                    </p>
                 </div>
             </div>
         </div>
-        <p>
-            <span jhiTranslate="deccomApp.ControlVar.creation_moment"></span>: {{cvCard.creation_moment}}</p>
-        <p>
-            <span jhiTranslate="deccomApp.ControlVar.entries"></span>: {{cvCard.entries}}</p>
-        <p>
-            <span jhiTranslate="deccomApp.ControlVar.last_update"></span>: {{cvCard.last_update}}</p>
-
-        <p>
-            <img src="../../../content/images/icons/graph.png" class="img1" alt="">
-        </p>
+        <div id="collapseExample" [ngbCollapse]="isCollapsed">
+            <p>
+                <span jhiTranslate="deccomApp.ControlVar.creation_moment"></span>: {{cvCard.creation_moment}}</p>
+            <p>
+                <span jhiTranslate="deccomApp.ControlVar.entries"></span>: {{cvCard.entries}}</p>
+            <p>
+                <span jhiTranslate="deccomApp.ControlVar.last_update"></span>: {{cvCard.last_update}}</p>
+            <p>
+                <img src="../../../content/images/icons/graph.png" class="img1" alt="">
+            </p>
+        </div>
     </div>
 </div>

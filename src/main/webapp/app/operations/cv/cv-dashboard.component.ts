@@ -14,21 +14,9 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
     styleUrls: ['./cv-dashboard.component.css']
 }) export class CVDashboardComponent implements OnInit, OnDestroy {
 
-    /*
-    runningCards: CVCard[];
-    pausedCards: CVCard[];
-    blockedCards: CVCard[];
-    */
-
     constructor(
         public cvService: CVService
-    ) {
-        /*
-        this.runningCards = cvService.getRunningCards();
-        this.pausedCards = cvService.getPausedCards();
-        this.blockedCards = cvService.getBlockedCards();
-        */
-    }
+    ) { }
 
     ngOnInit() { }
 
