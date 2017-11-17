@@ -14,7 +14,11 @@
                 "urlerror": "The URL format is not correct. Please mind the HTTP or HTTPS protocol",
                 "jsonerror": "The URL does not have a correct JSON format",
                 "valueerror": "There was an error extracting the value",
-                "unreachableurl": "The URL is unreachable"
+                "unreachableurl": "The URL is unreachable",
+                "nocredentials": "Authorization credentials are required to access this URL",
+                "wrongcredentials": "The provided authentication credentials are wrong",
+                "invalidendpointURLspecified": "Invalid endpoint URL specified",
+                "monitoringerror": "An error occurred while checking the variable value"
             }
         }
     }

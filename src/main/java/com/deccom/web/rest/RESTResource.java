@@ -32,7 +32,7 @@ import com.deccom.web.rest.util.PaginationUtil;
 import io.swagger.annotations.ApiParam;
 
 /**
- * REST controller for managing RestCalls.
+ * REST controller for managing REST.
  */
 @RestController
 @RequestMapping("/api")
@@ -107,21 +107,6 @@ public class RESTResource {
 						HeaderUtil.createEntityCreationAlert("RESTControlVar",
 								restControlVar.getId().toString()))
 				.body(restControlVar);
-
-	}
-
-	/**
-	 * GET /test : test a method
-	 *
-	 * @return the ResponseEntity with status 200 (OK)
-	 */
-	@GetMapping("/rest/test")
-	@Timed
-	public ResponseEntity<String> test() throws Exception {
-
-		log.debug("REST request to test");
-		restControlVarService.monitorize();
-		return ResponseEntity.ok().body("OK");
 
 	}
 

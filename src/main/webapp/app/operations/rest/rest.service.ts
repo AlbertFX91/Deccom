@@ -22,7 +22,7 @@ export class RESTService {
             .map((res: Response) => res);
     }
 
-    private createRequestOption(url: string, pageSettings: any): BaseRequestOptions {
+    public createRequestOption(url: string, pageSettings: any): BaseRequestOptions {
         const options: BaseRequestOptions = createRequestOption(pageSettings);
         // const params: URLSearchParams = new URLSearchParams();
         options.params.set('url', url);

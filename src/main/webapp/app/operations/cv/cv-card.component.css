@@ -2,8 +2,7 @@
     width: 350px;
     border: 1px solid gray;
     box-shadow: 1px 1px 3px #888;
-    /* border-top: 10px solid green; */
-    min-height: 250px;
+    /* min-height: 250px; */
     padding-: 10px;
     margin: 10px;
     display: flex;
@@ -12,15 +11,8 @@
 .property {
   margin: 0px;
 }
-    
-.img1 {
-    border-radius: 50%;
-    width: 70px;
-    margin: 10px;
-    margin-left: 0px;
-}
 
-.img2 {
+.img1 {
     border-radius: 50%;
     width: 300px;
     margin: 10px;
@@ -63,9 +55,23 @@ p {
   cursor: pointer;
 }
 
-.running {
+.Running {
   background-color: #44AA44;
   flex-grow: 0.3; 
   border-top-left-radius: 6px;
   border-bottom-left-radius: 6px;
+}
+
+.Paused {
+    background-color: #F2EF35;
+    flex-grow: 0.3; 
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+  }
+
+.Blocked {
+    background-color: #CC240A;
+    flex-grow: 0.3; 
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
 }

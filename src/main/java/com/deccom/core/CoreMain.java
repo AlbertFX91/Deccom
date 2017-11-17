@@ -18,8 +18,46 @@ import net.logstash.logback.encoder.org.apache.commons.lang.ClassUtils;
 
 public class CoreMain {
 	
-	public static void main(String[] args) throws InstantiationException, IllegalAccessException {
+	public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+		// DB DATA
+		String className = "com.deccom.core.RESTExtractor";
+		Map<String, String> attribs = Maps.newHashMap();
+		attribs.put("url", "https://jsonplaceholder.typicode.com/users");
+		attribs.put("jsonpath", "$.[5].id");
 		
+		Object wrapper = Class.forName(className).newInstance();
+		if(wrapper instanceof DataExtractor) {
+			DataExtractor dataExtractor = (DataExtractor) wrapper;
+			propertiesInjection(dataExtractor, attribs);
+			System.out.println("Data extracted ["+className+"]: "+dataExtractor.getData());
+		}
+	
+		// DB DATA
+		className = "com.deccom.core.SQLExtractor";
+		attribs = Maps.newHashMap();
+		attribs.put("username", "developer");
+		attribs.put("password", "developer");
+		attribs.put("url", "jdbc:mysql://localhost:3306/deccom");
+		attribs.put("query", "select age from author where idauthor='1'");
+			
+		wrapper = Class.forName(className).newInstance();
+		
+		if(wrapper instanceof DataExtractor) {
+			DataExtractor dataExtractor = (DataExtractor) wrapper;
+			propertiesInjection(dataExtractor, attribs);
+			System.out.println("Data extracted ["+className+"]: "+dataExtractor.getData());
+		}
+		
+
+		Map<Class<? extends DataExtractor>, List<Class<?>>> res = getClassInterface(DataExtractor.class);
+		
+		for(Entry<Class<? extends DataExtractor>, List<Class<?>>> e: res.entrySet()) {
+			System.out.println("["+e.getKey().getName()+"]: "+e.getValue().toString());
+		}
+		
+		
+		
+		/*
 		Class<SQLExtractor> _sql = SQLExtractor.class;
 		SQLExtractor sql = _sql.newInstance();
 		
@@ -33,15 +71,17 @@ public class CoreMain {
 		System.out.println("SQLExtractor: " + sql.getData());
 		
 		Class<RESTExtractor> _rest = RESTExtractor.class;
-		RESTExtractor rest = _rest.newInstance();
+		RESTExtractor rest2 = _rest.newInstance();
 		
 		properties = Maps.newHashMap();
 		properties.put("url", "https://jsonplaceholder.typicode.com/users");
 		properties.put("jsonpath", "$.[5].id");
 
-		propertiesInjection(rest, properties);
+		propertiesInjection(rest2, properties);
 		
-		System.out.println("RESTExtractor: " + rest.getData());
+		System.out.println("RESTExtractor: " + rest2.getData());
+		*/
+		
 		
 	}
 	

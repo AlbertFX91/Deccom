@@ -113,21 +113,6 @@ public class SQLResource {
 	            .headers(HeaderUtil.createEntityCreationAlert("sql", result.getId().toString()))
 	            .body(result);
 	}
-	
-	/**
-	 * GET /db/oracle/query : make a connection and a query to a oracle sql database
-	 *
-	 * @param query
-	 *            the SQL sentence
-	 * @return the ResponseEntity with status 200 (OK) and the query's data
-	 */
-	@GetMapping("/sql/atomic")
-	@Timed
-	public ResponseEntity<String> atomic() {
-		log.debug("REST request to atomic");
-		sqlControlVarService.monitorize();
-		return ResponseEntity.ok().body("OK");
-	}
 
 	@ExceptionHandler(SQLServiceException.class)
 	public ResponseEntity<String> panic(SQLServiceException oops) {
