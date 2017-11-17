@@ -100,12 +100,6 @@ public class RESTUtil {
 					+ ".dataunreadable", "RESTService", e);
 		}
 
-		catch (java.io.IOException e) {
-			throw new RESTServiceException(
-					"Authorization credentials are required to access this URL",
-					i18nCodeRoot + ".nocredentials", "RESTService", e);
-		}
-
 	}
 
 	/**
