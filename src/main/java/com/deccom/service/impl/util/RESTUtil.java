@@ -60,10 +60,11 @@ public class RESTUtil {
 			con.setRequestProperty("User-Agent", USER_AGENT);
 
 			if (url.contains("https://api.twitter.com/1.1/")) {
-				con.setRequestProperty("Host", "api.twitter.com");
 				String bearerToken;
 
 				bearerToken = requestBearerToken("https://api.twitter.com/oauth2/token");
+				
+				con.setRequestProperty("Host", "api.twitter.com");
 				con.setRequestProperty("Authorization", "Bearer " + bearerToken);
 			}
 
