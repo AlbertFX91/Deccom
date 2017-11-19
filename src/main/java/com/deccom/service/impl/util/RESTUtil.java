@@ -18,15 +18,44 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.core.env.ConfigurableEnvironment;
 
 import com.deccom.service.impl.RESTServiceImpl;
 import com.jayway.jsonpath.JsonPath;
 
+// @ConfigurationProperties(prefix = "application")
 public class RESTUtil {
 
 	private static final Logger log = LoggerFactory
 			.getLogger(RESTServiceImpl.class);
 	private static final String i18nCodeRoot = "operations.REST";
+
+	/*
+	@Value("${application.twitter.consumerKey}")
+	private static String consumerKey;
+
+	@Value("${application.twitter.consumerSecret}")
+	private static String consumerSecret;
+
+	public String getConsumerKey() {
+		return consumerKey;
+	}
+
+	public void setConsumerKey(String consumerKey) {
+		RESTUtil.consumerKey = consumerKey;
+	}
+
+	public String getConsumerSecret() {
+		return consumerSecret;
+	}
+
+	public void setConsumerSecret(String consumerSecret) {
+		RESTUtil.consumerSecret = consumerSecret;
+	}
+	*/
 
 	// Client
 	public static final String USER_AGENT = "Chrome/60.0.3112.101";
@@ -38,7 +67,7 @@ public class RESTUtil {
 	 *            the url to send the request to
 	 * @return the requested JSON as a String
 	 */
-	public static String getResponse(String url){
+	public static String getResponse(String url) {
 
 		URL obj;
 		HttpURLConnection con;
@@ -60,12 +89,7 @@ public class RESTUtil {
 			con.setRequestProperty("User-Agent", USER_AGENT);
 
 			if (url.contains("https://api.twitter.com/1.1/")) {
-				String bearerToken;
-
-				bearerToken = requestBearerToken("https://api.twitter.com/oauth2/token");
-				
-				con.setRequestProperty("Host", "api.twitter.com");
-				con.setRequestProperty("Authorization", "Bearer " + bearerToken);
+				setTwitterAuthentication(con);
 			}
 
 			// Here we will know if the response is positive or not
@@ -97,8 +121,8 @@ public class RESTUtil {
 			throw new RESTServiceException("Unreachable URL", i18nCodeRoot
 					+ ".unreachableurl", "RESTService", e);
 		} catch (IOException e) {
-			throw new RESTServiceException("Data cannot be readed", i18nCodeRoot
-					+ ".dataunreadable", "RESTService", e);
+			throw new RESTServiceException("Data cannot be readed",
+					i18nCodeRoot + ".dataunreadable", "RESTService", e);
 		}
 
 	}
@@ -131,7 +155,7 @@ public class RESTUtil {
 	 *            the JSONPath query to capture the data
 	 * @return the data captured
 	 */
-	public static String getByJSONPath(String value, String jsonPath){
+	public static String getByJSONPath(String value, String jsonPath) {
 
 		return JsonPath.parse(value).read(jsonPath).toString();
 
@@ -280,6 +304,22 @@ public class RESTUtil {
 		} catch (IOException e) {
 			return new String();
 		}
+	}
+
+	/**
+	 * Adds the requested Twitter authentication configuration to a request.
+	 * 
+	 * @param con
+	 *            the connection to be configured
+	 */
+	private static void setTwitterAuthentication(HttpURLConnection con)
+			throws IOException {
+		String bearerToken;
+
+		bearerToken = requestBearerToken("https://api.twitter.com/oauth2/token");
+
+		con.setRequestProperty("Host", "api.twitter.com");
+		con.setRequestProperty("Authorization", "Bearer " + bearerToken);
 	}
 
 }
