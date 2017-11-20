@@ -7,21 +7,6 @@
             <form name="twitterForm" role="form" novalidate (ngSubmit)="onSubmit()" #twitterForm="ngForm" style="width: 100%">
                 <jhi-alert-error></jhi-alert-error>
                 <jhi-alert></jhi-alert>
-                <!--
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="deccomApp.REST.url" for="field_url">URL</label>
-                    <input type="url" class="form-control" name="url" id="field_url" pattern="https?://.+" title="Include http://" [(ngModel)]="url"
-                        required />
-                    <div [hidden]="!(twitterForm.controls.url?.dirty && twitterForm.controls.url?.invalid)">
-                        <small class="form-text text-danger" [hidden]="!twitterForm.controls.url?.errors?.required" jhiTranslate="entity.validation.required">
-                            This field is required.
-                        </small>
-                        <small class="form-text text-danger" [hidden]="!twitterForm.controls.url?.errors?.pattern" jhiTranslate="deccomApp.REST.wrongURL">
-                            Wrong URL.
-                        </small>
-                    </div>
-                </div>
-            -->
                 <div>
                     <button type="button" class="btn btn-default cancel" data-dismiss="modal" (click)="clear()">
                         <span class="fa fa-ban"></span>&nbsp;

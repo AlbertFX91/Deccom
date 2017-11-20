@@ -173,7 +173,7 @@ public class RESTUtil {
 		HttpsURLConnection connection = null;
 		String encodedCredentials = encodeKeys(
 				myConfig.getTwitterConsumerKey(),
-				myConfig.getTwitterConsumerSecret());
+				myConfig.getTwitterConsumerKey());
 
 		try {
 			URL url = new URL(endPointUrl);
@@ -182,7 +182,6 @@ public class RESTUtil {
 			connection.setDoInput(true);
 			connection.setRequestMethod("POST");
 			connection.setRequestProperty("Host", "api.twitter.com");
-			connection.setRequestProperty("User-Agent", "Your Program Name");
 			connection.setRequestProperty("Authorization", "Basic "
 					+ encodedCredentials);
 			connection.setRequestProperty("Content-Type",
