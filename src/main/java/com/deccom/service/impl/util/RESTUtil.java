@@ -18,11 +18,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import com.deccom.config.ApplicationProperties;
 import com.deccom.service.impl.RESTServiceImpl;
 import com.jayway.jsonpath.JsonPath;
 
@@ -33,29 +31,8 @@ public class RESTUtil {
 			.getLogger(RESTServiceImpl.class);
 	private static final String i18nCodeRoot = "operations.REST";
 
-	/*
-	@Value("${application.twitter.consumerKey}")
-	private static String consumerKey;
-
-	@Value("${application.twitter.consumerSecret}")
-	private static String consumerSecret;
-
-	public String getConsumerKey() {
-		return consumerKey;
-	}
-
-	public void setConsumerKey(String consumerKey) {
-		RESTUtil.consumerKey = consumerKey;
-	}
-
-	public String getConsumerSecret() {
-		return consumerSecret;
-	}
-
-	public void setConsumerSecret(String consumerSecret) {
-		RESTUtil.consumerSecret = consumerSecret;
-	}
-	*/
+	@Autowired
+	private static ApplicationProperties myConfig;
 
 	// Client
 	public static final String USER_AGENT = "Chrome/60.0.3112.101";
@@ -194,7 +171,9 @@ public class RESTUtil {
 	private static String requestBearerToken(String endPointUrl)
 			throws IOException {
 		HttpsURLConnection connection = null;
-		String encodedCredentials = encodeKeys("consumerKey", "consumerSecret");
+		String encodedCredentials = encodeKeys(
+				myConfig.getTwitterConsumerKey(),
+				myConfig.getTwitterConsumerSecret());
 
 		try {
 			URL url = new URL(endPointUrl);
