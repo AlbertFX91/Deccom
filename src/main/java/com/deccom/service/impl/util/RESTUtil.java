@@ -24,18 +24,17 @@ import com.deccom.config.ApplicationProperties;
 import com.deccom.service.impl.RESTServiceImpl;
 import com.jayway.jsonpath.JsonPath;
 
-// @ConfigurationProperties(prefix = "application")
 public class RESTUtil {
 
 	private static final Logger log = LoggerFactory
 			.getLogger(RESTServiceImpl.class);
 	private static final String i18nCodeRoot = "operations.REST";
 
-	@Autowired
-	private static ApplicationProperties myConfig;
-
 	// Client
 	public static final String USER_AGENT = "Chrome/60.0.3112.101";
+
+	@Autowired
+	public static ApplicationProperties applicationProperties;
 
 	/**
 	 * Sends a HTTP GET request to an URL.
@@ -172,8 +171,8 @@ public class RESTUtil {
 			throws IOException {
 		HttpsURLConnection connection = null;
 		String encodedCredentials = encodeKeys(
-				myConfig.getTwitterConsumerKey(),
-				myConfig.getTwitterConsumerKey());
+				applicationProperties.getTwitterConsumerKey(),
+				applicationProperties.getTwitterConsumerSecret());
 
 		try {
 			URL url = new URL(endPointUrl);
