@@ -15,6 +15,7 @@
                 "jsonerror": "The URL does not have a correct JSON format",
                 "valueerror": "There was an error extracting the value",
                 "unreachableurl": "The URL is unreachable",
+                "unreadabledata": "Data cannot be read",
                 "nocredentials": "Authorization credentials are required to access this URL",
                 "wrongcredentials": "The provided authentication credentials are wrong",
                 "invalidendpointURLspecified": "Invalid endpoint URL specified",

@@ -9,6 +9,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.net.URLEncoder;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -66,8 +67,17 @@ public class RESTUtil {
 			// Adding request header
 			con.setRequestProperty("User-Agent", USER_AGENT);
 
-			if (url.contains("https://api.twitter.com/1.1/")) {
+			if (url.contains("https://api.twitter.com")) {
 				setTwitterAuthentication(con);
+			} else if (url.contains("https://graph.facebook.com")) {
+				// String bearerToken;
+
+				// bearerToken = requestFacebookBearerToken(con);
+
+				// con.setRequestProperty("Host", "graph.facebook.com");
+				// con.setRequestProperty("Authorization", "Bearer " +
+				// bearerToken);
+				setFacebookAuthentication(con);
 			}
 
 			// Here we will know if the response is positive or not
@@ -100,7 +110,7 @@ public class RESTUtil {
 					+ ".unreachableurl", "RESTService", e);
 		} catch (IOException e) {
 			throw new RESTServiceException("Data cannot be readed",
-					i18nCodeRoot + ".dataunreadable", "RESTService", e);
+					i18nCodeRoot + ".unreadabledata", "RESTService", e);
 		}
 
 	}
@@ -140,36 +150,29 @@ public class RESTUtil {
 	}
 
 	/**
-	 * Encodes the consumer key and secret.
+	 * Adds the requested Twitter authentication configuration to a request.
 	 * 
-	 * @param consumerKey
-	 *            the user's API Key
-	 * @param consumerSecret
-	 *            the user's API Secret
-	 * @return the basic authorization key
+	 * @param con
+	 *            the connection to be configured
 	 */
-	private static String encodeKeys(String consumerKey, String consumerSecret) {
-		try {
-			String encodedConsumerKey = URLEncoder.encode(consumerKey, "UTF-8");
-			String encodedConsumerSecret = URLEncoder.encode(consumerSecret,
-					"UTF-8");
-			String fullKey = encodedConsumerKey + ":" + encodedConsumerSecret;
-			byte[] encodedBytes = Base64.encodeBase64(fullKey.getBytes());
-			return new String(encodedBytes);
-		} catch (UnsupportedEncodingException e) {
-			return new String();
-		}
+	private static void setTwitterAuthentication(HttpURLConnection con)
+			throws IOException {
+		String bearerToken;
 
+		bearerToken = requestTwitterBearerToken("https://api.twitter.com/oauth2/token");
+
+		con.setRequestProperty("Host", "api.twitter.com");
+		con.setRequestProperty("Authorization", "Bearer " + bearerToken);
 	}
 
 	/**
-	 * Constructs the request for requesting a bearer token.
+	 * Constructs the request for requesting a bearer token for Twitter.
 	 * 
 	 * @param endPointUrl
 	 *            the URL to request the token
 	 * @return the bearer token as a string
 	 */
-	private static String requestBearerToken(String endPointUrl)
+	private static String requestTwitterBearerToken(String endPointUrl)
 			throws IOException {
 		HttpsURLConnection connection = null;
 		String encodedCredentials = encodeKeys(
@@ -234,6 +237,29 @@ public class RESTUtil {
 	}
 
 	/**
+	 * Encodes the consumer key and secret.
+	 * 
+	 * @param consumerKey
+	 *            the user's API Key
+	 * @param consumerSecret
+	 *            the user's API Secret
+	 * @return the basic authorization key
+	 */
+	private static String encodeKeys(String consumerKey, String consumerSecret) {
+		try {
+			String encodedConsumerKey = URLEncoder.encode(consumerKey, "UTF-8");
+			String encodedConsumerSecret = URLEncoder.encode(consumerSecret,
+					"UTF-8");
+			String fullKey = encodedConsumerKey + ":" + encodedConsumerSecret;
+			byte[] encodedBytes = Base64.encodeBase64(fullKey.getBytes());
+			return new String(encodedBytes);
+		} catch (UnsupportedEncodingException e) {
+			return new String();
+		}
+
+	}
+
+	/**
 	 * Writes a request to a connection.
 	 * 
 	 * @param connection
@@ -285,20 +311,83 @@ public class RESTUtil {
 		}
 	}
 
-	/**
-	 * Adds the requested Twitter authentication configuration to a request.
-	 * 
-	 * @param con
-	 *            the connection to be configured
-	 */
-	private static void setTwitterAuthentication(HttpURLConnection con)
+	private static void setFacebookAuthentication(HttpURLConnection con)
 			throws IOException {
 		String bearerToken;
 
-		bearerToken = requestBearerToken("https://api.twitter.com/oauth2/token");
+		bearerToken = requestFacebookBearerToken("https://graph.facebook.com/v2.11/oauth/access_token");
 
-		con.setRequestProperty("Host", "api.twitter.com");
+		con.setRequestProperty("Host", "graph.facebook.com");
 		con.setRequestProperty("Authorization", "Bearer " + bearerToken);
+	}
+
+	private static String requestFacebookBearerToken(String endPointUrl)
+			throws IOException {
+		String applicationKey, secretKey, accessTokenRequestURL;
+		HttpsURLConnection connection;
+
+		applicationKey = applicationProperties.getFacebookApplicationKey();
+		secretKey = applicationProperties.getFacebookSecretKey();
+		connection = null;
+
+		accessTokenRequestURL = endPointUrl + "?client_id=" + applicationKey
+				+ "&client_secret=" + secretKey
+				+ "&grant_type=client_credentials";
+
+		try {
+			// URL url = new URL(endPointUrl);
+			URL url = new URL(accessTokenRequestURL);
+			connection = (HttpsURLConnection) url.openConnection();
+			connection.setDoOutput(true);
+			connection.setDoInput(true);
+			connection.setRequestMethod("GET");
+			connection.setRequestProperty("Host", "graph.facebook.com");
+			connection.setRequestProperty("Content-Type",
+					"application/x-www-form-urlencoded;charset=UTF-8");
+			connection.setRequestProperty("Content-Length", "29");
+			connection.setUseCaches(false);
+
+			// writeRequest(connection, "grant_type=client_credentials");
+
+			// Parse the JSON response into a JSON mapped object to fetch fields
+			// from.
+			/*
+			 * JSONObject obj = (JSONObject) JSONValue
+			 * .parse(readResponse(connection));
+			 */
+
+			try {
+				JSONObject obj = new JSONObject(readResponse(connection));
+
+				if (obj != null) {
+					try {
+						String tokenType = (String) obj.get("token_type");
+						String token = (String) obj.get("access_token");
+
+						return ((tokenType.equals("bearer")) && (token != null)) ? token
+								: "";
+					} catch (JSONException e) {
+						throw new RESTServiceException("Wrong credentials",
+								i18nCodeRoot + ".wrongcredentials",
+								"RESTService", e);
+					}
+
+				}
+			} catch (JSONException e) {
+				throw new RESTServiceException("Wrong credentials",
+						i18nCodeRoot + ".wrongcredentials", "RESTService", e);
+			}
+
+			return new String();
+		} catch (MalformedURLException e) {
+			throw new RESTServiceException("Invalid endpoint URL specified",
+					i18nCodeRoot + ".invalidendpointURLspecified",
+					"RESTService", e);
+		} finally {
+			if (connection != null) {
+				connection.disconnect();
+			}
+		}
 	}
 
 }
