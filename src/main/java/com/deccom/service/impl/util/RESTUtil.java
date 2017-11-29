@@ -9,7 +9,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.net.URLEncoder;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -52,7 +51,7 @@ public class RESTUtil {
 		HttpURLConnection con;
 		int responseCode;
 		BufferedReader in;
-		String inputLine, result;
+		String inputLine, result, responseMessage;
 		StringBuffer response;
 
 		try {
@@ -70,20 +69,16 @@ public class RESTUtil {
 			if (url.contains("https://api.twitter.com")) {
 				setTwitterAuthentication(con);
 			} else if (url.contains("https://graph.facebook.com")) {
-				// String bearerToken;
-
-				// bearerToken = requestFacebookBearerToken(con);
-
-				// con.setRequestProperty("Host", "graph.facebook.com");
-				// con.setRequestProperty("Authorization", "Bearer " +
-				// bearerToken);
 				setFacebookAuthentication(con);
 			}
 
 			// Here we will know if the response is positive or not
 			responseCode = con.getResponseCode();
+			responseMessage = con.getResponseMessage();
+
 			log.debug("\nSending 'GET' request to URL : " + url);
 			log.debug("Response Code : " + responseCode);
+			log.debug("Response Message : " + responseMessage);
 
 			// Now, it is time to read the data as a string using BufferedReader
 			in = new BufferedReader(new InputStreamReader(con.getInputStream()));
@@ -318,7 +313,8 @@ public class RESTUtil {
 		bearerToken = requestFacebookBearerToken("https://graph.facebook.com/v2.11/oauth/access_token");
 
 		con.setRequestProperty("Host", "graph.facebook.com");
-		con.setRequestProperty("Authorization", "Bearer " + bearerToken);
+		// con.setRequestProperty("Authorization", "Bearer " + bearerToken);
+		con.setRequestProperty("access_token", bearerToken);
 	}
 
 	private static String requestFacebookBearerToken(String endPointUrl)
@@ -331,8 +327,7 @@ public class RESTUtil {
 		connection = null;
 
 		accessTokenRequestURL = endPointUrl + "?client_id=" + applicationKey
-				+ "&client_secret=" + secretKey
-				+ "&grant_type=client_credentials";
+				+ "&client_secret=" + secretKey;
 
 		try {
 			// URL url = new URL(endPointUrl);
@@ -347,7 +342,7 @@ public class RESTUtil {
 			connection.setRequestProperty("Content-Length", "29");
 			connection.setUseCaches(false);
 
-			// writeRequest(connection, "grant_type=client_credentials");
+			writeRequest(connection, "grant_type=client_credentials");
 
 			// Parse the JSON response into a JSON mapped object to fetch fields
 			// from.
