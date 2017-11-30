@@ -9,9 +9,9 @@ import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 
 @Component({
-    selector: 'jhi-twitter',
-    templateUrl: './twitter.component.html'
-}) export class TwitterComponent implements OnInit, OnDestroy {
+    selector: 'jhi-facebook',
+    templateUrl: './facebook.component.html'
+}) export class FacebookComponent implements OnInit, OnDestroy {
 
     isSaving: boolean;
     url: string;
@@ -37,7 +37,7 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
         };
         this.data = [];
         this.path = '';
-        this.url = 'https://api.twitter.com/1.1/users/lookup.json?screen_name=deccom2018';
+        this.url = 'https://graph.facebook.com/v2.11/me/friends';
     }
 
     loadPage(page) {
