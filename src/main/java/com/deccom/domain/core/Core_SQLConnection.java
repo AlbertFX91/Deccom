@@ -74,7 +74,7 @@ public class Core_SQLConnection extends Core_Connection{
 	@Override
 	public String toString() {
 		return "Core_SQLConnection [username=" + username + ", password=" + password + ", url=" + url + ", query="
-				+ query + ", _extractorClass=" + _extractorClass + "]";
+				+ query + ", _class=" + _class + "]";
 	}
 	
 	

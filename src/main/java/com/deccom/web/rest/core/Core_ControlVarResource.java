@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.codahale.metrics.annotation.Timed;
 import com.deccom.domain.core.Core_ControlVar;
 import com.deccom.domain.core.Core_RESTConnection;
+import com.deccom.domain.core.Core_RESTExtractor;
 import com.deccom.domain.core.Core_SQLConnection;
+import com.deccom.domain.core.Core_SQLExtractor;
 import com.deccom.service.impl.core.Core_ControlVarService;
 
 import io.github.jhipster.web.util.ResponseUtil;
@@ -42,23 +44,26 @@ public class Core_ControlVarResource {
     public ResponseEntity<String> createControlVars() {
         log.debug("Creation Core_Connection objects");
         
+        /*
         Core_RESTConnection rest = new Core_RESTConnection();
+        rest.set_extractorClass(Core_RESTExtractor.class.getName());
         rest.setJsonPath("$[0].id");
         rest.setUrl("http://api.google.es");
-        
+        */
         Core_SQLConnection sql = new Core_SQLConnection();
-        sql.setPassword("password");
-        sql.setQuery("select * from somewhere");
-        sql.setUrl("http://localhost:3808");
-        sql.setUsername("username");
-        
+        sql.set_extractorClass(Core_SQLExtractor.class.getName());
+        sql.setUsername("developer");
+        sql.setPassword("developer");
+        sql.setQuery("select age from author where  idauthor='1' and name='name-1';");
+        sql.setUrl("jdbc:mysql://localhost:3306/deccom");
+        /*
         Core_ControlVar c1 = new Core_ControlVar();
         c1.setConnection(rest);
         c1.setCreationMoment(LocalDateTime.now());
         c1.setDisabled(false);
         c1.setFrequency_sec(1000);
         c1.setName("RESTCONTROLVAR");
-        
+        */
         Core_ControlVar c2 = new Core_ControlVar();
         c2.setConnection(sql);
         c2.setCreationMoment(LocalDateTime.now());
@@ -67,7 +72,7 @@ public class Core_ControlVarResource {
         c2.setName("SQLCONTROLVAR");
         
         
-        controlvarService.save(c1);
+        // controlvarService.save(c1);
         controlvarService.save(c2);
         
         return ResponseUtil.wrapOrNotFound(Optional.empty());
@@ -86,4 +91,23 @@ public class Core_ControlVarResource {
         return controlvarService.findAll(pageable);
     }
 
+    /**
+     * Run loadControlVars from db
+     *
+     * 
+     * @return the ResponseEntity with status 200 (OK)
+     * @throws ClassNotFoundException 
+     * @throws IllegalAccessException 
+     * @throws IllegalArgumentException 
+     * @throws InstantiationException 
+     */
+    @GetMapping("/controlvar/run")
+    @Timed
+    public ResponseEntity<String> runControlVars() throws ClassNotFoundException, IllegalArgumentException, IllegalAccessException, InstantiationException {
+        log.debug("Run Core_Connection objects");
+        
+        controlvarService.run();
+        
+        return ResponseUtil.wrapOrNotFound(Optional.empty());
+    }
 }

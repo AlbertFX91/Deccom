@@ -48,7 +48,7 @@ public class Core_RESTConnection extends Core_Connection {
 	}
 	@Override
 	public String toString() {
-		return "Core_RESTConnection [url=" + url + ", jsonPath=" + jsonPath + ", _extractorClass=" + _extractorClass
+		return "Core_RESTConnection [url=" + url + ", jsonPath=" + jsonPath + ", _class=" + _class
 				+ "]";
 	}
 	

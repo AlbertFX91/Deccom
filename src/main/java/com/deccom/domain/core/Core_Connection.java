@@ -1,11 +1,20 @@
 package com.deccom.domain.core;
 
 public class Core_Connection {
+	protected String _class;
 	protected String _extractorClass;
 
 	Core_Connection(){
 		super();
-		this._extractorClass = this.getClass().getName();
+		this._class = this.getClass().getName();
+	}
+	
+	public String get_class() {
+		return _class;
+	}
+
+	public void set_class(String _class) {
+		this._class = _class;
 	}
 	
 	public String get_extractorClass() {
@@ -20,6 +29,7 @@ public class Core_Connection {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((_class == null) ? 0 : _class.hashCode());
 		result = prime * result + ((_extractorClass == null) ? 0 : _extractorClass.hashCode());
 		return result;
 	}
@@ -33,6 +43,11 @@ public class Core_Connection {
 		if (getClass() != obj.getClass())
 			return false;
 		Core_Connection other = (Core_Connection) obj;
+		if (_class == null) {
+			if (other._class != null)
+				return false;
+		} else if (!_class.equals(other._class))
+			return false;
 		if (_extractorClass == null) {
 			if (other._extractorClass != null)
 				return false;
@@ -43,9 +58,8 @@ public class Core_Connection {
 
 	@Override
 	public String toString() {
-		return "Core_Connection [_extractorClass=" + _extractorClass + "]";
+		return "Core_Connection [_class=" + _class + ", _extractorClass=" + _extractorClass + "]";
 	}
-	
 	
 	
 }
