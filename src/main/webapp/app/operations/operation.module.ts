@@ -5,6 +5,7 @@ import { DeccomSQLModule } from './sql/sql.module';
 import { DeccomRESTModule } from './rest/rest.module';
 import { DeccomCVModule } from './cv/cv.module';
 import { DeccomTwitterModule } from './twitter/twitter.module';
+import { DeccomFacebookModule } from './facebook/facebook.module';
 
 @NgModule({
     imports: [
@@ -12,7 +13,8 @@ import { DeccomTwitterModule } from './twitter/twitter.module';
         DeccomSQLModule,
         DeccomRESTModule,
         DeccomCVModule,
-        DeccomTwitterModule
+        DeccomTwitterModule,
+        DeccomFacebookModule
     ],
     declarations: [],
     entryComponents: [],

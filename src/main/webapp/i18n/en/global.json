@@ -38,7 +38,8 @@
                 "sql": "SQL query",
                 "rest": "API REST call",
                 "cv": "Control variables",
-                "twitter": "Extract Twitter data"
+                "twitter": "Extract Twitter data",
+                "facebook": "Extract Facebook data"
             },
             "language": "Language"
         },

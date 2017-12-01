@@ -7,21 +7,7 @@ import { trigger, state, style, transition, animate, keyframes } from '@angular/
 @Component({
     selector: 'jhi-cv-card',
     templateUrl: './cv-card.component.html',
-    styleUrls: ['./cv-card.component.css'],
-    animations: [
-        trigger('collapseAnimation', [
-            state('isCollapsed', style({
-                transform: 'scale(1)'
-            })),
-            state('!isCollapsed', style({
-                transform: 'scale(1.2)'
-            })),
-            transition('isCollapsed <=> !isCollapsed', animate('300ms ease-in', keyframes([
-                style({opacity: 0, offset: 0}),
-                style({opacity: 1, offset: 1})
-            ])))
-        ])
-    ]
+    styleUrls: ['./cv-card.component.css']
 })
 export class CVCardComponent implements OnInit, OnDestroy {
 

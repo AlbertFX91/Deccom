@@ -140,3 +140,4 @@ Desktop.ini
 # ESLint
 ######################
 .eslintcache
+src/main/resources/config/application.yml
