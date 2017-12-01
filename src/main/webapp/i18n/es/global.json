@@ -38,7 +38,8 @@
                 "sql": "Consulta SQL",
                 "rest": "Llamada a API REST",
                 "cv": "Variables de control",
-                "twitter": "Extrer datos de Twitter"
+                "twitter": "Extrer datos de Twitter",
+                "facebook": "Extrer datos de Facebook"
             },
             "language": "Idioma"
         },
