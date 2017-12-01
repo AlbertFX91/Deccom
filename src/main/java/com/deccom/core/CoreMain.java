@@ -20,6 +20,7 @@ public class CoreMain {
 	
 	public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
 		// DB DATA
+		/*
 		String className = "com.deccom.core.RESTExtractor";
 		Map<String, String> attribs = Maps.newHashMap();
 		attribs.put("url", "https://jsonplaceholder.typicode.com/users");
@@ -31,16 +32,17 @@ public class CoreMain {
 			propertiesInjection(dataExtractor, attribs);
 			System.out.println("Data extracted ["+className+"]: "+dataExtractor.getData());
 		}
+		*/
 	
 		// DB DATA
-		className = "com.deccom.core.SQLExtractor";
-		attribs = Maps.newHashMap();
+		String className = "com.deccom.core.SQLExtractor";
+		Map<String, String> attribs = Maps.newHashMap();
 		attribs.put("username", "developer");
 		attribs.put("password", "developer");
 		attribs.put("url", "jdbc:mysql://localhost:3306/deccom");
 		attribs.put("query", "select age from author where idauthor='1'");
 			
-		wrapper = Class.forName(className).newInstance();
+		Object wrapper = Class.forName(className).newInstance();
 		
 		if(wrapper instanceof DataExtractor) {
 			DataExtractor dataExtractor = (DataExtractor) wrapper;

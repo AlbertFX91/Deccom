@@ -57,7 +57,16 @@ public class SQLExtractor implements DataExtractor{
 		this.query = query;
 	}
 	
+	@Override
 	public String getData() {
+		String value;
+		
+		value = getFromSQL();
+		
+		return value;
+	}
+	
+	protected String getFromSQL() {
 		String value;
     	ResultSet rs;
     	Connection connection;
