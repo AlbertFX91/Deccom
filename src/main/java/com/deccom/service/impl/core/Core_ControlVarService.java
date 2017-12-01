@@ -52,14 +52,16 @@ public class Core_ControlVarService {
     		for(Entry<Field, Object> pair: fields.entrySet()) {
     			System.out.println(pair.getKey()+": "+pair.getValue());
     		}*/
-    			
+    	
+    		
+    		
     		Object wrapper = Class.forName(connection.get_extractorClass()).newInstance();
     		Map<String, Core_Connection> fields = new HashMap<>();
     		fields.put("dataConnection", connection);
     		if(wrapper instanceof Core_DataExtractor) {
     			Core_DataExtractor dataExtractor = (Core_DataExtractor) wrapper;
     			propertiesInjection(dataExtractor, fields);
-    			System.out.println("Data extracted ["+connection.getClass().getName()+"]: "+dataExtractor.getData());
+    			System.out.println("Data extracted ["+cv.getName()+"]: "+dataExtractor.getData());
     		}
     		
     		System.out.println("-------------------------------------------------");

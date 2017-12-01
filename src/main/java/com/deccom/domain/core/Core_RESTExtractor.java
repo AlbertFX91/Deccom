@@ -4,33 +4,12 @@ import com.deccom.service.impl.util.RESTUtil;
 
 public class Core_RESTExtractor implements Core_DataExtractor{
 	
-	private String url;
-	private String jsonpath;
+	private Core_RESTConnection dataConnection;
 	
 	public Core_RESTExtractor() {
-		this.url = "";
-		this.jsonpath = "";
 	}
 	
-	public Core_RESTExtractor(String url, String jsonpath) {
-		this.url = url;
-		this.jsonpath = jsonpath;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
-	public String getJsonpath() {
-		return jsonpath;
-	}
-	public void setJsonpath(String jsonpath) {
-		this.jsonpath = jsonpath;
-	}
-
+	@Override
 	public String getData() {
 		String value;
 		
@@ -40,8 +19,8 @@ public class Core_RESTExtractor implements Core_DataExtractor{
 	}
 	
 	protected String getByJsonPath(){
-		String body = RESTUtil.getResponse(this.url);
-		String value = RESTUtil.getByJSONPath(body, this.jsonpath);
+		String body = RESTUtil.getResponse(dataConnection.getUrl());
+		String value = RESTUtil.getByJSONPath(body, dataConnection.getJsonPath());
 		return value;
 	}
 	

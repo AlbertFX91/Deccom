@@ -44,26 +44,26 @@ public class Core_ControlVarResource {
     public ResponseEntity<String> createControlVars() {
         log.debug("Creation Core_Connection objects");
         
-        /*
+        
         Core_RESTConnection rest = new Core_RESTConnection();
         rest.set_extractorClass(Core_RESTExtractor.class.getName());
-        rest.setJsonPath("$[0].id");
-        rest.setUrl("http://api.google.es");
-        */
+        rest.setJsonPath("$[2].phone");
+        rest.setUrl("http://jsonplaceholder.typicode.com/users");
+        
         Core_SQLConnection sql = new Core_SQLConnection();
         sql.set_extractorClass(Core_SQLExtractor.class.getName());
         sql.setUsername("developer");
         sql.setPassword("developer");
         sql.setQuery("select age from author where  idauthor='1' and name='name-1';");
         sql.setUrl("jdbc:mysql://localhost:3306/deccom");
-        /*
+        
         Core_ControlVar c1 = new Core_ControlVar();
         c1.setConnection(rest);
         c1.setCreationMoment(LocalDateTime.now());
         c1.setDisabled(false);
         c1.setFrequency_sec(1000);
         c1.setName("RESTCONTROLVAR");
-        */
+        
         Core_ControlVar c2 = new Core_ControlVar();
         c2.setConnection(sql);
         c2.setCreationMoment(LocalDateTime.now());
@@ -72,7 +72,7 @@ public class Core_ControlVarResource {
         c2.setName("SQLCONTROLVAR");
         
         
-        // controlvarService.save(c1);
+        controlvarService.save(c1);
         controlvarService.save(c2);
         
         return ResponseUtil.wrapOrNotFound(Optional.empty());
