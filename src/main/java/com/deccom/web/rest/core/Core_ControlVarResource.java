@@ -28,7 +28,7 @@ import io.github.jhipster.web.util.ResponseUtil;
 public class Core_ControlVarResource {
 	private final Logger log = LoggerFactory.getLogger(Core_ControlVarResource.class);
 
-    private static final String ENTITY_NAME = "Core_ControlVar";
+    // private static final String ENTITY_NAME = "Core_ControlVar";
 
     @Autowired
     private Core_ControlVarService controlvarService;
@@ -44,7 +44,6 @@ public class Core_ControlVarResource {
     public ResponseEntity<String> createControlVars() {
         log.debug("Creation Core_Connection objects");
         
-        
         Core_RESTConnection rest = new Core_RESTConnection();
         rest.set_extractorClass(Core_RESTExtractor.class.getName());
         rest.setJsonPath("$[2].phone");
@@ -57,18 +56,18 @@ public class Core_ControlVarResource {
         sql.setQuery("select age from author where  idauthor='1' and name='name-1';");
         sql.setUrl("jdbc:mysql://localhost:3306/deccom");
         
-        Core_ControlVar c1 = new Core_ControlVar();
+        Core_ControlVar c1 = controlvarService.create();
         c1.setConnection(rest);
         c1.setCreationMoment(LocalDateTime.now());
         c1.setDisabled(false);
-        c1.setFrequency_sec(1000);
+        c1.setFrequency_sec(60);
         c1.setName("RESTCONTROLVAR");
         
-        Core_ControlVar c2 = new Core_ControlVar();
+        Core_ControlVar c2 = controlvarService.create();
         c2.setConnection(sql);
         c2.setCreationMoment(LocalDateTime.now());
         c2.setDisabled(false);
-        c2.setFrequency_sec(3000);
+        c2.setFrequency_sec(30);
         c2.setName("SQLCONTROLVAR");
         
         

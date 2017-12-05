@@ -1,4 +1,4 @@
-package com.deccom.service.impl;
+package com.deccom.service.impl.core;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,52 +12,43 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.deccom.config.DeccomRESTControlVarMonitorTask;
-import com.deccom.config.DeccomSQLControlVarMonitorTask;
-import com.deccom.domain.RESTControlVar;
-import com.deccom.domain.SQLControlVar;
-import com.deccom.service.RESTControlVarService;
-import com.deccom.service.SQLControlVarService;
+import com.deccom.domain.core.Core_ControlVar;
+import com.deccom.service.impl.core.util.Core_ControlVarRunnable;
 
 /**
  * Service class for managing users.
  */
 @Service
-public class DeccomSchedulingService {
+public class Core_SchedulingService {
  
-    private final Logger log = LoggerFactory.getLogger(DeccomSchedulingService.class);
+    private final Logger log = LoggerFactory.getLogger(Core_SchedulingService.class);
     
     private ScheduledExecutorService str;
-    
-    @Autowired
-	private RESTControlVarService restCvService;
+	
 	@Autowired
-	private SQLControlVarService sqlCvService;
+	private Core_ControlVarService cvService;
 
 	// Map which stores the ID from the controlVar and the job to be executed
     private Map<String, ScheduledFuture<?>> jobs;
    
 
     public synchronized void startJobs() {
+    	log.debug("Starting Jobs");
     	jobs = new HashMap<>();
-    	for (RESTControlVar cv : restCvService.findAll()) {
-			ScheduledFuture<?> job = str.scheduleAtFixedRate(new DeccomRESTControlVarMonitorTask(cv, restCvService), cv.getFrequency_sec() , cv.getFrequency_sec(), TimeUnit.SECONDS);
-			jobs.put(cv.getId(), job);
-		}
-		for (SQLControlVar cv : sqlCvService.findAll()) {
-			ScheduledFuture<?> job = str.scheduleAtFixedRate(new DeccomSQLControlVarMonitorTask(cv, sqlCvService), 0 , cv.getFrequency_sec(), TimeUnit.SECONDS);
-			jobs.put(cv.getId(), job);
-		}
+    	for (Core_ControlVar cv: cvService.findAll()) {
+    		ScheduledFuture<?> job = str.scheduleAtFixedRate(new Core_ControlVarRunnable(cv, cvService), 0, cv.getFrequency_sec(), TimeUnit.SECONDS);
+    		jobs.put(cv.getId(), job);
+    	}
     }
     
     public synchronized void startJobs(ScheduledExecutorService newstr) {
 		this.str = newstr;
 		startJobs();
-    	
     }
     
     
     public synchronized void resetJobs() {
+    	log.debug("Resetting jobs");
     	for(Entry<String, ScheduledFuture<?>> e: jobs.entrySet()) {
     		e.getValue().cancel(false);
     	}
@@ -66,21 +57,19 @@ public class DeccomSchedulingService {
     }
     
     public synchronized void stopJobs() {
+    	log.debug("Stopping jobs");
     	for(Entry<String, ScheduledFuture<?>> e: jobs.entrySet()) {
     		e.getValue().cancel(false);
     	}
     	jobs.clear();
     }
     
-    public void newJob(RESTControlVar cv) {
-    	ScheduledFuture<?> job = str.scheduleAtFixedRate(new DeccomRESTControlVarMonitorTask(cv, restCvService), 0 , cv.getFrequency_sec(), TimeUnit.SECONDS);
+    public void newJob(Core_ControlVar cv) {
+    	log.debug("New job");
+    	ScheduledFuture<?> job = str.scheduleAtFixedRate(new Core_ControlVarRunnable(cv, cvService), 0 , cv.getFrequency_sec(), TimeUnit.SECONDS);
 		jobs.put(cv.getId(), job);
     }
     
-    public void newJob(SQLControlVar cv) {
-    	ScheduledFuture<?> job = str.scheduleAtFixedRate(new DeccomSQLControlVarMonitorTask(cv, sqlCvService), 0 , cv.getFrequency_sec(), TimeUnit.SECONDS);
-		jobs.put(cv.getId(), job);
-    }
     /*
     //Call this on deployment from the ScheduleDataRepository and everytime when schedule data changes.
     public synchronized void scheduleJob(int jobNr, long newRate) {//you are free to change/add new scheduling data, but suppose for now you only want to change the rate

@@ -1,6 +1,7 @@
 package com.deccom.domain.core;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
@@ -23,6 +24,8 @@ public class Core_ControlVar {
 	
 	@NotNull
 	private Core_Connection connection;
+	@NotNull
+	private List<Core_ControlVarEntry> entries;
 	
 	public String getId() {
 		return id;
@@ -61,6 +64,13 @@ public class Core_ControlVar {
 	public void setConnection(Core_Connection connection) {
 		this.connection = connection;
 	}
+	public List<Core_ControlVarEntry> getEntries() {
+		return entries;
+	}
+	public void setEntries(List<Core_ControlVarEntry> entries) {
+		this.entries = entries;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
