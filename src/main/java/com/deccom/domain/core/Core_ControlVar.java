@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 
 @Document
-public class Core_ControlVar {
+public class Core_ControlVar{
 	@Id
 	private String id;
 	@NotNull
