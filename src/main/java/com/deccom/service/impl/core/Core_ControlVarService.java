@@ -1,5 +1,6 @@
 package com.deccom.service.impl.core;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import com.deccom.domain.core.Core_Connection;
 import com.deccom.domain.core.Core_ControlVar;
 import com.deccom.domain.core.Core_ControlVarEntry;
 import com.deccom.domain.core.Core_DataExtractor;
+import com.deccom.domain.core.annotation.Core_Extractor;
 import com.deccom.repository.core.Core_ControlVarRepository;
 	
 
@@ -73,21 +75,35 @@ public class Core_ControlVarService {
     public void executeMonitorize(Core_ControlVar controlVar) {
     	Core_Connection connection = controlVar.getConnection();
     	Object wrapper;
-		try {
-			wrapper = Class.forName(connection.get_extractorClass()).newInstance();
-		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-			// TODO
-			e.printStackTrace();
-			wrapper = new Object();
-		}
-		Map<String, Core_Connection> fields = new HashMap<>();
-		fields.put("dataConnection", connection);
-		if(wrapper instanceof Core_DataExtractor) {
-			Core_DataExtractor dataExtractor = (Core_DataExtractor) wrapper;
-			propertiesInjection(dataExtractor, fields);
-			String value = dataExtractor.getData();
-			addEntry(controlVar, value);
-			log.debug("Data extracted ["+controlVar.getName()+"]: "+value);
+    	if(connection.getClass().isAnnotationPresent(Core_Extractor.class)) {
+        	Annotation annotation = connection.getClass().getAnnotation(Core_Extractor.class);
+        	Core_Extractor core_extractor = (Core_Extractor) annotation;
+        	try {
+				wrapper = core_extractor.value().newInstance();
+			} catch (InstantiationException | IllegalAccessException e) {
+				// TODO This is when the class its an interface, an abstract class, or its private.
+				// So, if its happens, its a programming error. It will throw an exception	
+				e.printStackTrace();
+				wrapper = null;
+    			System.out.println("Error. Cannot instanciate the extractor");
+			}
+    		
+    		Map<String, Core_Connection> fields = new HashMap<>();
+    		fields.put("dataConnection", connection);
+    		if(wrapper instanceof Core_DataExtractor) {
+    			Core_DataExtractor dataExtractor = (Core_DataExtractor) wrapper;
+    			propertiesInjection(dataExtractor, fields);
+    			String value = dataExtractor.getData();
+    			addEntry(controlVar, value);
+    			log.debug("Data extracted ["+controlVar.getName()+"]: "+value);
+    		}else {
+    			// TODO This is when the class in @Extractor does not extends from Core_DataExtractor, but its controlled by the Core_Extractor interface.
+    			// If its happens, but its unlikely, it will throw an exception
+    			System.out.println("Error. Wrapper is not an instance of Core_DataExtractor");
+    		}
+		}else {
+			// TODO This is when a class has not the annotation @Extractor implemented. It'll throw an exception
+			System.out.println("Error. Connection has not the annotation @Extractor");
 		}
     }
     public Core_ControlVarEntry addEntry(Core_ControlVar cv, String value) {

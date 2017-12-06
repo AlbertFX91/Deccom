@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.codahale.metrics.annotation.Timed;
 import com.deccom.domain.core.Core_ControlVar;
 import com.deccom.domain.core.Core_RESTConnection;
-import com.deccom.domain.core.Core_RESTExtractor;
 import com.deccom.domain.core.Core_SQLConnection;
-import com.deccom.domain.core.Core_SQLExtractor;
 import com.deccom.service.impl.core.Core_ControlVarService;
 
 import io.github.jhipster.web.util.ResponseUtil;
@@ -45,12 +43,10 @@ public class Core_ControlVarResource {
         log.debug("Creation Core_Connection objects");
         
         Core_RESTConnection rest = new Core_RESTConnection();
-        rest.set_extractorClass(Core_RESTExtractor.class.getName());
         rest.setJsonPath("$[2].phone");
         rest.setUrl("http://jsonplaceholder.typicode.com/users");
         
         Core_SQLConnection sql = new Core_SQLConnection();
-        sql.set_extractorClass(Core_SQLExtractor.class.getName());
         sql.setUsername("developer");
         sql.setPassword("developer");
         sql.setQuery("select age from author where  idauthor='1' and name='name-1';");
