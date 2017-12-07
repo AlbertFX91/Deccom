@@ -1,10 +1,13 @@
 package com.deccom.web.rest.core;
 
 import java.lang.reflect.Field;
+import java.net.URISyntaxException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -122,7 +125,7 @@ public class Core_ControlVarResource {
 		  }
 		}
      */
-    public ResponseEntity<String> newControlVars2(@RequestBody Core_ControlVarCreation cve) {
+    public ResponseEntity<String> newControlVars2(@RequestBody @Valid Core_ControlVarCreation cve)  throws URISyntaxException {
         /**
          * Development report @AlbertFX91:
          * + It works
@@ -139,12 +142,14 @@ public class Core_ControlVarResource {
 		try {
 			connection = (Core_Connection) Class.forName(_connectionClass).newInstance();
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+			// TODO Throw specific exception
 			return ResponseEntity.badRequest().body("_connectionClass error: "+e.getMessage());
 		}
         
 		/* ConnectionData verification */
         Boolean connectionVerification = connectionVerification(connection, connectionData);
         if(!connectionVerification) {
+        	// TODO Throw specific exception
         	return ResponseEntity.badRequest().body("connectionData error");
         }
         
@@ -186,6 +191,8 @@ public class Core_ControlVarResource {
 
         return ResponseEntity.ok().build();
     }
+    
+    // TODO Handle error
     
     private static <T> void propertiesInjection(Object o, Map<String, T> properties) {
 		for (Entry<String, T> property : properties.entrySet()) {

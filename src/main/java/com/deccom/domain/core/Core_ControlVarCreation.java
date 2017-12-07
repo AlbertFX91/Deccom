@@ -2,10 +2,15 @@ package com.deccom.domain.core;
 
 import java.util.Map;
 
+import javax.validation.Valid;
+
 public class Core_ControlVarCreation {
+	@Valid
 	private Core_ControlVar controlvar;
+	@Valid
 	private Map<String, String> connectionData;
 	private String _connectionClass;
+	
 	public Core_ControlVar getControlvar() {
 		return controlvar;
 	}
