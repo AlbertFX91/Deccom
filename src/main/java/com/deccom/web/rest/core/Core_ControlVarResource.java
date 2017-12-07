@@ -100,31 +100,26 @@ public class Core_ControlVarResource {
         return ResponseEntity.ok().build();
     }
     
+/*	
+EXAMPLE CONTROLVAR CREATION DATA FOR SWAGGER
+{
+  "_connectionClass": "com.deccom.domain.core.Core_RESTConnection",
+  "connectionData": {
+    "url" : "http://jsonplaceholder.typicode.com/users",
+	"jsonPath": "$.[0].id"
+  },
+  "controlvar": {
+    "connection": {},
+	"creationMoment": "2017-12-06T21:36:28.081Z",
+	"disabled": true,
+	"entries": [],
+	"frequency_sec": 20,
+	"name": "exampleCV"
+  }
+}
+*/
     @PostMapping("/controlvar/new2")
     @Timed
-    /*
-     * EXAMPLE DATA FOR SWAGGER
-     * 	{
-		  "_connectionClass": "com.deccom.domain.core.Core_RESTConnection",
-		  "connectionData": {
-		    "url" : "http://jsonplaceholder.typicode.com/users",
-		    "jsonPath": "$.[0].id"
-		  },
-		  "controlvar": {
-		    "connection": {},
-		    "creationMoment": "2017-12-06T21:36:28.081Z",
-		    "disabled": true,
-		    "entries": [
-		      {
-		        "creationMoment": "2017-12-06T21:36:28.081Z",
-		        "value": "string"
-		      }
-		    ],
-		    "frequency_sec": 20,
-		    "name": "exampleCV"
-		  }
-		}
-     */
     public ResponseEntity<String> newControlVars2(@RequestBody @Valid Core_ControlVarCreation cve)  throws URISyntaxException {
         /**
          * Development report @AlbertFX91:
