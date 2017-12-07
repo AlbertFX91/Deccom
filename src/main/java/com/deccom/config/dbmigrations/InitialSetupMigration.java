@@ -185,6 +185,7 @@ public class InitialSetupMigration {
 		mongoTemplate.save(r);
 	}
 	
+	// This ControlVars will not be monitored when they are created because the jobs start before populate
 	@ChangeSet(order = "06", author = "initiator", id = "06-addCoreControlVar")
 	public void addCoreControlVars(MongoTemplate mongoTemplate) {
 		Core_RESTConnection rest = new Core_RESTConnection();
