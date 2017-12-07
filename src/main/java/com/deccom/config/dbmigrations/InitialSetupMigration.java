@@ -16,6 +16,9 @@ import com.deccom.domain.RESTConnection;
 import com.deccom.domain.RESTControlVar;
 import com.deccom.domain.RESTControlVarEntry;
 import com.deccom.domain.User;
+import com.deccom.domain.core.Core_ControlVar;
+import com.deccom.domain.core.Core_RESTConnection;
+import com.deccom.domain.core.Core_SQLConnection;
 import com.deccom.security.AuthoritiesConstants;
 import com.github.mongobee.changeset.ChangeLog;
 import com.github.mongobee.changeset.ChangeSet;
@@ -180,7 +183,35 @@ public class InitialSetupMigration {
 				"17", LocalDateTime.now())));
 
 		mongoTemplate.save(r);
-
 	}
+	
+	@ChangeSet(order = "06", author = "initiator", id = "06-addCoreControlVar")
+	public void addCoreControlVars(MongoTemplate mongoTemplate) {
+		Core_RESTConnection rest = new Core_RESTConnection();
+        rest.setJsonPath("$[2].phone");
+        rest.setUrl("http://jsonplaceholder.typicode.com/users");
+        
+        Core_SQLConnection sql = new Core_SQLConnection();
+        sql.setUsername("developer");
+        sql.setPassword("developer");
+        sql.setQuery("select age from author where  idauthor='1' and name='name-1';");
+        sql.setUrl("jdbc:mysql://localhost:3306/deccom");
+        
+        Core_ControlVar c1 = new Core_ControlVar();
+        c1.setConnection(rest);
+        c1.setCreationMoment(LocalDateTime.now());
+        c1.setDisabled(false);
+        c1.setFrequency_sec(60);
+        c1.setName("RESTCONTROLVAR");
+        
+        Core_ControlVar c2 = new Core_ControlVar();;
+        c2.setConnection(sql);
+        c2.setCreationMoment(LocalDateTime.now());
+        c2.setDisabled(false);
+        c2.setFrequency_sec(30);
+        c2.setName("SQLCONTROLVAR");
 
+		mongoTemplate.save(c1);
+		mongoTemplate.save(c2);
+	}
 }
