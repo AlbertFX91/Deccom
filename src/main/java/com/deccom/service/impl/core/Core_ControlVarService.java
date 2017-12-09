@@ -70,7 +70,9 @@ public class Core_ControlVarService {
 		log.debug("Request to run all Core_Connection");
 		List<Core_ControlVar> controlVars = controlVarRepository.findAll();
 		for (Core_ControlVar cv : controlVars) {
-			executeMonitorize(cv);
+			if (cv.getStatus() == Status.RUNNING) {
+				executeMonitorize(cv);
+			}
 		}
 	}
 

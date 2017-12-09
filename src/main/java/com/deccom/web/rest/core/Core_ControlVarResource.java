@@ -72,7 +72,7 @@ public class Core_ControlVarResource {
 		Core_ControlVar c2 = controlvarService.create();
 		c2.setConnection(sql);
 		c2.setCreationMoment(LocalDateTime.now());
-		c2.setStatus(Status.RUNNING);
+		c2.setStatus(Status.PAUSED);
 		c2.setFrequency_sec(30);
 		c2.setName("SQLCONTROLVAR");
 

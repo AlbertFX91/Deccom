@@ -202,7 +202,7 @@ public class InitialSetupMigration {
         Core_ControlVar c1 = new Core_ControlVar();
         c1.setConnection(rest);
         c1.setCreationMoment(LocalDateTime.now());
-        c1.setStatus(Status.RUNNING);
+        c1.setStatus(Status.PAUSED);
         c1.setFrequency_sec(60);
         c1.setName("RESTCONTROLVAR");
         
