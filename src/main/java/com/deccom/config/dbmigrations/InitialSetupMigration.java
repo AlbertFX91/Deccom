@@ -19,6 +19,7 @@ import com.deccom.domain.User;
 import com.deccom.domain.core.Core_ControlVar;
 import com.deccom.domain.core.Core_RESTConnection;
 import com.deccom.domain.core.Core_SQLConnection;
+import com.deccom.domain.core.Status;
 import com.deccom.security.AuthoritiesConstants;
 import com.github.mongobee.changeset.ChangeLog;
 import com.github.mongobee.changeset.ChangeSet;
@@ -201,14 +202,14 @@ public class InitialSetupMigration {
         Core_ControlVar c1 = new Core_ControlVar();
         c1.setConnection(rest);
         c1.setCreationMoment(LocalDateTime.now());
-        c1.setDisabled(false);
+        c1.setStatus(Status.RUNNING);
         c1.setFrequency_sec(60);
         c1.setName("RESTCONTROLVAR");
         
         Core_ControlVar c2 = new Core_ControlVar();;
         c2.setConnection(sql);
         c2.setCreationMoment(LocalDateTime.now());
-        c2.setDisabled(false);
+        c2.setStatus(Status.RUNNING);
         c2.setFrequency_sec(30);
         c2.setName("SQLCONTROLVAR");
 
