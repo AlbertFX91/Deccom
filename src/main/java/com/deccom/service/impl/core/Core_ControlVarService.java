@@ -70,30 +70,31 @@ public class Core_ControlVarService {
 		log.debug("Request to run all Core_Connection");
 		List<Core_ControlVar> controlVars = controlVarRepository.findAll();
 		for (Core_ControlVar cv : controlVars) {
-			if (cv.getStatus() == Status.RUNNING) {
-				executeMonitorize(cv);
-			}
+			executeMonitorize(cv);
 		}
 	}
 
 	public void executeMonitorize(Core_ControlVar controlVar) {
-		Core_DataExtractor dataExtractor;
-		Core_Connection connection;
-		String value;
+		if (controlVar.getStatus() == Status.RUNNING) {
+			Core_DataExtractor dataExtractor;
+			Core_Connection connection;
+			String value;
 
-		connection = controlVar.getConnection();
-		if (hasExtractor(connection)) {
-			dataExtractor = getExtractorByConnection(connection);
-			dataExtractor = injectConnectionInExtractor(dataExtractor,
-					connection);
-			value = dataExtractor.getData();
-			addEntry(controlVar, value);
-			log.debug("Data extracted [" + controlVar.getName() + "]: " + value);
-		} else {
-			// TODO This is when a class has not the annotation @Extractor
-			// implemented. It'll throw an exception
-			System.out
-					.println("Error. Connection has not the annotation @Extractor");
+			connection = controlVar.getConnection();
+			if (hasExtractor(connection)) {
+				dataExtractor = getExtractorByConnection(connection);
+				dataExtractor = injectConnectionInExtractor(dataExtractor,
+						connection);
+				value = dataExtractor.getData();
+				addEntry(controlVar, value);
+				log.debug("Data extracted [" + controlVar.getName() + "]: "
+						+ value);
+			} else {
+				// TODO This is when a class has not the annotation @Extractor
+				// implemented. It'll throw an exception
+				System.out
+						.println("Error. Connection has not the annotation @Extractor");
+			}
 		}
 	}
 

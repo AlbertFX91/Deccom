@@ -23,10 +23,8 @@ public class Core_ControlVarRunnable implements Runnable {
 
 	@Override
 	public void run() {
-		if (cv.getStatus() == Status.RUNNING) {
-			log.debug("Core_ControlVar monitoring: " + cv.getId());
-			service.executeMonitorize(cv);
-		}
+		log.debug("Core_ControlVar monitoring: " + cv.getId());
+		service.executeMonitorize(cv);
 	}
 
 }
