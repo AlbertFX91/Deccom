@@ -20,12 +20,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 import com.deccom.config.ApplicationProperties;
 import com.deccom.service.impl.RESTServiceImpl;
 import com.jayway.jsonpath.JsonPath;
 
 @EnableConfigurationProperties(ApplicationProperties.class)
+@Component
 public class RESTUtil {
 
 	private static final Logger log = LoggerFactory
@@ -35,8 +37,12 @@ public class RESTUtil {
 	// Client
 	public static final String USER_AGENT = "Chrome/60.0.3112.101";
 
-	@Autowired
 	private static ApplicationProperties applicationProperties;
+    
+    @Autowired
+    public RESTUtil(ApplicationProperties applicationProperties) {
+    	RESTUtil.applicationProperties = applicationProperties;
+    }
 
 	/**
 	 * Sends a HTTP GET request to an URL.
