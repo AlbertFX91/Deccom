@@ -38,11 +38,11 @@ public class RESTUtil {
 	public static final String USER_AGENT = "Chrome/60.0.3112.101";
 
 	private static ApplicationProperties applicationProperties;
-    
-    @Autowired
-    public RESTUtil(ApplicationProperties applicationProperties) {
-    	RESTUtil.applicationProperties = applicationProperties;
-    }
+
+	@Autowired
+	public RESTUtil(ApplicationProperties applicationProperties) {
+		RESTUtil.applicationProperties = applicationProperties;
+	}
 
 	/**
 	 * Sends a HTTP GET request to an URL.
