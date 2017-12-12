@@ -85,10 +85,16 @@ public class Core_ControlVarService {
 				dataExtractor = getExtractorByConnection(connection);
 				dataExtractor = injectConnectionInExtractor(dataExtractor,
 						connection);
-				value = dataExtractor.getData();
-				addEntry(controlVar, value);
-				log.debug("Data extracted [" + controlVar.getName() + "]: "
-						+ value);
+				try {
+					value = dataExtractor.getData();
+					addEntry(controlVar, value);
+					log.debug("Data extracted [" + controlVar.getName() + "]: "
+							+ value);
+				} catch (Throwable e) {
+					controlVar.setStatus(Status.BLOCKED);
+					controlVarRepository.save(controlVar);
+					schedulingService.stopJob(controlVar);
+				}
 			} else {
 				// TODO This is when a class has not the annotation @Extractor
 				// implemented. It'll throw an exception
