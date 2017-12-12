@@ -205,6 +205,7 @@ public class InitialSetupMigration {
         c1.setStatus(Status.PAUSED);
         c1.setFrequency_sec(60);
         c1.setName("RESTCONTROLVAR");
+		c1.setEntries(Lists.newArrayList());
         
         Core_ControlVar c2 = new Core_ControlVar();;
         c2.setConnection(sql);
@@ -212,6 +213,7 @@ public class InitialSetupMigration {
         c2.setStatus(Status.RUNNING);
         c2.setFrequency_sec(30);
         c2.setName("SQLCONTROLVAR");
+		c2.setEntries(Lists.newArrayList());
 
 		mongoTemplate.save(c1);
 		mongoTemplate.save(c2);
