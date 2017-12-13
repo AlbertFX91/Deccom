@@ -56,6 +56,11 @@ public class Core_ControlVarService {
 		return cv;
 	}
 
+	public Core_ControlVar findOne(String id) {
+		log.debug("Request to get Core_ControlVar : {}", id);
+		return controlVarRepository.findOne(id);
+	}
+
 	public Page<Core_ControlVar> findAll(Pageable pageable) {
 		log.debug("Request to get all Core_Connection");
 		return controlVarRepository.findAll(pageable);
@@ -111,6 +116,19 @@ public class Core_ControlVarService {
 		cv.getEntries().add(entry);
 		controlVarRepository.save(cv);
 		return entry;
+	}
+	
+	public Core_ControlVar pause(String controlVarId) {
+		Core_ControlVar controlVar;
+		
+		controlVar = findOne(controlVarId);
+		
+		if (controlVar.getStatus().equals(Status.RUNNING)) {
+			controlVar.setStatus(Status.PAUSED);
+			schedulingService.stopJob(controlVar);
+		}
+		
+		return controlVarRepository.save(controlVar);
 	}
 
 	private static <T> void propertiesInjection(Object o,
@@ -172,4 +190,5 @@ public class Core_ControlVarService {
 			return null;
 		}
 	}
+
 }

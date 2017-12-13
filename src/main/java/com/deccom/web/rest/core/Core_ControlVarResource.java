@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,6 +30,7 @@ import com.deccom.domain.core.Core_RESTConnection;
 import com.deccom.domain.core.Core_SQLConnection;
 import com.deccom.domain.core.Status;
 import com.deccom.service.impl.core.Core_ControlVarService;
+import com.deccom.web.rest.util.HeaderUtil;
 
 @RestController
 @RequestMapping("/api")
@@ -36,7 +38,7 @@ public class Core_ControlVarResource {
 	private final Logger log = LoggerFactory
 			.getLogger(Core_ControlVarResource.class);
 
-	// private static final String ENTITY_NAME = "Core_ControlVar";
+	private static final String ENTITY_NAME = "Core_ControlVar";
 
 	@Autowired
 	private Core_ControlVarService controlvarService;
@@ -164,6 +166,32 @@ public class Core_ControlVarResource {
 	public Page<Core_ControlVar> findAll(Pageable pageable) {
 		log.debug("Request to get all Core_Connection");
 		return controlvarService.findAll(pageable);
+	}
+
+	/**
+	 * PUT /controlvar/pause : Pauses an existing control var.
+	 *
+	 * @param acme
+	 *            the acme to update
+	 * @return the ResponseEntity with status 200 (OK) and with body the updated
+	 *         acme, or with status 400 (Bad Request) if the acme is not valid,
+	 *         or with status 500 (Internal Server Error) if the acme couldn't
+	 *         be updated
+	 * @throws URISyntaxException
+	 *             if the Location URI syntax is incorrect
+	 */
+	@PutMapping("/controlvar/pause")
+	@Timed
+	public ResponseEntity<Core_ControlVar> pause(String controlVarId)
+			throws URISyntaxException {
+		log.debug("REST request to pause Core_ControlVar with id: {}",
+				controlVarId);
+		Core_ControlVar result = controlvarService.pause(controlVarId);
+		return ResponseEntity
+				.ok()
+				.headers(
+						HeaderUtil.createEntityUpdateAlert(ENTITY_NAME,
+								controlVarId.toString())).body(result);
 	}
 
 	/**
