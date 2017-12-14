@@ -169,14 +169,14 @@ public class Core_ControlVarResource {
 	}
 
 	/**
-	 * PUT /controlvar/pause : Pauses an existing control var.
+	 * PUT /controlvar/pause : Pauses a running control var.
 	 *
-	 * @param acme
-	 *            the acme to update
-	 * @return the ResponseEntity with status 200 (OK) and with body the updated
-	 *         acme, or with status 400 (Bad Request) if the acme is not valid,
-	 *         or with status 500 (Internal Server Error) if the acme couldn't
-	 *         be updated
+	 * @param controlVarId
+	 *            the id of the control var to update
+	 * @return the ResponseEntity with status 200 (OK) and with body the paused
+	 *         control var, or with status 400 (Bad Request) if the control var
+	 *         is not valid, or with status 500 (Internal Server Error) if the
+	 *         control var couldn't be paused
 	 * @throws URISyntaxException
 	 *             if the Location URI syntax is incorrect
 	 */
@@ -187,6 +187,32 @@ public class Core_ControlVarResource {
 		log.debug("REST request to pause Core_ControlVar with id: {}",
 				controlVarId);
 		Core_ControlVar result = controlvarService.pause(controlVarId);
+		return ResponseEntity
+				.ok()
+				.headers(
+						HeaderUtil.createEntityUpdateAlert(ENTITY_NAME,
+								controlVarId.toString())).body(result);
+	}
+
+	/**
+	 * PUT /controlvar/pause : Restarts a paused control var.
+	 *
+	 * @param controlVarId
+	 *            the id of the control var to update
+	 * @return the ResponseEntity with status 200 (OK) and with body the
+	 *         restartd control var, or with status 400 (Bad Request) if the
+	 *         control var is not valid, or with status 500 (Internal Server
+	 *         Error) if the control var couldn't be started
+	 * @throws URISyntaxException
+	 *             if the Location URI syntax is incorrect
+	 */
+	@PutMapping("/controlvar/restart")
+	@Timed
+	public ResponseEntity<Core_ControlVar> restart(String controlVarId)
+			throws URISyntaxException {
+		log.debug("REST request to restart Core_ControlVar with id: {}",
+				controlVarId);
+		Core_ControlVar result = controlvarService.restart(controlVarId);
 		return ResponseEntity
 				.ok()
 				.headers(

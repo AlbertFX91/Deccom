@@ -117,17 +117,30 @@ public class Core_ControlVarService {
 		controlVarRepository.save(cv);
 		return entry;
 	}
-	
+
 	public Core_ControlVar pause(String controlVarId) {
 		Core_ControlVar controlVar;
-		
+
 		controlVar = findOne(controlVarId);
-		
+
 		if (controlVar.getStatus().equals(Status.RUNNING)) {
 			controlVar.setStatus(Status.PAUSED);
 			schedulingService.stopJob(controlVar);
 		}
-		
+
+		return controlVarRepository.save(controlVar);
+	}
+
+	public Core_ControlVar restart(String controlVarId) {
+		Core_ControlVar controlVar;
+
+		controlVar = findOne(controlVarId);
+
+		if (controlVar.getStatus().equals(Status.PAUSED)) {
+			controlVar.setStatus(Status.RUNNING);
+			schedulingService.newJob(controlVar);
+		}
+
 		return controlVarRepository.save(controlVar);
 	}
 
