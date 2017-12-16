@@ -1,5 +1,8 @@
 package com.deccom.domain.core;
 
+import com.deccom.domain.core.annotation.Core_Extractor;
+
+@Core_Extractor(Core_SQLExtractor.class)
 public class Core_SQLConnection extends Core_Connection{
 	private String username;
 	private String password;
@@ -74,7 +77,7 @@ public class Core_SQLConnection extends Core_Connection{
 	@Override
 	public String toString() {
 		return "Core_SQLConnection [username=" + username + ", password=" + password + ", url=" + url + ", query="
-				+ query + ", _class=" + _class + "]";
+				+ query + "]";
 	}
 	
 	

@@ -12,7 +12,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
-import com.deccom.service.impl.DeccomSchedulingService;
+import com.deccom.service.impl.core.Core_SchedulingService;
 
 @Configuration
 @EnableScheduling
@@ -21,7 +21,7 @@ public class DeccomSchedulingConfigurer implements SchedulingConfigurer {
 	private static final Logger log = LoggerFactory.getLogger(DeccomSchedulingConfigurer.class);
 
 	@Autowired
-	private DeccomSchedulingService schedulingService;
+	private Core_SchedulingService schedulingService;
 	
 	@Override
 	public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {

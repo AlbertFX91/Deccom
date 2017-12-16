@@ -1,5 +1,8 @@
 package com.deccom.domain.core;
 
+import com.deccom.domain.core.annotation.Core_Extractor;
+
+@Core_Extractor(Core_RESTExtractor.class)
 public class Core_RESTConnection extends Core_Connection {
 	private String url;
 	private String jsonPath;
@@ -48,8 +51,7 @@ public class Core_RESTConnection extends Core_Connection {
 	}
 	@Override
 	public String toString() {
-		return "Core_RESTConnection [url=" + url + ", jsonPath=" + jsonPath + ", _class=" + _class
-				+ "]";
+		return "Core_RESTConnection [url=" + url + ", jsonPath=" + jsonPath + "]";
 	}
 	
 	
