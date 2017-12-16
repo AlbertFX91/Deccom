@@ -37,7 +37,7 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
         };
         this.data = [];
         this.path = '';
-        this.url = 'https://graph.facebook.com/v2.11/me/friends';
+        this.url = 'https://graph.facebook.com/v2.11/facebookApplicationKey?fields=name,description';
     }
 
     loadPage(page) {
