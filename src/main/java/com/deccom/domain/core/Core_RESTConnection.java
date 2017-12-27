@@ -3,7 +3,7 @@ package com.deccom.domain.core;
 import com.deccom.domain.core.annotation.Core_Extractor;
 
 @Core_Extractor(Core_RESTExtractor.class)
-public class Core_RESTConnection extends Core_Connection {
+public class Core_RESTConnection implements Core_Connection {
 	private String url;
 	private String jsonPath;
 	

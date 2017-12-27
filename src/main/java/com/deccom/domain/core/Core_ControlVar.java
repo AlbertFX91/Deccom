@@ -21,7 +21,6 @@ public class Core_ControlVar {
 	@NotNull
 	private Integer frequency_sec;
 
-	@NotNull
 	private Core_Connection connection;
 	@NotNull
 	private List<Core_ControlVarEntry> entries;

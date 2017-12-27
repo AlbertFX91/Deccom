@@ -3,7 +3,7 @@ package com.deccom.domain.core;
 import com.deccom.domain.core.annotation.Core_Extractor;
 
 @Core_Extractor(Core_SQLExtractor.class)
-public class Core_SQLConnection extends Core_Connection{
+public class Core_SQLConnection implements Core_Connection{
 	private String username;
 	private String password;
 	private String url;

@@ -1,4 +1,7 @@
 package com.deccom.domain.core;
 
-public class Core_Connection {
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+@JsonDeserialize(using = Core_ConnectionDeserializer.class)
+public interface Core_Connection {
 }

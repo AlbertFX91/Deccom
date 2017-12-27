@@ -106,12 +106,14 @@ public class Core_ControlVarResource {
 	}
 
 	/*
-	 * EXAMPLE CONTROLVAR CREATION DATA FOR SWAGGER { "_connectionClass":
-	 * "com.deccom.domain.core.Core_RESTConnection", "connectionData": { "url" :
-	 * "http://jsonplaceholder.typicode.com/users", "jsonPath": "$.[0].id" },
-	 * "controlvar": { "connection": {}, "creationMoment":
-	 * "2017-12-06T21:36:28.081Z", "disabled": true, "entries": [],
-	 * "frequency_sec": 20, "name": "exampleCV" } }
+	 * EXAMPLE CONTROLVAR CREATION DATA FOR SWAGGER 
+	 { 
+	 	"_connectionClass":
+	 	"com.deccom.domain.core.Core_RESTConnection", "connectionData": { "url" :
+	 	"http://jsonplaceholder.typicode.com/users", "jsonPath": "$.[0].id" },
+	 	"controlvar": { "connection": {}, "creationMoment":
+	 	"2017-12-06T21:36:28.081Z", "disabled": true, "entries": [],
+	 	"frequency_sec": 20, "name": "exampleCV" } }
 	 */
 	@PostMapping("/controlvar/new2")
 	@Timed
@@ -150,6 +152,36 @@ public class Core_ControlVarResource {
 
 		propertiesInjection(connection, connectionData);
 		cv.setConnection(connection);
+		controlvarService.save(cv);
+		return ResponseEntity.ok().build();
+	}
+	
+	/*
+	 * EXAMPLE CONTROLVAR CREATION DATA FOR SWAGGER 
+	{
+	  "connection": {
+	     "_connectionClass": "com.deccom.domain.core.Core_RESTConnection",
+	     "url": "http://jsonplaceholder.typicode.com/users", 
+	     "jsonPath": "$.[0].id" 
+	  },
+	  "creationMoment": "2017-12-26T23:55:53.793Z",
+	  "frequency_sec": 30,
+          "entries": [],
+	  "name": "awesomeCV",
+	  "status": "RUNNING"
+	}
+	 */
+	@PostMapping("/controlvar/new3")
+	@Timed
+	public ResponseEntity<String> newControlVar3(
+			@RequestBody @Valid Core_ControlVar cv)
+			throws URISyntaxException {
+		/**
+		 * Development report @AlbertFX91: + It works - connectionClass name its
+		 * neccesary - connectionData dynamic: Its neccesary to verify it after
+		 * create a control var
+		 */
+		log.debug("New Core_ControlVar object 3");
 		controlvarService.save(cv);
 		return ResponseEntity.ok().build();
 	}
