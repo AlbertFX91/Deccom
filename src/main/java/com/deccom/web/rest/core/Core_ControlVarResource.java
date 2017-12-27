@@ -160,7 +160,7 @@ public class Core_ControlVarResource {
 	 * EXAMPLE CONTROLVAR CREATION DATA FOR SWAGGER 
 	{
 	  "connection": {
-	     "_connectionClass": "com.deccom.domain.core.Core_RESTConnection",
+	     "_connectionClass": "com.deccom.domain.core.rest.Core_RESTConnection",
 	     "url": "http://jsonplaceholder.typicode.com/users", 
 	     "jsonPath": "$.[0].id" 
 	  },
