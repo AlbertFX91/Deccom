@@ -26,9 +26,9 @@ import com.codahale.metrics.annotation.Timed;
 import com.deccom.domain.core.Core_Connection;
 import com.deccom.domain.core.Core_ControlVar;
 import com.deccom.domain.core.Core_ControlVarCreation;
-import com.deccom.domain.core.Core_RESTConnection;
-import com.deccom.domain.core.Core_SQLConnection;
 import com.deccom.domain.core.Status;
+import com.deccom.domain.core.rest.Core_RESTConnection;
+import com.deccom.domain.core.sql.Core_SQLConnection;
 import com.deccom.service.impl.core.Core_ControlVarService;
 import com.deccom.web.rest.util.HeaderUtil;
 

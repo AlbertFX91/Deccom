@@ -86,26 +86,30 @@ public class Core_ControlVarService {
 			String value;
 
 			connection = controlVar.getConnection();
-			if (hasExtractor(connection)) {
+			System.out.println(controlVar.getName()+": "+connection.getClass());
+			// if (hasExtractor(connection)) {
 				dataExtractor = getExtractorByConnection(connection);
+				System.out.println("EXTRACTOR GETTED");
 				dataExtractor = injectConnectionInExtractor(dataExtractor,
 						connection);
+				System.out.println("EXTRACTOR INJECTED");
 				try {
 					value = dataExtractor.getData();
 					addEntry(controlVar, value);
 					log.debug("Data extracted [" + controlVar.getName() + "]: "
 							+ value);
 				} catch (Throwable e) {
+					System.out.println("EXTRACTOR ERROR");
 					controlVar.setStatus(Status.BLOCKED);
 					controlVarRepository.save(controlVar);
 					schedulingService.stopJob(controlVar);
 				}
-			} else {
+			//} else {
 				// TODO This is when a class has not the annotation @Extractor
 				// implemented. It'll throw an exception
-				System.out
-						.println("Error. Connection has not the annotation @Extractor");
-			}
+			//	System.out
+			//			.println("Error. Connection has not the annotation @Extractor");
+			// }
 		}
 	}
 
