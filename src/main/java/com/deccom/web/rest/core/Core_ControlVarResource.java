@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.net.URISyntaxException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -26,6 +27,7 @@ import com.codahale.metrics.annotation.Timed;
 import com.deccom.domain.core.Core_Connection;
 import com.deccom.domain.core.Core_ControlVar;
 import com.deccom.domain.core.Core_ControlVarCreation;
+import com.deccom.domain.core.Core_DataExtractor;
 import com.deccom.domain.core.Status;
 import com.deccom.domain.core.rest.Core_RESTConnection;
 import com.deccom.domain.core.sql.Core_SQLConnection;
@@ -273,7 +275,22 @@ public class Core_ControlVarResource {
 
 		return ResponseEntity.ok().build();
 	}
-
+	
+	/**
+	 * Get all availabe controlvars to create
+	 *
+	 * @return the list of controlvars to create
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
+	 */
+	@GetMapping("/controlvar/available")
+	@Timed
+	public List<Core_DataExtractor> available() throws InstantiationException, IllegalAccessException {
+		log.debug("Request to get all Controlvars to create");
+		List<Core_DataExtractor> res = controlvarService.getAvailableExtractors();
+		return res;
+	}
+	
 	// TODO Handle error
 
 	private static <T> void propertiesInjection(Object o,
@@ -293,7 +310,7 @@ public class Core_ControlVarResource {
 			}
 		}
 	}
-
+	
 	private static Boolean connectionVerification(Core_Connection connection,
 			Map<String, String> connectionData) {
 		return Arrays.stream(connection.getClass().getDeclaredFields())

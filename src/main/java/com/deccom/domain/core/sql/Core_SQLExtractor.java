@@ -13,7 +13,7 @@ import com.deccom.service.impl.util.SQLUtil;
 public class Core_SQLExtractor implements Core_DataExtractor{
 	
 	private Core_SQLConnection dataConnection;
-	private Core_SQLStyle style;
+	private Core_SQLStyle style = new Core_SQLStyle();
 	
 	public Core_SQLExtractor() {
 	}

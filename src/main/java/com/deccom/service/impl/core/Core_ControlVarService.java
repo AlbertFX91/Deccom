@@ -4,11 +4,17 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
+import org.reflections.Reflections;
+import org.reflections.util.ClasspathHelper;
+import org.reflections.util.ConfigurationBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,12 +93,10 @@ public class Core_ControlVarService {
 
 			connection = controlVar.getConnection();
 			System.out.println(controlVar.getName()+": "+connection.getClass());
-			// if (hasExtractor(connection)) {
+			if (hasExtractor(connection)) {
 				dataExtractor = getExtractorByConnection(connection);
-				System.out.println("EXTRACTOR GETTED");
 				dataExtractor = injectConnectionInExtractor(dataExtractor,
 						connection);
-				System.out.println("EXTRACTOR INJECTED");
 				try {
 					value = dataExtractor.getData();
 					addEntry(controlVar, value);
@@ -104,12 +108,11 @@ public class Core_ControlVarService {
 					controlVarRepository.save(controlVar);
 					schedulingService.stopJob(controlVar);
 				}
-			//} else {
+			} else {
 				// TODO This is when a class has not the annotation @Extractor
 				// implemented. It'll throw an exception
-			//	System.out
-			//			.println("Error. Connection has not the annotation @Extractor");
-			// }
+				System.out.println("Error. Connection has not the annotation @Extractor");
+			}
 		}
 	}
 
@@ -148,6 +151,23 @@ public class Core_ControlVarService {
 		return controlVarRepository.save(controlVar);
 	}
 
+	public List<Core_DataExtractor> getAvailableExtractors() throws InstantiationException, IllegalAccessException {
+		List<Core_DataExtractor> res = new ArrayList<>();
+		Class<Core_Connection> connection = Core_Connection.class;
+		Set<Class<? extends Core_Connection>> available = getSubClassesOf(connection);
+		for(Class<? extends Core_Connection> c: available) {
+			Core_Connection cn = c.newInstance();
+			if(hasExtractor(cn)) {
+				Core_DataExtractor extractor = getExtractorByConnection(cn);
+				System.out.println(extractor.getClass().getName());
+				if(extractor.getStyle()!=null) {
+					res.add(extractor);
+				}
+			}
+		}
+		return res;
+	}
+	
 	private static <T> void propertiesInjection(Object o,
 			Map<String, T> properties) {
 		for (Entry<String, T> property : properties.entrySet()) {
@@ -206,6 +226,17 @@ public class Core_ControlVarService {
 					.println("Error. Wrapper is not an instance of Core_DataExtractor");
 			return null;
 		}
+	}
+	
+	private static <T> Set<Class<? extends T>> getSubClassesOf(Class<T> cls){
+		Reflections reflections = new Reflections(
+				new ConfigurationBuilder()
+				.setUrls(Arrays.asList(ClasspathHelper.forClass(cls))));
+		Set<?> subTypes = reflections.getSubTypesOf(cls);
+		return subTypes.stream()
+				.map((o)->(Class<? extends T>) o)
+				.filter((c)->!c.isInterface())
+				.collect(Collectors.toSet());
 	}
 
 }

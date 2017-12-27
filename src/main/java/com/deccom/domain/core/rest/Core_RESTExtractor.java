@@ -7,7 +7,7 @@ import com.deccom.service.impl.util.RESTUtil;
 public class Core_RESTExtractor implements Core_DataExtractor{
 	
 	private Core_RESTConnection dataConnection;
-	private Core_RESTStyle style;
+	private Core_RESTStyle style = new Core_RESTStyle();
 	
 	
 	public Core_RESTExtractor() {
