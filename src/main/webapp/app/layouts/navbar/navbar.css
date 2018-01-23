@@ -83,3 +83,7 @@ Logo styles
     background-size: contain;
     width: 100%;
 }
+
+.roboto {
+    font-family: 'Roboto', sans-serif;
+}
