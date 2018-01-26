@@ -180,7 +180,7 @@ public class Core_ControlVarResource {
 			throws URISyntaxException {
 		/**
 		 * Development report @AlbertFX91: + It works - connectionClass name its
-		 * neccesary - connectionData dynamic: Its neccesary to verify it after
+		 * mandatory - connectionData dynamic: Its mandatory to verify it after
 		 * create a control var
 		 */
 		log.debug("New Core_ControlVar object 3");
@@ -277,7 +277,7 @@ public class Core_ControlVarResource {
 	}
 	
 	/**
-	 * Get all availabe controlvars to create
+	 * Get all available controlvars to create
 	 *
 	 * @return the list of controlvars to create
 	 * @throws IllegalAccessException 
@@ -291,8 +291,8 @@ public class Core_ControlVarResource {
 		return res;
 	}
 	
+	
 	// TODO Handle error
-
 	private static <T> void propertiesInjection(Object o,
 			Map<String, T> properties) {
 		for (Entry<String, T> property : properties.entrySet()) {

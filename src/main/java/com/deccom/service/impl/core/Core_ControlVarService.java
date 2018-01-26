@@ -151,15 +151,26 @@ public class Core_ControlVarService {
 		return controlVarRepository.save(controlVar);
 	}
 
+	/**
+	 * List the available extractors by the connection objects created.
+	 * We can't list an extractor if there are not a connection object for the extractor
+	 * @return
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 */
 	public List<Core_DataExtractor> getAvailableExtractors() throws InstantiationException, IllegalAccessException {
 		List<Core_DataExtractor> res = new ArrayList<>();
+		// Getting the parent Core_Connection class
 		Class<Core_Connection> connection = Core_Connection.class;
+		// Recovering the subclases of the parent Core_Connection [Ex: REST_Connection, SQL_Connection, etc...]
 		Set<Class<? extends Core_Connection>> available = getSubClassesOf(connection);
 		for(Class<? extends Core_Connection> c: available) {
 			Core_Connection cn = c.newInstance();
+			// If the connection has an extractor configurated
 			if(hasExtractor(cn)) {
+				// Creation of an extractor instance
 				Core_DataExtractor extractor = getExtractorByConnection(cn);
-				System.out.println(extractor.getClass().getName());
+				// If it has the attribute style setted
 				if(extractor.getStyle()!=null) {
 					res.add(extractor);
 				}
@@ -167,6 +178,7 @@ public class Core_ControlVarService {
 		}
 		return res;
 	}
+	
 	
 	private static <T> void propertiesInjection(Object o,
 			Map<String, T> properties) {
