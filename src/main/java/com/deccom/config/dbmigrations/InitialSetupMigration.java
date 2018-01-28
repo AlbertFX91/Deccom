@@ -197,7 +197,8 @@ public class InitialSetupMigration {
         sql.setUsername("developer");
         sql.setPassword("developer");
         sql.setQuery("select age from author where  idauthor='1' and name='name-1';");
-        sql.setUrl("jdbc:mysql://localhost:3306/deccom");
+        sql.setUrl("localhost:3306/deccom");
+        sql.setJdbc("mysql");
         
         Core_ControlVar c1 = new Core_ControlVar();
         c1.setConnection(rest);

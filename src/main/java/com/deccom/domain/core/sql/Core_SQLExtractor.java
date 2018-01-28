@@ -32,7 +32,7 @@ public class Core_SQLExtractor implements Core_DataExtractor{
     	ResultSet rs;
     	Connection connection;
     	
-    	connection = SQLUtil.connect(dataConnection.getUrl(), dataConnection.getUsername(), dataConnection.getPassword());
+    	connection = SQLUtil.connect(dataConnection.getJdbc(), dataConnection.getUrl(), dataConnection.getUsername(), dataConnection.getPassword());
     	rs = SQLUtil.executeQuery(connection, dataConnection.getQuery());
     	List<Map<String, String>> data = SQLUtil.collectAll(rs);
     	
