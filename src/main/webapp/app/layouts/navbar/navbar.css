@@ -87,3 +87,15 @@ Logo styles
 .roboto {
     font-family: 'Roboto', sans-serif;
 }
+
+.icon-background {
+    color: #3f51b5;
+}
+
+.white-icon {
+    color: white;
+}
+
+.dropdown-toggle::after {
+    border: none;
+}
