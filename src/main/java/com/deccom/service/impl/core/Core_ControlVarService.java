@@ -87,7 +87,7 @@ public class Core_ControlVarService {
 
 	public void executeMonitorize(Core_ControlVar controlVar) {
 		if (controlVar.getStatus() == Status.RUNNING) {
-			Core_DataExtractor dataExtractor;
+			Core_DataExtractor<Core_Connection> dataExtractor;
 			Core_Connection connection;
 			String value;
 
@@ -95,8 +95,7 @@ public class Core_ControlVarService {
 			System.out.println(controlVar.getName()+": "+connection.getClass());
 			if (hasExtractor(connection)) {
 				dataExtractor = getExtractorByConnection(connection);
-				dataExtractor = injectConnectionInExtractor(dataExtractor,
-						connection);
+				dataExtractor.setConnection(connection);
 				try {
 					value = dataExtractor.getData();
 					addEntry(controlVar, value);
@@ -214,7 +213,7 @@ public class Core_ControlVarService {
 		return extractor;
 	}
 
-	private Core_DataExtractor getExtractorByConnection(
+	private Core_DataExtractor<Core_Connection> getExtractorByConnection(
 			Core_Connection connection) {
 		Object wrapper;
 		Annotation annotation = connection.getClass().getAnnotation(
@@ -232,7 +231,7 @@ public class Core_ControlVarService {
 			return null;
 		}
 		if (wrapper instanceof Core_DataExtractor) {
-			return (Core_DataExtractor) wrapper;
+			return (Core_DataExtractor<Core_Connection>) wrapper;
 		} else {
 			// TODO This is when the class in @Extractor does not extends from
 			// Core_DataExtractor, but its controlled by the Core_Extractor

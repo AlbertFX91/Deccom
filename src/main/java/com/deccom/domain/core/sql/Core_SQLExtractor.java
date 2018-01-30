@@ -6,11 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.deccom.domain.core.Core_Connection;
 import com.deccom.domain.core.Core_DataExtractor;
 import com.deccom.domain.core.Core_Style;
 import com.deccom.service.impl.util.SQLUtil;
 
-public class Core_SQLExtractor implements Core_DataExtractor{
+public class Core_SQLExtractor implements Core_DataExtractor<Core_SQLConnection>{
 	
 	private Core_SQLConnection dataConnection;
 	private Core_SQLStyle style = new Core_SQLStyle();
@@ -55,6 +56,17 @@ public class Core_SQLExtractor implements Core_DataExtractor{
 	@Override
 	public Core_Style getStyle() {
 		return style;
+	}
+
+	@Override
+	public Core_SQLConnection getConnection() {
+		return dataConnection;
+	}
+
+	@Override
+	public void setConnection(Core_SQLConnection connection) {
+		this.dataConnection = connection;
+		
 	}
 	
 	

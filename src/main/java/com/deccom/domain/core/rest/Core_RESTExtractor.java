@@ -4,7 +4,7 @@ import com.deccom.domain.core.Core_DataExtractor;
 import com.deccom.domain.core.Core_Style;
 import com.deccom.service.impl.util.RESTUtil;
 
-public class Core_RESTExtractor implements Core_DataExtractor{
+public class Core_RESTExtractor implements Core_DataExtractor<Core_RESTConnection>{
 	
 	private Core_RESTConnection dataConnection;
 	private Core_RESTStyle style = new Core_RESTStyle();
@@ -31,6 +31,16 @@ public class Core_RESTExtractor implements Core_DataExtractor{
 	@Override
 	public Core_Style getStyle() {
 		return style;
+	}
+
+	@Override
+	public Core_RESTConnection getConnection() {
+		return dataConnection;
+	}
+
+	@Override
+	public void setConnection(Core_RESTConnection connection) {
+		this.dataConnection = connection;
 	}
 	
 }

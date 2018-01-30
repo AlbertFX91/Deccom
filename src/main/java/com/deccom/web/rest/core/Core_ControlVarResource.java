@@ -83,6 +83,7 @@ public class Core_ControlVarResource {
 		controlvarService.save(c2);
 		*/
 		
+		
 		Core_MySQLConnection sql = new Core_MySQLConnection();
 		sql.setUsername("developer");
 		sql.setPassword("developer");
