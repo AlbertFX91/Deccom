@@ -3,6 +3,7 @@ import { Http, Response, URLSearchParams, BaseRequestOptions } from '@angular/ht
 import { Observable } from 'rxjs/Rx';
 import { ResponseWrapper, createRequestOption } from '../../shared';
 import { CVCard } from './cv.model';
+import { JhiDateUtils } from 'ng-jhipster';
 
 @Injectable()
 export class CVService {
@@ -11,7 +12,7 @@ export class CVService {
 
     cvCards: CVCard[];
 
-    constructor(private http: Http) {
+    constructor(private http: Http, private dateUtils: JhiDateUtils) {
         this.cvCards = [
             {
                 'id': 'cvCardId1',
@@ -75,6 +76,25 @@ export class CVService {
 
     filterCardsByStatus(status: String) {
         return this.cvCards.filter((cvCard) => cvCard.status === status);
+    }
+
+    query(req?: any): Observable<ResponseWrapper> {
+        const options = createRequestOption(req);
+        return this.http.get(this.resourceUrl, options)
+            .map((res: Response) => this.convertResponse(res));
+    }
+
+    private convertResponse(res: Response): ResponseWrapper {
+        const jsonResponse = res.json();
+        for (let i = 0; i < jsonResponse.length; i++) {
+            this.convertItemFromServer(jsonResponse[i]);
+        }
+        return new ResponseWrapper(res.headers, jsonResponse, res.status);
+    }
+
+    private convertItemFromServer(entity: any) {
+        entity.publication_date = this.dateUtils
+            .convertLocalDateFromServer(entity.publication_date);
     }
 
 }

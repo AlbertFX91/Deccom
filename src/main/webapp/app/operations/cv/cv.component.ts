@@ -2,24 +2,53 @@ import { Component, HostListener, Input, OnInit, OnDestroy } from '@angular/core
 import { ActivatedRoute, Router } from '@angular/router';
 import { CVCard } from './cv.model';
 import { CVService } from './cv.service';
+import { ResponseWrapper } from '../../shared';
+import { JhiParseLinks, JhiAlertService } from 'ng-jhipster';
 
 @Component({
-    selector: 'jhi-cv-list',
-    templateUrl: './cv-list.component.html',
-    styleUrls: ['./cv-list.component.css']
+    selector: 'jhi-cv',
+    templateUrl: './cv.component.html',
+    styleUrls: ['./cv.component.css']
 })
-export class CVListComponent implements OnInit, OnDestroy {
+export class CVComponent implements OnInit, OnDestroy {
 
-    @Input()
     cvCards: CVCard[];
+    links: any;
+    totalItems: number;
 
     constructor(
-        public cvService: CVService
-    ) { }
+        public cvService: CVService,
+        private parseLinks: JhiParseLinks,
+        private alertService: JhiAlertService
+    ) {
+        this.cvCards = [];
+        this.links = {
+            last: 0
+        };
+    }
 
     ngOnInit() { }
 
     ngOnDestroy() { }
+
+    loadAll() {
+        this.cvService.query({}).subscribe(
+            (res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
+            (res: ResponseWrapper) => this.onError(res.json)
+        );
+    }
+
+    private onSuccess(data, headers) {
+        this.links = this.parseLinks.parse(headers.get('link'));
+        this.totalItems = headers.get('X-Total-Count');
+        for (let i = 0; i < data.length; i++) {
+            this.cvCards.push(data[i]);
+        }
+    }
+
+    private onError(error) {
+        this.alertService.error(error.message, null, null);
+    }
 
     allowDrop($event) {
         $event.preventDefault();

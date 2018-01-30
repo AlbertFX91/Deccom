@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="row cv-cols-container">
+        <div class="col container list-surroundings" style="background-color: rgb(221, 212, 212);">
+            <strong>
+                <div class="card-header center-in-bar cardtitle" style="background-color: #44aa44;" jhiTranslate="deccomApp.ControlVar.running">Running</div>
+            </strong>
+            <div class="row" *ngFor="let cvCard of cvService.getRunningCards()">
+                <jhi-cv-card [cvCard]="cvCard"></jhi-cv-card>
+            </div>
+        </div>
+        <div class="col container list-surroundings" style="background-color: rgb(221, 212, 212);">
+            <strong>
+                <div class="card-header center-in-bar cardtitle" style="background-color: #fb8c00;" jhiTranslate="deccomApp.ControlVar.paused">Paused</div>
+            </strong>
+            <div class="row" *ngFor="let cvCard of cvService.getPausedCards()">
+                <jhi-cv-card [cvCard]="cvCard"></jhi-cv-card>
+            </div>
+        </div>
+        <div class="col container list-surroundings" style="background-color: rgb(221, 212, 212);">
+            <strong>
+                <div class="card-header center-in-bar cardtitle" style="background-color: #cc240a;" jhiTranslate="deccomApp.ControlVar.blocked">Blocked</div>
+            </strong>
+            <div class="row" *ngFor="let cvCard of cvService.getBlockedCards()">
+                <jhi-cv-card [cvCard]="cvCard"></jhi-cv-card>
+            </div>
+        </div>
+    </div>
+</div>
