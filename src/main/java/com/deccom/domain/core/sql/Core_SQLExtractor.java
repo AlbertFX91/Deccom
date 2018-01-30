@@ -1,4 +1,4 @@
-package com.deccom.domain.core;
+package com.deccom.domain.core.sql;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -6,11 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.deccom.domain.core.Core_DataExtractor;
+import com.deccom.domain.core.Core_Style;
 import com.deccom.service.impl.util.SQLUtil;
 
 public class Core_SQLExtractor implements Core_DataExtractor{
 	
 	private Core_SQLConnection dataConnection;
+	private Core_SQLStyle style = new Core_SQLStyle();
 	
 	public Core_SQLExtractor() {
 	}
@@ -29,7 +32,7 @@ public class Core_SQLExtractor implements Core_DataExtractor{
     	ResultSet rs;
     	Connection connection;
     	
-    	connection = SQLUtil.connect(dataConnection.getUrl(), dataConnection.getUsername(), dataConnection.getPassword());
+    	connection = SQLUtil.connect(dataConnection.getJdbc(), dataConnection.getUrl(), dataConnection.getUsername(), dataConnection.getPassword());
     	rs = SQLUtil.executeQuery(connection, dataConnection.getQuery());
     	List<Map<String, String>> data = SQLUtil.collectAll(rs);
     	
@@ -47,6 +50,11 @@ public class Core_SQLExtractor implements Core_DataExtractor{
     	value = new ArrayList<>(entry.values()).get(0);
     	
     	return value;
+	}
+
+	@Override
+	public Core_Style getStyle() {
+		return style;
 	}
 	
 	

@@ -233,6 +233,19 @@ public class SQLUtil {
 	}
 
 	/**
+	 * A function which connect with a datasource by
+	 * @param jdbc the jdbc to be used for the connection
+	 * @param url the url connection of the datasource
+	 * @param username the username's credential
+	 * @param password the password's credential
+	 * @return the Connection object
+	 */
+	public static Connection connect(String jdbc, String url, String username, String password) {
+		String fullUrl = "jdbc:" + jdbc + "://"+url;
+		return connect(fullUrl, username, password);
+	}
+
+	/**
 	 * A function which execute a query by a connection object
 	 * @param connection the connection object which is going to execute the query
 	 * @param query the query to execute
