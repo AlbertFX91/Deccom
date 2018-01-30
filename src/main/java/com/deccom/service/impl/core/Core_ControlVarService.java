@@ -104,6 +104,10 @@ public class Core_ControlVarService {
 							+ value);
 				} catch (Throwable e) {
 					System.out.println("EXTRACTOR ERROR");
+					System.out.println(dataExtractor);
+					System.out.println(controlVar.getConnection());
+					System.out.println(dataExtractor.getData());
+					System.out.println(e);
 					controlVar.setStatus(Status.BLOCKED);
 					controlVarRepository.save(controlVar);
 					schedulingService.stopJob(controlVar);

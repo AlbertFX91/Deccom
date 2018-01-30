@@ -29,8 +29,7 @@ import com.deccom.domain.core.Core_ControlVar;
 import com.deccom.domain.core.Core_ControlVarCreation;
 import com.deccom.domain.core.Core_DataExtractor;
 import com.deccom.domain.core.Status;
-import com.deccom.domain.core.rest.Core_RESTConnection;
-import com.deccom.domain.core.sql.Core_SQLConnection;
+import com.deccom.domain.core.sql.mysql.Core_MySQLConnection;
 import com.deccom.service.impl.core.Core_ControlVarService;
 import com.deccom.web.rest.util.HeaderUtil;
 
@@ -56,7 +55,7 @@ public class Core_ControlVarResource {
 	public ResponseEntity<String> exampleControlVars() {
 		log.debug("Creating example Core_ControlVar objects");
 
-		Core_RESTConnection rest = new Core_RESTConnection();
+		/*Core_RESTConnection rest = new Core_RESTConnection();
 		rest.setJsonPath("$[2].phone");
 		rest.setUrl("http://jsonplaceholder.typicode.com/users");
 
@@ -82,7 +81,28 @@ public class Core_ControlVarResource {
 
 		controlvarService.save(c1);
 		controlvarService.save(c2);
+		*/
+		
+		Core_MySQLConnection sql = new Core_MySQLConnection();
+		sql.setUsername("developer");
+		sql.setPassword("developer");
+		sql.setQuery("select age from author where  idauthor='1' and name='name-1';");
+		sql.setUrl("localhost:3306/deccom");
 
+		Core_ControlVar c2 = controlvarService.create();
+		c2.setConnection(sql);
+		c2.setCreationMoment(LocalDateTime.now());
+		c2.setStatus(Status.RUNNING);
+		c2.setFrequency_sec(30);
+		c2.setName("MySQL_ControlVar");
+
+		for (Field f: sql.getClass().getFields()){
+			System.out.println(f.getName());
+		}
+		System.out.println("---------------- JDBC: " + sql.getJdbc());
+		
+		controlvarService.save(c2);
+		
 		return ResponseEntity.ok().build();
 	}
 
