@@ -2,8 +2,8 @@ import { Component, HostListener, Input, OnInit, OnDestroy } from '@angular/core
 import { ActivatedRoute, Router } from '@angular/router';
 import { CVCard } from './cv.model';
 import { CVService } from './cv.service';
-import { ResponseWrapper } from '../../shared';
-import { JhiParseLinks, JhiAlertService } from 'ng-jhipster';
+import { ResponseWrapper, ITEMS_PER_PAGE } from '../../shared';
+import { JhiParseLinks, JhiAlertService, JhiEventManager } from 'ng-jhipster';
 
 @Component({
     selector: 'jhi-cv',
@@ -13,41 +13,71 @@ import { JhiParseLinks, JhiAlertService } from 'ng-jhipster';
 export class CVComponent implements OnInit, OnDestroy {
 
     cvCards: CVCard[];
+    page: any;
+    itemsPerPage: number;
     links: any;
-    totalItems: number;
 
     constructor(
         public cvService: CVService,
         private parseLinks: JhiParseLinks,
-        private alertService: JhiAlertService
+        private alertService: JhiAlertService,
+        private eventManager: JhiEventManager,
     ) {
         this.cvCards = [];
+        this.page = 0;
+        this.itemsPerPage = ITEMS_PER_PAGE;
         this.links = {
             last: 0
         };
     }
 
-    ngOnInit() { }
+    ngOnInit() {
+        const pageSettings = {
+            page: this.page,
+            size: this.itemsPerPage
+        };
+        this.cvService.findAll(pageSettings).subscribe(
+            (data: any) => this.onSuccess(data.json(), data.headers),
+            (error: Response) => this.onError(error)
+        )
+    }
 
     ngOnDestroy() { }
 
-    loadAll() {
-        this.cvService.query({}).subscribe(
-            (res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
-            (res: ResponseWrapper) => this.onError(res.json)
-        );
-    }
-
-    private onSuccess(data, headers) {
-        this.links = this.parseLinks.parse(headers.get('link'));
-        this.totalItems = headers.get('X-Total-Count');
-        for (let i = 0; i < data.length; i++) {
-            this.cvCards.push(data[i]);
+    onSuccess(data: any, headers: any) {
+        for (let i = 0; i < data.content.length; i++) {
+            const cvCard: CVCard = {
+                name: data.content[i]['name'],
+                creationMoment: data.content[i]['creationMoment'],
+                status: data.content[i]['status'],
+                entries: data.content[i]['entries'],
+            };
+            this.cvCards.push(cvCard);
         }
+        console.log('cvCards:');
+        console.log(this.cvCards);
+        // this.links = this.parseLinks.parse(headers.get('link'));
+        this.eventManager.broadcast({ name: 'all_success', content: 'OK' });
     }
 
     private onError(error) {
         this.alertService.error(error.message, null, null);
+    }
+
+    getRunningCards() {
+        return this.filterCardsByStatus('RUNNING');
+    }
+
+    getPausedCards() {
+        return this.filterCardsByStatus('PAUSED');
+    }
+
+    getBlockedCards() {
+        return this.filterCardsByStatus('BLOCKED');
+    }
+
+    filterCardsByStatus(status: String) {
+        return this.cvCards.filter((cvCard) => cvCard.status === status);
     }
 
     allowDrop($event) {

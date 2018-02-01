@@ -29,9 +29,9 @@
         </div>
         <div id="collapseExample" [ngbCollapse]="isCollapsed">
             <p>
-                <span class="roboto" jhiTranslate="deccomApp.ControlVar.creation_moment"></span>: {{cvCard.creation_moment}}</p>
+                <span class="roboto" jhiTranslate="deccomApp.ControlVar.creation_moment"></span>: {{cvCard.creationMoment | date : "dd.MM.yyyy HH:mm:ss"}}</p>
             <p>
-                <span class="roboto" jhiTranslate="deccomApp.ControlVar.entries"></span>: {{cvCard.entries}}</p>
+                <span class="roboto" jhiTranslate="deccomApp.ControlVar.entries"></span>: {{cvCard.entries.length}}</p>
             <p>
                 <span class="roboto" jhiTranslate="deccomApp.ControlVar.last_update"></span>: {{cvCard.last_update}}</p>
             <p>

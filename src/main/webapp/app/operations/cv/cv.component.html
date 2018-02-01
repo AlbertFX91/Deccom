@@ -4,7 +4,7 @@
             <strong>
                 <div class="card-header center-in-bar cardtitle" style="background-color: #44aa44;" jhiTranslate="deccomApp.ControlVar.running">Running</div>
             </strong>
-            <div class="row" *ngFor="let cvCard of cvService.getRunningCards()">
+            <div class="row" *ngFor="let cvCard of getRunningCards()">
                 <jhi-cv-card [cvCard]="cvCard"></jhi-cv-card>
             </div>
         </div>
@@ -12,7 +12,7 @@
             <strong>
                 <div class="card-header center-in-bar cardtitle" style="background-color: #fb8c00;" jhiTranslate="deccomApp.ControlVar.paused">Paused</div>
             </strong>
-            <div class="row" *ngFor="let cvCard of cvService.getPausedCards()">
+            <div class="row" *ngFor="let cvCard of getPausedCards()">
                 <jhi-cv-card [cvCard]="cvCard"></jhi-cv-card>
             </div>
         </div>
@@ -20,7 +20,7 @@
             <strong>
                 <div class="card-header center-in-bar cardtitle" style="background-color: #cc240a;" jhiTranslate="deccomApp.ControlVar.blocked">Blocked</div>
             </strong>
-            <div class="row" *ngFor="let cvCard of cvService.getBlockedCards()">
+            <div class="row" *ngFor="let cvCard of getBlockedCards()">
                 <jhi-cv-card [cvCard]="cvCard"></jhi-cv-card>
             </div>
         </div>
