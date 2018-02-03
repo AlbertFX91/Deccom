@@ -6,14 +6,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.constraints.NotNull;
+
 import com.deccom.service.impl.util.SQLUtil;
 
 public class SQLExtractor implements ControlVariableExtractor {
 
+	@NotNull
 	private String username;
+	@NotNull
 	private String password;
+	@NotNull
 	private String url;
+	@NotNull
 	private String query;
+	@NotNull
 	private String jdbc;
 
 	public String getUsername() {

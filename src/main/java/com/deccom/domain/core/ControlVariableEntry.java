@@ -13,8 +13,6 @@ public class ControlVariableEntry {
 	private Integer value;
 	@NotNull
 	private LocalDateTime creationMoment;
-	@NotNull
-	private ControlVariable controlVariable;
 
 	public Integer getValue() {
 		return value;
@@ -30,14 +28,6 @@ public class ControlVariableEntry {
 
 	public void setCreationMoment(LocalDateTime creationMoment) {
 		this.creationMoment = creationMoment;
-	}
-
-	public ControlVariable getControlVar() {
-		return controlVariable;
-	}
-
-	public void setControlVar(ControlVariable controlVar) {
-		this.controlVariable = controlVar;
 	}
 
 	@Override

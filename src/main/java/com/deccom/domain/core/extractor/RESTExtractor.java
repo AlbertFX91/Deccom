@@ -1,10 +1,14 @@
 package com.deccom.domain.core.extractor;
 
+import javax.validation.constraints.NotNull;
+
 import com.deccom.service.impl.util.RESTUtil;
 
 public class RESTExtractor implements ControlVariableExtractor {
 	
+	@NotNull
 	private String url;
+	@NotNull
 	private String jsonPath;
 
 	public String getUrl() {
