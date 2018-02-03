@@ -16,6 +16,10 @@ import com.deccom.domain.SQLConnection;
 import com.deccom.domain.SQLControlVar;
 import com.deccom.domain.SQLControlVarEntry;
 import com.deccom.domain.User;
+import com.deccom.domain.core.ControlVariable;
+import com.deccom.domain.core.Status;
+import com.deccom.domain.core.extractor.RESTExtractor;
+import com.deccom.domain.core.extractor.SQLExtractor;
 import com.deccom.security.AuthoritiesConstants;
 import com.github.mongobee.changeset.ChangeLog;
 import com.github.mongobee.changeset.ChangeSet;
@@ -182,39 +186,36 @@ public class InitialSetupMigration {
 		mongoTemplate.save(r);
 	}
 	
-	// This ControlVars will not be monitored when they are created because the jobs start before populate
 	@ChangeSet(order = "06", author = "initiator", id = "06-addCoreControlVar")
 	public void addCoreControlVars(MongoTemplate mongoTemplate) {
-		/*
-		Core_RESTConnection rest = new Core_RESTConnection();
+		RESTExtractor rest = new RESTExtractor();
         rest.setJsonPath("$[2].phone");
         rest.setUrl("http://jsonplaceholder.typicode.com/users");
         
-        Core_SQLConnection sql = new Core_SQLConnection();
+        SQLExtractor sql = new SQLExtractor();
         sql.setUsername("developer");
         sql.setPassword("developer");
         sql.setQuery("select age from author where  idauthor='1' and name='name-1';");
         sql.setUrl("localhost:3306/deccom");
         sql.setJdbc("mysql");
         
-        Core_ControlVar c1 = new Core_ControlVar();
-        c1.setConnection(rest);
+        ControlVariable c1 = new ControlVariable();
+        c1.setExtractor(rest);
         c1.setCreationMoment(LocalDateTime.now());
         c1.setStatus(Status.PAUSED);
-        c1.setFrequency_sec(60);
+        c1.setFrequency(60);
         c1.setName("RESTCONTROLVAR");
-		c1.setEntries(Lists.newArrayList());
+		c1.setControlVarEntries(Lists.newArrayList());
         
-        Core_ControlVar c2 = new Core_ControlVar();;
-        c2.setConnection(sql);
+		ControlVariable c2 = new ControlVariable();;
+        c2.setExtractor(sql);
         c2.setCreationMoment(LocalDateTime.now());
         c2.setStatus(Status.RUNNING);
-        c2.setFrequency_sec(30);
+        c2.setFrequency(30);
         c2.setName("SQLCONTROLVAR");
-		c2.setEntries(Lists.newArrayList());
+		c2.setControlVarEntries(Lists.newArrayList());
 
 		mongoTemplate.save(c1);
 		mongoTemplate.save(c2);
-		*/
 	}
 }

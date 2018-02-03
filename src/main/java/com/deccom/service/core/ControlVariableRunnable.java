@@ -1,9 +1,9 @@
-package com.deccom.service.newcore;
+package com.deccom.service.core;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.deccom.newcore.domain.ControlVariable;
+import com.deccom.domain.core.ControlVariable;
 
 public class ControlVariableRunnable implements Runnable {
 	private static final Logger log = LoggerFactory

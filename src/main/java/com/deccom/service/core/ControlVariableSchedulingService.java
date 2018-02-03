@@ -1,4 +1,4 @@
-package com.deccom.service.newcore;
+package com.deccom.service.core;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,8 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.deccom.newcore.domain.ControlVariable;
-import com.deccom.newcore.domain.Status;
+import com.deccom.domain.core.ControlVariable;
+import com.deccom.domain.core.Status;
 
 /**
  * Service class for managing users.

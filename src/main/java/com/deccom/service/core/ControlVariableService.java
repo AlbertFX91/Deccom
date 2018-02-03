@@ -1,4 +1,4 @@
-package com.deccom.service.newcore;
+package com.deccom.service.core;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,11 +11,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.deccom.newcore.domain.ControlVariable;
-import com.deccom.newcore.domain.ControlVariableEntry;
-import com.deccom.newcore.domain.ControlVariableExtractor;
-import com.deccom.newcore.domain.Status;
-import com.deccom.repository.ControlVariableRepository;
+import com.deccom.domain.core.ControlVariable;
+import com.deccom.domain.core.ControlVariableEntry;
+import com.deccom.domain.core.Status;
+import com.deccom.domain.core.extractor.ControlVariableExtractor;
+import com.deccom.repository.core.ControlVariableRepository;
 
 @Service
 public class ControlVariableService {

@@ -1,4 +1,4 @@
-package com.deccom.web.rest.newcore;
+package com.deccom.web.rest.core;
 
 import java.util.Optional;
 
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
-import com.deccom.service.newcore.ControlVariableSchedulingService;
+import com.deccom.service.core.ControlVariableSchedulingService;
 
 import io.github.jhipster.web.util.ResponseUtil;
 

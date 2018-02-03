@@ -12,7 +12,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
-import com.deccom.service.newcore.ControlVariableSchedulingService;
+import com.deccom.service.core.ControlVariableSchedulingService;
 
 @Configuration
 @EnableScheduling

@@ -1,4 +1,4 @@
-package com.deccom.web.rest.newcore;
+package com.deccom.web.rest.core;
 
 import java.net.URISyntaxException;
 
@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
-import com.deccom.newcore.domain.ControlVariable;
-import com.deccom.newcore.domain.RESTExtractor;
-import com.deccom.newcore.domain.SQLExtractor;
-import com.deccom.service.newcore.ControlVariableService;
+import com.deccom.domain.core.ControlVariable;
+import com.deccom.domain.core.extractor.RESTExtractor;
+import com.deccom.domain.core.extractor.SQLExtractor;
+import com.deccom.service.core.ControlVariableService;
 import com.deccom.web.rest.util.HeaderUtil;
 
 @RestController

@@ -1,4 +1,4 @@
-package com.deccom.newcore.domain;
+package com.deccom.domain.core;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -6,6 +6,8 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.Id;
+
+import com.deccom.domain.core.extractor.ControlVariableExtractor;
 
 /**
  * A ControlVar.

@@ -1,4 +1,4 @@
-package com.deccom.newcore.domain;
+package com.deccom.domain.core;
 
 public enum Status {
 	RUNNING,
