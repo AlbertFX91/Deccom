@@ -1,5 +1,7 @@
 package com.deccom.newcore.domain;
 
+import com.deccom.service.impl.util.RESTUtil;
+
 public class RESTExtractor implements ControlVariableExtractor {
 	
 	private String url;
@@ -23,8 +25,9 @@ public class RESTExtractor implements ControlVariableExtractor {
 	
 	@Override
 	public Integer getData() {
-		// TODO Auto-generated method stub
-		return 1;
+		String body = RESTUtil.getResponse(getUrl());
+		String value = RESTUtil.getByJSONPath(body, getJsonPath());
+		return value.length();
 	}
 
 }

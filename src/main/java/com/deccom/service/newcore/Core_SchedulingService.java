@@ -1,27 +1,13 @@
-package com.deccom.service.impl.core;
+package com.deccom.service.newcore;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.deccom.domain.core.Core_ControlVar;
-import com.deccom.domain.core.Status;
-import com.deccom.service.impl.core.util.Core_ControlVarRunnable;
 
 /**
  * Service class for managing users.
  */
 @Service
 public class Core_SchedulingService {
-
+	/*TODO 
 	private final Logger log = LoggerFactory
 			.getLogger(Core_SchedulingService.class);
 
@@ -82,6 +68,7 @@ public class Core_SchedulingService {
 			jobs.remove(cv.getId());
 		}
 	}
+	*/
 
 	/*
 	 * //Call this on deployment from the ScheduleDataRepository and everytime

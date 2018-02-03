@@ -68,5 +68,11 @@ public class ControlVariableService {
 		log.debug("Request to get all Core_Connection");
 		return controlVariableRepository.findAll();
 	}
+	
+	public void testLaunchCVS() {
+		for(ControlVariable cv: findAll()) {
+			System.out.println(cv.getName() + ": " + cv.getExtractor().getData());
+		}
+	}
 
 }

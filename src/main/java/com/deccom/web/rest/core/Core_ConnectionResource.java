@@ -1,26 +1,12 @@
 package com.deccom.web.rest.core;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import org.reflections.Reflections;
-import org.reflections.util.ClasspathHelper;
-import org.reflections.util.ConfigurationBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.codahale.metrics.annotation.Timed;
-import com.deccom.domain.core.Core_Connection;
 
 @RestController
 @RequestMapping("/api")
 public class Core_ConnectionResource {
+	/*TODO
 	private final Logger log = LoggerFactory
 			.getLogger(Core_ConnectionResource.class);
 
@@ -31,6 +17,7 @@ public class Core_ConnectionResource {
 	 *
 	 * @return the list of core_connections
 	 */
+	/*
 	@GetMapping("/connection/all")
 	@Timed
 	public List<Core_Connection> findAll() {
@@ -52,4 +39,5 @@ public class Core_ConnectionResource {
 				.filter((c)->!c.isInterface())
 				.collect(Collectors.toSet());
 	}
+	*/
 }

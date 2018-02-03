@@ -9,17 +9,13 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 
 import com.deccom.domain.Acme;
 import com.deccom.domain.Authority;
-import com.deccom.domain.SQLConnection;
-import com.deccom.domain.SQLControlVar;
-import com.deccom.domain.SQLControlVarEntry;
 import com.deccom.domain.RESTConnection;
 import com.deccom.domain.RESTControlVar;
 import com.deccom.domain.RESTControlVarEntry;
+import com.deccom.domain.SQLConnection;
+import com.deccom.domain.SQLControlVar;
+import com.deccom.domain.SQLControlVarEntry;
 import com.deccom.domain.User;
-import com.deccom.domain.core.Core_ControlVar;
-import com.deccom.domain.core.Status;
-import com.deccom.domain.core.rest.Core_RESTConnection;
-import com.deccom.domain.core.sql.Core_SQLConnection;
 import com.deccom.security.AuthoritiesConstants;
 import com.github.mongobee.changeset.ChangeLog;
 import com.github.mongobee.changeset.ChangeSet;
@@ -189,6 +185,7 @@ public class InitialSetupMigration {
 	// This ControlVars will not be monitored when they are created because the jobs start before populate
 	@ChangeSet(order = "06", author = "initiator", id = "06-addCoreControlVar")
 	public void addCoreControlVars(MongoTemplate mongoTemplate) {
+		/*
 		Core_RESTConnection rest = new Core_RESTConnection();
         rest.setJsonPath("$[2].phone");
         rest.setUrl("http://jsonplaceholder.typicode.com/users");
@@ -218,5 +215,6 @@ public class InitialSetupMigration {
 
 		mongoTemplate.save(c1);
 		mongoTemplate.save(c2);
+		*/
 	}
 }

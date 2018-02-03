@@ -1,37 +1,10 @@
-package com.deccom.service.impl.core;
+package com.deccom.service.newcore;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Map.Entry;
-import java.util.stream.Collectors;
-
-import org.reflections.Reflections;
-import org.reflections.util.ClasspathHelper;
-import org.reflections.util.ConfigurationBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import com.deccom.domain.core.Core_Connection;
-import com.deccom.domain.core.Core_ControlVar;
-import com.deccom.domain.core.Core_ControlVarEntry;
-import com.deccom.domain.core.Core_DataExtractor;
-import com.deccom.domain.core.Status;
-import com.deccom.domain.core.annotation.Core_Extractor;
-import com.deccom.repository.core.Core_ControlVarRepository;
 
 @Service
 public class Core_ControlVarService {
+	/* TODO
 	private final Logger log = LoggerFactory
 			.getLogger(Core_ControlVarService.class);
 
@@ -46,6 +19,7 @@ public class Core_ControlVarService {
 	 *
 	 * @return the entity
 	 */
+	/*
 	public Core_ControlVar create() {
 		Core_ControlVar result = new Core_ControlVar();
 
@@ -161,6 +135,7 @@ public class Core_ControlVarService {
 	 * @throws InstantiationException
 	 * @throws IllegalAccessException
 	 */
+	/*
 	public List<Core_DataExtractor> getAvailableExtractors() throws InstantiationException, IllegalAccessException {
 		List<Core_DataExtractor> res = new ArrayList<>();
 		// Getting the parent Core_Connection class
@@ -253,5 +228,5 @@ public class Core_ControlVarService {
 				.filter((c)->!c.isInterface())
 				.collect(Collectors.toSet());
 	}
-
+	*/
 }

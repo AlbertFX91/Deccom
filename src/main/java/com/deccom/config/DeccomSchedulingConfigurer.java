@@ -12,7 +12,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
-import com.deccom.service.impl.core.Core_SchedulingService;
+import com.deccom.service.newcore.Core_SchedulingService;
 
 @Configuration
 @EnableScheduling
@@ -28,7 +28,7 @@ public class DeccomSchedulingConfigurer implements SchedulingConfigurer {
 		log.debug("Scheduled ControlVar tasks initialization");
 		ScheduledExecutorService str = taskExecutor();
 		taskRegistrar.setScheduler(str);
-		schedulingService.startJobs(str);
+		// TODO: schedulingService.startJobs(str);
 	}
 
 	@Bean(destroyMethod = "shutdown")

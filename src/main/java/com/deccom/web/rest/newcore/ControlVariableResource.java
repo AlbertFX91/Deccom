@@ -41,13 +41,13 @@ public class ControlVariableResource {
 
 		restControlVariable.setName("restControlVariable");
 		sqlControlVariable.setName("sqlControlVariable");
-		restExtractor.setUrl("url");
-		restExtractor.setJsonPath("jsonPath");
-		sqlExtractor.setUsername("username");
-		sqlExtractor.setPassword("password");
-		sqlExtractor.setUrl("url");
-		sqlExtractor.setQuery("query");
-		sqlExtractor.setJdbc("jdbc");
+		restExtractor.setUrl("http://jsonplaceholder.typicode.com/users");
+		restExtractor.setJsonPath("$[2].phone");
+		sqlExtractor.setUsername("developer");
+		sqlExtractor.setPassword("developer");
+		sqlExtractor.setUrl("localhost:3306/deccom");
+		sqlExtractor.setQuery("select age from author where  idauthor='1' and name='name-1';");
+		sqlExtractor.setJdbc("mysql");
 		restControlVariable.setExtractor(restExtractor);
 		sqlControlVariable.setExtractor(sqlExtractor);
 
@@ -56,5 +56,22 @@ public class ControlVariableResource {
 
 		return ResponseEntity.ok().build();
 	}
+	
+	/**
+	 * Test core_controlvar
+	 *
+	 * 
+	 * @return the ResponseEntity with status 200 (OK)
+	 */
+	@GetMapping("/controlvariable/test")
+	@Timed
+	public ResponseEntity<String> test() {
+		log.debug("Printing controlVariable data");
+
+		controlVariableService.testLaunchCVS();
+		
+		return ResponseEntity.ok().build();
+	}
+	
 
 }

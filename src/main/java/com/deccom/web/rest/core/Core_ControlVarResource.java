@@ -1,41 +1,12 @@
 package com.deccom.web.rest.core;
 
-import java.lang.reflect.Field;
-import java.net.URISyntaxException;
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import javax.validation.Valid;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.codahale.metrics.annotation.Timed;
-import com.deccom.domain.core.Core_Connection;
-import com.deccom.domain.core.Core_ControlVar;
-import com.deccom.domain.core.Core_ControlVarCreation;
-import com.deccom.domain.core.Core_DataExtractor;
-import com.deccom.domain.core.Status;
-import com.deccom.domain.core.sql.mysql.Core_MySQLConnection;
-import com.deccom.service.impl.core.Core_ControlVarService;
-import com.deccom.web.rest.util.HeaderUtil;
 
 @RestController
 @RequestMapping("/api")
 public class Core_ControlVarResource {
+	/* TODO
 	private final Logger log = LoggerFactory
 			.getLogger(Core_ControlVarResource.class);
 
@@ -50,6 +21,7 @@ public class Core_ControlVarResource {
 	 * 
 	 * @return the ResponseEntity with status 200 (OK)
 	 */
+	/* TODO
 	@GetMapping("/controlvar/example")
 	@Timed
 	public ResponseEntity<String> exampleControlVars() {
@@ -83,7 +55,7 @@ public class Core_ControlVarResource {
 		controlvarService.save(c2);
 		*/
 		
-		
+	/* TODO
 		Core_MySQLConnection sql = new Core_MySQLConnection();
 		sql.setUsername("developer");
 		sql.setPassword("developer");
@@ -116,6 +88,7 @@ public class Core_ControlVarResource {
 		 * Development report @AlbertFX91: - It doesnt work - the data is not
 		 * injected in the connection
 		 */
+	/* TODO
 		log.debug("New Core_ControlVar object 1");
 		Core_Connection connection = cv.getConnection();
 		System.out.println(cv);
@@ -138,6 +111,7 @@ public class Core_ControlVarResource {
 	 	"2017-12-06T21:36:28.081Z", "disabled": true, "entries": [],
 	 	"frequency_sec": 20, "name": "exampleCV" } }
 	 */
+	/* TODO
 	@PostMapping("/controlvar/new2")
 	@Timed
 	public ResponseEntity<String> newControlVars2(
@@ -148,6 +122,7 @@ public class Core_ControlVarResource {
 		 * neccesary - connectionData dynamic: Its neccesary to verify it after
 		 * create a control var
 		 */
+	/* TODO
 		log.debug("New Core_ControlVar object 2");
 		Core_ControlVar cv = cve.getControlvar();
 		String _connectionClass = cve.get_connectionClass();
@@ -155,6 +130,7 @@ public class Core_ControlVarResource {
 		Core_Connection connection;
 
 		/* _connectionClass verification */
+	/* TODO
 		try {
 			connection = (Core_Connection) Class.forName(_connectionClass)
 					.newInstance();
@@ -166,6 +142,7 @@ public class Core_ControlVarResource {
 		}
 
 		/* ConnectionData verification */
+	/* TODO
 		Boolean connectionVerification = connectionVerification(connection,
 				connectionData);
 		if (!connectionVerification) {
@@ -194,6 +171,7 @@ public class Core_ControlVarResource {
 	  "status": "RUNNING"
 	}
 	 */
+	/* TODO
 	@PostMapping("/controlvar/new3")
 	@Timed
 	public ResponseEntity<String> newControlVar3(
@@ -204,6 +182,7 @@ public class Core_ControlVarResource {
 		 * mandatory - connectionData dynamic: Its mandatory to verify it after
 		 * create a control var
 		 */
+	/* TODO
 		log.debug("New Core_ControlVar object 3");
 		controlvarService.save(cv);
 		return ResponseEntity.ok().build();
@@ -216,6 +195,7 @@ public class Core_ControlVarResource {
 	 *            the pagination information
 	 * @return the list of core_controlvars
 	 */
+	/* TODO
 	@GetMapping("/controlvar/all")
 	@Timed
 	public Page<Core_ControlVar> findAll(Pageable pageable) {
@@ -235,6 +215,7 @@ public class Core_ControlVarResource {
 	 * @throws URISyntaxException
 	 *             if the Location URI syntax is incorrect
 	 */
+	/* TODO
 	@PutMapping("/controlvar/pause")
 	@Timed
 	public ResponseEntity<Core_ControlVar> pause(String controlVarId)
@@ -261,6 +242,7 @@ public class Core_ControlVarResource {
 	 * @throws URISyntaxException
 	 *             if the Location URI syntax is incorrect
 	 */
+	/* TODO
 	@PutMapping("/controlvar/restart")
 	@Timed
 	public ResponseEntity<Core_ControlVar> restart(String controlVarId)
@@ -285,6 +267,7 @@ public class Core_ControlVarResource {
 	 * @throws IllegalArgumentException
 	 * @throws InstantiationException
 	 */
+	/* TODO
 	@GetMapping("/controlvar/run")
 	@Timed
 	public ResponseEntity<String> runControlVars()
@@ -304,6 +287,7 @@ public class Core_ControlVarResource {
 	 * @throws IllegalAccessException 
 	 * @throws InstantiationException 
 	 */
+	/* TODO
 	@GetMapping("/controlvar/available")
 	@Timed
 	public List<Core_DataExtractor> available() throws InstantiationException, IllegalAccessException {
@@ -337,4 +321,5 @@ public class Core_ControlVarResource {
 		return Arrays.stream(connection.getClass().getDeclaredFields())
 				.allMatch(f -> connectionData.containsKey(f.getName()));
 	}
+	*/
 }
