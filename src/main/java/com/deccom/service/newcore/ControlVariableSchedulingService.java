@@ -1,20 +1,33 @@
 package com.deccom.service.newcore;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.deccom.newcore.domain.ControlVariable;
+import com.deccom.newcore.domain.Status;
 
 /**
  * Service class for managing users.
  */
 @Service
-public class Core_SchedulingService {
-	/*TODO 
+public class ControlVariableSchedulingService {
+
 	private final Logger log = LoggerFactory
-			.getLogger(Core_SchedulingService.class);
+			.getLogger(ControlVariableSchedulingService.class);
 
 	private ScheduledExecutorService str;
 
 	@Autowired
-	private Core_ControlVarService cvService;
+	private ControlVariableService cvService;
 
 	// Map which stores the ID from the controlVar and the job to be executed
 	private Map<String, ScheduledFuture<?>> jobs;
@@ -22,10 +35,10 @@ public class Core_SchedulingService {
 	public synchronized void startJobs() {
 		log.debug("Starting Jobs");
 		jobs = new HashMap<>();
-		for (Core_ControlVar cv : cvService.findAll()) {
+		for (ControlVariable cv : cvService.findAll()) {
 			ScheduledFuture<?> job = str.scheduleAtFixedRate(
-					new Core_ControlVarRunnable(cv, cvService), 0,
-					cv.getFrequency_sec(), TimeUnit.SECONDS);
+					new ControlVariableRunnable(cv, cvService), 0,
+					cv.getFrequency(), TimeUnit.SECONDS);
 			jobs.put(cv.getId(), job);
 		}
 	}
@@ -52,15 +65,15 @@ public class Core_SchedulingService {
 		jobs.clear();
 	}
 
-	public void newJob(Core_ControlVar cv) {
+	public void newJob(ControlVariable cv) {
 		log.debug("New job");
 		ScheduledFuture<?> job = str.scheduleAtFixedRate(
-				new Core_ControlVarRunnable(cv, cvService), 0,
-				cv.getFrequency_sec(), TimeUnit.SECONDS);
+				new ControlVariableRunnable(cv, cvService), 0,
+				cv.getFrequency(), TimeUnit.SECONDS);
 		jobs.put(cv.getId(), job);
 	}
 
-	public synchronized void stopJob(Core_ControlVar cv) {
+	public synchronized void stopJob(ControlVariable cv) {
 		if (cv.getStatus().equals(Status.PAUSED)
 				|| cv.getStatus().equals(Status.BLOCKED)) {
 			log.debug("Stopping job with name: " + cv.getName());
@@ -68,7 +81,10 @@ public class Core_SchedulingService {
 			jobs.remove(cv.getId());
 		}
 	}
-	*/
+	
+	public synchronized Boolean isRunning(ControlVariable cv) {
+		return jobs.containsKey(cv.getId());
+	}
 
 	/*
 	 * //Call this on deployment from the ScheduleDataRepository and everytime

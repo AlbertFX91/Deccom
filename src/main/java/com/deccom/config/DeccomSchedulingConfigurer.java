@@ -12,7 +12,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
-import com.deccom.service.newcore.Core_SchedulingService;
+import com.deccom.service.newcore.ControlVariableSchedulingService;
 
 @Configuration
 @EnableScheduling
@@ -21,14 +21,14 @@ public class DeccomSchedulingConfigurer implements SchedulingConfigurer {
 	private static final Logger log = LoggerFactory.getLogger(DeccomSchedulingConfigurer.class);
 
 	@Autowired
-	private Core_SchedulingService schedulingService;
+	private ControlVariableSchedulingService schedulingService;
 	
 	@Override
 	public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
 		log.debug("Scheduled ControlVar tasks initialization");
 		ScheduledExecutorService str = taskExecutor();
 		taskRegistrar.setScheduler(str);
-		// TODO: schedulingService.startJobs(str);
+		schedulingService.startJobs(str);
 	}
 
 	@Bean(destroyMethod = "shutdown")
