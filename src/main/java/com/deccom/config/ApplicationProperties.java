@@ -7,13 +7,23 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * <p>
  * Properties are configured in the application.yml file.
  */
-@ConfigurationProperties(prefix = "application", ignoreUnknownFields = false)
+@ConfigurationProperties(prefix = "application", ignoreUnknownFields = true)
 public class ApplicationProperties {
 
+	private String twitterUsername;
 	private String twitterConsumerKey;
 	private String twitterConsumerSecret;
+	private String facebookPageID;
 	private String facebookApplicationKey;
 	private String facebookSecretKey;
+
+	public String getTwitterUsername() {
+		return twitterUsername;
+	}
+
+	public void setTwitterUsername(String twitterUsername) {
+		this.twitterUsername = twitterUsername;
+	}
 
 	public String getTwitterConsumerKey() {
 		return twitterConsumerKey;
@@ -29,6 +39,14 @@ public class ApplicationProperties {
 
 	public void setTwitterConsumerSecret(String twitterConsumerSecret) {
 		this.twitterConsumerSecret = twitterConsumerSecret;
+	}
+
+	public String getFacebookPageID() {
+		return facebookPageID;
+	}
+
+	public void setFacebookPageID(String facebookPageID) {
+		this.facebookPageID = facebookPageID;
 	}
 
 	public String getFacebookApplicationKey() {

@@ -56,22 +56,26 @@ p {
 }
 
 .Running {
-  background-color: #44AA44;
-  flex-grow: 0.3; 
-  border-top-left-radius: 6px;
-  border-bottom-left-radius: 6px;
+    background-color: #44aa44;
+    flex-grow: 0.3; 
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
 }
 
 .Paused {
-    background-color: #F2EF35;
+    background-color: #fb8c00;
     flex-grow: 0.3; 
     border-top-left-radius: 6px;
     border-bottom-left-radius: 6px;
-  }
+}
 
 .Blocked {
-    background-color: #CC240A;
+    background-color: #cc240a;
     flex-grow: 0.3; 
     border-top-left-radius: 6px;
     border-bottom-left-radius: 6px;
+}
+
+.roboto {
+    font-family: 'Roboto', sans-serif;
 }
