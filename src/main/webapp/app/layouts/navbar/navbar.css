@@ -7,7 +7,8 @@ Navbar
 }
 
 .jh-navbar {
-    background-color: #353d47;
+    /* background-color: #353d47; */
+    background-color: #0097a7;
     padding: .2em 1em;
 }
 
@@ -19,7 +20,8 @@ Navbar
 }
 
 .jh-navbar .dropdown-item.active, .jh-navbar .dropdown-item.active:focus, .jh-navbar .dropdown-item.active:hover {
-    background-color: #353d47;
+    /* background-color: #353d47; */
+    background-color: #0097a7;
 }
 
 .jh-navbar .dropdown-toggle::after {
@@ -80,4 +82,20 @@ Logo styles
     background: url("../../../content/images/logo-jhipster.png") no-repeat center center;
     background-size: contain;
     width: 100%;
+}
+
+.roboto {
+    font-family: 'Roboto', sans-serif;
+}
+
+.icon-background {
+    color: #3f51b5;
+}
+
+.white-icon {
+    color: white;
+}
+
+.dropdown-toggle::after {
+    border: none;
 }
