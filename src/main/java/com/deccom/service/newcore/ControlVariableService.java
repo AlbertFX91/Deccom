@@ -1,4 +1,4 @@
-package com.deccom.newcore.service;
+package com.deccom.service.newcore;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -24,12 +24,12 @@ import org.springframework.stereotype.Service;
 
 import com.deccom.newcore.domain.ControlVariable;
 import com.deccom.newcore.domain.Status;
-import com.deccom.newcore.repository.ControlVariableRepository;
+import com.deccom.repository.ControlVariableRepository;
 
 @Service
-public class ControlVarService {
+public class ControlVariableService {
 
-	private final Logger log = LoggerFactory.getLogger(ControlVarService.class);
+	private final Logger log = LoggerFactory.getLogger(ControlVariableService.class);
 
 	@Autowired
 	private ControlVariableRepository controlVariableRepository;

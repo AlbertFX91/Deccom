@@ -1,6 +1,6 @@
 package com.deccom.newcore.domain;
 
-public interface DeccomExtractor {
+public interface ControlVariableExtractor {
 	
 	Integer getData();
 

@@ -1,6 +1,6 @@
 package com.deccom.newcore.domain;
 
-public class RESTExtractor implements DeccomExtractor {
+public class RESTExtractor implements ControlVariableExtractor {
 	
 	private String url;
 	private String jsonPath;

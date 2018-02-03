@@ -1,6 +1,6 @@
 package com.deccom.newcore.domain;
 
-public class SQLExtractor implements DeccomExtractor {
+public class SQLExtractor implements ControlVariableExtractor {
 
 	private String username;
 	private String password;

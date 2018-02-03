@@ -23,7 +23,7 @@ public class ControlVariable {
 	@NotNull
 	private List<ControlVariableEntry> controlVarEntries;
 	@NotNull
-	private DeccomExtractor extractor;
+	private ControlVariableExtractor extractor;
 
 	public String getId() {
 		return id;
@@ -65,11 +65,11 @@ public class ControlVariable {
 		this.controlVarEntries = controlVarEntries;
 	}
 
-	public DeccomExtractor getExtractor() {
+	public ControlVariableExtractor getExtractor() {
 		return extractor;
 	}
 
-	public void setExtractor(DeccomExtractor extractor) {
+	public void setExtractor(ControlVariableExtractor extractor) {
 		this.extractor = extractor;
 	}
 
