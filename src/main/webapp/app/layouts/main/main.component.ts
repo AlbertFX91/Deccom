@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRouteSnapshot, NavigationEnd, RoutesRecognized } from '@angular/router';
 
-import { JhiLanguageHelper, StateStorageService } from '../../shared';
+import { JhiLanguageHelper, StateStorageService, LoginService } from '../../shared';
 
 @Component({
     selector: 'jhi-main',
@@ -13,6 +13,7 @@ export class JhiMainComponent implements OnInit {
         private jhiLanguageHelper: JhiLanguageHelper,
         private router: Router,
         private $storageService: StateStorageService,
+        private loginService: LoginService,
     ) {}
 
     private getPageTitle(routeSnapshot: ActivatedRouteSnapshot) {

@@ -1,0 +1,25 @@
+/* ==========================================================================
+Control Var creation button
+========================================================================== */
+
+#cvbuttonfixed{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 50;
+    width: 50px;
+    height: 50px;
+    background-color: #0097a7;
+    border-radius: 100%;
+    margin-bottom: 20px;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: all .2s ease-in-out; 
+}
+
+#cvbuttonfixed:hover { 
+    transform: scale(1.3); 
+}
