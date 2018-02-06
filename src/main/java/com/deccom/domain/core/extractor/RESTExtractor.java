@@ -2,6 +2,7 @@ package com.deccom.domain.core.extractor;
 
 import javax.validation.constraints.NotNull;
 
+import com.deccom.domain.core.CVStyle;
 import com.deccom.service.impl.util.RESTUtil;
 
 public class RESTExtractor implements ControlVariableExtractor {
@@ -10,7 +11,13 @@ public class RESTExtractor implements ControlVariableExtractor {
 	private String url;
 	@NotNull
 	private String jsonPath;
-
+	@NotNull
+	private CVStyle style;
+	
+	public RESTExtractor() {
+		style = CVStyle.create("API REST", "fa-file-code", "#4DB6AC", "#000000");
+	}
+	
 	public String getUrl() {
 		return url;
 	}
@@ -32,6 +39,11 @@ public class RESTExtractor implements ControlVariableExtractor {
 		String body = RESTUtil.getResponse(getUrl());
 		String value = RESTUtil.getByJSONPath(body, getJsonPath());
 		return Integer.parseInt(value);
+	}
+
+	@Override
+	public CVStyle getStyle() {
+		return style;
 	}
 
 }

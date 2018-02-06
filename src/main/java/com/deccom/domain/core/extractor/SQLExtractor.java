@@ -8,7 +8,9 @@ import java.util.Map;
 
 import javax.validation.constraints.NotNull;
 
+import com.deccom.domain.core.CVStyle;
 import com.deccom.service.impl.util.SQLUtil;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class SQLExtractor implements ControlVariableExtractor {
 
@@ -22,6 +24,12 @@ public class SQLExtractor implements ControlVariableExtractor {
 	private String query;
 	@NotNull
 	private String jdbc;
+	@NotNull
+	private CVStyle style;
+	
+	public SQLExtractor() {
+		style = CVStyle.create("SQL", "fa-database", "#EF6C00", "#000000");
+	}
 
 	public String getUsername() {
 		return username;
@@ -64,6 +72,12 @@ public class SQLExtractor implements ControlVariableExtractor {
 	}
 
 	@Override
+	public CVStyle getStyle() {
+		return style;
+	}
+	
+	@Override
+	@JsonIgnore
 	public Integer getData() {
 		// TODO Auto-generated method stub
 		return Integer.parseInt(getFromSQL());
