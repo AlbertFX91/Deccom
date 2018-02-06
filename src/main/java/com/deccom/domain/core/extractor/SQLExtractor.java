@@ -66,32 +66,32 @@ public class SQLExtractor implements ControlVariableExtractor {
 	@Override
 	public Integer getData() {
 		// TODO Auto-generated method stub
-		return getFromSQL().length();
+		return Integer.parseInt(getFromSQL());
 	}
-	
+
 	protected String getFromSQL() {
 		String value;
-    	ResultSet rs;
-    	Connection connection;
-    	
-    	connection = SQLUtil.connect(getJdbc(), getUrl(), getUsername(), getPassword());
-    	rs = SQLUtil.executeQuery(connection, getQuery());
-    	List<Map<String, String>> data = SQLUtil.collectAll(rs);
-    	
-    	// Only one row is accepted
-    	if(data.size() != 1) {
-    		throw new RuntimeException("Wrong Control Variable: Data collection with more than one result");
-    	}
-    	
-    	// Only one row with one column is accepted
-    	Map<String, String> entry = data.get(0);
-    	if(entry.size() != 1) {
-    		throw new RuntimeException("Wrong Control Variable: Data collection with more than one column");
-    	}
-    	
-    	value = new ArrayList<>(entry.values()).get(0);
-    	
-    	return value;
+		ResultSet rs;
+		Connection connection;
+
+		connection = SQLUtil.connect(getJdbc(), getUrl(), getUsername(), getPassword());
+		rs = SQLUtil.executeQuery(connection, getQuery());
+		List<Map<String, String>> data = SQLUtil.collectAll(rs);
+
+		// Only one row is accepted
+		if (data.size() != 1) {
+			throw new RuntimeException("Wrong Control Variable: Data collection with more than one result");
+		}
+
+		// Only one row with one column is accepted
+		Map<String, String> entry = data.get(0);
+		if (entry.size() != 1) {
+			throw new RuntimeException("Wrong Control Variable: Data collection with more than one column");
+		}
+
+		value = new ArrayList<>(entry.values()).get(0);
+
+		return value;
 	}
 
 }

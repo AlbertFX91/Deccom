@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 import com.deccom.service.impl.util.RESTUtil;
 
 public class RESTExtractor implements ControlVariableExtractor {
-	
+
 	@NotNull
 	private String url;
 	@NotNull
@@ -26,12 +26,12 @@ public class RESTExtractor implements ControlVariableExtractor {
 	public void setJsonPath(String jsonPath) {
 		this.jsonPath = jsonPath;
 	}
-	
+
 	@Override
 	public Integer getData() {
 		String body = RESTUtil.getResponse(getUrl());
 		String value = RESTUtil.getByJSONPath(body, getJsonPath());
-		return value.length();
+		return Integer.parseInt(value);
 	}
 
 }

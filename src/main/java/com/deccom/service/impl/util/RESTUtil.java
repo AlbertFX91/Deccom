@@ -98,11 +98,11 @@ public class RESTUtil {
 		} catch (MalformedURLException e) {
 			throw new RESTServiceException("Wrong URL format", i18nCodeRoot
 					+ ".urlerror", "RESTService", e);
-		}
-
-		catch (java.net.UnknownHostException | java.io.FileNotFoundException e) {
+			
+		} catch (java.net.UnknownHostException | java.io.FileNotFoundException e) {
 			throw new RESTServiceException("Unreachable URL", i18nCodeRoot
 					+ ".unreachableurl", "RESTService", e);
+			
 		} catch (IOException e) {
 			throw new RESTServiceException("Data cannot be readed",
 					i18nCodeRoot + ".unreadabledata", "RESTService", e);
@@ -220,15 +220,18 @@ public class RESTUtil {
 			}
 
 			return new String();
+
 		} catch (MalformedURLException e) {
 			throw new RESTServiceException("Invalid endpoint URL specified",
 					i18nCodeRoot + ".invalidendpointURLspecified",
 					"RESTService", e);
+
 		} finally {
 			if (connection != null) {
 				connection.disconnect();
 			}
 		}
+		
 	}
 
 	/**
