@@ -127,7 +127,7 @@ public class InitialSetupMigration {
 		cv.setId("SQLControlVar-1");
 		cv.setCreationMoment(LocalDateTime.now());
 		cv.setName("controlvar-1");
-		cv.setQuery("select age  from author where  idauthor='1' and name='name-1'");
+		cv.setQuery("select age from author where idauthor='1' and name='name-1'");
 		cv.setFrequency_sec(30);
 		cv.setSqlConnection(new SQLConnection("developer", "developer", "jdbc:mysql://localhost:3306/deccom"));
 		cv.setSqlControlVarEntries(Lists.newArrayList(new SQLControlVarEntry("16", LocalDateTime.now()),
@@ -138,7 +138,7 @@ public class InitialSetupMigration {
 		cv.setId("SQLControlVar-2");
 		cv.setCreationMoment(LocalDateTime.now());
 		cv.setName("controlvar-2");
-		cv.setQuery("select age  from author where  idauthor='2' and name='name-2'");
+		cv.setQuery("select age from author where idauthor='2' and name='name-2'");
 		cv.setFrequency_sec(60);
 		cv.setSqlConnection(new SQLConnection("developer", "developer", "jdbc:mysql://localhost:3306/deccom"));
 		cv.setSqlControlVarEntries(Lists.newArrayList(new SQLControlVarEntry("16", LocalDateTime.now()),
@@ -178,7 +178,7 @@ public class InitialSetupMigration {
 		RESTExtractor rest1 = new RESTExtractor();
 		rest1.setJsonPath("$[2].id");
 		rest1.setUrl("http://jsonplaceholder.typicode.com/users");
-		
+
 		RESTExtractor rest2 = new RESTExtractor();
 		rest2.setJsonPath("$[2].phone");
 		rest2.setUrl("http://jsonplaceholder.typicode.com/users");
@@ -189,7 +189,7 @@ public class InitialSetupMigration {
 		sql3.setQuery("select age from author where idauthor='1' and name='name-1';");
 		sql3.setUrl("localhost:3306/deccom");
 		sql3.setJdbc("mysql");
-		
+
 		SQLExtractor sql4 = new SQLExtractor();
 		sql4.setUsername("developer");
 		sql4.setPassword("developer");
@@ -204,7 +204,7 @@ public class InitialSetupMigration {
 		c1.setFrequency(10);
 		c1.setName("RESTCONTROLVAR1");
 		c1.setControlVarEntries(Lists.newArrayList());
-		
+
 		ControlVariable c2 = new ControlVariable();
 		c2.setExtractor(rest2);
 		c2.setCreationMoment(LocalDateTime.now());
@@ -220,7 +220,7 @@ public class InitialSetupMigration {
 		c3.setFrequency(10);
 		c3.setName("SQLCONTROLVAR3");
 		c3.setControlVarEntries(Lists.newArrayList());
-		
+
 		ControlVariable c4 = new ControlVariable();
 		c4.setExtractor(sql4);
 		c4.setCreationMoment(LocalDateTime.now());
