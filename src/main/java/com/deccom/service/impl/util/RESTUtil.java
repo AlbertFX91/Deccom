@@ -20,12 +20,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 import com.deccom.config.ApplicationProperties;
 import com.deccom.service.impl.RESTServiceImpl;
 import com.jayway.jsonpath.JsonPath;
 
 @EnableConfigurationProperties({ ApplicationProperties.class })
+@Component
 public class RESTUtil {
 
 	private static final Logger log = LoggerFactory.getLogger(RESTServiceImpl.class);
@@ -34,8 +36,12 @@ public class RESTUtil {
 	// Client
 	public static final String USER_AGENT = "Chrome/60.0.3112.101";
 
-	@Autowired
 	private static ApplicationProperties applicationProperties;
+
+	@Autowired
+	public RESTUtil(ApplicationProperties applicationProperties) {
+		RESTUtil.applicationProperties = applicationProperties;
+	}
 
 	/**
 	 * Sends a HTTP GET request to an URL.
@@ -65,9 +71,9 @@ public class RESTUtil {
 			// Adding request header
 			con.setRequestProperty("User-Agent", USER_AGENT);
 
-			if (url.contains("https://api.twitter.com")) {
+			if (url.contains("api.twitter.com")) {
 				setTwitterAuthentication(con);
-			} else if (url.contains("https://graph.facebook.com")) {
+			} else if (url.contains("graph.facebook.com")) {
 				setFacebookAuthentication(con);
 			}
 
@@ -297,8 +303,7 @@ public class RESTUtil {
 		bearerToken = requestFacebookBearerToken("https://graph.facebook.com/v2.11/oauth/access_token");
 
 		con.setRequestProperty("Host", "graph.facebook.com");
-		// con.setRequestProperty("Authorization", "Bearer " + bearerToken);
-		con.setRequestProperty("access_token", bearerToken);
+		con.setRequestProperty("Authorization", "Bearer " + bearerToken);
 	}
 
 	private static String requestFacebookBearerToken(String endPointUrl) throws IOException {
@@ -340,26 +345,31 @@ public class RESTUtil {
 						String token = (String) obj.get("access_token");
 
 						return ((tokenType.equals("bearer")) && (token != null)) ? token : "";
+
 					} catch (JSONException e) {
 						throw new RESTServiceException("Wrong credentials", i18nCodeRoot + ".wrongcredentials",
 								"RESTService", e);
 					}
 
 				}
+
 			} catch (JSONException e) {
 				throw new RESTServiceException("Wrong credentials", i18nCodeRoot + ".wrongcredentials", "RESTService",
 						e);
 			}
 
 			return new String();
+
 		} catch (MalformedURLException e) {
 			throw new RESTServiceException("Invalid endpoint URL specified",
 					i18nCodeRoot + ".invalidendpointURLspecified", "RESTService", e);
+
 		} finally {
 			if (connection != null) {
 				connection.disconnect();
 			}
 		}
+
 	}
 
 }
