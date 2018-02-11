@@ -2,6 +2,8 @@ package com.deccom.web.rest.core;
 
 import java.net.URISyntaxException;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -82,108 +86,19 @@ public class ControlVariableResource {
 
 		return ResponseEntity.ok().build();
 	}
-	//
-	// @PostMapping("/controlvar/new1")
-	// @Timed
-	// public ResponseEntity<String> newControlVars1(
-	// @RequestBody Core_ControlVar cv) throws IllegalArgumentException,
-	// IllegalAccessException {
-	// /**
-	// * Development report @AlbertFX91: - It doesnt work - the data is not
-	// * injected in the connection
-	// */
-	// log.debug("New Core_ControlVar object 1");
-	// Core_Connection connection = cv.getConnection();
-	// System.out.println(cv);
-	// for (Field field : connection.getClass().getDeclaredFields()) {
-	// field.setAccessible(true);
-	// Object value = field.get(connection);
-	// System.out.println(field.getName() + ": " + value);
-	// }
-	//
-	// return ResponseEntity.ok().build();
-	// }
-	//
-	// /*
-	// * EXAMPLE CONTROLVAR CREATION DATA FOR SWAGGER
-	// {
-	// "_connectionClass":
-	// "com.deccom.domain.core.Core_RESTConnection", "connectionData": { "url" :
-	// "http://jsonplaceholder.typicode.com/users", "jsonPath": "$.[0].id" },
-	// "controlvar": { "connection": {}, "creationMoment":
-	// "2017-12-06T21:36:28.081Z", "disabled": true, "entries": [],
-	// "frequency_sec": 20, "name": "exampleCV" } }
-	// */
-	// @PostMapping("/controlvar/new2")
-	// @Timed
-	// public ResponseEntity<String> newControlVars2(
-	// @RequestBody @Valid Core_ControlVarCreation cve)
-	// throws URISyntaxException {
-	// /**
-	// * Development report @AlbertFX91: + It works - connectionClass name its
-	// * neccesary - connectionData dynamic: Its neccesary to verify it after
-	// * create a control var
-	// */
-	// log.debug("New Core_ControlVar object 2");
-	// Core_ControlVar cv = cve.getControlvar();
-	// String _connectionClass = cve.get_connectionClass();
-	// Map<String, String> connectionData = cve.getConnectionData();
-	// Core_Connection connection;
-	//
-	// /* _connectionClass verification */
-	// try {
-	// connection = (Core_Connection) Class.forName(_connectionClass)
-	// .newInstance();
-	// } catch (InstantiationException | IllegalAccessException
-	// | ClassNotFoundException e) {
-	// // TODO Throw specific exception
-	// return ResponseEntity.badRequest().body(
-	// "_connectionClass error: " + e.getMessage());
-	// }
-	//
-	// /* ConnectionData verification */
-	// Boolean connectionVerification = connectionVerification(connection,
-	// connectionData);
-	// if (!connectionVerification) {
-	// // TODO Throw specific exception
-	// return ResponseEntity.badRequest().body("connectionData error");
-	// }
-	//
-	// propertiesInjection(connection, connectionData);
-	// cv.setConnection(connection);
-	// controlvarService.save(cv);
-	// return ResponseEntity.ok().build();
-	// }
-	//
-	// /*
-	// * EXAMPLE CONTROLVAR CREATION DATA FOR SWAGGER
-	// {
-	// "connection": {
-	// "_connectionClass": "com.deccom.domain.core.rest.Core_RESTConnection",
-	// "url": "http://jsonplaceholder.typicode.com/users",
-	// "jsonPath": "$.[0].id"
-	// },
-	// "creationMoment": "2017-12-26T23:55:53.793Z",
-	// "frequency_sec": 30,
-	// "entries": [],
-	// "name": "awesomeCV",
-	// "status": "RUNNING"
-	// }
-	// */
-	// @PostMapping("/controlvar/new3")
-	// @Timed
-	// public ResponseEntity<String> newControlVar3(
-	// @RequestBody @Valid Core_ControlVar cv)
-	// throws URISyntaxException {
-	// /**
-	// * Development report @AlbertFX91: + It works - connectionClass name its
-	// * mandatory - connectionData dynamic: Its mandatory to verify it after
-	// * create a control var
-	// */
-	// log.debug("New Core_ControlVar object 3");
-	// controlvarService.save(cv);
-	// return ResponseEntity.ok().build();
-	// }
+
+	 @PostMapping("/controlvariable/new")
+	 @Timed
+	 public ResponseEntity<String> newControlVar(@RequestBody @Valid NewControlVariable cv) throws URISyntaxException {
+
+	 log.debug("New Core_ControlVar object 3");
+	 
+	 ControlVariable res = NewControlVariable.recover(cv);
+	 System.out.println(res);
+	 controlVariableService.save(res);
+	 
+	 return ResponseEntity.ok().build();
+	 }
 
 	/**
 	 * Get all the controlvars.

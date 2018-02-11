@@ -46,4 +46,11 @@ public class RESTExtractor implements ControlVariableExtractor {
 		return style;
 	}
 
+	@Override
+	public String toString() {
+		return "RESTExtractor [url=" + url + ", jsonPath=" + jsonPath + "]";
+	}
+	
+	
+
 }
