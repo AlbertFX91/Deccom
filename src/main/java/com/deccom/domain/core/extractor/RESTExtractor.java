@@ -1,5 +1,7 @@
 package com.deccom.domain.core.extractor;
 
+import java.net.HttpURLConnection;
+
 import javax.validation.constraints.NotNull;
 
 import com.deccom.domain.core.CVStyle;
@@ -36,8 +38,8 @@ public class RESTExtractor implements ControlVariableExtractor {
 
 	@Override
 	public Integer getData() {
-		String body = RESTUtil.getResponse(getUrl());
-		String value = RESTUtil.getByJSONPath(body, getJsonPath());
+		String body = getResponse(url);
+		String value = getByJSONPath(body, getJsonPath());
 		return Integer.parseInt(value);
 	}
 
@@ -46,4 +48,21 @@ public class RESTExtractor implements ControlVariableExtractor {
 		return style;
 	}
 
+	protected String getResponse(String url) {
+		return RESTUtil.getResponse(url);
+	}
+	
+	protected String getResponse(HttpURLConnection con) {
+		return RESTUtil.getResponse(con);
+	}
+	
+	protected String getByJSONPath(String body, String jsonPath) {
+		return RESTUtil.getByJSONPath(body, jsonPath);
+	}
+	
+	
+	
+	
+	
+	
 }
