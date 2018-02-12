@@ -1,9 +1,11 @@
-package com.deccom.domain.core;
+package com.deccom.domain.core.wrapper;
 
 import java.util.Map;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+
+import com.deccom.domain.core.ControlVariable;
 
 public class New_ControlVariable {
 	@NotNull

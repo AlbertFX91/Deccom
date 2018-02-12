@@ -16,9 +16,9 @@ import org.springframework.stereotype.Service;
 
 import com.deccom.domain.core.ControlVariable;
 import com.deccom.domain.core.ControlVariableEntry;
-import com.deccom.domain.core.New_ControlVariable;
 import com.deccom.domain.core.Status;
 import com.deccom.domain.core.extractor.ControlVariableExtractor;
+import com.deccom.domain.core.wrapper.New_ControlVariable;
 import com.deccom.repository.core.ControlVariableRepository;
 import com.deccom.service.core.util.ControlVariableServiceException;
 
