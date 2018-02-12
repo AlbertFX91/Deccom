@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -19,9 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 import com.deccom.domain.core.ControlVariable;
+import com.deccom.domain.core.New_ControlVariable;
 import com.deccom.domain.core.extractor.RESTExtractor;
 import com.deccom.domain.core.extractor.SQLExtractor;
 import com.deccom.service.core.ControlVariableService;
+import com.deccom.service.core.util.ControlVariableServiceException;
 import com.deccom.web.rest.util.HeaderUtil;
 
 @RestController
@@ -89,15 +92,13 @@ public class ControlVariableResource {
 
 	 @PostMapping("/controlvariable/new")
 	 @Timed
-	 public ResponseEntity<String> newControlVar(@RequestBody @Valid NewControlVariable cv) throws URISyntaxException {
-
-	 log.debug("New Core_ControlVar object 3");
-	 
-	 ControlVariable res = NewControlVariable.recover(cv);
-	 System.out.println(res);
-	 controlVariableService.save(res);
-	 
-	 return ResponseEntity.ok().build();
+	 public ResponseEntity<String> newControlVar(@RequestBody @Valid New_ControlVariable cv) throws URISyntaxException {
+		 log.debug("New Core_ControlVar object 3");
+		 
+		 ControlVariable res = controlVariableService.convert(cv);
+		 controlVariableService.save(res);
+		 
+		 return ResponseEntity.ok().build();
 	 }
 
 	/**
@@ -177,46 +178,14 @@ public class ControlVariableResource {
 		return ResponseEntity.ok().build();
 	}
 
-	// /**
-	// * Get all available controlvars to create
-	// *
-	// * @return the list of controlvars to create
-	// * @throws IllegalAccessException
-	// * @throws InstantiationException
-	// */
-	// @GetMapping("/controlvar/available")
-	// @Timed
-	// public List<Core_DataExtractor> available() throws InstantiationException,
-	// IllegalAccessException {
-	// log.debug("Request to get all Controlvars to create");
-	// List<Core_DataExtractor> res =
-	// controlVariableService.getAvailableExtractors();
-	// return res;
-	// }
-
-	// // TODO Handle error
-	// private static <T> void propertiesInjection(Object o,
-	// Map<String, T> properties) {
-	// for (Entry<String, T> property : properties.entrySet()) {
-	// String f = property.getKey();
-	// T v = property.getValue();
-	// Class<?> clazz = o.getClass();
-	// try {
-	// Field field = clazz.getDeclaredField(f);
-	// field.setAccessible(true);
-	// field.set(o, v);
-	// } catch (NoSuchFieldException e) {
-	// clazz = clazz.getSuperclass();
-	// } catch (Exception e) {
-	// throw new IllegalStateException(e);
-	// }
-	// }
-	// }
-	//
-	// private static Boolean connectionVerification(Core_Connection connection,
-	// Map<String, String> connectionData) {
-	// return Arrays.stream(connection.getClass().getDeclaredFields())
-	// .allMatch(f -> connectionData.containsKey(f.getName()));
-	// }
+	@ExceptionHandler(ControlVariableServiceException.class)
+	public ResponseEntity<String> panic(ControlVariableServiceException oops) {
+		return ResponseEntity
+				.badRequest()
+				.headers(
+						HeaderUtil.createFailureAlert(oops.getEntity(),
+								oops.getI18nCode(), oops.getMessage()))
+				.body("{ \"error\": \"" + oops.getMessage() + "\" }");
+	}
 
 }

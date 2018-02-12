@@ -3,6 +3,7 @@ package com.deccom.domain.core;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.Id;
@@ -23,6 +24,7 @@ public class ControlVariable {
 	@NotNull
 	private LocalDateTime creationMoment;
 	@NotNull
+	@Min(value=1)
 	private Integer frequency;
 	@NotNull
 	private List<ControlVariableEntry> controlVarEntries;
