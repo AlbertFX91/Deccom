@@ -21,7 +21,7 @@ public class FacebookFansExtractor extends RESTExtractor implements ControlVaria
 		String url, jsonPath;
 
 		url = "https://graph.facebook.com/v2.11/" + applicationProperties.getFacebookPageID() + "?fields=fan_count";
-		jsonPath = "$.[0].fan_count";
+		jsonPath = "$.fan_count";
 
 		setUrl(url);
 		setJsonPath(jsonPath);
@@ -41,6 +41,7 @@ public class FacebookFansExtractor extends RESTExtractor implements ControlVaria
 	}
 
 	public static String getResponseFacebook(String url) {
+		System.out.println("getResponseFacebook: " + RESTUtil.getResponseFacebook(url));
 		return RESTUtil.getResponseFacebook(url);
 	}
 
