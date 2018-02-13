@@ -26,7 +26,8 @@ import {
     PageRibbonComponent,
     ActiveMenuDirective,
     ErrorComponent,
-    CVButtonComponent
+    CVButtonComponent,
+    SidebarComponent
 } from './layouts';
 
 @NgModule({
@@ -50,7 +51,8 @@ import {
         PageRibbonComponent,
         ActiveMenuDirective,
         FooterComponent,
-        CVButtonComponent
+        CVButtonComponent,
+        SidebarComponent
     ],
     providers: [
         ProfileService,

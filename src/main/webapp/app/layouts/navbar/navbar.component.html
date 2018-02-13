@@ -2,7 +2,7 @@
     <a class="jh-navbar-toggler hidden-lg-up float-right" href="javascript:void(0);" data-toggle="collapse" data-target="#navbarResponsive"
         aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">
     </a>
-    <div class="navbar-brand logo float-left">
+    <div class="navbar-brand logo float-left" (click)="toggleSidebar()">
         <ul class="navbar-nav ml-auto">
             <li *jhiHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="fa fa-bars white-icon" ngbDropdownToggle href="javascript:void(0); " id="operation-menu">

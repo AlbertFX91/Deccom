@@ -9,6 +9,8 @@ import { JhiLanguageHelper, StateStorageService, LoginService } from '../../shar
 })
 export class JhiMainComponent implements OnInit {
 
+    displaySidebar: boolean;
+
     constructor(
         private jhiLanguageHelper: JhiLanguageHelper,
         private router: Router,
@@ -30,5 +32,10 @@ export class JhiMainComponent implements OnInit {
                 this.jhiLanguageHelper.updateTitle(this.getPageTitle(this.router.routerState.snapshot.root));
             }
         });
+        this.displaySidebar = false;
+    }
+
+    onDisplaySidebar(displaySidebar: boolean) {
+        this.displaySidebar = displaySidebar;
     }
 }
