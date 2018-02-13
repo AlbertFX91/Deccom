@@ -54,10 +54,7 @@ public class RESTUtil {
 
 		URL obj;
 		HttpURLConnection con;
-		int responseCode;
-		BufferedReader in;
-		String inputLine, result, responseMessage;
-		StringBuffer response;
+		String result;
 
 		try {
 			// The path is transformed into an URL object to establish the
@@ -86,14 +83,13 @@ public class RESTUtil {
 		}
 
 	}
-	
+
 	public static String getResponseFacebook(String url) {
+
 		URL obj;
 		HttpURLConnection con;
-		int responseCode;
-		BufferedReader in;
-		String inputLine, result, responseMessage;
-		StringBuffer response;
+		String result;
+
 		try {
 			// The path is transformed into an URL object to establish the
 			// connection
@@ -106,9 +102,9 @@ public class RESTUtil {
 			// Adding request header
 			con.setRequestProperty("User-Agent", USER_AGENT);
 
-			// FACEBOOK MAGIC!!!!
+			// Facebook authentication settings
 			setFacebookAuthentication(con);
-			
+
 			result = getResponse(con);
 
 			return result;
@@ -122,15 +118,15 @@ public class RESTUtil {
 		} catch (IOException e) {
 			throw new RESTServiceException("Data cannot be read", i18nCodeRoot + ".unreadabledata", "RESTService", e);
 		}
+
 	}
-	
+
 	public static String getResponseTwitter(String url) {
+
 		URL obj;
 		HttpURLConnection con;
-		int responseCode;
-		BufferedReader in;
-		String inputLine, result, responseMessage;
-		StringBuffer response;
+		String result;
+
 		try {
 			// The path is transformed into an URL object to establish the
 			// connection
@@ -143,9 +139,9 @@ public class RESTUtil {
 			// Adding request header
 			con.setRequestProperty("User-Agent", USER_AGENT);
 
-			// Twitter MAGIC!!!!
+			// Twitter authentication settings
 			setTwitterAuthentication(con);
-			
+
 			result = getResponse(con);
 
 			return result;
@@ -159,8 +155,9 @@ public class RESTUtil {
 		} catch (IOException e) {
 			throw new RESTServiceException("Data cannot be read", i18nCodeRoot + ".unreadabledata", "RESTService", e);
 		}
+
 	}
-	
+
 	/**
 	 * Sends a HTTP GET request to an URL.
 	 * 
@@ -211,7 +208,7 @@ public class RESTUtil {
 		}
 
 	}
-	
+
 	/**
 	 * Tells if the response contains an array with many JSON objects or just one
 	 * JSON object.
