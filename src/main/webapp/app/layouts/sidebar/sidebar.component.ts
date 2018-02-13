@@ -82,7 +82,7 @@ export class SidebarComponent implements OnInit {
         return this.isAuthenticated() ? this.principal.getImageUrl() : null;
     }
 
-    getDisplay() {
-        return this.display ? 'flex' : 'none';
+    canBeDisplayed() {
+        return this.display && this.principal.isAuthenticated();
     }
 }

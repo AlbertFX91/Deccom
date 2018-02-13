@@ -1,11 +1,11 @@
-<div id="sidebar" [class.displayed]="display" [class.hidded]="!display">
+<div id="sidebar" [class.displayed]="canBeDisplayed()" [class.hidded]="!canBeDisplayed()">
     <div id="sidebar-logo-container">
-        <div id="sidebar-logo-circle" [class.displayed]="display" [class.hidded]="!display">
+        <div id="sidebar-logo-circle" [class.displayed]="canBeDisplayed()" [class.hidded]="!canBeDisplayed()">
              <img id="sidebar-logo" src="https://www.freepnglogos.com/uploads/-d-logo-png-5.png">
         </div>
     </div>
     <div id="sidebar-operations-container">
-        <a class="sidebar-selection">
+        <a class="sidebar-selection" routerLink="cv" routerLinkActive="active">
             <i class="fa fa-tachometer" aria-hidden="true"></i>
         </a>
         <a class="sidebar-selection">

@@ -17,6 +17,7 @@ sidebar
 
 #sidebar.hidded{
     width: 0px;
+    font-size: 0px;
 }
 
 #sidebar.displayed{
@@ -85,11 +86,31 @@ sidebar operations
     font-size: 25px;
     cursor: pointer;
     color: #E3F2FD;
+    text-decoration: none;
+    transition: font-size 100ms linear;
+    transition-delay: 200ms;
 }
 
 .sidebar-selection:hover{
-    background-color: #1f275a;
+    background-color:#26C6DA;
     transition: background-color 100ms linear;
+}
+
+.sidebar-selection.active{
+    border-left: #29B6F6;
+    border-left-style: solid;
+    border-left-width: 7px;
+    padding-right: 7px;
+    background-color: #1f275a;
+    transition: all 100ms linear;
+    transition-delay: 200ms;
+}
+
+.hidded > #sidebar-operations-container > .sidebar-selection{
+    border-left: black;
+    border-left-width: 0px;
+    padding-right: 0px;
+    font-size: 0px;
 }
 
 /* ==========================================================================
