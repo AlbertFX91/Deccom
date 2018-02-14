@@ -17,6 +17,8 @@ import { VERSION, DEBUG_INFO_ENABLED } from '../../app.constants';
 })
 export class SidebarComponent implements OnInit {
 
+    LOGO = require('../../../content/images/deccom-logo.png');
+
     inProduction: boolean;
     isNavbarCollapsed: boolean;
     languages: any[];

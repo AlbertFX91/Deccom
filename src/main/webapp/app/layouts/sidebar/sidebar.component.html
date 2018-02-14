@@ -1,7 +1,7 @@
 <div id="sidebar" [class.displayed]="canBeDisplayed()" [class.hidded]="!canBeDisplayed()">
     <div id="sidebar-logo-container">
         <div id="sidebar-logo-circle" [class.displayed]="canBeDisplayed()" [class.hidded]="!canBeDisplayed()">
-             <img id="sidebar-logo" src="https://www.freepnglogos.com/uploads/-d-logo-png-5.png">
+             <img id="sidebar-logo" [src]="LOGO" />
         </div>
     </div>
     <div id="sidebar-operations-container">
