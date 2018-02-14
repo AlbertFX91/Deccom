@@ -7,7 +7,6 @@ import java.util.stream.IntStream;
 
 import org.springframework.data.mongodb.core.MongoTemplate;
 
-import com.deccom.config.ApplicationProperties;
 import com.deccom.domain.Acme;
 import com.deccom.domain.Authority;
 import com.deccom.domain.RESTConnection;
@@ -20,6 +19,7 @@ import com.deccom.domain.User;
 import com.deccom.domain.core.ControlVariable;
 import com.deccom.domain.core.Status;
 import com.deccom.domain.core.extractor.FacebookFansExtractor;
+import com.deccom.domain.core.extractor.MySQLExtractor;
 import com.deccom.domain.core.extractor.RESTExtractor;
 import com.deccom.domain.core.extractor.SQLExtractor;
 import com.deccom.security.AuthoritiesConstants;
@@ -185,12 +185,12 @@ public class InitialSetupMigration {
 		rest2.setJsonPath("$[2].phone");
 		rest2.setUrl("http://jsonplaceholder.typicode.com/users");
 
-		SQLExtractor sql3 = new SQLExtractor();
+		MySQLExtractor sql3 = new MySQLExtractor();
 		sql3.setUsername("developer");
 		sql3.setPassword("developer");
 		sql3.setQuery("select age from author where idauthor='1' and name='name-1';");
 		sql3.setUrl("localhost:3306/deccom");
-		sql3.setJdbc("mysql");
+		// sql3.setJdbc("mysql");
 
 		SQLExtractor sql4 = new SQLExtractor();
 		sql4.setUsername("developer");
