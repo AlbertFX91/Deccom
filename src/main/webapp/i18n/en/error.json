@@ -20,6 +20,9 @@
                 "wrongcredentials": "The provided authentication credentials are wrong",
                 "invalidendpointURLspecified": "Invalid endpoint URL specified",
                 "monitoringerror": "An error occurred while checking the variable value"
+            },
+            "controlvariable": {
+                "nointeger": "Data must be an integer number"
             }
         }
     }

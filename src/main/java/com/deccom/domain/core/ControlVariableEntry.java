@@ -5,35 +5,20 @@ import java.time.LocalDateTime;
 import javax.validation.constraints.NotNull;
 
 /**
- * A RESTControlVar.
+ * A ControlVarEntry.
  */
-public class Core_ControlVarEntry {
+public class ControlVariableEntry {
 
 	@NotNull
-	private String value;
-
+	private Integer value;
 	@NotNull
 	private LocalDateTime creationMoment;
 
-	public Core_ControlVarEntry(String value, LocalDateTime creationMoment) {
-
-		super();
-		this.value = value;
-		this.creationMoment = creationMoment;
-
-	}
-
-	public Core_ControlVarEntry() {
-
-		super();
-
-	}
-
-	public String getValue() {
+	public Integer getValue() {
 		return value;
 	}
 
-	public void setValue(String value) {
+	public void setValue(Integer value) {
 		this.value = value;
 	}
 
@@ -46,25 +31,9 @@ public class Core_ControlVarEntry {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Core_ControlVarEntry other = (Core_ControlVarEntry) obj;
-		if (creationMoment == null) {
-			if (other.creationMoment != null)
-				return false;
-		} else if (!creationMoment.equals(other.creationMoment))
-			return false;
-		if (value == null) {
-			if (other.value != null)
-				return false;
-		} else if (!value.equals(other.value))
-			return false;
-		return true;
+	public String toString() {
+		return "ControlVarEntry [value=" + value + ", creationMoment="
+				+ creationMoment + "]";
 	}
 
 	@Override
@@ -78,9 +47,25 @@ public class Core_ControlVarEntry {
 	}
 
 	@Override
-	public String toString() {
-		return "Core_ControlVarEntry [value=" + value + ", creationMoment="
-				+ creationMoment + "]";
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ControlVariableEntry other = (ControlVariableEntry) obj;
+		if (creationMoment == null) {
+			if (other.creationMoment != null)
+				return false;
+		} else if (!creationMoment.equals(other.creationMoment))
+			return false;
+		if (value == null) {
+			if (other.value != null)
+				return false;
+		} else if (!value.equals(other.value))
+			return false;
+		return true;
 	}
 
 }
