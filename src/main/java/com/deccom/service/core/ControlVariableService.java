@@ -1,8 +1,11 @@
 package com.deccom.service.core;
 
+import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +18,7 @@ import com.deccom.domain.core.ControlVariable;
 import com.deccom.domain.core.ControlVariableEntry;
 import com.deccom.domain.core.Status;
 import com.deccom.domain.core.extractor.ControlVariableExtractor;
+import com.deccom.domain.core.wrapper.New_ControlVariable;
 import com.deccom.repository.core.ControlVariableRepository;
 import com.deccom.service.core.util.ControlVariableServiceException;
 
@@ -61,8 +65,8 @@ public class ControlVariableService {
 			return cv;
 
 		} catch (NumberFormatException e) {
-			throw new ControlVariableServiceException("Data must be an integer number", i18nCodeRoot + ".nointeger",
-					"ControlVariableService", e);
+			throwException("Data must be an integer number", "nointeger", e);
+			return null;
 		}
 
 	}
@@ -148,68 +152,84 @@ public class ControlVariableService {
 
 		return controlVariableRepository.save(controlVar);
 	}
-	/*
-	 * /** List the available extractors by the connection objects created. We can't
-	 * list an extractor if there are not a connection object for the extractor
-	 * 
-	 * @return
-	 * 
-	 * @throws InstantiationException
-	 * 
-	 * @throws IllegalAccessException
-	 */
-	/*
-	 * public List<Core_DataExtractor> getAvailableExtractors() throws
-	 * InstantiationException, IllegalAccessException { List<Core_DataExtractor> res
-	 * = new ArrayList<>(); // Getting the parent Core_Connection class
-	 * Class<Core_Connection> connection = Core_Connection.class; // Recovering the
-	 * subclases of the parent Core_Connection [Ex: REST_Connection, SQL_Connection,
-	 * etc...] Set<Class<? extends Core_Connection>> available =
-	 * getSubClassesOf(connection); for(Class<? extends Core_Connection> c:
-	 * available) { Core_Connection cn = c.newInstance(); // If the connection has
-	 * an extractor configurated if(hasExtractor(cn)) { // Creation of an extractor
-	 * instance Core_DataExtractor extractor = getExtractorByConnection(cn); // If
-	 * it has the attribute style setted if(extractor.getStyle()!=null) {
-	 * res.add(extractor); } } } return res; }
-	 * 
-	 * 
-	 * private static <T> void propertiesInjection(Object o, Map<String, T>
-	 * properties) { for (Entry<String, T> property : properties.entrySet()) {
-	 * String f = property.getKey(); T v = property.getValue(); Class<?> clazz =
-	 * o.getClass(); try { Field field = clazz.getDeclaredField(f);
-	 * field.setAccessible(true); field.set(o, v); } catch (NoSuchFieldException e)
-	 * { clazz = clazz.getSuperclass(); } catch (Exception e) { throw new
-	 * IllegalStateException(e); } } }
-	 * 
-	 * private Boolean hasExtractor(Core_Connection connection) { return
-	 * connection.getClass().isAnnotationPresent(Core_Extractor.class); }
-	 * 
-	 * private Core_DataExtractor injectConnectionInExtractor( Core_DataExtractor
-	 * extractor, Core_Connection connection) { Map<String, Core_Connection> fields
-	 * = new HashMap<>(); fields.put("dataConnection", connection);
-	 * propertiesInjection(extractor, fields); return extractor; }
-	 * 
-	 * private Core_DataExtractor<Core_Connection> getExtractorByConnection(
-	 * Core_Connection connection) { Object wrapper; Annotation annotation =
-	 * connection.getClass().getAnnotation( Core_Extractor.class); Core_Extractor
-	 * core_extractor = (Core_Extractor) annotation; try { wrapper =
-	 * core_extractor.value().newInstance(); } catch (InstantiationException |
-	 * IllegalAccessException e) { // TODO This is when the class its an interface,
-	 * an abstract class, // or its private. // So, if its happens, its a
-	 * programming error. It will throw an // exception e.printStackTrace();
-	 * System.out.println("Error. Cannot instanciate the extractor"); return null; }
-	 * if (wrapper instanceof Core_DataExtractor) { return
-	 * (Core_DataExtractor<Core_Connection>) wrapper; } else { // TODO This is when
-	 * the class in @Extractor does not extends from // Core_DataExtractor, but its
-	 * controlled by the Core_Extractor // interface. // If its happens, but its
-	 * unlikely, it will throw an exception System.out
-	 * .println("Error. Wrapper is not an instance of Core_DataExtractor"); return
-	 * null; } }
-	 * 
-	 * private static <T> Set<Class<? extends T>> getSubClassesOf(Class<T> cls){
-	 * Reflections reflections = new Reflections( new ConfigurationBuilder()
-	 * .setUrls(Arrays.asList(ClasspathHelper.forClass(cls)))); Set<?> subTypes =
-	 * reflections.getSubTypesOf(cls); return subTypes.stream() .map((o)->(Class<?
-	 * extends T>) o) .filter((c)->!c.isInterface()) .collect(Collectors.toSet()); }
-	 */
+	
+	public ControlVariable convert(New_ControlVariable ncv) {
+		ControlVariable res;
+		ControlVariableExtractor extractor;
+
+		// 1. Recover Control variable
+		res = ncv.getControlVariable();
+		// 2. InstanciateExtractor
+		extractor = getExtractor(ncv);
+		// 3. Inject data in extractor
+		injectData(ncv.getExtractorData(), extractor);
+		// 4. Check all extractors fields are added
+		checkFieldsNotNull(extractor);
+		
+		res.setExtractor(extractor);
+		return res;
+	}
+	
+
+	
+	private ControlVariableExtractor getExtractor(New_ControlVariable ncv) {
+		ControlVariableExtractor res = null;
+		String extractor = ncv.getExtractorClass();
+		
+		try {
+			Object cls = Class.forName(extractor).newInstance();
+			if (cls instanceof ControlVariableExtractor) {
+				res = (ControlVariableExtractor) cls;
+			}else {
+				throwException("the class '"+ncv.getExtractorClass()+"' is not an extrator", "extractorclassnotinstance");
+			}
+		} catch (InstantiationException | IllegalAccessException e) {
+			throwException("the class '"+ncv.getExtractorClass()+"' cannot be instanciated", "extractorclasserror", e);
+		} catch (ClassNotFoundException e) {
+			throwException("the class '"+ncv.getExtractorClass()+"' cannot be founded", "extractorclassnotfound", e);
+		}
+		return res;
+	}
+	
+	private void checkFieldsNotNull(ControlVariableExtractor ncv){
+		List<String> missingFields = new ArrayList<>();
+		for(Field f: ncv.getClass().getDeclaredFields()) {
+			f.setAccessible(true);
+			try {
+				if(f.get(ncv) == null) {
+					missingFields.add(f.getName());
+				}
+			} catch (IllegalArgumentException | IllegalAccessException e) {
+				throwException("Error checking fields in extractor", "extractorclassfields");
+			}
+		}
+		if(!missingFields.isEmpty()) {
+			throwException("The fields " + missingFields + " are null", "extractorclassfieldsnull");
+		}
+	}
+
+	private <T> void injectData(Map<String, T> extractorData, ControlVariableExtractor extractor) {
+		Class<?> clazz = extractor.getClass();
+		for (Entry<String, T> entry: extractorData.entrySet()) {
+			String f = entry.getKey();
+			T v = entry.getValue();
+			try {
+				Field field = clazz.getDeclaredField(f);
+				field.setAccessible(true);
+				field.set(extractor, v);
+			} catch (Exception  e) {
+				throwException("Error injectin data into extractor " + extractor.getClass().getName(), "extractorclassinjectionerror");
+			}
+		}
+	}
+	
+	private void throwException(String msg, String i18Code, Exception e) {
+		throw new ControlVariableServiceException(msg, i18nCodeRoot + "." + i18Code,
+				"ControlVariableService", e);
+	}
+	
+	private void throwException(String msg, String i18Code) {
+		throw new ControlVariableServiceException(msg, i18nCodeRoot + "." + i18Code,
+				"ControlVariableService");
+	}
 }

@@ -52,7 +52,7 @@ public class RESTExtractor implements ControlVariableExtractor {
 	public CVStyle getStyle() {
 		return style;
 	}
-
+  
 	protected String getResponse(String url) {
 		return RESTUtil.getResponse(url);
 	}
@@ -64,5 +64,9 @@ public class RESTExtractor implements ControlVariableExtractor {
 	protected String getByJSONPath(String body, String jsonPath) {
 		return RESTUtil.getByJSONPath(body, jsonPath);
 	}
-	
+  
+	@Override
+	public String toString() {
+		return "RESTExtractor [url=" + url + ", jsonPath=" + jsonPath + "]";
+	}
 }
