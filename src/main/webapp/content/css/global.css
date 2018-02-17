@@ -189,3 +189,10 @@ ui bootstrap tweaks
 }
 
 /* jhipster-needle-css-add-main JHipster will add new css style */
+
+
+html, body {
+    margin: 0;
+    height: 100%;
+}
+

@@ -1,18 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRouteSnapshot, NavigationEnd, RoutesRecognized } from '@angular/router';
 
-import { JhiLanguageHelper, StateStorageService } from '../../shared';
+import { JhiLanguageHelper, StateStorageService, LoginService } from '../../shared';
 
 @Component({
     selector: 'jhi-main',
-    templateUrl: './main.component.html'
+    templateUrl: './main.component.html',
+    styleUrls: [
+        'main.css'
+    ]
 })
 export class JhiMainComponent implements OnInit {
+
+    displaySidebar: boolean;
 
     constructor(
         private jhiLanguageHelper: JhiLanguageHelper,
         private router: Router,
         private $storageService: StateStorageService,
+        private loginService: LoginService,
     ) {}
 
     private getPageTitle(routeSnapshot: ActivatedRouteSnapshot) {
@@ -29,5 +35,10 @@ export class JhiMainComponent implements OnInit {
                 this.jhiLanguageHelper.updateTitle(this.getPageTitle(this.router.routerState.snapshot.root));
             }
         });
+        this.displaySidebar = false;
+    }
+
+    onDisplaySidebar(displaySidebar: boolean) {
+        this.displaySidebar = displaySidebar;
     }
 }

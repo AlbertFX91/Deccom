@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiLanguageService } from 'ng-jhipster';
@@ -9,13 +9,15 @@ import { JhiLanguageHelper, Principal, LoginModalService, LoginService } from '.
 import { VERSION, DEBUG_INFO_ENABLED } from '../../app.constants';
 
 @Component({
-    selector: 'jhi-navbar',
-    templateUrl: './navbar.component.html',
+    selector: 'jhi-sidebar',
+    templateUrl: './sidebar.component.html',
     styleUrls: [
-        'navbar.css'
+        'sidebar.css'
     ]
 })
-export class NavbarComponent implements OnInit {
+export class SidebarComponent implements OnInit {
+
+    LOGO = require('../../../content/images/deccom-logo.png');
 
     inProduction: boolean;
     isNavbarCollapsed: boolean;
@@ -24,8 +26,7 @@ export class NavbarComponent implements OnInit {
     modalRef: NgbModalRef;
     version: string;
 
-    @Output() onDisplaySidebar = new EventEmitter<boolean>();
-    displaySidebar: boolean;
+    @Input() display: boolean;
 
     constructor(
         private loginService: LoginService,
@@ -50,7 +51,7 @@ export class NavbarComponent implements OnInit {
             this.swaggerEnabled = profileInfo.swaggerEnabled;
         });
 
-        this.displaySidebar = false;
+        this.display = false;
     }
 
     changeLanguage(languageKey: string) {
@@ -83,8 +84,7 @@ export class NavbarComponent implements OnInit {
         return this.isAuthenticated() ? this.principal.getImageUrl() : null;
     }
 
-    toggleSidebar() {
-        this.displaySidebar = !this.displaySidebar;
-        this.onDisplaySidebar.emit(this.displaySidebar);
+    canBeDisplayed() {
+        return this.display && this.principal.isAuthenticated();
     }
 }
