@@ -1,39 +1,44 @@
 package com.deccom.domain.core.extractor;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
-
-import com.deccom.config.ApplicationProperties;
 import com.deccom.service.impl.util.RESTUtil;
 
-@Configuration
-@EnableConfigurationProperties({ ApplicationProperties.class })
 public class FacebookFansExtractor extends RESTExtractor implements ControlVariableExtractor {
 
-	@Autowired
-	private ApplicationProperties applicationProperties = new ApplicationProperties();
-
+	private String facebookPageID;
+	
 	public FacebookFansExtractor() {
 
 		super();
 
-		String url, jsonPath;
+		String url, jsonPath, facebookPageID;
 
-		url = "https://graph.facebook.com/v2.11/" + applicationProperties.getFacebookPageID() + "?fields=fan_count";
+		// url = "https://graph.facebook.com/v2.11/" + facebookPageID + "?fields=fan_count";
+		url = "https://graph.facebook.com/v2.11/";
 		jsonPath = "$.fan_count";
+		facebookPageID = "546664955726052";
 
 		setUrl(url);
 		setJsonPath(jsonPath);
+		setFacebookPageID(facebookPageID);
 
+	}
+	
+	public String getFacebookPageID() {
+		return facebookPageID;
+	}
+
+	public void setFacebookPageID(String facebookPageID) {
+		this.facebookPageID = facebookPageID;
 	}
 
 	@Override
 	public Integer getData() {
 
-		String body, value;
+		String url, body, value;
+		
+		url = getUrl() + getFacebookPageID() + "?fields=fan_count";
 
-		body = RESTUtil.getResponseFacebook(getUrl());
+		body = RESTUtil.getResponseFacebook(url);
 		value = getByJSONPath(body, getJsonPath());
 
 		return Integer.parseInt(value);
