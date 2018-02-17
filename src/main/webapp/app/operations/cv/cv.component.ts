@@ -50,7 +50,7 @@ export class CVComponent implements OnInit, OnDestroy {
                 name: data.content[i]['name'],
                 creationMoment: data.content[i]['creationMoment'],
                 status: data.content[i]['status'],
-                entries: data.content[i]['entries'],
+                controlVarEntries: data.content[i]['controlVarEntries'],
             };
             this.cvCards.push(cvCard);
         }

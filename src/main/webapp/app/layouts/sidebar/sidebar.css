@@ -1,0 +1,123 @@
+/* ==========================================================================
+sidebar
+========================================================================== */
+#sidebar{
+    display: flex;
+    background-color: #303F9F; 
+    color: white; 
+    width: 100px; 
+    height: 100%;
+    transition: width 100ms linear;
+
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+    align-content: stretch;
+}
+
+#sidebar.hidded{
+    width: 0px;
+    font-size: 0px;
+}
+
+#sidebar.displayed{
+    width: 100px;
+}
+
+#sidebar > div{
+    display: flex;
+    flex-direction: column;
+}
+
+/* ==========================================================================
+sidebar logo
+========================================================================== */
+
+#sidebar-logo-container{
+    flex-grow: 1;
+    justify-content: flex-start;
+}
+
+#sidebar-logo-circle{
+    margin: 10px;
+    background: #0097A7;
+    padding: 20px;
+    border-radius: 100%;
+    -webkit-box-shadow: 0px 0px 40px -7px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 40px -7px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 40px -7px rgba(0,0,0,0.75);
+}
+
+#sidebar-logo-circle.hidded{
+    width: 0px;
+    height: 0px;
+    padding: 0px;
+    margin-top: -80px;
+    transition: all 100ms linear;
+}
+#sidebar-logo-circle.displayed{
+    width: 80px;
+    height: 80px;
+    padding: 20px;
+    transition: all 100ms linear;
+    transition-delay: 200ms;
+}
+
+#sidebar-logo{
+    max-width: 100%;
+    height: auto;
+    margin: auto;
+    filter: brightness(0) invert(1);
+}
+
+/* ==========================================================================
+sidebar operations
+========================================================================== */
+
+#sidebar-operations-container{
+    flex-grow: 4;
+    justify-content: center;
+}
+.sidebar-selection{
+    height: 50px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    font-size: 25px;
+    cursor: pointer;
+    color: #E3F2FD;
+    text-decoration: none;
+    transition: font-size 100ms linear;
+    transition-delay: 200ms;
+}
+
+.sidebar-selection:hover{
+    background-color:#26C6DA;
+    transition: background-color 100ms linear;
+}
+
+.sidebar-selection.active{
+    border-left: #29B6F6;
+    border-left-style: solid;
+    border-left-width: 7px;
+    padding-right: 7px;
+    background-color: #1f275a;
+    transition: all 100ms linear;
+    transition-delay: 200ms;
+}
+
+.hidded > #sidebar-operations-container > .sidebar-selection{
+    border-left: black;
+    border-left-width: 0px;
+    padding-right: 0px;
+    font-size: 0px;
+}
+
+/* ==========================================================================
+sidebar settings
+========================================================================== */
+
+#sidebar-settings-container{
+    flex-grow: 1;
+    justify-content: flex-end;
+}

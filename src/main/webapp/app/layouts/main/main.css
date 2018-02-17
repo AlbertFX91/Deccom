@@ -1,0 +1,6 @@
+#main-body{
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-start;
+    flex-grow: 1;
+}
