@@ -1,10 +1,11 @@
-package com.deccom.domain.core.extractor;
+package com.deccom.domain.core.extractor.rest;
 
 import java.net.HttpURLConnection;
 
 import javax.validation.constraints.NotNull;
 
 import com.deccom.domain.core.CVStyle;
+import com.deccom.domain.core.extractor.ControlVariableExtractor;
 import com.deccom.service.impl.util.RESTUtil;
 
 public class RESTExtractor implements ControlVariableExtractor {

@@ -1,4 +1,4 @@
-package com.deccom.domain.core.extractor;
+package com.deccom.domain.core.extractor.sql;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.validation.constraints.NotNull;
 
 import com.deccom.domain.core.CVStyle;
+import com.deccom.domain.core.extractor.ControlVariableExtractor;
 import com.deccom.service.impl.util.SQLUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

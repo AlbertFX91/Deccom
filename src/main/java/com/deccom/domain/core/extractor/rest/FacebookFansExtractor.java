@@ -1,5 +1,6 @@
-package com.deccom.domain.core.extractor;
+package com.deccom.domain.core.extractor.rest;
 
+import com.deccom.domain.core.extractor.ControlVariableExtractor;
 import com.deccom.service.impl.util.RESTUtil;
 
 public class FacebookFansExtractor extends RESTExtractor implements ControlVariableExtractor {
