@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
-import com.deccom.service.impl.core.Core_SchedulingService;
+import com.deccom.service.core.ControlVariableSchedulingService;
 
 import io.github.jhipster.web.util.ResponseUtil;
 
@@ -20,16 +20,15 @@ import io.github.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
-public class Core_SchedulingResource {
-
-    private final Logger log = LoggerFactory.getLogger(Core_SchedulingResource.class);
+public class ControlVariableSchedulingResource {
+    private final Logger log = LoggerFactory.getLogger(ControlVariableSchedulingResource.class);
 
     // private static final String ENTITY_NAME = "scheduling";
 
     @Autowired
-    private final Core_SchedulingService schedulingService;
+    private final ControlVariableSchedulingService schedulingService;
 
-    public Core_SchedulingResource(Core_SchedulingService schedulingService) {
+    public ControlVariableSchedulingResource(ControlVariableSchedulingService schedulingService) {
         this.schedulingService = schedulingService;
     }
 

@@ -20,6 +20,9 @@
                 "wrongcredentials": "Las credenciales de autenticación proporcionadas son incorrectas",
                 "invalidendpointURLspecified": "La URL final no es válida",
                 "monitoringerror": "Se produjo un error al comprobar el valor de la variable"
+            },
+            "controlvariable": {
+                "nointeger": "El dato debe ser un número entero"
             }
         }
     }
