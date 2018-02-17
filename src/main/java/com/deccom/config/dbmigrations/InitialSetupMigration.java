@@ -18,6 +18,8 @@ import com.deccom.domain.SQLControlVarEntry;
 import com.deccom.domain.User;
 import com.deccom.domain.core.ControlVariable;
 import com.deccom.domain.core.Status;
+import com.deccom.domain.core.extractor.FacebookFansExtractor;
+import com.deccom.domain.core.extractor.MySQLExtractor;
 import com.deccom.domain.core.extractor.RESTExtractor;
 import com.deccom.domain.core.extractor.SQLExtractor;
 import com.deccom.security.AuthoritiesConstants;
@@ -183,12 +185,12 @@ public class InitialSetupMigration {
 		rest2.setJsonPath("$[2].phone");
 		rest2.setUrl("http://jsonplaceholder.typicode.com/users");
 
-		SQLExtractor sql3 = new SQLExtractor();
+		MySQLExtractor sql3 = new MySQLExtractor();
 		sql3.setUsername("developer");
 		sql3.setPassword("developer");
 		sql3.setQuery("select age from author where idauthor='1' and name='name-1';");
 		sql3.setUrl("localhost:3306/deccom");
-		sql3.setJdbc("mysql");
+		// sql3.setJdbc("mysql");
 
 		SQLExtractor sql4 = new SQLExtractor();
 		sql4.setUsername("developer");
@@ -235,4 +237,24 @@ public class InitialSetupMigration {
 		mongoTemplate.save(c4);
 
 	}
+
+	@ChangeSet(order = "07", author = "initiator", id = "07-addFacebookFansControlVar")
+	public void addFacebookFansControlVars(MongoTemplate mongoTemplate) {
+
+		FacebookFansExtractor facebookFansExtractor;
+
+		facebookFansExtractor = new FacebookFansExtractor();
+
+		ControlVariable controlVariable = new ControlVariable();
+		controlVariable.setExtractor(facebookFansExtractor);
+		controlVariable.setCreationMoment(LocalDateTime.now());
+		controlVariable.setStatus(Status.RUNNING);
+		controlVariable.setFrequency(10);
+		controlVariable.setName("FacebookFansControlVar");
+		controlVariable.setControlVarEntries(Lists.newArrayList());
+
+		mongoTemplate.save(controlVariable);
+
+	}
+
 }

@@ -54,10 +54,7 @@ public class RESTUtil {
 
 		URL obj;
 		HttpURLConnection con;
-		int responseCode;
-		BufferedReader in;
-		String inputLine, result, responseMessage;
-		StringBuffer response;
+		String result;
 
 		try {
 			// The path is transformed into an URL object to establish the
@@ -71,17 +68,119 @@ public class RESTUtil {
 			// Adding request header
 			con.setRequestProperty("User-Agent", USER_AGENT);
 
-			if (url.contains("api.twitter.com")) {
-				setTwitterAuthentication(con);
-			} else if (url.contains("graph.facebook.com")) {
-				setFacebookAuthentication(con);
-			}
+			result = getResponse(con);
+
+			return result;
+
+		} catch (MalformedURLException e) {
+			throw new RESTServiceException("Wrong URL format", i18nCodeRoot + ".urlerror", "RESTService", e);
+
+		} catch (java.net.UnknownHostException | java.io.FileNotFoundException e) {
+			throw new RESTServiceException("Unreachable URL", i18nCodeRoot + ".unreachableurl", "RESTService", e);
+
+		} catch (IOException e) {
+			throw new RESTServiceException("Data cannot be read", i18nCodeRoot + ".unreadabledata", "RESTService", e);
+		}
+
+	}
+
+	public static String getResponseFacebook(String url) {
+
+		URL obj;
+		HttpURLConnection con;
+		String result;
+
+		try {
+			// The path is transformed into an URL object to establish the
+			// connection
+			obj = new URL(url);
+			con = (HttpURLConnection) obj.openConnection();
+
+			// Optional default is GET
+			con.setRequestMethod("GET");
+
+			// Adding request header
+			con.setRequestProperty("User-Agent", USER_AGENT);
+
+			// Facebook authentication settings
+			setFacebookAuthentication(con);
+			
+			System.out.println("Facebook con: " + con);
+
+			result = getResponse(con);
+
+			return result;
+
+		} catch (MalformedURLException e) {
+			throw new RESTServiceException("Wrong URL format", i18nCodeRoot + ".urlerror", "RESTService", e);
+
+		} catch (java.net.UnknownHostException | java.io.FileNotFoundException e) {
+			throw new RESTServiceException("Unreachable URL", i18nCodeRoot + ".unreachableurl", "RESTService", e);
+
+		} catch (IOException e) {
+			throw new RESTServiceException("Data cannot be read", i18nCodeRoot + ".unreadabledata", "RESTService", e);
+		}
+
+	}
+
+	public static String getResponseTwitter(String url) {
+
+		URL obj;
+		HttpURLConnection con;
+		String result;
+
+		try {
+			// The path is transformed into an URL object to establish the
+			// connection
+			obj = new URL(url);
+			con = (HttpURLConnection) obj.openConnection();
+
+			// Optional default is GET
+			con.setRequestMethod("GET");
+
+			// Adding request header
+			con.setRequestProperty("User-Agent", USER_AGENT);
+
+			// Twitter authentication settings
+			setTwitterAuthentication(con);
+
+			result = getResponse(con);
+
+			return result;
+
+		} catch (MalformedURLException e) {
+			throw new RESTServiceException("Wrong URL format", i18nCodeRoot + ".urlerror", "RESTService", e);
+
+		} catch (java.net.UnknownHostException | java.io.FileNotFoundException e) {
+			throw new RESTServiceException("Unreachable URL", i18nCodeRoot + ".unreachableurl", "RESTService", e);
+
+		} catch (IOException e) {
+			throw new RESTServiceException("Data cannot be read", i18nCodeRoot + ".unreadabledata", "RESTService", e);
+		}
+
+	}
+
+	/**
+	 * Sends a HTTP GET request to an URL.
+	 * 
+	 * @param url
+	 *            the url to send the request to
+	 * @return the requested JSON as a String
+	 */
+	public static String getResponse(HttpURLConnection con) {
+
+		int responseCode;
+		BufferedReader in;
+		String inputLine, result, responseMessage;
+		StringBuffer response;
+
+		try {
 
 			// Here we will know if the response is positive or not
 			responseCode = con.getResponseCode();
 			responseMessage = con.getResponseMessage();
 
-			log.debug("\nSending 'GET' request to URL : " + url);
+			// log.debug("\nSending 'GET' request to URL : " + url);
 			log.debug("Response Code : " + responseCode);
 			log.debug("Response Message : " + responseMessage);
 
