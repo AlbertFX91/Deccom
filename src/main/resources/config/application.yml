@@ -97,9 +97,9 @@ jhipster:
 # ===================================================================
 
 application:
-    twitterUsername: deccom2018
-    twitterConsumerKey: 2WpcTxgPurbnhOBE7ThLMK08x
-    twitterConsumerSecret: G7Tg1a5OYkOKwvIRFaSNgx8Y7Mfen7rhXACr8dYVrTJsKcUhSu
-    facebookPageID: 546664955726052
-    facebookApplicationKey: 131714104182428
-    facebookSecretKey: 03bf7a4a5e85dbfbee820520f8382464
+    twitterUsername: XXXXXX
+    twitterConsumerKey: XXXXXX
+    twitterConsumerSecret: XXXXXX
+    facebookPageID: XXXXXX
+    facebookApplicationKey: XXXXXX
+    facebookSecretKey: XXXXXX

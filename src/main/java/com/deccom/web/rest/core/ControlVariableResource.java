@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 import com.deccom.domain.core.ControlVariable;
-import com.deccom.domain.core.extractor.RESTExtractor;
-import com.deccom.domain.core.extractor.SQLExtractor;
+import com.deccom.domain.core.extractor.rest.RESTExtractor;
+import com.deccom.domain.core.extractor.sql.SQLExtractor;
 import com.deccom.domain.core.wrapper.New_ControlVariable;
 import com.deccom.service.core.ControlVariableService;
 import com.deccom.service.core.util.ControlVariableServiceException;
