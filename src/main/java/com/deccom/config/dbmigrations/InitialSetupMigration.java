@@ -9,17 +9,19 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 
 import com.deccom.domain.Acme;
 import com.deccom.domain.Authority;
-import com.deccom.domain.SQLConnection;
-import com.deccom.domain.SQLControlVar;
-import com.deccom.domain.SQLControlVarEntry;
 import com.deccom.domain.RESTConnection;
 import com.deccom.domain.RESTControlVar;
 import com.deccom.domain.RESTControlVarEntry;
+import com.deccom.domain.SQLConnection;
+import com.deccom.domain.SQLControlVar;
+import com.deccom.domain.SQLControlVarEntry;
 import com.deccom.domain.User;
-import com.deccom.domain.core.Core_ControlVar;
+import com.deccom.domain.core.ControlVariable;
 import com.deccom.domain.core.Status;
-import com.deccom.domain.core.rest.Core_RESTConnection;
-import com.deccom.domain.core.sql.Core_SQLConnection;
+import com.deccom.domain.core.extractor.rest.FacebookFansExtractor;
+import com.deccom.domain.core.extractor.rest.RESTExtractor;
+import com.deccom.domain.core.extractor.sql.MySQLExtractor;
+import com.deccom.domain.core.extractor.sql.SQLExtractor;
 import com.deccom.security.AuthoritiesConstants;
 import com.github.mongobee.changeset.ChangeLog;
 import com.github.mongobee.changeset.ChangeSet;
@@ -51,8 +53,7 @@ public class InitialSetupMigration {
 		User systemUser = new User();
 		systemUser.setId("user-0");
 		systemUser.setLogin("system");
-		systemUser
-				.setPassword("$2a$10$mE.qmcV0mFU5NcKh73TZx.z4ueI/.bDWbj0T1BYyqP481kGGarKLG");
+		systemUser.setPassword("$2a$10$mE.qmcV0mFU5NcKh73TZx.z4ueI/.bDWbj0T1BYyqP481kGGarKLG");
 		systemUser.setFirstName("");
 		systemUser.setLastName("System");
 		systemUser.setEmail("system@localhost");
@@ -67,8 +68,7 @@ public class InitialSetupMigration {
 		User anonymousUser = new User();
 		anonymousUser.setId("user-1");
 		anonymousUser.setLogin("anonymoususer");
-		anonymousUser
-				.setPassword("$2a$10$j8S5d7Sr7.8VTOYNviDPOeWX8KcYILUVJBsYV83Y5NtECayypx9lO");
+		anonymousUser.setPassword("$2a$10$j8S5d7Sr7.8VTOYNviDPOeWX8KcYILUVJBsYV83Y5NtECayypx9lO");
 		anonymousUser.setFirstName("Anonymous");
 		anonymousUser.setLastName("User");
 		anonymousUser.setEmail("anonymous@localhost");
@@ -81,8 +81,7 @@ public class InitialSetupMigration {
 		User adminUser = new User();
 		adminUser.setId("user-2");
 		adminUser.setLogin("admin");
-		adminUser
-				.setPassword("$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC");
+		adminUser.setPassword("$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC");
 		adminUser.setFirstName("admin");
 		adminUser.setLastName("Administrator");
 		adminUser.setEmail("admin@localhost");
@@ -130,28 +129,22 @@ public class InitialSetupMigration {
 		cv.setId("SQLControlVar-1");
 		cv.setCreationMoment(LocalDateTime.now());
 		cv.setName("controlvar-1");
-		cv.setQuery("select age  from author where  idauthor='1' and name='name-1'");
+		cv.setQuery("select age from author where idauthor='1' and name='name-1'");
 		cv.setFrequency_sec(30);
-		cv.setSqlConnection(new SQLConnection("developer", "developer",
-				"jdbc:mysql://localhost:3306/deccom"));
-		cv.setSqlControlVarEntries(Lists.newArrayList(new SQLControlVarEntry(
-				"16", LocalDateTime.now()), new SQLControlVarEntry("17",
-				LocalDateTime.now()), new SQLControlVarEntry("18",
-				LocalDateTime.now())));
+		cv.setSqlConnection(new SQLConnection("developer", "developer", "jdbc:mysql://localhost:3306/deccom"));
+		cv.setSqlControlVarEntries(Lists.newArrayList(new SQLControlVarEntry("16", LocalDateTime.now()),
+				new SQLControlVarEntry("17", LocalDateTime.now()), new SQLControlVarEntry("18", LocalDateTime.now())));
 		mongoTemplate.save(cv);
-		
+
 		cv = new SQLControlVar();
 		cv.setId("SQLControlVar-2");
 		cv.setCreationMoment(LocalDateTime.now());
 		cv.setName("controlvar-2");
-		cv.setQuery("select age  from author where  idauthor='2' and name='name-2'");
+		cv.setQuery("select age from author where idauthor='2' and name='name-2'");
 		cv.setFrequency_sec(60);
-		cv.setSqlConnection(new SQLConnection("developer", "developer",
-				"jdbc:mysql://localhost:3306/deccom"));
-		cv.setSqlControlVarEntries(Lists.newArrayList(new SQLControlVarEntry(
-				"16", LocalDateTime.now()), new SQLControlVarEntry("17",
-				LocalDateTime.now()), new SQLControlVarEntry("18",
-				LocalDateTime.now())));
+		cv.setSqlConnection(new SQLConnection("developer", "developer", "jdbc:mysql://localhost:3306/deccom"));
+		cv.setSqlControlVarEntries(Lists.newArrayList(new SQLControlVarEntry("16", LocalDateTime.now()),
+				new SQLControlVarEntry("17", LocalDateTime.now()), new SQLControlVarEntry("18", LocalDateTime.now())));
 		mongoTemplate.save(cv);
 	}
 
@@ -163,60 +156,105 @@ public class InitialSetupMigration {
 		r.setName("id1");
 		r.setQuery("$.[0].id");
 		r.setFrequency_sec(30);
-		r.setRestConnection(new RESTConnection(
-				"https://jsonplaceholder.typicode.com/photos"));
-		r.setRestControlVarEntries(Lists.newArrayList(new RESTControlVarEntry(
-				"value-1", LocalDateTime.now()), new RESTControlVarEntry(
-				"value-2", LocalDateTime.now())));
+		r.setRestConnection(new RESTConnection("https://jsonplaceholder.typicode.com/photos"));
+		r.setRestControlVarEntries(Lists.newArrayList(new RESTControlVarEntry("value-1", LocalDateTime.now()),
+				new RESTControlVarEntry("value-2", LocalDateTime.now())));
 
 		mongoTemplate.save(r);
-		
+
 		r = new RESTControlVar();
 		r.setId("restControlVar-2");
 		r.setCreationMoment(LocalDateTime.now());
 		r.setName("id2");
 		r.setQuery("$.[5].id");
 		r.setFrequency_sec(60);
-		r.setRestConnection(new RESTConnection(
-				"https://jsonplaceholder.typicode.com/photos"));
-		r.setRestControlVarEntries(Lists.newArrayList(new RESTControlVarEntry(
-				"15", LocalDateTime.now()), new RESTControlVarEntry(
-				"17", LocalDateTime.now())));
+		r.setRestConnection(new RESTConnection("https://jsonplaceholder.typicode.com/photos"));
+		r.setRestControlVarEntries(Lists.newArrayList(new RESTControlVarEntry("15", LocalDateTime.now()),
+				new RESTControlVarEntry("17", LocalDateTime.now())));
 
 		mongoTemplate.save(r);
 	}
-	
-	// This ControlVars will not be monitored when they are created because the jobs start before populate
+
 	@ChangeSet(order = "06", author = "initiator", id = "06-addCoreControlVar")
 	public void addCoreControlVars(MongoTemplate mongoTemplate) {
-		Core_RESTConnection rest = new Core_RESTConnection();
-        rest.setJsonPath("$[2].phone");
-        rest.setUrl("http://jsonplaceholder.typicode.com/users");
-        
-        Core_SQLConnection sql = new Core_SQLConnection();
-        sql.setUsername("developer");
-        sql.setPassword("developer");
-        sql.setQuery("select age from author where  idauthor='1' and name='name-1';");
-        sql.setUrl("localhost:3306/deccom");
-        sql.setJdbc("mysql");
-        
-        Core_ControlVar c1 = new Core_ControlVar();
-        c1.setConnection(rest);
-        c1.setCreationMoment(LocalDateTime.now());
-        c1.setStatus(Status.PAUSED);
-        c1.setFrequency_sec(60);
-        c1.setName("RESTCONTROLVAR");
-		c1.setEntries(Lists.newArrayList());
-        
-        Core_ControlVar c2 = new Core_ControlVar();;
-        c2.setConnection(sql);
-        c2.setCreationMoment(LocalDateTime.now());
-        c2.setStatus(Status.RUNNING);
-        c2.setFrequency_sec(30);
-        c2.setName("SQLCONTROLVAR");
-		c2.setEntries(Lists.newArrayList());
+		RESTExtractor rest1 = new RESTExtractor();
+		rest1.setJsonPath("$[2].id");
+		rest1.setUrl("http://jsonplaceholder.typicode.com/users");
+
+		RESTExtractor rest2 = new RESTExtractor();
+		rest2.setJsonPath("$[2].phone");
+		rest2.setUrl("http://jsonplaceholder.typicode.com/users");
+
+		MySQLExtractor sql3 = new MySQLExtractor();
+		sql3.setUsername("developer");
+		sql3.setPassword("developer");
+		sql3.setQuery("select age from author where idauthor='1' and name='name-1';");
+		sql3.setUrl("localhost:3306/deccom");
+		// sql3.setJdbc("mysql");
+
+		SQLExtractor sql4 = new SQLExtractor();
+		sql4.setUsername("developer");
+		sql4.setPassword("developer");
+		sql4.setQuery("select name from author where idauthor='1' and name='name-1';");
+		sql4.setUrl("localhost:3306/deccom");
+		sql4.setJdbc("mysql");
+
+		ControlVariable c1 = new ControlVariable();
+		c1.setExtractor(rest1);
+		c1.setCreationMoment(LocalDateTime.now());
+		c1.setStatus(Status.RUNNING);
+		c1.setFrequency(10);
+		c1.setName("RESTCONTROLVAR1");
+		c1.setControlVarEntries(Lists.newArrayList());
+
+		ControlVariable c2 = new ControlVariable();
+		c2.setExtractor(rest2);
+		c2.setCreationMoment(LocalDateTime.now());
+		c2.setStatus(Status.RUNNING);
+		c2.setFrequency(10);
+		c2.setName("RESTCONTROLVAR2");
+		c2.setControlVarEntries(Lists.newArrayList());
+
+		ControlVariable c3 = new ControlVariable();
+		c3.setExtractor(sql3);
+		c3.setCreationMoment(LocalDateTime.now());
+		c3.setStatus(Status.RUNNING);
+		c3.setFrequency(10);
+		c3.setName("SQLCONTROLVAR3");
+		c3.setControlVarEntries(Lists.newArrayList());
+
+		ControlVariable c4 = new ControlVariable();
+		c4.setExtractor(sql4);
+		c4.setCreationMoment(LocalDateTime.now());
+		c4.setStatus(Status.RUNNING);
+		c4.setFrequency(10);
+		c4.setName("SQLCONTROLVAR4");
+		c4.setControlVarEntries(Lists.newArrayList());
 
 		mongoTemplate.save(c1);
 		mongoTemplate.save(c2);
+		mongoTemplate.save(c3);
+		mongoTemplate.save(c4);
+
 	}
+
+	@ChangeSet(order = "07", author = "initiator", id = "07-addFacebookFansControlVar")
+	public void addFacebookFansControlVars(MongoTemplate mongoTemplate) {
+
+		FacebookFansExtractor facebookFansExtractor;
+
+		facebookFansExtractor = new FacebookFansExtractor();
+
+		ControlVariable controlVariable = new ControlVariable();
+		controlVariable.setExtractor(facebookFansExtractor);
+		controlVariable.setCreationMoment(LocalDateTime.now());
+		controlVariable.setStatus(Status.RUNNING);
+		controlVariable.setFrequency(10);
+		controlVariable.setName("FacebookFansControlVar");
+		controlVariable.setControlVarEntries(Lists.newArrayList());
+
+		mongoTemplate.save(controlVariable);
+
+	}
+
 }

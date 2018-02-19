@@ -48,12 +48,19 @@ export class CVComponent implements OnInit, OnDestroy {
         for (let i = 0; i < data.content.length; i++) {
             const cvCard: CVCard = {
                 name: data.content[i]['name'],
-                creationMoment: data.content[i]['creationMoment'],
                 status: data.content[i]['status'],
-                entries: data.content[i]['entries'],
+                creationMoment: data.content[i]['creationMoment'],
+                controlVarEntries: data.content[i]['controlVarEntries'].length,
+                cvStyle: {
+                    icon: data.content[i]['extractor']['style']['icon'],
+                    backgroundColor: data.content[i]['extractor']['style']['backgroundColor'],
+                    fontColor: data.content[i]['extractor']['style']['fontColor']
+                }
             };
             this.cvCards.push(cvCard);
         }
+        console.log('cvCards:');
+        console.log(this.cvCards);
         // this.links = this.parseLinks.parse(headers.get('link'));
         this.eventManager.broadcast({ name: 'all_success', content: 'OK' });
     }

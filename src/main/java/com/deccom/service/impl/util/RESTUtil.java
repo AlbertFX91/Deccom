@@ -20,23 +20,28 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 import com.deccom.config.ApplicationProperties;
 import com.deccom.service.impl.RESTServiceImpl;
 import com.jayway.jsonpath.JsonPath;
 
 @EnableConfigurationProperties({ ApplicationProperties.class })
+@Component
 public class RESTUtil {
 
-	private static final Logger log = LoggerFactory
-			.getLogger(RESTServiceImpl.class);
+	private static final Logger log = LoggerFactory.getLogger(RESTServiceImpl.class);
 	private static final String i18nCodeRoot = "operations.REST";
 
 	// Client
 	public static final String USER_AGENT = "Chrome/60.0.3112.101";
 
-	@Autowired
 	private static ApplicationProperties applicationProperties;
+
+	@Autowired
+	public RESTUtil(ApplicationProperties applicationProperties) {
+		RESTUtil.applicationProperties = applicationProperties;
+	}
 
 	/**
 	 * Sends a HTTP GET request to an URL.
@@ -49,10 +54,7 @@ public class RESTUtil {
 
 		URL obj;
 		HttpURLConnection con;
-		int responseCode;
-		BufferedReader in;
-		String inputLine, result, responseMessage;
-		StringBuffer response;
+		String result;
 
 		try {
 			// The path is transformed into an URL object to establish the
@@ -66,17 +68,119 @@ public class RESTUtil {
 			// Adding request header
 			con.setRequestProperty("User-Agent", USER_AGENT);
 
-			if (url.contains("https://api.twitter.com")) {
-				setTwitterAuthentication(con);
-			} else if (url.contains("https://graph.facebook.com")) {
-				setFacebookAuthentication(con);
-			}
+			result = getResponse(con);
+
+			return result;
+
+		} catch (MalformedURLException e) {
+			throw new RESTServiceException("Wrong URL format", i18nCodeRoot + ".urlerror", "RESTService", e);
+
+		} catch (java.net.UnknownHostException | java.io.FileNotFoundException e) {
+			throw new RESTServiceException("Unreachable URL", i18nCodeRoot + ".unreachableurl", "RESTService", e);
+
+		} catch (IOException e) {
+			throw new RESTServiceException("Data cannot be read", i18nCodeRoot + ".unreadabledata", "RESTService", e);
+		}
+
+	}
+
+	public static String getResponseFacebook(String url) {
+
+		URL obj;
+		HttpURLConnection con;
+		String result;
+
+		try {
+			// The path is transformed into an URL object to establish the
+			// connection
+			obj = new URL(url);
+			con = (HttpURLConnection) obj.openConnection();
+
+			// Optional default is GET
+			con.setRequestMethod("GET");
+
+			// Adding request header
+			con.setRequestProperty("User-Agent", USER_AGENT);
+
+			// Facebook authentication settings
+			setFacebookAuthentication(con);
+			
+			System.out.println("Facebook con: " + con);
+
+			result = getResponse(con);
+
+			return result;
+
+		} catch (MalformedURLException e) {
+			throw new RESTServiceException("Wrong URL format", i18nCodeRoot + ".urlerror", "RESTService", e);
+
+		} catch (java.net.UnknownHostException | java.io.FileNotFoundException e) {
+			throw new RESTServiceException("Unreachable URL", i18nCodeRoot + ".unreachableurl", "RESTService", e);
+
+		} catch (IOException e) {
+			throw new RESTServiceException("Data cannot be read", i18nCodeRoot + ".unreadabledata", "RESTService", e);
+		}
+
+	}
+
+	public static String getResponseTwitter(String url) {
+
+		URL obj;
+		HttpURLConnection con;
+		String result;
+
+		try {
+			// The path is transformed into an URL object to establish the
+			// connection
+			obj = new URL(url);
+			con = (HttpURLConnection) obj.openConnection();
+
+			// Optional default is GET
+			con.setRequestMethod("GET");
+
+			// Adding request header
+			con.setRequestProperty("User-Agent", USER_AGENT);
+
+			// Twitter authentication settings
+			setTwitterAuthentication(con);
+
+			result = getResponse(con);
+
+			return result;
+
+		} catch (MalformedURLException e) {
+			throw new RESTServiceException("Wrong URL format", i18nCodeRoot + ".urlerror", "RESTService", e);
+
+		} catch (java.net.UnknownHostException | java.io.FileNotFoundException e) {
+			throw new RESTServiceException("Unreachable URL", i18nCodeRoot + ".unreachableurl", "RESTService", e);
+
+		} catch (IOException e) {
+			throw new RESTServiceException("Data cannot be read", i18nCodeRoot + ".unreadabledata", "RESTService", e);
+		}
+
+	}
+
+	/**
+	 * Sends a HTTP GET request to an URL.
+	 * 
+	 * @param url
+	 *            the url to send the request to
+	 * @return the requested JSON as a String
+	 */
+	public static String getResponse(HttpURLConnection con) {
+
+		int responseCode;
+		BufferedReader in;
+		String inputLine, result, responseMessage;
+		StringBuffer response;
+
+		try {
 
 			// Here we will know if the response is positive or not
 			responseCode = con.getResponseCode();
 			responseMessage = con.getResponseMessage();
 
-			log.debug("\nSending 'GET' request to URL : " + url);
+			// log.debug("\nSending 'GET' request to URL : " + url);
 			log.debug("Response Code : " + responseCode);
 			log.debug("Response Message : " + responseMessage);
 
@@ -96,23 +200,20 @@ public class RESTUtil {
 			return result;
 
 		} catch (MalformedURLException e) {
-			throw new RESTServiceException("Wrong URL format", i18nCodeRoot
-					+ ".urlerror", "RESTService", e);
-		}
+			throw new RESTServiceException("Wrong URL format", i18nCodeRoot + ".urlerror", "RESTService", e);
 
-		catch (java.net.UnknownHostException | java.io.FileNotFoundException e) {
-			throw new RESTServiceException("Unreachable URL", i18nCodeRoot
-					+ ".unreachableurl", "RESTService", e);
+		} catch (java.net.UnknownHostException | java.io.FileNotFoundException e) {
+			throw new RESTServiceException("Unreachable URL", i18nCodeRoot + ".unreachableurl", "RESTService", e);
+
 		} catch (IOException e) {
-			throw new RESTServiceException("Data cannot be readed",
-					i18nCodeRoot + ".unreadabledata", "RESTService", e);
+			throw new RESTServiceException("Data cannot be read", i18nCodeRoot + ".unreadabledata", "RESTService", e);
 		}
 
 	}
 
 	/**
-	 * Tells if the response contains an array with many JSON objects or just
-	 * one JSON object.
+	 * Tells if the response contains an array with many JSON objects or just one
+	 * JSON object.
 	 * 
 	 * @param response
 	 *            the response to check
@@ -129,8 +230,7 @@ public class RESTUtil {
 	}
 
 	/**
-	 * Sends a HTTP GET request to an URL and captures the data using a
-	 * JSONPath.
+	 * Sends a HTTP GET request to an URL and captures the data using a JSONPath.
 	 * 
 	 * @param url
 	 *            the URL to send the request to
@@ -150,8 +250,7 @@ public class RESTUtil {
 	 * @param con
 	 *            the connection to be configured
 	 */
-	private static void setTwitterAuthentication(HttpURLConnection con)
-			throws IOException {
+	private static void setTwitterAuthentication(HttpURLConnection con) throws IOException {
 		String bearerToken;
 
 		bearerToken = requestTwitterBearerToken("https://api.twitter.com/oauth2/token");
@@ -167,11 +266,9 @@ public class RESTUtil {
 	 *            the URL to request the token
 	 * @return the bearer token as a string
 	 */
-	private static String requestTwitterBearerToken(String endPointUrl)
-			throws IOException {
+	private static String requestTwitterBearerToken(String endPointUrl) throws IOException {
 		HttpsURLConnection connection = null;
-		String encodedCredentials = encodeKeys(
-				applicationProperties.getTwitterConsumerKey(),
+		String encodedCredentials = encodeKeys(applicationProperties.getTwitterConsumerKey(),
 				applicationProperties.getTwitterConsumerSecret());
 
 		try {
@@ -181,10 +278,8 @@ public class RESTUtil {
 			connection.setDoInput(true);
 			connection.setRequestMethod("POST");
 			connection.setRequestProperty("Host", "api.twitter.com");
-			connection.setRequestProperty("Authorization", "Basic "
-					+ encodedCredentials);
-			connection.setRequestProperty("Content-Type",
-					"application/x-www-form-urlencoded;charset=UTF-8");
+			connection.setRequestProperty("Authorization", "Basic " + encodedCredentials);
+			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
 			connection.setRequestProperty("Content-Length", "29");
 			connection.setUseCaches(false);
 
@@ -193,8 +288,7 @@ public class RESTUtil {
 			// Parse the JSON response into a JSON mapped object to fetch fields
 			// from.
 			/*
-			 * JSONObject obj = (JSONObject) JSONValue
-			 * .parse(readResponse(connection));
+			 * JSONObject obj = (JSONObject) JSONValue .parse(readResponse(connection));
 			 */
 
 			try {
@@ -205,30 +299,30 @@ public class RESTUtil {
 						String tokenType = (String) obj.get("token_type");
 						String token = (String) obj.get("access_token");
 
-						return ((tokenType.equals("bearer")) && (token != null)) ? token
-								: "";
+						return ((tokenType.equals("bearer")) && (token != null)) ? token : "";
 					} catch (JSONException e) {
-						throw new RESTServiceException("Wrong credentials",
-								i18nCodeRoot + ".wrongcredentials",
+						throw new RESTServiceException("Wrong credentials", i18nCodeRoot + ".wrongcredentials",
 								"RESTService", e);
 					}
 
 				}
 			} catch (JSONException e) {
-				throw new RESTServiceException("Wrong credentials",
-						i18nCodeRoot + ".wrongcredentials", "RESTService", e);
+				throw new RESTServiceException("Wrong credentials", i18nCodeRoot + ".wrongcredentials", "RESTService",
+						e);
 			}
 
 			return new String();
+
 		} catch (MalformedURLException e) {
 			throw new RESTServiceException("Invalid endpoint URL specified",
-					i18nCodeRoot + ".invalidendpointURLspecified",
-					"RESTService", e);
+					i18nCodeRoot + ".invalidendpointURLspecified", "RESTService", e);
+
 		} finally {
 			if (connection != null) {
 				connection.disconnect();
 			}
 		}
+
 	}
 
 	/**
@@ -243,8 +337,7 @@ public class RESTUtil {
 	private static String encodeKeys(String consumerKey, String consumerSecret) {
 		try {
 			String encodedConsumerKey = URLEncoder.encode(consumerKey, "UTF-8");
-			String encodedConsumerSecret = URLEncoder.encode(consumerSecret,
-					"UTF-8");
+			String encodedConsumerSecret = URLEncoder.encode(consumerSecret, "UTF-8");
 			String fullKey = encodedConsumerKey + ":" + encodedConsumerSecret;
 			byte[] encodedBytes = Base64.encodeBase64(fullKey.getBytes());
 			return new String(encodedBytes);
@@ -264,11 +357,9 @@ public class RESTUtil {
 	 * @return tells if the request was properly sent or not
 	 */
 	// Writes a request to a connection
-	private static boolean writeRequest(HttpsURLConnection connection,
-			String textBody) {
+	private static boolean writeRequest(HttpsURLConnection connection, String textBody) {
 		try {
-			BufferedWriter wr = new BufferedWriter(new OutputStreamWriter(
-					connection.getOutputStream()));
+			BufferedWriter wr = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream()));
 			wr.write(textBody);
 			wr.flush();
 			wr.close();
@@ -291,8 +382,7 @@ public class RESTUtil {
 	private static String readResponse(HttpsURLConnection connection) {
 		try {
 			StringBuilder str = new StringBuilder();
-			BufferedReader br = new BufferedReader(new InputStreamReader(
-					connection.getInputStream()));
+			BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 			String line = "";
 
 			while ((line = br.readLine()) != null) {
@@ -306,19 +396,16 @@ public class RESTUtil {
 		}
 	}
 
-	private static void setFacebookAuthentication(HttpURLConnection con)
-			throws IOException {
+	private static void setFacebookAuthentication(HttpURLConnection con) throws IOException {
 		String bearerToken;
 
 		bearerToken = requestFacebookBearerToken("https://graph.facebook.com/v2.11/oauth/access_token");
 
 		con.setRequestProperty("Host", "graph.facebook.com");
-		// con.setRequestProperty("Authorization", "Bearer " + bearerToken);
-		con.setRequestProperty("access_token", bearerToken);
+		con.setRequestProperty("Authorization", "Bearer " + bearerToken);
 	}
 
-	private static String requestFacebookBearerToken(String endPointUrl)
-			throws IOException {
+	private static String requestFacebookBearerToken(String endPointUrl) throws IOException {
 		String applicationKey, secretKey, accessTokenRequestURL;
 		HttpsURLConnection connection;
 
@@ -326,8 +413,7 @@ public class RESTUtil {
 		secretKey = applicationProperties.getFacebookSecretKey();
 		connection = null;
 
-		accessTokenRequestURL = endPointUrl + "?client_id=" + applicationKey
-				+ "&client_secret=" + secretKey;
+		accessTokenRequestURL = endPointUrl + "?client_id=" + applicationKey + "&client_secret=" + secretKey;
 
 		try {
 			// URL url = new URL(endPointUrl);
@@ -337,8 +423,7 @@ public class RESTUtil {
 			connection.setDoInput(true);
 			connection.setRequestMethod("GET");
 			connection.setRequestProperty("Host", "graph.facebook.com");
-			connection.setRequestProperty("Content-Type",
-					"application/x-www-form-urlencoded;charset=UTF-8");
+			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
 			connection.setRequestProperty("Content-Length", "29");
 			connection.setUseCaches(false);
 
@@ -347,8 +432,7 @@ public class RESTUtil {
 			// Parse the JSON response into a JSON mapped object to fetch fields
 			// from.
 			/*
-			 * JSONObject obj = (JSONObject) JSONValue
-			 * .parse(readResponse(connection));
+			 * JSONObject obj = (JSONObject) JSONValue .parse(readResponse(connection));
 			 */
 
 			try {
@@ -359,30 +443,32 @@ public class RESTUtil {
 						String tokenType = (String) obj.get("token_type");
 						String token = (String) obj.get("access_token");
 
-						return ((tokenType.equals("bearer")) && (token != null)) ? token
-								: "";
+						return ((tokenType.equals("bearer")) && (token != null)) ? token : "";
+
 					} catch (JSONException e) {
-						throw new RESTServiceException("Wrong credentials",
-								i18nCodeRoot + ".wrongcredentials",
+						throw new RESTServiceException("Wrong credentials", i18nCodeRoot + ".wrongcredentials",
 								"RESTService", e);
 					}
 
 				}
+
 			} catch (JSONException e) {
-				throw new RESTServiceException("Wrong credentials",
-						i18nCodeRoot + ".wrongcredentials", "RESTService", e);
+				throw new RESTServiceException("Wrong credentials", i18nCodeRoot + ".wrongcredentials", "RESTService",
+						e);
 			}
 
 			return new String();
+
 		} catch (MalformedURLException e) {
 			throw new RESTServiceException("Invalid endpoint URL specified",
-					i18nCodeRoot + ".invalidendpointURLspecified",
-					"RESTService", e);
+					i18nCodeRoot + ".invalidendpointURLspecified", "RESTService", e);
+
 		} finally {
 			if (connection != null) {
 				connection.disconnect();
 			}
 		}
+
 	}
 
 }
