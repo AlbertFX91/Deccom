@@ -190,7 +190,6 @@ public class InitialSetupMigration {
 		sql3.setPassword("developer");
 		sql3.setQuery("select age from author where idauthor='1' and name='name-1';");
 		sql3.setUrl("localhost:3306/deccom");
-		// sql3.setJdbc("mysql");
 
 		SQLExtractor sql4 = new SQLExtractor();
 		sql4.setUsername("developer");
@@ -204,7 +203,7 @@ public class InitialSetupMigration {
 		c1.setCreationMoment(LocalDateTime.now());
 		c1.setStatus(Status.RUNNING);
 		c1.setFrequency(10);
-		c1.setName("RESTCONTROLVAR1");
+		c1.setName("RESTControlVar1");
 		c1.setControlVarEntries(Lists.newArrayList());
 
 		ControlVariable c2 = new ControlVariable();
@@ -212,7 +211,7 @@ public class InitialSetupMigration {
 		c2.setCreationMoment(LocalDateTime.now());
 		c2.setStatus(Status.RUNNING);
 		c2.setFrequency(10);
-		c2.setName("RESTCONTROLVAR2");
+		c2.setName("RESTControlVar2");
 		c2.setControlVarEntries(Lists.newArrayList());
 
 		ControlVariable c3 = new ControlVariable();
@@ -220,7 +219,7 @@ public class InitialSetupMigration {
 		c3.setCreationMoment(LocalDateTime.now());
 		c3.setStatus(Status.RUNNING);
 		c3.setFrequency(10);
-		c3.setName("SQLCONTROLVAR3");
+		c3.setName("MySQLControlVar");
 		c3.setControlVarEntries(Lists.newArrayList());
 
 		ControlVariable c4 = new ControlVariable();
@@ -228,7 +227,7 @@ public class InitialSetupMigration {
 		c4.setCreationMoment(LocalDateTime.now());
 		c4.setStatus(Status.RUNNING);
 		c4.setFrequency(10);
-		c4.setName("SQLCONTROLVAR4");
+		c4.setName("SQLControlVar");
 		c4.setControlVarEntries(Lists.newArrayList());
 
 		mongoTemplate.save(c1);

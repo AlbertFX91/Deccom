@@ -52,6 +52,7 @@ export class CVComponent implements OnInit, OnDestroy {
                 creationMoment: data.content[i]['creationMoment'],
                 controlVarEntries: data.content[i]['controlVarEntries'].length,
                 cvStyle: {
+                    defaultName: data.content[i]['extractor']['style']['defaultName'],
                     icon: data.content[i]['extractor']['style']['icon'],
                     backgroundColor: data.content[i]['extractor']['style']['backgroundColor'],
                     fontColor: data.content[i]['extractor']['style']['fontColor']
@@ -59,8 +60,6 @@ export class CVComponent implements OnInit, OnDestroy {
             };
             this.cvCards.push(cvCard);
         }
-        console.log('cvCards:');
-        console.log(this.cvCards);
         // this.links = this.parseLinks.parse(headers.get('link'));
         this.eventManager.broadcast({ name: 'all_success', content: 'OK' });
     }
