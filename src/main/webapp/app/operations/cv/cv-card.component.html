@@ -4,12 +4,12 @@
             <div [ngClass]="cvCard.cvStyle">
                 &nbsp;
             </div>
-            <div class="logo" style="flex-grow: 3; justify-content: center; align-items: center; display:flex;">
+            <div class="logo" style="flex-grow: 3; justify-content: center; align-items: center; display: flex;">
                 <i class="fa {{cvCard.cvStyle.icon}}"></i>
             </div>
-            <div class="title" style="flex-grow: 8; font-weight: 700; display:flex; align-items: center; border-color: black; border-width: 0 1px 0 0; border-style: solid; border-top-right-radius: 6px;
-                    border-bottom-right-radius: 6px;">
-                <strong class="roboto">{{cvCard.name}}</strong>
+            <div class="title" style="flex-grow: 8; font-weight: 700; display: flex; align-items: center; border-color: black; border-width: 0 1px 0 0; border-style: solid; border-top-right-radius: 6px;
+                    border-bottom-right-radius: 6px;" [ngStyle]="{ 'background-color': cvCard.cvStyle.backgroundColor, 'color': cvCard.cvStyle.fontColor }">
+                <strong class="roboto" style="margin: auto;">{{cvCard.name}}</strong>
             </div>
             <div class="data" style="background-color: #A8A8A8; flex-grow: 3; font-weight: 700; display:flex; align-items: center; color: black; justify-content: center; border-top-right-radius: 6px;
                     border-bottom-right-radius: 6px; display: flex; flex-direction: row; text-align:center">
