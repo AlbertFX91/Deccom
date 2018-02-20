@@ -8,7 +8,7 @@ import { ExtractorListComponent } from './extractor-list.component';
 
 export const extractorRoute: Routes = [
     {
-        path: 'extractor',
+        path: 'extractor/list',
         component: ExtractorListComponent,
         data: {
             authorities: ['ROLE_USER'],

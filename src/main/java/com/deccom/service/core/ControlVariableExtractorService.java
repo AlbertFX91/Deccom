@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.deccom.domain.core.extractor.ControlVariableExtractor;
+import com.deccom.domain.core.extractor.ControlVariableExtractorImpl;
 import com.deccom.domain.core.extractor.Item_ControlVariableExtractor;
 
 @Service
@@ -30,7 +31,7 @@ public class ControlVariableExtractorService {
 		List<Item_ControlVariableExtractor> res = new ArrayList<>();
 		List<ControlVariableExtractor> aux = getAllExtractors();
 		for (ControlVariableExtractor c: aux) {
-			res.add(create(c));
+				res.add(create(c));
 		}
 		return res;
 		
@@ -43,7 +44,10 @@ public class ControlVariableExtractorService {
 		for(Class<? extends ControlVariableExtractor> c: subTypes) {
 			try {
 				ControlVariableExtractor e = c.newInstance();
-				res.add(e);
+				// Removing the sample controlVariableExtractor
+				if(!e.getClass().equals(ControlVariableExtractorImpl.class)) {
+					res.add(e);
+				}
 			} catch (InstantiationException | IllegalAccessException e) {
 				
 			}
