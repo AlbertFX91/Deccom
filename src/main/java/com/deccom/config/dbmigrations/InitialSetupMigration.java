@@ -249,7 +249,7 @@ public class InitialSetupMigration {
 		controlVariable.setCreationMoment(LocalDateTime.now());
 		controlVariable.setStatus(Status.RUNNING);
 		controlVariable.setFrequency(10);
-		controlVariable.setName("FacebookFansControlVar");
+		controlVariable.setName("FBFansControlVar");
 		controlVariable.setControlVarEntries(Lists.newArrayList());
 
 		mongoTemplate.save(controlVariable);
