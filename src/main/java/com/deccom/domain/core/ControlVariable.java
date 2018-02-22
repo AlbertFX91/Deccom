@@ -11,7 +11,7 @@ import org.springframework.data.annotation.Id;
 import com.deccom.domain.core.extractor.ControlVariableExtractor;
 
 /**
- * A ControlVar.
+ * A ControlVariable.
  */
 public class ControlVariable {
 
@@ -24,7 +24,7 @@ public class ControlVariable {
 	@NotNull
 	private LocalDateTime creationMoment;
 	@NotNull
-	@Min(value=1)
+	@Min(value = 1)
 	private Integer frequency;
 	@NotNull
 	private List<ControlVariableEntry> controlVarEntries;
@@ -75,8 +75,7 @@ public class ControlVariable {
 		return controlVarEntries;
 	}
 
-	public void setControlVarEntries(
-			List<ControlVariableEntry> controlVarEntries) {
+	public void setControlVarEntries(List<ControlVariableEntry> controlVarEntries) {
 		this.controlVarEntries = controlVarEntries;
 	}
 
@@ -90,26 +89,19 @@ public class ControlVariable {
 
 	@Override
 	public String toString() {
-		return "ControlVariable [id=" + id + ", name=" + name + ", status="
-				+ status + ", creationMoment=" + creationMoment
-				+ ", frequency=" + frequency + ", controlVarEntries="
-				+ controlVarEntries + ", extractor=" + extractor + "]";
+		return "ControlVariable [id=" + id + ", name=" + name + ", status=" + status + ", creationMoment="
+				+ creationMoment + ", frequency=" + frequency + ", controlVarEntries=" + controlVarEntries
+				+ ", extractor=" + extractor + "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime
-				* result
-				+ ((controlVarEntries == null) ? 0 : controlVarEntries
-						.hashCode());
-		result = prime * result
-				+ ((creationMoment == null) ? 0 : creationMoment.hashCode());
-		result = prime * result
-				+ ((extractor == null) ? 0 : extractor.hashCode());
-		result = prime * result
-				+ ((frequency == null) ? 0 : frequency.hashCode());
+		result = prime * result + ((controlVarEntries == null) ? 0 : controlVarEntries.hashCode());
+		result = prime * result + ((creationMoment == null) ? 0 : creationMoment.hashCode());
+		result = prime * result + ((extractor == null) ? 0 : extractor.hashCode());
+		result = prime * result + ((frequency == null) ? 0 : frequency.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
