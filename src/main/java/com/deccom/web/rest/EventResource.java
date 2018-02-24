@@ -115,7 +115,7 @@ public class EventResource {
 	 * @return the ResponseEntity with status 200 (OK) and the list of events in
 	 *         body
 	 */
-	@GetMapping("/events")
+	@GetMapping("/event/findAll")
 	@Timed
 	public ResponseEntity<List<Event>> getAllEvents(@ApiParam Pageable pageable) {
 		log.debug("REST request to get a page of Events");
@@ -132,7 +132,7 @@ public class EventResource {
 	 * @return the ResponseEntity with status 200 (OK) and with body the event, or
 	 *         with status 404 (Not Found)
 	 */
-	@GetMapping("/event/{id}")
+	@GetMapping("/event/findOne/{id}")
 	@Timed
 	public ResponseEntity<Event> getEvent(@PathVariable String id) {
 		log.debug("REST request to get Event : {}", id);

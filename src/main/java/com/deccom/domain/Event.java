@@ -22,7 +22,7 @@ public class Event implements Serializable {
 	private String id;
 
 	@NotNull
-	@Field("title")
+	@Field("name")
 	private String name;
 
 	@NotNull

@@ -1,0 +1,13 @@
+{
+    "deccomApp": {
+        "event": {
+            "home": {
+                "title": "Events"
+            },
+            "name": "Name",
+            "creationMoment": "Since",
+            "startingDate": "Starting date",
+            "endingDate": "Ending date"
+        }
+    }
+}
