@@ -7,10 +7,14 @@ public class Item_ControlVariableExtractor {
 	private String extractorClass;
 
 	private CVStyle style;
+	
+	private String uid;
 
-	public Item_ControlVariableExtractor(String extractorClass, CVStyle style) {
+	public Item_ControlVariableExtractor(String extractorClass, CVStyle style, String uid) {
 		this.extractorClass = extractorClass;
 		this.style = style;
+		// Force the uid > 0
+		this.uid = uid;
 	}
 
 	public Item_ControlVariableExtractor() {
@@ -32,6 +36,14 @@ public class Item_ControlVariableExtractor {
 
 	public void setStyle(CVStyle style) {
 		this.style = style;
+	}
+
+	public String getUid() {
+		return uid;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
 	}
 
 	@Override
@@ -67,7 +79,9 @@ public class Item_ControlVariableExtractor {
 
 	@Override
 	public String toString() {
-		return "Item_ControlVariableExtractor [extractorClass=" + extractorClass + ", style=" + style + "]";
+		return "Item_ControlVariableExtractor [extractorClass=" + extractorClass + ", style=" + style + ", uid=" + uid
+				+ "]";
 	}
+
 
 }

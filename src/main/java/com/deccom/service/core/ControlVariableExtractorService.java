@@ -3,6 +3,7 @@ package com.deccom.service.core;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -24,48 +25,50 @@ public class ControlVariableExtractorService {
 	private static final String i18nCodeRoot = "operations.controlvariableextractor";
 
 	public Item_ControlVariableExtractor create(ControlVariableExtractor c) {
-		return new Item_ControlVariableExtractor(c.getClass().getName(), c.getStyle());
+		return new Item_ControlVariableExtractor(c.getClass().getName(), c.getStyle(), c.getUid());
 	}
-	
-	public List<Item_ControlVariableExtractor> getAllListExtractors(){
+
+	public List<Item_ControlVariableExtractor> getAllListExtractors() {
 		List<Item_ControlVariableExtractor> res = new ArrayList<>();
 		List<ControlVariableExtractor> aux = getAllExtractors();
-		for (ControlVariableExtractor c: aux) {
-				res.add(create(c));
+		for (ControlVariableExtractor c : aux) {
+			res.add(create(c));
 		}
 		return res;
-		
 	}
-	
-	public List<ControlVariableExtractor> getAllExtractors(){
+
+	public List<ControlVariableExtractor> getAllExtractors() {
 		List<ControlVariableExtractor> res = new ArrayList<>();
 		Set<Class<? extends ControlVariableExtractor>> subTypes = getSubClassesOf(ControlVariableExtractor.class);
-		
-		for(Class<? extends ControlVariableExtractor> c: subTypes) {
+
+		for (Class<? extends ControlVariableExtractor> c : subTypes) {
 			try {
 				ControlVariableExtractor e = c.newInstance();
 				// Removing the sample controlVariableExtractor
-				if(!e.getClass().equals(ControlVariableExtractorImpl.class)) {
+				if (!e.getClass().equals(ControlVariableExtractorImpl.class)) {
 					res.add(e);
 				}
 			} catch (InstantiationException | IllegalAccessException e) {
-				
+
 			}
-			
+
 		}
-		
 		return res;
-		
 	}
-	
-	private static <T> Set<Class<? extends T>> getSubClassesOf(Class<T> cls){
+
+	public ControlVariableExtractor findOne(String id) {
+		Optional<ControlVariableExtractor> res = getAllExtractors().stream().filter(x -> x.getUid().equals(id))
+				.findFirst();
+		return res.isPresent() ? res.get() : null;
+	}
+
+	@SuppressWarnings("unchecked")
+	private static <T> Set<Class<? extends T>> getSubClassesOf(Class<T> cls) {
 		Reflections reflections = new Reflections(
-				new ConfigurationBuilder()
-				.setUrls(Arrays.asList(ClasspathHelper.forClass(cls))));
+				new ConfigurationBuilder().setUrls(Arrays.asList(ClasspathHelper.forClass(cls))));
 		Set<?> subTypes = reflections.getSubTypesOf(cls);
-		return subTypes.stream()
-				.map((o)->(Class<? extends T>) o)
-				.filter((c)->!c.isInterface())
+		return subTypes.stream().map((o) -> (Class<? extends T>) o).filter((c) -> !c.isInterface())
 				.collect(Collectors.toSet());
 	}
+
 }
