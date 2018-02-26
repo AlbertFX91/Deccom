@@ -11,7 +11,8 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 
 @Component({
     selector: 'jhi-extractor-list',
-    templateUrl: './extractor-list.component.html'
+    templateUrl: './extractor-list.component.html',
+    styleUrls: ['./extractor-list.component.css']
 })
 export class ExtractorListComponent implements OnInit, OnDestroy {
 

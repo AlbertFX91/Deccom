@@ -1,8 +1,12 @@
 <div>
-    <h1>Extractor time!</h1>
-    <div>
-        <div *ngFor="let extractor of extractors;">
-            {{extractor.extractorClass}}
-          </div>
+    <div id="extractor-list">
+        <div class="extractor-list-element" *ngFor="let extractor of extractors;" title="{{extractor.style.defaultName}}">
+            <div class="extractor-list-element-icon">
+                <i class="fa {{extractor.style.icon}}"></i>
+            </div>
+            <div class="extractor-list-element-name" data-toggle="tooltip">
+                {{extractor.style.defaultName}}
+            </div>
+        </div>
     </div>
 </div>
