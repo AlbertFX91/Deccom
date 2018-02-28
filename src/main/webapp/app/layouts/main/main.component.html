@@ -1,13 +1,13 @@
 <jhi-page-ribbon></jhi-page-ribbon>
 <div id="main-body">
-    <jhi-sidebar [display]="displaySidebar"></jhi-sidebar>
+    <jhi-sidebar [display]="displaySidebar" style="z-index: 3;"></jhi-sidebar>
     <div id="div-content" style="width: 100%;display: flex;flex-direction: column;">
         <div>
             <!--<router-outlet name="navbar"></router-outlet>-->
             <jhi-navbar (onDisplaySidebar)="onDisplaySidebar($event)"></jhi-navbar>
         </div>
-        <div style="width: 100%; height: 100%;">
-            <router-outlet></router-outlet>
+        <div style="width: 100%; height: 100%;" [@routerAnimations]="prepareRouteTransition(outlet)">
+            <router-outlet #outlet="outlet"></router-outlet>
             <router-outlet name="popup"></router-outlet>
         </div>
     </div>

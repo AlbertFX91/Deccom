@@ -5,8 +5,6 @@
 }
 .extractor-list-element {
     display: flex;
-    color: black;
-    text-decoration: none;
     flex-direction: column;
     cursor: pointer;
     width: 140px; 

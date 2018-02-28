@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { DeccomSharedModule } from '../../shared';
 import {
     ExtractorListComponent,
+    ExtractorCreationComponent,
     ExtractorService,
     extractorRoute,
 } from './';
@@ -19,6 +20,7 @@ const ENTITY_STATES = [
     ],
     declarations: [
         ExtractorListComponent,
+        ExtractorCreationComponent,
     ],
     entryComponents: [
         ExtractorListComponent,

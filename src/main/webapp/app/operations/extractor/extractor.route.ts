@@ -5,14 +5,30 @@ import { UserRouteAccessService } from '../../shared';
 import { JhiPaginationUtil } from 'ng-jhipster';
 
 import { ExtractorListComponent } from './extractor-list.component';
+import { ExtractorCreationComponent } from './extractor-creation.component';
 
 export const extractorRoute: Routes = [
     {
-        path: 'extractor/list',
+        path: 'extractors',
         component: ExtractorListComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'deccomApp.extractor.home.title'
+            pageTitle: 'deccomApp.extractor.home.title',
+            animation: {
+                  value: 'extractors',
+            }
+        },
+        canActivate: [UserRouteAccessService]
+    },
+    {
+        path: 'extractors/:uid',
+        component: ExtractorCreationComponent,
+        data: {
+            authorities: ['ROLE_USER'],
+            pageTitle: 'deccomApp.extractor.home.title',
+            animation: {
+                value: 'extractors-create',
+          }
         },
         canActivate: [UserRouteAccessService]
     }

@@ -10,14 +10,13 @@ import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 
 @Component({
-    selector: 'jhi-extractor-list',
-    templateUrl: './extractor-list.component.html',
-    styleUrls: ['./extractor-list.component.css']
+    selector: 'jhi-extractor-creation',
+    templateUrl: './extractor-creation.component.html',
+    styleUrls: ['./extractor-creation.component.css']
 })
-export class ExtractorListComponent implements OnInit, OnDestroy {
+export class ExtractorCreationComponent implements OnInit, OnDestroy {
 
-    extractorSelected: ExtractorItem;
-    extractors: ExtractorItem[];
+    extractor: ExtractorItem;
     currentAccount: any;
 
     constructor(
@@ -25,21 +24,22 @@ export class ExtractorListComponent implements OnInit, OnDestroy {
         private alertService: JhiAlertService,
         private eventManager: JhiEventManager,
         private parseLinks: JhiParseLinks,
-        private principal: Principal
+        private principal: Principal,
+        private router: ActivatedRoute
     ) {
-        this.extractors = [];
-        this.extractorSelected = null;
+        this.extractor = null;
     }
 
-    loadAll() {
-        this.extractorService.all().subscribe(
-            (res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
-            (res: ResponseWrapper) => this.onError(res.json)
-        );
+    loadExtractor() {
+        const uid = this.router.snapshot.paramMap.get('uid');
+        console.log(uid);
+        this.extractorService.find(uid).subscribe((extractor) => {
+            this.extractor = extractor;
+        });
     }
 
     ngOnInit() {
-        this.loadAll();
+        this.loadExtractor();
         this.principal.identity().then((account) => {
             this.currentAccount = account;
         });
@@ -47,17 +47,7 @@ export class ExtractorListComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {}
 
-    onExtractorClick(extractor: ExtractorItem) {
-        this.extractorSelected = extractor;
-    }
-
-    private onSuccess(data, headers) {
-        for (let i = 0; i < data.length; i++) {
-            this.extractors.push(data[i]);
-        }
-    }
-
-    private onError(error) {
-        this.alertService.error(error.message, null, null);
+    printExtractor() {
+        return JSON.stringify(this.extractor, undefined, 2);
     }
 }

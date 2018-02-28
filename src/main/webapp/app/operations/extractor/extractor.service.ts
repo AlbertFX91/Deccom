@@ -15,6 +15,13 @@ export class ExtractorService {
         return this.http.get(this.resourceUrl).map((res: Response) => this.convertResponse(res));
     }
 
+    find(id: string): Observable<ExtractorItem> {
+        return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
+            const jsonResponse = res.json();
+            return jsonResponse;
+        });
+    }
+
     private convertResponse(res: Response): ResponseWrapper {
         const jsonResponse = res.json();
         return new ResponseWrapper(res.headers, jsonResponse, res.status);
