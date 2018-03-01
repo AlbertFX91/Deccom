@@ -28,7 +28,6 @@ export class EventService {
 
     delete(id: string): Observable<Response> {
         return this.http.delete(`${this.resourceUrl + '/delete'}/${id}`);
-        // return this.http.delete(this.resourceUrl + 'delete/' + id);
     }
 
     public createRequestOption(pageSettings: any): BaseRequestOptions {
