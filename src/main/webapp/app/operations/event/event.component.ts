@@ -19,6 +19,8 @@ import { JhiParseLinks, JhiAlertService, JhiEventManager } from 'ng-jhipster';
     reverse: any;
     totalItems: number;
     eventSubscriber: Subscription;
+    event: Event;
+    isSaving: boolean;
 
     constructor(
         public eventService: EventService,
@@ -43,6 +45,8 @@ import { JhiParseLinks, JhiAlertService, JhiEventManager } from 'ng-jhipster';
             (data: any) => this.onSuccess(data.json(), data.headers),
             (error: Response) => this.onError(error)
         )
+        this.isSaving = false;
+        this.event = {};
     }
 
     ngOnDestroy() { }
@@ -50,6 +54,7 @@ import { JhiParseLinks, JhiAlertService, JhiEventManager } from 'ng-jhipster';
     onSuccess(data: any, headers: any) {
         for (let i = 0; i < data.length; i++) {
             const event: Event = {
+                id: data[i]['id'],
                 name: data[i]['name'],
                 creationMoment: data[i]['creationMoment'],
                 startingDate: data[i]['startingDate'],
@@ -65,6 +70,34 @@ import { JhiParseLinks, JhiAlertService, JhiEventManager } from 'ng-jhipster';
         this.alertService.error(error.message, null, null);
     }
 
+    createEvent() {
+        this.isSaving = true;
+        this.eventService.create(this.event).subscribe(
+            (res: any) => this.onEventSuccess(res),
+            (error: Response) => this.onError(error)
+        )
+    }
+
+    onEventSuccess(res: any) {
+        this.isSaving = false;
+        // this.eventManager.broadcast({ name: 'event_success', content: 'OK' });
+        this.eventManager.broadcast({ name: 'eventListModification', content: 'OK' });
+        this.clear();
+    }
+
+    delete(id: string) {
+        this.eventService.delete(id).subscribe((response) => {
+            this.eventManager.broadcast({
+                name: 'eventListModification',
+                content: 'Deleted an event'
+            });
+        });
+    }
+
+    clear() {
+        this.event = {};
+    }
+
     loadAll() {
         this.eventService.query({
             page: this.page,
@@ -78,6 +111,10 @@ import { JhiParseLinks, JhiAlertService, JhiEventManager } from 'ng-jhipster';
     loadPage(page) {
         this.page = page;
         this.loadAll();
+    }
+
+    registerChangeInEvents() {
+        this.eventSubscriber = this.eventManager.subscribe('eventListModification', (response) => this.reset());
     }
 
     reset() {

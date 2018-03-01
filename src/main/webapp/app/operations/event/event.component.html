@@ -49,15 +49,17 @@
                     <td>{{event.endingDate | date : "dd.MM.yyyy"}}</td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
+                            <!--
                             <button type="submit" [routerLink]="['../event', event.id ]" class="btn btn-info btn-sm">
                                 <span class="fa fa-eye"></span>
                                 <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>
                             </button>
+                            -->
                             <button type="submit" [routerLink]="['/', { outlets: { popup: 'event/'+ event.id + '/edit'} }]" replaceUrl="true" class="btn btn-primary btn-sm">
                                 <span class="fa fa-pencil"></span>
                                 <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
                             </button>
-                            <button type="submit" [routerLink]="['/', { outlets: { popup: 'event/'+ event.id + '/delete'} }]" replaceUrl="true" class="btn btn-danger btn-sm">
+                            <button type="submit" (click)="delete(event.id)" class="btn btn-danger btn-sm">
                                 <span class="fa fa-remove"></span>
                                 <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
                             </button>
@@ -66,5 +68,41 @@
                 </tr>
             </tbody>
         </table>
+    </div>
+    <div class="row">
+        <form name="eventForm" role="form" novalidate (ngSubmit)="createEvent()" #eventForm="ngForm" style="width: 100%">
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="deccomApp.event.name" for="field_name">Name</label>
+                <input type="text" class="form-control" name="name" id="name" [(ngModel)]="event.name" required />
+                <div [hidden]="!(eventForm.controls.name?.dirty && eventForm.controls.name?.invalid)">
+                    <small class="form-text text-danger" [hidden]="!eventForm.controls.name?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="deccomApp.event.startingDate" for="field_startingDate">Starting date</label>
+                <input type="text" class="form-control" name="startingDate" id="startingDate" [(ngModel)]="event.startingDate" required />
+                <div [hidden]="!(eventForm.controls.startingDate?.dirty && eventForm.controls.startingDate?.invalid)">
+                    <small class="form-text text-danger" [hidden]="!eventForm.controls.startingDate?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="deccomApp.event.endingDate" for="field_endingDate">Ending date</label>
+                <input type="text" class="form-control" name="endingDate" id="endingDate" [(ngModel)]="event.endingDate" />
+            </div>
+            <div>
+                <button type="button" class="btn btn-default cancel" data-dismiss="modal" (click)="clear()">
+                    <span class="fa fa-ban"></span>&nbsp;
+                    <span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" [disabled]="eventForm.form.invalid || isSaving" class="btn btn-success" *ngIf="event">
+                    <span class="fa fa-save"></span>&nbsp;
+                    <span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
     </div>
 </div>

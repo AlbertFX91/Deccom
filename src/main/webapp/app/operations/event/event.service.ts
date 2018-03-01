@@ -21,6 +21,16 @@ export class EventService {
             .map((res: Response) => res);
     }
 
+    create(req?: Event): Observable<ResponseWrapper> {
+        return this.http.post(this.resourceUrl + 'create', req)
+            .map((res: Response) => res);
+    }
+
+    delete(id: string): Observable<Response> {
+        return this.http.delete(`${this.resourceUrl + '/delete'}/${id}`);
+        // return this.http.delete(this.resourceUrl + 'delete/' + id);
+    }
+
     public createRequestOption(pageSettings: any): BaseRequestOptions {
         const options: BaseRequestOptions = createRequestOption(pageSettings);
         // const params: URLSearchParams = new URLSearchParams();

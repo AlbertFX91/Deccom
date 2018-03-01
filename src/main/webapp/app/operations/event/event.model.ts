@@ -1,3 +1,5 @@
+import { BaseEntity } from './../../shared';
+
 export class Event {
     constructor(
         public id?: string,

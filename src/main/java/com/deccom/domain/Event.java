@@ -25,7 +25,7 @@ public class Event implements Serializable {
 	@Field("name")
 	private String name;
 
-	@NotNull
+	// @NotNull
 	@Field("creationMoment")
 	private LocalDateTime creationMoment;
 

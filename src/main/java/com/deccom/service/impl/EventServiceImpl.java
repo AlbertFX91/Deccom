@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import com.deccom.domain.Event;
 import com.deccom.repository.EventRepository;
@@ -19,6 +20,7 @@ import com.deccom.service.EventService;
 public class EventServiceImpl implements EventService {
 
 	private final Logger log = LoggerFactory.getLogger(EventServiceImpl.class);
+	private static final String i18nCodeRoot = "operations.event";
 
 	private final EventRepository eventRepository;
 
@@ -27,15 +29,15 @@ public class EventServiceImpl implements EventService {
 	}
 
 	/**
-     * Create an event.
-     *
-     * @return the created event
-     */
+	 * Create an event.
+	 *
+	 * @return the created event
+	 */
 	public Event create() {
 
 		Event result;
 		LocalDateTime creationMoment;
-		
+
 		result = new Event();
 		creationMoment = LocalDateTime.now();
 
@@ -54,19 +56,28 @@ public class EventServiceImpl implements EventService {
 	 */
 	@Override
 	public Event save(Event event) {
-		
+
 		log.debug("Request to save Event : {}", event);
-		
+
 		if (event.getId() == null) {
+
 			LocalDateTime creationMoment;
-			
+
 			creationMoment = LocalDateTime.now();
 
 			event.setCreationMoment(creationMoment);
+
 		}
-		
+
+		if (event.getEndingDate() != null) {
+
+			Assert.isTrue(event.getStartingDate().isBefore(event.getEndingDate())
+					|| event.getStartingDate().isEqual(event.getEndingDate()), i18nCodeRoot + ".wrongDates");
+
+		}
+
 		return eventRepository.save(event);
-		
+
 	}
 
 	/**
