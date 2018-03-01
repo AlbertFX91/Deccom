@@ -17,9 +17,10 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 })
 export class ExtractorCreationComponent implements OnInit, OnDestroy {
 
-    extractor: ExtractorItem;
-    // controlvar: 
+    controlvar: CV;
     currentAccount: any;
+    cvFields: String[];
+    extractorFields: String[];
 
     constructor(
         private extractorService: ExtractorService,
@@ -29,14 +30,16 @@ export class ExtractorCreationComponent implements OnInit, OnDestroy {
         private principal: Principal,
         private router: ActivatedRoute
     ) {
-        this.extractor = null;
+        this.controlvar = new CV();
     }
 
     loadExtractor() {
         const uid = this.router.snapshot.paramMap.get('uid');
-        console.log(uid);
         this.extractorService.find(uid).subscribe((extractor) => {
-            this.extractor = extractor;
+            this.controlvar.extractor = extractor;
+            this.cvFields = this.getFieldsCVToInclude();
+            this.extractorFields = this.getFieldsExtractorToInclude();
+            console.log(this.controlvar);
         });
     }
 
@@ -50,6 +53,24 @@ export class ExtractorCreationComponent implements OnInit, OnDestroy {
     ngOnDestroy() {}
 
     printExtractor() {
-        return JSON.stringify(this.extractor, undefined, 2);
+        return JSON.stringify(this.controlvar, undefined, 2);
+    }
+
+    getFieldsCVToExclude() {
+        return ['id', 'status', 'creationMoment', 'controlVarEntries', 'extractor'];
+    }
+    getFieldsExtractorToExclude() {
+        return ['extractorClass', 'style', 'uid'];
+    }
+
+    getFieldsCVToInclude() {
+        return Object.keys(this.controlvar).filter((x) => this.getFieldsCVToExclude().indexOf(x) === -1);
+    }
+
+    getFieldsExtractorToInclude() {
+        return Object.keys(this.controlvar.extractor).filter((x) => this.getFieldsExtractorToExclude().indexOf(x) === -1);
+    }
+
+    save() {
     }
 }

@@ -47,7 +47,6 @@ export class CVComponent implements OnInit, OnDestroy {
     onSuccess(data: any, headers: any) {
         for (let i = 0; i < data.content.length; i++) {
             this.cvCards.push(data.content[i]);
-            console.log(this.cvCards);
         }
         // this.links = this.parseLinks.parse(headers.get('link'));
         this.eventManager.broadcast({ name: 'all_success', content: 'OK' });

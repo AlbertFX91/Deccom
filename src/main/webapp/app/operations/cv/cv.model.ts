@@ -7,8 +7,16 @@ export class CV {
         public status?: string,
         public creationMoment?: any,
         public controlVarEntries?: any,
+        public frequency?: number,
         public extractor?: ExtractorItem
     ) {
+        this.id = null;
+        this.name = null;
+        this.status = 'RUNNING';
+        this.creationMoment = new Date();
+        this.controlVarEntries = [];
+        this.extractor = new ExtractorItem();
+        this.frequency = 0;
     }
 }
 
