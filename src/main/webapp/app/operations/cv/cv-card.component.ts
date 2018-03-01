@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CVCard } from './cv.model';
+import { CV } from './cv.model';
 import { CVService } from './cv.service';
 import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
 
@@ -12,7 +12,7 @@ import { trigger, state, style, transition, animate, keyframes } from '@angular/
 export class CVCardComponent implements OnInit, OnDestroy {
 
     @Input()
-    cvCard: CVCard;
+    cvCard: CV;
 
     public isCollapsed;
 

@@ -1,6 +1,6 @@
 import { Component, HostListener, Input, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CVCard } from './cv.model';
+import { CV } from './cv.model';
 import { CVService } from './cv.service';
 import { ResponseWrapper, ITEMS_PER_PAGE } from '../../shared';
 import { JhiParseLinks, JhiAlertService, JhiEventManager } from 'ng-jhipster';
@@ -12,7 +12,7 @@ import { JhiParseLinks, JhiAlertService, JhiEventManager } from 'ng-jhipster';
 })
 export class CVComponent implements OnInit, OnDestroy {
 
-    cvCards: CVCard[];
+    cvCards: CV[];
     page: any;
     itemsPerPage: number;
     links: any;
@@ -46,19 +46,8 @@ export class CVComponent implements OnInit, OnDestroy {
 
     onSuccess(data: any, headers: any) {
         for (let i = 0; i < data.content.length; i++) {
-            const cvCard: CVCard = {
-                name: data.content[i]['name'],
-                status: data.content[i]['status'],
-                creationMoment: data.content[i]['creationMoment'],
-                controlVarEntries: data.content[i]['controlVarEntries'].length,
-                cvStyle: {
-                    defaultName: data.content[i]['extractor']['style']['defaultName'],
-                    icon: data.content[i]['extractor']['style']['icon'],
-                    backgroundColor: data.content[i]['extractor']['style']['backgroundColor'],
-                    fontColor: data.content[i]['extractor']['style']['fontColor']
-                }
-            };
-            this.cvCards.push(cvCard);
+            this.cvCards.push(data.content[i]);
+            console.log(this.cvCards);
         }
         // this.links = this.parseLinks.parse(headers.get('link'));
         this.eventManager.broadcast({ name: 'all_success', content: 'OK' });

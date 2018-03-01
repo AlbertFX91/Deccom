@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs/Rx';
 import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, JhiAlertService } from 'ng-jhipster';
 
 import { ExtractorItem } from './extractor.model';
+import { CV } from '../cv/cv.model';
 import { ExtractorService } from './extractor.service';
 
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
@@ -17,6 +18,7 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 export class ExtractorCreationComponent implements OnInit, OnDestroy {
 
     extractor: ExtractorItem;
+    // controlvar: 
     currentAccount: any;
 
     constructor(

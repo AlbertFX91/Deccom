@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response, URLSearchParams, BaseRequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { ResponseWrapper, createRequestOption } from '../../shared';
-import { CVCard } from './cv.model';
+import { CV } from './cv.model';
 import { JhiDateUtils } from 'ng-jhipster';
 
 @Injectable()
@@ -10,7 +10,7 @@ export class CVService {
 
     private resourceUrl = 'api/controlvar/';
 
-    cvCards: CVCard[];
+    cvCards: CV[];
 
     constructor(private http: Http, private dateUtils: JhiDateUtils) {
         this.cvCards = [];
