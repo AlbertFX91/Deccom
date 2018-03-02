@@ -7,6 +7,7 @@ import { DeccomCVModule } from './cv/cv.module';
 import { DeccomTwitterModule } from './twitter/twitter.module';
 import { DeccomFacebookModule } from './facebook/facebook.module';
 import { DeccomExtractorModule } from './extractor/extractor.module';
+import { DeccomEventModule } from './event/event.module';
 
 @NgModule({
     imports: [
@@ -16,7 +17,8 @@ import { DeccomExtractorModule } from './extractor/extractor.module';
         DeccomCVModule,
         DeccomTwitterModule,
         DeccomFacebookModule,
-        DeccomExtractorModule
+        DeccomExtractorModule,
+        DeccomEventModule
     ],
     declarations: [],
     entryComponents: [],

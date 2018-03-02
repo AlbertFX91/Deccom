@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 
 import com.deccom.domain.Acme;
 import com.deccom.domain.Authority;
+import com.deccom.domain.Event;
 import com.deccom.domain.RESTConnection;
 import com.deccom.domain.RESTControlVar;
 import com.deccom.domain.RESTControlVarEntry;
@@ -148,7 +149,7 @@ public class InitialSetupMigration {
 		mongoTemplate.save(cv);
 	}
 
-	@ChangeSet(order = "05", author = "initiator", id = "05-addRestControlVars")
+	@ChangeSet(order = "05", author = "initiator", id = "05-addRESTControlVars")
 	public void addRESTControlVars(MongoTemplate mongoTemplate) {
 		RESTControlVar r = new RESTControlVar();
 		r.setId("restControlVar-1");
@@ -175,7 +176,7 @@ public class InitialSetupMigration {
 		mongoTemplate.save(r);
 	}
 
-	@ChangeSet(order = "06", author = "initiator", id = "06-addCoreControlVar")
+	@ChangeSet(order = "06", author = "initiator", id = "06-addCoreControlVars")
 	public void addCoreControlVars(MongoTemplate mongoTemplate) {
 		RESTExtractor rest1 = new RESTExtractor();
 		rest1.setJsonPath("$[2].id");
@@ -237,7 +238,7 @@ public class InitialSetupMigration {
 
 	}
 
-	@ChangeSet(order = "07", author = "initiator", id = "07-addFacebookFansControlVar")
+	@ChangeSet(order = "07", author = "initiator", id = "07-addFacebookFansControlVars")
 	public void addFacebookFansControlVars(MongoTemplate mongoTemplate) {
 
 		FacebookFansExtractor facebookFansExtractor;
@@ -253,6 +254,37 @@ public class InitialSetupMigration {
 		controlVariable.setControlVarEntries(Lists.newArrayList());
 
 		mongoTemplate.save(controlVariable);
+
+	}
+	
+	@ChangeSet(order = "08", author = "initiator", id = "08-addEvents")
+	public void addEvents(MongoTemplate mongoTemplate) {
+
+		Event event1, event2;
+		String event1Name, event2Name;
+		LocalDateTime event1CreationMoment, event2CreationMoment;
+		LocalDate event1StartingDate, event2StartingDate, event2EndingDate;
+		
+		event1 = new Event();
+		event2 = new Event();
+		event1Name = "event1Name";
+		event2Name = "event2Name";
+		event1CreationMoment = LocalDateTime.now();
+		event2CreationMoment = LocalDateTime.now();
+		event1StartingDate = LocalDate.of(2018, 12, 18);
+		event2StartingDate = LocalDate.of(2018, 03, 18);
+		event2EndingDate = LocalDate.of(2018, 05, 01);
+		
+		event1.setName(event1Name);
+		event2.setName(event2Name);
+		event1.setCreationMoment(event1CreationMoment);
+		event2.setCreationMoment(event2CreationMoment);
+		event1.setStartingDate(event1StartingDate);
+		event2.setStartingDate(event2StartingDate);
+		event2.setEndingDate(event2EndingDate);
+
+		mongoTemplate.save(event1);
+		mongoTemplate.save(event2);
 
 	}
 
