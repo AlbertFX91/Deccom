@@ -12,6 +12,7 @@
                 "wrongDates": "The starting date must be before or equal to the ending date"
             },
             "created": "The event has been created",
+            "confirmDelete": "Are you sure you want to delete this event?",
             "deleted": "The event has been deleted"
         }
     }

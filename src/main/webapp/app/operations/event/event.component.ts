@@ -52,8 +52,8 @@ import { JhiParseLinks, JhiAlertService, JhiEventManager } from 'ng-jhipster';
     ngOnDestroy() { }
 
     onSuccess(data: any, headers: any) {
-        for (let i = 0; i < data.content.length; i++) {
-            this.events.push(data.content[i]);
+        for (let i = 0; i < data.length; i++) {
+            this.events.push(data[i]);
         }
         // this.links = this.parseLinks.parse(headers.get('link'));
         this.eventManager.broadcast({ name: 'all_success', content: 'OK' });
@@ -76,17 +76,21 @@ import { JhiParseLinks, JhiAlertService, JhiEventManager } from 'ng-jhipster';
         // this.eventManager.broadcast({ name: 'event_success', content: 'OK' });
         this.eventManager.broadcast({ name: 'eventListModification', content: 'OK' });
         this.clear();
-        this.loadAll();
+        this.events = [];
+        this.ngOnInit();
     }
 
     delete(id: string) {
-        this.eventService.delete(id).subscribe((response) => {
-            this.eventManager.broadcast({
-                name: 'eventListModification',
-                content: 'Deleted an event'
+        if (confirm('Are you sure you want to delete this event?')) {
+            this.eventService.delete(id).subscribe((response) => {
+                this.eventManager.broadcast({
+                    name: 'eventListModification',
+                    content: 'Deleted an event'
+                });
             });
-        });
-        this.loadAll();
+            this.events = [];
+            this.ngOnInit();
+        }
     }
 
     clear() {

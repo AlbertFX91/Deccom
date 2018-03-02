@@ -12,6 +12,7 @@
                 "wrongDates": "La fecha de inicio debe ser anterior o igual a la fecha de fin"
             },
             "created": "El evento ha sido creado",
+            "confirmDelete": "¿Está seguro de que quiere borrar este evento?",
             "deleted": "El evento ha sido borrado"
         }
     }
