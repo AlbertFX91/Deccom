@@ -1,0 +1,108 @@
+<div>
+    <h2>
+        <span jhiTranslate="deccomApp.event.home.title">Events</span>
+        <!--
+        <button class="btn btn-primary float-right jh-create-entity create-event" [routerLink]="['/', { outlets: { popup: ['event-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span jhiTranslate="deccomApp.event.home.createLabel">
+                Create new Event
+            </span>
+        </button>
+        -->
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="events">
+        <table class="table table-striped">
+            <thead>
+                <tr jhiSort [(ascending)]="reverse" [callback]="reset.bind(this)">
+                    <th>
+                        <span jhiTranslate="deccomApp.event.name">Name</span>
+                    </th>
+                    <th jhiSortBy="creationMoment" sortable-column="'creationMoment'">
+                        <span jhiTranslate="deccomApp.event.creationMoment">Creation moment</span>
+                        <span class="fa fa-sort"></span>
+                    </th>
+                    <th jhiSortBy="startingDate" sortable-column="'startingDate'">
+                        <span jhiTranslate="deccomApp.event.startingDate">Starting date</span>
+                        <span class="fa fa-sort"></span>
+                    </th>
+                    <th jhiSortBy="endingDate" sortable-column="'endingDate'">
+                        <span jhiTranslate="deccomApp.event.endingDate">Ending date</span>
+                        <span class="fa fa-sort"></span>
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+                <tr *ngFor="let event of events; trackBy: trackId">
+                    <!--
+                    <td>
+                        <a [routerLink]="['../event', event.id ]">{{event.id}}</a>
+                    </td>
+                    -->
+                    <td>{{event.name}}</td>
+                    <td>{{event.creationMoment | date : "dd.MM.yyyy HH:mm:ss"}}</td>
+                    <td>{{event.startingDate | date : "dd.MM.yyyy"}}</td>
+                    <td>{{event.endingDate | date : "dd.MM.yyyy"}}</td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <!--
+                            <button type="submit" [routerLink]="['../event', event.id ]" class="btn btn-info btn-sm">
+                                <span class="fa fa-eye"></span>
+                                <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>
+                            </button>
+                            -->
+                            <button type="submit" [routerLink]="['/', { outlets: { popup: 'event/'+ event.id + '/edit'} }]" replaceUrl="true" class="btn btn-primary btn-sm">
+                                <span class="fa fa-pencil"></span>
+                                <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+                            <button type="submit" (click)="delete(event.id)" class="btn btn-danger btn-sm">
+                                <span class="fa fa-remove"></span>
+                                <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <form name="eventForm" role="form" novalidate (ngSubmit)="createEvent()" #eventForm="ngForm" style="width: 100%">
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="deccomApp.event.name" for="field_name">Name</label>
+                <input type="text" class="form-control" name="name" id="name" [(ngModel)]="event.name" required />
+                <div [hidden]="!(eventForm.controls.name?.dirty && eventForm.controls.name?.invalid)">
+                    <small class="form-text text-danger" [hidden]="!eventForm.controls.name?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="deccomApp.event.startingDate" for="field_startingDate">Starting date</label>
+                <input type="text" class="form-control" name="startingDate" id="startingDate" [(ngModel)]="event.startingDate" required />
+                <div [hidden]="!(eventForm.controls.startingDate?.dirty && eventForm.controls.startingDate?.invalid)">
+                    <small class="form-text text-danger" [hidden]="!eventForm.controls.startingDate?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="deccomApp.event.endingDate" for="field_endingDate">Ending date</label>
+                <input type="text" class="form-control" name="endingDate" id="endingDate" [(ngModel)]="event.endingDate" />
+            </div>
+            <div>
+                <button type="button" class="btn btn-default cancel" data-dismiss="modal" (click)="clear()">
+                    <span class="fa fa-ban"></span>&nbsp;
+                    <span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" [disabled]="eventForm.form.invalid || isSaving" class="btn btn-success" *ngIf="event">
+                    <span class="fa fa-save"></span>&nbsp;
+                    <span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
