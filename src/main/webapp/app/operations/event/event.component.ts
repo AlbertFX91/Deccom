@@ -83,6 +83,7 @@ import { JhiParseLinks, JhiAlertService, JhiEventManager } from 'ng-jhipster';
         // this.eventManager.broadcast({ name: 'event_success', content: 'OK' });
         this.eventManager.broadcast({ name: 'eventListModification', content: 'OK' });
         this.clear();
+        this.loadAll();
     }
 
     delete(id: string) {
@@ -92,6 +93,7 @@ import { JhiParseLinks, JhiAlertService, JhiEventManager } from 'ng-jhipster';
                 content: 'Deleted an event'
             });
         });
+        this.loadAll();
     }
 
     clear() {
