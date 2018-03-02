@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response, URLSearchParams, BaseRequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { ResponseWrapper, createRequestOption } from '../../shared';
-import { CVCard } from './cv.model';
+import { CV, NewCV } from './cv.model';
 import { JhiDateUtils } from 'ng-jhipster';
 
 @Injectable()
@@ -10,7 +10,7 @@ export class CVService {
 
     private resourceUrl = 'api/controlvar/';
 
-    cvCards: CVCard[];
+    cvCards: CV[];
 
     constructor(private http: Http, private dateUtils: JhiDateUtils) {
         this.cvCards = [];
@@ -61,6 +61,14 @@ export class CVService {
     ]
     */
 
+   create(cv: NewCV): Observable<NewCV> {
+    return this.http.post(this.resourceUrl, cv).map((res: Response) => {
+        const jsonResponse = res.json();
+        // this.convertItemFromServer(jsonResponse);
+        return jsonResponse;
+    });
+}
+
     findAll(pageSettings: any): Observable<ResponseWrapper> {
         const options = this.createRequestOption(pageSettings);
         return this.http.get(this.resourceUrl + 'all', options)
@@ -92,5 +100,4 @@ export class CVService {
         // options.params = params;
         return options;
     }
-
 }

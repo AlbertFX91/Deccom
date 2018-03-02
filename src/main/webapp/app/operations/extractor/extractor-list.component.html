@@ -1,0 +1,12 @@
+<div>
+    <div id="extractor-list">
+        <a class="extractor-list-element" *ngFor="let extractor of extractors;" title="{{extractor.style.defaultName}}" [routerLink]="['/extractors', extractor.uid]">
+            <div class="extractor-list-element-icon">
+                <i class="fa {{extractor.style.icon}}"></i>
+            </div>
+            <div class="extractor-list-element-name" data-toggle="tooltip">
+                {{extractor.style.defaultName}}
+            </div>
+        </a>
+    </div>
+</div>

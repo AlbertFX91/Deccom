@@ -1,0 +1,37 @@
+#extractor-list{
+    display: flex; 
+    flex-direction: row; 
+    flex-wrap: wrap;
+}
+.extractor-list-element {
+    display: flex;
+    color: black;
+    text-decoration: none;
+    flex-direction: column;
+    cursor: pointer;
+    width: 140px; 
+    height: 100px; 
+    margin: 3px 30px 3px 30px;
+    padding: 2px 0px 2px 0px;
+    transition: all 200ms linear;
+}
+.extractor-list-element:hover{
+    background-color: #EEEEEE;
+    transition: all 200ms linear;
+}
+.extractor-list-element-icon{
+    display: flex; 
+    flex-grow: 1; 
+    justify-content: center; 
+    align-items: center;
+}
+.extractor-list-element-icon > i{
+    font-size: 3.5em;
+}
+.extractor-list-element-name {
+    text-align: center; 
+    font-weight: bold;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+}

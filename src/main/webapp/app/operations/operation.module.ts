@@ -6,6 +6,7 @@ import { DeccomRESTModule } from './rest/rest.module';
 import { DeccomCVModule } from './cv/cv.module';
 import { DeccomTwitterModule } from './twitter/twitter.module';
 import { DeccomFacebookModule } from './facebook/facebook.module';
+import { DeccomExtractorModule } from './extractor/extractor.module';
 import { DeccomEventModule } from './event/event.module';
 
 @NgModule({
@@ -16,6 +17,7 @@ import { DeccomEventModule } from './event/event.module';
         DeccomCVModule,
         DeccomTwitterModule,
         DeccomFacebookModule,
+        DeccomExtractorModule,
         DeccomEventModule
     ],
     declarations: [],

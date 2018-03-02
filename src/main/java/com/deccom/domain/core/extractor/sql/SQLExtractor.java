@@ -27,7 +27,7 @@ public class SQLExtractor implements ControlVariableExtractor {
 	private String jdbc;
 	@NotNull
 	private CVStyle style;
-	
+
 	public SQLExtractor() {
 		style = CVStyle.create("SQL", "fa-database", "#EF6C00", "#000000");
 	}
@@ -76,7 +76,11 @@ public class SQLExtractor implements ControlVariableExtractor {
 	public CVStyle getStyle() {
 		return style;
 	}
-	
+
+	public void setStyle(CVStyle style) {
+		this.style = style;
+	}
+
 	@Override
 	@JsonIgnore
 	public Integer getData() {
