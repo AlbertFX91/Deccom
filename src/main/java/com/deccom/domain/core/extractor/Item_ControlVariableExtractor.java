@@ -13,7 +13,6 @@ public class Item_ControlVariableExtractor {
 	public Item_ControlVariableExtractor(String extractorClass, CVStyle style, String uid) {
 		this.extractorClass = extractorClass;
 		this.style = style;
-		// Force the uid > 0
 		this.uid = uid;
 	}
 

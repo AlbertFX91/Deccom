@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs/Rx';
 import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, JhiAlertService } from 'ng-jhipster';
 
 import { ExtractorItem } from './extractor.model';
-import { CV } from '../cv/cv.model';
+import { CV, NewCV } from '../cv/cv.model';
 import { ExtractorService } from './extractor.service';
 
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
@@ -72,5 +72,13 @@ export class ExtractorCreationComponent implements OnInit, OnDestroy {
     }
 
     save() {
+        // var newCV: NewCV = new NewCV();
+        // newCV.extractorClass = this.controlvar.extractor.extractorClass;
+        // newCV.controlVariable = this.controlvar;
+        // this.getFieldsExtractorToInclude()
+        console.log(this.controlvar);
+    }
+
+    cancel() {
     }
 }

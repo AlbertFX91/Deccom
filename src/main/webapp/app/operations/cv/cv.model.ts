@@ -29,3 +29,12 @@ export class CVStyle {
     ) {
     }
 }
+
+export class NewCV {
+    constructor(
+        public extractorClass?: string,
+        public extractorData?: any,
+        public controlVariable?: CV
+    ) {
+    }
+}

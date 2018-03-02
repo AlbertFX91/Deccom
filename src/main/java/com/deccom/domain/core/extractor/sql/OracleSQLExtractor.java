@@ -1,5 +1,6 @@
 package com.deccom.domain.core.extractor.sql;
 
+import com.deccom.domain.core.CVStyleUtil;
 import com.deccom.domain.core.extractor.ControlVariableExtractor;
 
 public class OracleSQLExtractor extends SQLExtractor implements ControlVariableExtractor {
@@ -9,6 +10,7 @@ public class OracleSQLExtractor extends SQLExtractor implements ControlVariableE
 		String jdbc;
 		jdbc = "oracle";
 		setJdbc(jdbc);
+		setStyle(CVStyleUtil.oraclesql);
 	}
 
 }
