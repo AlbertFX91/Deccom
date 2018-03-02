@@ -1,0 +1,42 @@
+<div class="container">
+    <h4 id="extractor-creation">{{controlvar.extractor?.style?.defaultName}}</h4>
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" *ngFor="let field of extractorFields;">
+            <label class="form-control-label" for="field_{{field}}">{{field}}</label>
+            <input type="text" class="form-control" name="{{field}}" id="field_{{field}}" [(ngModel)]="controlvar.extractor[field]" [attr.required]="controlvar.extractor[field]?'':null"
+                placeholder="{{controlvar.extractor[field]}}" [attr.disabled]="controlvar.extractor[field]?'':null" />
+            <div [hidden]="!(editForm.controls[field]?.dirty && editForm.controls[field]?.invalid)">
+                <small class="form-text text-danger" [hidden]="!editForm.controls[field]?.errors?.required">
+                    This field is required.
+                </small>
+            </div>
+        </div>
+
+        <br/>
+
+        <div class="form-group" *ngFor="let field of cvFields;">
+            <label class="form-control-label" for="field_{{field}}">{{field}}</label>
+            <input type="text" class="form-control" name="{{field}}" id="field_{{field}}" [(ngModel)]="controlvar[field]" required />
+            <div [hidden]="!(editForm.controls[field]?.dirty && editForm.controls[field]?.invalid)">
+                <small class="form-text text-danger" [hidden]="!editForm.controls[field]?.errors?.required">
+                    This field is required.
+                </small>
+            </div>
+        </div>
+
+        <br/>
+
+        <div>
+            <button type="button" class="btn btn-default" data-dismiss="modal" (click)="cancel()">
+                <span class="fa fa-ban"></span>&nbsp;
+                <span jhiTranslate="entity.action.cancel">Cancel</span>
+            </button>
+            <button type="submit" [disabled]="editForm.form.invalid" class="btn btn-primary">
+                <span class="fa fa-save"></span>&nbsp;
+                <span jhiTranslate="entity.action.save">Save</span>
+            </button>
+        </div>
+    </form>
+</div>

@@ -1,4 +1,4 @@
-package com.deccom.domain.core.extractor;
+package com.deccom.domain.core.extractor.sql;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.validation.constraints.NotNull;
 
 import com.deccom.domain.core.CVStyle;
+import com.deccom.domain.core.extractor.ControlVariableExtractor;
 import com.deccom.service.impl.util.SQLUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -26,7 +27,7 @@ public class SQLExtractor implements ControlVariableExtractor {
 	private String jdbc;
 	@NotNull
 	private CVStyle style;
-	
+
 	public SQLExtractor() {
 		style = CVStyle.create("SQL", "fa-database", "#EF6C00", "#000000");
 	}
@@ -75,7 +76,11 @@ public class SQLExtractor implements ControlVariableExtractor {
 	public CVStyle getStyle() {
 		return style;
 	}
-	
+
+	public void setStyle(CVStyle style) {
+		this.style = style;
+	}
+
 	@Override
 	@JsonIgnore
 	public Integer getData() {

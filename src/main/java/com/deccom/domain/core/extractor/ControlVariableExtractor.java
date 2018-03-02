@@ -10,4 +10,8 @@ public interface ControlVariableExtractor {
 	@JsonIgnore
 	Integer getData();
 	CVStyle getStyle();
+	default String getUid() {
+		// Get a positive uid by the class name
+		return "" + (this.getClass().getName().toString().hashCode() & 0xffffff);
+	};
 }

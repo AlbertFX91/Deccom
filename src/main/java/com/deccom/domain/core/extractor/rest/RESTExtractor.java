@@ -1,10 +1,12 @@
-package com.deccom.domain.core.extractor;
+package com.deccom.domain.core.extractor.rest;
 
 import java.net.HttpURLConnection;
 
 import javax.validation.constraints.NotNull;
 
 import com.deccom.domain.core.CVStyle;
+import com.deccom.domain.core.CVStyleUtil;
+import com.deccom.domain.core.extractor.ControlVariableExtractor;
 import com.deccom.service.impl.util.RESTUtil;
 
 public class RESTExtractor implements ControlVariableExtractor {
@@ -17,7 +19,7 @@ public class RESTExtractor implements ControlVariableExtractor {
 	private CVStyle style;
 	
 	public RESTExtractor() {
-		style = CVStyle.create("API REST", "fa-file-code", "#4DB6AC", "#000000");
+		style = CVStyleUtil.rest;
 	}
 	
 	public String getUrl() {
@@ -51,6 +53,10 @@ public class RESTExtractor implements ControlVariableExtractor {
 	@Override
 	public CVStyle getStyle() {
 		return style;
+	}
+	
+	public void setStyle(CVStyle style) {
+		this.style = style;
 	}
   
 	protected String getResponse(String url) {
