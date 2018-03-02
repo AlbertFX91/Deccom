@@ -1,0 +1,18 @@
+{
+    "deccomApp": {
+        "event": {
+            "home": {
+                "title": "Eventos"
+            },
+            "name": "Nombre",
+            "creationMoment": "Desde",
+            "startingDate": "Fecha de inicio",
+            "endingDate": "Fecha de fin",
+            "error": {
+                "wrongDates": "La fecha de inicio debe ser anterior o igual a la fecha de fin"
+            },
+            "created": "El evento ha sido creado",
+            "deleted": "El evento ha sido borrado"
+        }
+    }
+}
