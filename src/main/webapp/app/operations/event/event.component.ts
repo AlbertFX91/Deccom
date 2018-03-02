@@ -52,15 +52,8 @@ import { JhiParseLinks, JhiAlertService, JhiEventManager } from 'ng-jhipster';
     ngOnDestroy() { }
 
     onSuccess(data: any, headers: any) {
-        for (let i = 0; i < data.length; i++) {
-            const event: Event = {
-                id: data[i]['id'],
-                name: data[i]['name'],
-                creationMoment: data[i]['creationMoment'],
-                startingDate: data[i]['startingDate'],
-                endingDate: data[i]['endingDate']
-            };
-            this.events.push(event);
+        for (let i = 0; i < data.content.length; i++) {
+            this.events.push(data.content[i]);
         }
         // this.links = this.parseLinks.parse(headers.get('link'));
         this.eventManager.broadcast({ name: 'all_success', content: 'OK' });
