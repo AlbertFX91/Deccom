@@ -21,6 +21,8 @@ import { JhiParseLinks, JhiAlertService, JhiEventManager } from 'ng-jhipster';
     eventSubscriber: Subscription;
     event: Event;
     isSaving: boolean;
+    startingDateDp: any;
+    endingDateDp: any;
 
     constructor(
         public eventService: EventService,
@@ -65,6 +67,10 @@ import { JhiParseLinks, JhiAlertService, JhiEventManager } from 'ng-jhipster';
 
     createEvent() {
         this.isSaving = true;
+        this.event.startingDate = this.convertDate(this.event.startingDate);
+        if (this.event.endingDate) {
+            this.event.endingDate = this.convertDate(this.event.endingDate);
+        }
         this.eventService.create(this.event).subscribe(
             (res: any) => this.onEventSuccess(res),
             (error: Response) => this.onError(error)
@@ -76,8 +82,7 @@ import { JhiParseLinks, JhiAlertService, JhiEventManager } from 'ng-jhipster';
         // this.eventManager.broadcast({ name: 'event_success', content: 'OK' });
         this.eventManager.broadcast({ name: 'eventListModification', content: 'OK' });
         this.clear();
-        this.events = [];
-        this.ngOnInit();
+        this.reload();
     }
 
     delete(id: string) {
@@ -88,8 +93,7 @@ import { JhiParseLinks, JhiAlertService, JhiEventManager } from 'ng-jhipster';
                     content: 'Deleted an event'
                 });
             });
-            this.events = [];
-            this.ngOnInit();
+            this.reload();
         }
     }
 
@@ -120,6 +124,27 @@ import { JhiParseLinks, JhiAlertService, JhiEventManager } from 'ng-jhipster';
         this.page = 0;
         this.events = [];
         this.loadAll();
+    }
+
+    convertDate(date: any) {
+        let dateAux, dateMonth, dateDay;
+        if (date['month'].toString().length === 1) {
+            dateMonth = '0' + date['month'];
+        } else {
+            dateMonth = date['month'];
+        }
+        if (date['day'].toString().length === 1) {
+            dateDay = '0' + date['day'];
+        } else {
+            dateDay = date['day'];
+        }
+        dateAux = date['year'] + '-' + dateMonth + '-' + dateDay;
+        return dateAux;
+    }
+
+    reload() {
+        this.events = [];
+        this.ngOnInit();
     }
 
 }

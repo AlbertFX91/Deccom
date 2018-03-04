@@ -3,33 +3,41 @@ import { RouterModule } from '@angular/router';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { DeccomSharedModule } from '../../shared';
-import { DeccomJSONVisualizerModule } from '../jsonvisualizer';
 
 import {
     EventService,
+    EventPopupService,
     EventComponent,
-    eventRoute
+    EventDialogComponent,
+    EventPopupComponent,
+    eventRoute,
+    eventPopupRoute
 } from './';
 
 const ENTITY_STATES = [
     ...eventRoute,
+    ...eventPopupRoute
 ];
 
 @NgModule({
     imports: [
         DeccomSharedModule,
-        DeccomJSONVisualizerModule,
         InfiniteScrollModule,
         RouterModule.forRoot(ENTITY_STATES, { useHash: true })
     ],
     declarations: [
-        EventComponent
+        EventComponent,
+        EventDialogComponent,
+        EventPopupComponent
     ],
     entryComponents: [
-        EventComponent
+        EventComponent,
+        EventDialogComponent,
+        EventPopupComponent
     ],
     providers: [
-        EventService
+        EventService,
+        EventPopupService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

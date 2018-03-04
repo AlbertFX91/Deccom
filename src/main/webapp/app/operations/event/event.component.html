@@ -44,7 +44,7 @@
                     </td>
                     -->
                     <td>{{event.name}}</td>
-                    <td>{{event.creationMoment | date : "dd.MM.yyyy HH:mm:ss"}}</td>
+                    <td>{{event.creationMoment | date : "dd.MM.yyyy HH:mm"}}</td>
                     <td>{{event.startingDate | date : "dd.MM.yyyy"}}</td>
                     <td>{{event.endingDate | date : "dd.MM.yyyy"}}</td>
                     <td class="text-right">
@@ -82,7 +82,15 @@
             </div>
             <div class="form-group">
                 <label class="form-control-label" jhiTranslate="deccomApp.event.startingDate" for="field_startingDate">Starting date</label>
-                <input type="text" class="form-control" name="startingDate" id="startingDate" [(ngModel)]="event.startingDate" required />
+                <div class="input-group">
+                    <input id="field_startingDate" type="text" class="form-control" name="startingDate" ngbDatepicker #startingDateDp="ngbDatepicker"
+                        [(ngModel)]="event.startingDate" required/>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" (click)="startingDateDp.toggle()">
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </span>
+                </div>
                 <div [hidden]="!(eventForm.controls.startingDate?.dirty && eventForm.controls.startingDate?.invalid)">
                     <small class="form-text text-danger" [hidden]="!eventForm.controls.startingDate?.errors?.required" jhiTranslate="entity.validation.required">
                         This field is required.
@@ -91,7 +99,15 @@
             </div>
             <div class="form-group">
                 <label class="form-control-label" jhiTranslate="deccomApp.event.endingDate" for="field_endingDate">Ending date</label>
-                <input type="text" class="form-control" name="endingDate" id="endingDate" [(ngModel)]="event.endingDate" />
+                <div class="input-group">
+                    <input id="field_endingDate" type="text" class="form-control" name="endingDate" ngbDatepicker #endingDateDp="ngbDatepicker"
+                        [(ngModel)]="event.endingDate" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" (click)="endingDateDp.toggle()">
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </span>
+                </div>
             </div>
             <div>
                 <button type="button" class="btn btn-default cancel" data-dismiss="modal" (click)="clear()">
