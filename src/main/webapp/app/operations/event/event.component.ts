@@ -51,7 +51,9 @@ import { JhiParseLinks, JhiAlertService, JhiEventManager } from 'ng-jhipster';
         this.event = {};
     }
 
-    ngOnDestroy() { }
+    ngOnDestroy() {
+        this.eventManager.destroy(this.eventSubscriber);
+    }
 
     onSuccess(data: any, headers: any) {
         for (let i = 0; i < data.length; i++) {
@@ -93,7 +95,8 @@ import { JhiParseLinks, JhiAlertService, JhiEventManager } from 'ng-jhipster';
                     content: 'Deleted an event'
                 });
             });
-            this.reload();
+            this.events = [];
+            this.ngOnInit();
         }
     }
 
@@ -117,7 +120,7 @@ import { JhiParseLinks, JhiAlertService, JhiEventManager } from 'ng-jhipster';
     }
 
     registerChangeInEvents() {
-        this.eventSubscriber = this.eventManager.subscribe('eventListModification', (response) => this.reset());
+        this.eventSubscriber = this.eventManager.subscribe('eventListModification', (response) => this.reload());
     }
 
     reset() {
