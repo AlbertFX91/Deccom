@@ -10,6 +10,8 @@ import {
     EventComponent,
     EventDialogComponent,
     EventPopupComponent,
+    EventDeletePopupComponent,
+    EventDeleteDialogComponent,
     eventRoute,
     eventPopupRoute
 } from './';
@@ -28,12 +30,16 @@ const ENTITY_STATES = [
     declarations: [
         EventComponent,
         EventDialogComponent,
-        EventPopupComponent
+        EventPopupComponent,
+        EventDeletePopupComponent,
+        EventDeleteDialogComponent,
     ],
     entryComponents: [
         EventComponent,
         EventDialogComponent,
-        EventPopupComponent
+        EventPopupComponent,
+        EventDeletePopupComponent,
+        EventDeleteDialogComponent,
     ],
     providers: [
         EventService,

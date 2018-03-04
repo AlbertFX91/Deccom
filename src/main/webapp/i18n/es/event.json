@@ -3,6 +3,7 @@
         "event": {
             "home": {
                 "title": "Eventos",
+                "create": "Crear un nuevo evento",
                 "edit": "Editar un evento"
             },
             "name": "Nombre",

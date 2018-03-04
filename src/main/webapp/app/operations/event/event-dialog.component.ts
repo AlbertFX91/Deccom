@@ -41,17 +41,28 @@ export class EventDialogComponent implements OnInit {
         if (this.event.id !== undefined) {
             this.subscribeToSaveResponse(
                 this.eventService.update(this.event));
+        } else {
+            this.event.startingDate = this.convertDate(this.event.startingDate);
+            if (this.event.endingDate) {
+                this.event.endingDate = this.convertDate(this.event.endingDate);
+            }
+            this.eventService.create(this.event).subscribe(
+                (res: any) => this.onEventSuccess(res),
+                (error: Response) => this.onError(error)
+            )
         }
-        /* else {
-            this.subscribeToSaveResponse(
-                this.eventService.create(this.event));
-        }
-        */
     }
 
     private subscribeToSaveResponse(result: Observable<Event>) {
         result.subscribe((res: Event) =>
             this.onSaveSuccess(res), (res: Response) => this.onSaveError(res));
+    }
+
+    onEventSuccess(res: any) {
+        this.isSaving = false;
+        // this.eventManager.broadcast({ name: 'event_success', content: 'OK' });
+        this.eventManager.broadcast({ name: 'eventListModification', content: 'OK' });
+        this.clear();
     }
 
     private onSaveSuccess(result: Event) {
@@ -73,6 +84,23 @@ export class EventDialogComponent implements OnInit {
     private onError(error) {
         this.alertService.error(error.message, null, null);
     }
+
+    convertDate(date: any) {
+        let dateAux, dateMonth, dateDay;
+        if (date['month'].toString().length === 1) {
+            dateMonth = '0' + date['month'];
+        } else {
+            dateMonth = date['month'];
+        }
+        if (date['day'].toString().length === 1) {
+            dateDay = '0' + date['day'];
+        } else {
+            dateDay = date['day'];
+        }
+        dateAux = date['year'] + '-' + dateMonth + '-' + dateDay;
+        return dateAux;
+    }
+
 }
 
 @Component({
@@ -103,4 +131,5 @@ export class EventPopupComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.routeSub.unsubscribe();
     }
+
 }

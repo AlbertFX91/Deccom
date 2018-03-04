@@ -1,5 +1,6 @@
 package com.deccom.domain.core;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -7,28 +8,39 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.deccom.domain.core.extractor.ControlVariableExtractor;
 
 /**
  * A ControlVariable.
  */
-public class ControlVariable {
+@Document(collection = "controlVariable")
+public class ControlVariable implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	private String id;
 	@NotNull
+	@Field("name")
 	private String name;
 	@NotNull
+	@Field("status")
 	private Status status;
 	@NotNull
+	@Field("creationMoment")
 	private LocalDateTime creationMoment;
 	@NotNull
 	@Min(value = 1)
+	@Field("frequency")
 	private Integer frequency;
 	@NotNull
+	@Field("controlVarEntries")
 	private List<ControlVariableEntry> controlVarEntries;
 	@NotNull
+	@Field("extractor")
 	private ControlVariableExtractor extractor;
 
 	public String getId() {

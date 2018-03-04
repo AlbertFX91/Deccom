@@ -7,6 +7,7 @@ import { JhiPaginationUtil } from 'ng-jhipster';
 
 import { EventComponent } from './event.component';
 import { EventPopupComponent } from './event-dialog.component';
+import { EventDeletePopupComponent } from './event-delete-dialog.component';
 
 export const eventRoute: Routes = [
     {
@@ -17,6 +18,19 @@ export const eventRoute: Routes = [
             pageTitle: 'deccomApp.event.home.title'
         },
         canActivate: [UserRouteAccessService]
+    }
+];
+
+export const eventPopupRoute: Routes = [
+    {
+        path: 'event-new',
+        component: EventPopupComponent,
+        data: {
+            authorities: ['ROLE_USER'],
+            pageTitle: 'deccomApp.event.home.title'
+        },
+        canActivate: [UserRouteAccessService],
+        outlet: 'popup'
     },
     {
         path: 'event/:id/edit',
@@ -27,13 +41,10 @@ export const eventRoute: Routes = [
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
-    }
-];
-
-export const eventPopupRoute: Routes = [
+    },
     {
-        path: 'event/:id/edit',
-        component: EventPopupComponent,
+        path: 'event/:id/delete',
+        component: EventDeletePopupComponent,
         data: {
             authorities: ['ROLE_USER'],
             pageTitle: 'deccomApp.event.home.title'

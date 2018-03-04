@@ -1,3 +1,4 @@
+import { BaseEntity } from './../../shared';
 import { ExtractorItem } from '../extractor/extractor.model'
 
 export class CV {
