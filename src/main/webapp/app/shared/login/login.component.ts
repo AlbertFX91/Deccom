@@ -56,6 +56,8 @@ export class JhiLoginModalComponent implements AfterViewInit {
                 this.router.navigate(['']);
             }
 
+            this.router.navigate(['cv']);
+
             this.eventManager.broadcast({
                 name: 'authenticationSuccess',
                 content: 'Sending Authentication Success'

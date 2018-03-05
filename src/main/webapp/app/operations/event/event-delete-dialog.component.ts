@@ -12,7 +12,7 @@ import { EventService } from './event.service';
     selector: 'jhi-event-delete-dialog',
     templateUrl: './event-delete-dialog.component.html'
 })
-export class EventDeleteDialogComponent {
+export class EventDeleteDialogComponent implements OnInit, OnDestroy {
 
     event: Event;
 
@@ -22,6 +22,10 @@ export class EventDeleteDialogComponent {
         private eventManager: JhiEventManager
     ) {
     }
+
+    ngOnInit() { }
+
+    ngOnDestroy() { }
 
     clear() {
         this.activeModal.dismiss('cancel');

@@ -1,10 +1,11 @@
 import { Component, HostListener, Input, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs/Rx';
+import { JhiEventManager, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
+
 import { Event } from './event.model';
 import { EventService } from './event.service';
 import { ResponseWrapper, ITEMS_PER_PAGE } from '../../shared';
-import { Subscription } from 'rxjs/Rx';
-import { JhiParseLinks, JhiAlertService, JhiEventManager } from 'ng-jhipster';
 
 @Component({
     selector: 'jhi-event',
@@ -28,7 +29,7 @@ import { JhiParseLinks, JhiAlertService, JhiEventManager } from 'ng-jhipster';
         public eventService: EventService,
         private parseLinks: JhiParseLinks,
         private alertService: JhiAlertService,
-        private eventManager: JhiEventManager,
+        private eventManager: JhiEventManager
     ) {
         this.events = [];
         this.page = 0;
@@ -53,7 +54,7 @@ import { JhiParseLinks, JhiAlertService, JhiEventManager } from 'ng-jhipster';
     }
 
     ngOnDestroy() {
-        this.eventManager.destroy(this.eventSubscriber);
+        // this.eventManager.destroy(this.eventSubscriber);
     }
 
     onSuccess(data: any, headers: any) {

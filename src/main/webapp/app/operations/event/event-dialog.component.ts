@@ -14,7 +14,7 @@ import { EventService } from './event.service';
     selector: 'jhi-event-dialog',
     templateUrl: './event-dialog.component.html'
 })
-export class EventDialogComponent implements OnInit {
+export class EventDialogComponent implements OnInit, OnDestroy {
 
     event: Event;
     isSaving: boolean;
@@ -31,6 +31,8 @@ export class EventDialogComponent implements OnInit {
     ngOnInit() {
         this.isSaving = false;
     }
+
+    ngOnDestroy() { }
 
     clear() {
         this.activeModal.dismiss('cancel');
