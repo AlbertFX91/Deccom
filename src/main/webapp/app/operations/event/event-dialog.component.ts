@@ -85,7 +85,7 @@ export class EventDialogComponent implements OnInit {
         this.alertService.error(error.message, null, null);
     }
 
-    convertDate(date: any) {
+    private convertDate(date: any) {
         let dateAux, dateMonth, dateDay;
         if (date['month'].toString().length === 1) {
             dateMonth = '0' + date['month'];

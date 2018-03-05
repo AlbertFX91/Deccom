@@ -19,10 +19,10 @@ import { JhiParseLinks, JhiAlertService, JhiEventManager } from 'ng-jhipster';
     reverse: any;
     totalItems: number;
     eventSubscriber: Subscription;
-    event: Event;
     isSaving: boolean;
     startingDateDp: any;
     endingDateDp: any;
+    predicate: any;
 
     constructor(
         public eventService: EventService,
@@ -36,6 +36,8 @@ import { JhiParseLinks, JhiAlertService, JhiEventManager } from 'ng-jhipster';
         this.links = {
             last: 0
         };
+        this.predicate = 'id';
+        this.reverse = true;
     }
 
     ngOnInit() {
@@ -48,7 +50,6 @@ import { JhiParseLinks, JhiAlertService, JhiEventManager } from 'ng-jhipster';
             (error: Response) => this.onError(error)
         )
         this.isSaving = false;
-        this.event = {};
     }
 
     ngOnDestroy() {
@@ -67,47 +68,11 @@ import { JhiParseLinks, JhiAlertService, JhiEventManager } from 'ng-jhipster';
         this.alertService.error(error.message, null, null);
     }
 
-    createEvent() {
-        this.isSaving = true;
-        this.event.startingDate = this.convertDate(this.event.startingDate);
-        if (this.event.endingDate) {
-            this.event.endingDate = this.convertDate(this.event.endingDate);
-        }
-        this.eventService.create(this.event).subscribe(
-            (res: any) => this.onEventSuccess(res),
-            (error: Response) => this.onError(error)
-        )
-    }
-
-    onEventSuccess(res: any) {
-        this.isSaving = false;
-        // this.eventManager.broadcast({ name: 'event_success', content: 'OK' });
-        this.eventManager.broadcast({ name: 'eventListModification', content: 'OK' });
-        this.clear();
-        this.reload();
-    }
-
-    delete(id: string) {
-        if (confirm('Are you sure you want to delete this event?')) {
-            this.eventService.delete(id).subscribe((response) => {
-                this.eventManager.broadcast({
-                    name: 'eventListModification',
-                    content: 'Deleted an event'
-                });
-            });
-            this.events = [];
-            this.ngOnInit();
-        }
-    }
-
-    clear() {
-        this.event = {};
-    }
-
     loadAll() {
         this.eventService.query({
             page: this.page,
-            size: this.itemsPerPage
+            size: this.itemsPerPage,
+            sort: this.sort()
         }).subscribe(
             (res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
             (res: ResponseWrapper) => this.onError(res.json)
@@ -120,29 +85,21 @@ import { JhiParseLinks, JhiAlertService, JhiEventManager } from 'ng-jhipster';
     }
 
     registerChangeInEvents() {
-        this.eventSubscriber = this.eventManager.subscribe('eventListModification', (response) => this.reload());
+        this.eventSubscriber = this.eventManager.subscribe('eventListModification', (response) => this.reset());
+    }
+
+    sort() {
+        const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
+        if (this.predicate !== 'id') {
+            result.push('id');
+        }
+        return result;
     }
 
     reset() {
         this.page = 0;
         this.events = [];
         this.loadAll();
-    }
-
-    convertDate(date: any) {
-        let dateAux, dateMonth, dateDay;
-        if (date['month'].toString().length === 1) {
-            dateMonth = '0' + date['month'];
-        } else {
-            dateMonth = date['month'];
-        }
-        if (date['day'].toString().length === 1) {
-            dateDay = '0' + date['day'];
-        } else {
-            dateDay = date['day'];
-        }
-        dateAux = date['year'] + '-' + dateMonth + '-' + dateDay;
-        return dateAux;
     }
 
     reload() {

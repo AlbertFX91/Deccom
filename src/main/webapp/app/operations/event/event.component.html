@@ -15,7 +15,7 @@
     <div class="table-responsive" *ngIf="events">
         <table class="table table-striped">
             <thead>
-                <tr jhiSort [(ascending)]="reverse" [callback]="reset.bind(this)">
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
                     <th>
                         <span jhiTranslate="deccomApp.event.name">Name</span>
                     </th>

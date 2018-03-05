@@ -9,11 +9,8 @@ import { JhiDateUtils } from 'ng-jhipster';
 export class EventService {
 
     private resourceUrl = 'api/event/';
-    events: Event[];
 
-    constructor(private http: Http, private dateUtils: JhiDateUtils) {
-        this.events = [];
-    }
+    constructor(private http: Http, private dateUtils: JhiDateUtils) { }
 
     findOne(id: string): Observable<Event> {
         return this.http.get(`${this.resourceUrl + '/findOne'}/${id}`).map((res: Response) => {
@@ -56,7 +53,7 @@ export class EventService {
 
     query(req?: any): Observable<ResponseWrapper> {
         const options = createRequestOption(req);
-        return this.http.get(this.resourceUrl, options)
+        return this.http.get(this.resourceUrl + 'findAll', options)
             .map((res: Response) => this.convertResponse(res));
     }
 
