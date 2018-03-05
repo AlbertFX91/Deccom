@@ -56,8 +56,6 @@ export class JhiLoginModalComponent implements AfterViewInit {
                 this.router.navigate(['']);
             }
 
-            this.router.navigate(['cv']);
-
             this.eventManager.broadcast({
                 name: 'authenticationSuccess',
                 content: 'Sending Authentication Success'
@@ -68,6 +66,8 @@ export class JhiLoginModalComponent implements AfterViewInit {
             const redirect = this.stateStorageService.getUrl();
             if (redirect) {
                 this.router.navigate([redirect]);
+            } else {
+                this.router.navigate(['cv']);
             }
         }).catch(() => {
             this.authenticationError = true;
