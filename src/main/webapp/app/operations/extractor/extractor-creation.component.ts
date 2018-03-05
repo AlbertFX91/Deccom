@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs/Rx';
+import { Subscription, Observable} from 'rxjs/Rx';
 import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, JhiAlertService } from 'ng-jhipster';
 
 import { ExtractorItem } from './extractor.model';
 import { CV, NewCV } from '../cv/cv.model';
 import { ExtractorService } from './extractor.service';
+import { CVService } from '../cv/cv.service';
 
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
@@ -24,6 +25,7 @@ export class ExtractorCreationComponent implements OnInit, OnDestroy {
 
     constructor(
         private extractorService: ExtractorService,
+        private controlvarService: CVService,
         private alertService: JhiAlertService,
         private eventManager: JhiEventManager,
         private parseLinks: JhiParseLinks,
@@ -39,7 +41,6 @@ export class ExtractorCreationComponent implements OnInit, OnDestroy {
             this.controlvar.extractor = extractor;
             this.cvFields = this.getFieldsCVToInclude();
             this.extractorFields = this.getFieldsExtractorToInclude();
-            console.log(this.controlvar);
         });
     }
 
@@ -72,11 +73,39 @@ export class ExtractorCreationComponent implements OnInit, OnDestroy {
     }
 
     save() {
-        // var newCV: NewCV = new NewCV();
-        // newCV.extractorClass = this.controlvar.extractor.extractorClass;
-        // newCV.controlVariable = this.controlvar;
-        // this.getFieldsExtractorToInclude()
-        console.log(this.controlvar);
+        const newCV: NewCV = new NewCV();
+        newCV.extractorClass = this.controlvar.extractor.extractorClass;
+        newCV.controlVariable = this.controlvar;
+        this.getFieldsExtractorToInclude().forEach((x) => (newCV.extractorData[x] = this.controlvar.extractor[x]));
+        this.subscribeToSaveResponse(
+            this.controlvarService.create(newCV));
+    }
+
+    private subscribeToSaveResponse(result: Observable<NewCV>) {
+        result.subscribe(
+            (res: NewCV) => (this.onSaveSuccess(res)),
+            (res: Response) => (this.onSaveError(res)));
+    }
+
+    private onSaveSuccess(result: NewCV) {
+        console.log('OK!');
+        // this.eventManager.broadcast({ name: 'acmeListModification', content: 'OK'});
+        // this.isSaving = false;
+        // this.activeModal.dismiss(result);
+    }
+
+    private onSaveError(error) {
+        try {
+            error.json();
+        } catch (exception) {
+            error.message = error.text();
+        }
+        // this.isSaving = false;
+        this.onError(error);
+    }
+
+    private onError(error) {
+        this.alertService.error(error.message, null, null);
     }
 
     cancel() {

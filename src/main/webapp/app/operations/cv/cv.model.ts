@@ -36,5 +36,8 @@ export class NewCV {
         public extractorData?: any,
         public controlVariable?: CV
     ) {
+        this.extractorClass = '';
+        this.extractorData = {};
+        this.controlVariable = new CV();
     }
 }
