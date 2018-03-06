@@ -8,6 +8,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -26,6 +27,10 @@ public class ControlVariable implements Serializable {
 	@NotNull
 	@Field("name")
 	private String name;
+	@Field("value")
+	private Integer value;
+	@Field("lastUpdate")
+	private LocalDateTime lastUpdate;
 	@NotNull
 	@Field("status")
 	private Status status;
@@ -57,6 +62,22 @@ public class ControlVariable implements Serializable {
 
 	public void setStatus(Status status) {
 		this.status = status;
+	}
+	
+	public Integer getValue() {
+		return value;
+	}
+
+	public void setValue(Integer value) {
+		this.value = value;
+	}
+
+	public LocalDateTime getLastUpdate() {
+		return lastUpdate;
+	}
+
+	public void setLastUpdate(LocalDateTime lastUpdate) {
+		this.lastUpdate = lastUpdate;
 	}
 
 	public String getName() {
