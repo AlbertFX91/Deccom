@@ -3,16 +3,11 @@ package com.deccom.service.core;
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-import org.reflections.Reflections;
-import org.reflections.util.ClasspathHelper;
-import org.reflections.util.ConfigurationBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -214,18 +209,38 @@ public class ControlVariableService {
 		}
 	}
 
-	private <T> void injectData(Map<String, T> extractorData, ControlVariableExtractor extractor) {
+	private <T, V extends ControlVariableExtractor> void injectData(Map<String, T> extractorData, V extractor) {
 		Class<?> clazz = extractor.getClass();
-		for (Entry<String, T> entry: extractorData.entrySet()) {
-			String f = entry.getKey();
-			T v = entry.getValue();
-			try {
-				Field field = clazz.getDeclaredField(f);
-				field.setAccessible(true);
-				field.set(extractor, v);
-			} catch (Exception  e) {
-				throwException("Error injectin data into extractor " + extractor.getClass().getName(), "extractorclassinjectionerror");
+		Set<String> keys = extractorData.keySet();
+		Set<String> keysInjected = new HashSet<>();
+		for(String key: keys) {
+			T value = extractorData.get(key);
+			Boolean res = inject(key, value, clazz, extractor);
+			if (res) {
+				keysInjected.add(key);
 			}
+		}
+		if(!keysInjected.equals(keys)) {
+			keys.removeAll(keysInjected);
+			throwException("Error injecting fields into extractor " + extractor.getClass().getName() + keys, "extractorclassinjectionerror");
+		}
+	}
+	
+	private <T, V extends ControlVariableExtractor> Boolean inject(String key, T value, Class<?> c, V extractor){
+		// Base
+		if(c.equals(Object.class)) {
+			return false;
+		}
+		
+		Field field;
+		try {
+			field = c.getDeclaredField(key);
+			field.setAccessible(true);
+			field.set(extractor, value);
+			return true;
+		} catch (Exception e) {
+			// Recursion
+			return inject(key, value, extractor.getClass().getSuperclass(), extractor);
 		}
 	}
 	
