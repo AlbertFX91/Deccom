@@ -22,6 +22,8 @@ export class ExtractorCreationComponent implements OnInit, OnDestroy {
     currentAccount: any;
     cvFields: String[];
     extractorFields: String[];
+    extractorDisableFields: String[];
+    isSaving: boolean;
 
     constructor(
         private extractorService: ExtractorService,
@@ -30,7 +32,8 @@ export class ExtractorCreationComponent implements OnInit, OnDestroy {
         private eventManager: JhiEventManager,
         private parseLinks: JhiParseLinks,
         private principal: Principal,
-        private router: ActivatedRoute
+        private router: ActivatedRoute,
+        private mainRouter: Router,
     ) {
         this.controlvar = new CV();
     }
@@ -39,8 +42,9 @@ export class ExtractorCreationComponent implements OnInit, OnDestroy {
         const uid = this.router.snapshot.paramMap.get('uid');
         this.extractorService.find(uid).subscribe((extractor) => {
             this.controlvar.extractor = extractor;
-            this.cvFields = this.getFieldsCVToInclude();
-            this.extractorFields = this.getFieldsExtractorToInclude();
+            this.cvFields = this.getFieldsCVToInclude().slice();
+            this.extractorFields = this.getFieldsExtractorToInclude().slice();
+            this.extractorDisableFields = this.extractorFields.filter((x) => (this.controlvar.extractor[x.toString()])).slice();
         });
     }
 
@@ -64,19 +68,22 @@ export class ExtractorCreationComponent implements OnInit, OnDestroy {
         return ['extractorClass', 'style', 'uid'];
     }
 
-    getFieldsCVToInclude() {
+    private getFieldsCVToInclude() {
         return Object.keys(this.controlvar).filter((x) => this.getFieldsCVToExclude().indexOf(x) === -1);
     }
 
-    getFieldsExtractorToInclude() {
+    private getFieldsExtractorToInclude() {
         return Object.keys(this.controlvar.extractor).filter((x) => this.getFieldsExtractorToExclude().indexOf(x) === -1);
     }
 
     save() {
+        this.isSaving = true;
         const newCV: NewCV = new NewCV();
         newCV.extractorClass = this.controlvar.extractor.extractorClass;
         newCV.controlVariable = this.controlvar;
-        this.getFieldsExtractorToInclude().forEach((x) => (newCV.extractorData[x] = this.controlvar.extractor[x]));
+        this.extractorFields
+            .map((x) => x.toString())
+            .forEach((x) => (newCV.extractorData[x] = this.controlvar.extractor[x]));
         this.subscribeToSaveResponse(
             this.controlvarService.create(newCV));
     }
@@ -88,10 +95,9 @@ export class ExtractorCreationComponent implements OnInit, OnDestroy {
     }
 
     private onSaveSuccess(result: NewCV) {
-        console.log('OK!');
-        // this.eventManager.broadcast({ name: 'acmeListModification', content: 'OK'});
-        // this.isSaving = false;
-        // this.activeModal.dismiss(result);
+        this.eventManager.broadcast({ name: 'acmeListModification', content: 'OK'});
+        this.isSaving = false;
+        this.mainRouter.navigateByUrl('/cv');
     }
 
     private onSaveError(error) {
@@ -100,7 +106,7 @@ export class ExtractorCreationComponent implements OnInit, OnDestroy {
         } catch (exception) {
             error.message = error.text();
         }
-        // this.isSaving = false;
+        this.isSaving = false;
         this.onError(error);
     }
 
@@ -109,5 +115,13 @@ export class ExtractorCreationComponent implements OnInit, OnDestroy {
     }
 
     cancel() {
+    }
+
+    requiredField(field: String) {
+        return this.controlvar.extractor[field.toString()] ? '' : null
+    }
+
+    disableField(field: String) {
+        return this.extractorDisableFields.indexOf(field) !== -1 ? '' : null;
     }
 }
