@@ -153,7 +153,7 @@ public class ControlVariableService {
 
 		return controlVariableRepository.save(controlVar);
 	}
-	
+
 	public ControlVariable convert(New_ControlVariable ncv) {
 		ControlVariable res;
 		ControlVariableExtractor extractor;
@@ -166,72 +166,88 @@ public class ControlVariableService {
 		injectData(ncv.getExtractorData(), extractor);
 		// 4. Check all extractors fields are added
 		checkFieldsNotNull(extractor);
-		
+
 		res.setExtractor(extractor);
 		return res;
 	}
-	
 
-	
 	private ControlVariableExtractor getExtractor(New_ControlVariable ncv) {
 		ControlVariableExtractor res = null;
 		String extractor = ncv.getExtractorClass();
-		
+
 		try {
 			Object cls = Class.forName(extractor).newInstance();
 			if (cls instanceof ControlVariableExtractor) {
 				res = (ControlVariableExtractor) cls;
-			}else {
-				throwException("the class '"+ncv.getExtractorClass()+"' is not an extrator", "extractorclassnotinstance");
+			} else {
+				throwException("the class '" + ncv.getExtractorClass() + "' is not an extrator",
+						"extractorclassnotinstance");
 			}
 		} catch (InstantiationException | IllegalAccessException e) {
-			throwException("the class '"+ncv.getExtractorClass()+"' cannot be instanciated", "extractorclasserror", e);
+			throwException("the class '" + ncv.getExtractorClass() + "' cannot be instanciated", "extractorclasserror",
+					e);
 		} catch (ClassNotFoundException e) {
-			throwException("the class '"+ncv.getExtractorClass()+"' cannot be founded", "extractorclassnotfound", e);
+			throwException("the class '" + ncv.getExtractorClass() + "' cannot be founded", "extractorclassnotfound",
+					e);
 		}
 		return res;
 	}
-	
-	private void checkFieldsNotNull(ControlVariableExtractor ncv){
+
+	private void checkFieldsNotNull(ControlVariableExtractor ncv) {
 		List<String> missingFields = new ArrayList<>();
-		for(Field f: ncv.getClass().getDeclaredFields()) {
+
+		missingFields = checkFieldsNotNull(ncv.getClass(), ncv);
+		
+		if (!missingFields.isEmpty()) {
+			throwException("The fields " + missingFields + " are null", "extractorclassfieldsnull");
+		}
+
+	}
+
+	private List<String> checkFieldsNotNull(Class<?> c, ControlVariableExtractor ncv) {
+		List<String> missingFields = new ArrayList<>();
+		// Base
+		if (c.equals(Object.class)) {
+			return missingFields;
+		}
+		for (Field f : c.getDeclaredFields()) {
 			f.setAccessible(true);
 			try {
-				if(f.get(ncv) == null) {
+				if (f.get(ncv) == null) {
 					missingFields.add(f.getName());
 				}
 			} catch (IllegalArgumentException | IllegalAccessException e) {
-				throwException("Error checking fields in extractor", "extractorclassfields");
+				missingFields.add(f.getName());
 			}
 		}
-		if(!missingFields.isEmpty()) {
-			throwException("The fields " + missingFields + " are null", "extractorclassfieldsnull");
-		}
+		missingFields.addAll(checkFieldsNotNull(c.getSuperclass(), ncv));
+		return missingFields;
 	}
 
 	private <T, V extends ControlVariableExtractor> void injectData(Map<String, T> extractorData, V extractor) {
 		Class<?> clazz = extractor.getClass();
 		Set<String> keys = extractorData.keySet();
 		Set<String> keysInjected = new HashSet<>();
-		for(String key: keys) {
+		for (String key : keys) {
 			T value = extractorData.get(key);
 			Boolean res = inject(key, value, clazz, extractor);
 			if (res) {
 				keysInjected.add(key);
 			}
 		}
-		if(!keysInjected.equals(keys)) {
+		if (!keysInjected.equals(keys)) {
 			keys.removeAll(keysInjected);
-			throwException("Error injecting fields into extractor " + extractor.getClass().getName() + keys, "extractorclassinjectionerror");
+			throwException("Error injecting fields into extractor " + extractor.getClass().getName() + keys,
+					"extractorclassinjectionerror");
 		}
 	}
-	
-	private <T, V extends ControlVariableExtractor> Boolean inject(String key, T value, Class<?> c, V extractor){
+
+	private <T, V extends ControlVariableExtractor> Boolean inject(String key, T value, Class<?> c, V extractor) {
 		// Base
-		if(c.equals(Object.class)) {
+		if (c.equals(Object.class)) {
 			return false;
 		}
-		
+
 		Field field;
 		try {
 			field = c.getDeclaredField(key);
@@ -243,14 +259,12 @@ public class ControlVariableService {
 			return inject(key, value, extractor.getClass().getSuperclass(), extractor);
 		}
 	}
-	
+
 	private void throwException(String msg, String i18Code, Exception e) {
-		throw new ControlVariableServiceException(msg, i18nCodeRoot + "." + i18Code,
-				"ControlVariableService", e);
+		throw new ControlVariableServiceException(msg, i18nCodeRoot + "." + i18Code, "ControlVariableService", e);
 	}
-	
+
 	private void throwException(String msg, String i18Code) {
-		throw new ControlVariableServiceException(msg, i18nCodeRoot + "." + i18Code,
-				"ControlVariableService");
+		throw new ControlVariableServiceException(msg, i18nCodeRoot + "." + i18Code, "ControlVariableService");
 	}
 }
