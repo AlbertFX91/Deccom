@@ -114,6 +114,22 @@ public class ControlVariableResource {
 		log.debug("Request to get all Core_Connection");
 		return controlVariableService.findAll(pageable);
 	}
+	
+	/**
+	 * Get all the controlvars with a limited number of entries.
+	 *
+	 * @param pageable
+	 *            the pagination information
+	 * @param numberOfEntries
+	 *            the number of entries included in each controlvar
+	 * @return the list of core_controlvars with a limited number of entries
+	 */
+	@GetMapping("/controlvar/all_limited_entries")
+	@Timed
+	public Page<ControlVariable> findAllLimitedNumberOfEntries(Pageable pageable, Integer numberOfEntries) {
+		log.debug("Request to get all Core_Connection");
+		return controlVariableService.findAllLimitedNumberOfEntries(pageable, numberOfEntries);
+	}
 
 	/**
 	 * PUT /controlvar/pause : Pauses a running control var.

@@ -75,10 +75,17 @@ public class ControlVariableService {
 		log.debug("Request to get ControlVariable : {}", id);
 		return controlVariableRepository.findOne(id);
 	}
-
+	
 	public Page<ControlVariable> findAll(Pageable pageable) {
 		log.debug("Request to get all Core_Connection");
 		return controlVariableRepository.findAll(pageable);
+	}
+
+	public Page<ControlVariable> findAllLimitedNumberOfEntries(Pageable pageable, Integer numberOfEntries) {
+		log.debug("Request to get all Core_Connection");
+		Page<ControlVariable> result = controlVariableRepository.findAll(pageable);
+		setNumberOfControlVariableEntries(result, numberOfEntries);
+		return result;
 	}
 
 	public List<ControlVariable> findAll() {
@@ -235,4 +242,21 @@ public class ControlVariableService {
 	private void throwException(String msg, String i18Code) {
 		throw new ControlVariableServiceException(msg, i18nCodeRoot + "." + i18Code, "ControlVariableService");
 	}
+
+	private void setNumberOfControlVariableEntries(Page<ControlVariable> controlVariables, Integer i) {
+
+		for (ControlVariable controlVariable : controlVariables) {
+			
+			List<ControlVariableEntry> controlVariableEntries;
+			List<ControlVariableEntry> newControlVariableEntries;
+			
+			controlVariableEntries = controlVariable.getControlVarEntries();
+			newControlVariableEntries = controlVariableEntries.subList(Math.max(controlVariableEntries.size() - i, 0), controlVariableEntries.size());
+			
+			controlVariable.setControlVarEntries(newControlVariableEntries);
+			
+		}
+
+	}
+
 }
