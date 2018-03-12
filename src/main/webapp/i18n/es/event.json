@@ -10,9 +10,6 @@
             "creationMoment": "Desde",
             "startingDate": "Fecha de inicio",
             "endingDate": "Fecha de fin",
-            "error": {
-                "wrongDates": "La fecha de inicio debe ser anterior o igual a la fecha de fin"
-            },
             "created": "El evento ha sido creado",
             "updated": "El evento ha sido actualizado",
             "confirmDelete": "¿Está seguro de que quiere borrar este evento?",

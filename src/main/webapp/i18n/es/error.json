@@ -23,6 +23,9 @@
             },
             "controlvariable": {
                 "nointeger": "El dato debe ser un número entero"
+            },
+            "event": {
+                "wrongdates": "La fecha de inicio debe ser anterior o igual a la fecha de fin"
             }
         }
     }

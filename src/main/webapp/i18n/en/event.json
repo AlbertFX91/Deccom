@@ -10,9 +10,6 @@
             "creationMoment": "Since",
             "startingDate": "Starting date",
             "endingDate": "Ending date",
-            "error": {
-                "wrongDates": "The starting date must be before or equal to the ending date"
-            },
             "created": "The event has been created",
             "updated": "The event has been updated",
             "confirmDelete": "Are you sure you want to delete this event?",

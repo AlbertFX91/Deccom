@@ -70,8 +70,10 @@ export class EventService {
             .convertDateTimeFromServer(entity.creationMoment);
         entity.startingDate = this.dateUtils
             .convertLocalDateFromServer(entity.startingDate);
-        entity.endingDate = this.dateUtils
-            .convertLocalDateFromServer(entity.endingDate);
+        if (entity.endingDate) {
+            entity.endingDate = this.dateUtils
+                .convertLocalDateFromServer(entity.endingDate);
+        }
     }
 
     private convert(event: Event): Event {
@@ -80,8 +82,10 @@ export class EventService {
             .convertDateTimeFromServer(event.creationMoment);
         copy.startingDate = this.dateUtils
             .convertLocalDateToServer(event.startingDate);
-        copy.endingDate = this.dateUtils
-            .convertLocalDateToServer(event.endingDate);
+        if (copy.endingDate) {
+            copy.endingDate = this.dateUtils
+                .convertLocalDateToServer(event.endingDate);
+        }
         return copy;
     }
 
