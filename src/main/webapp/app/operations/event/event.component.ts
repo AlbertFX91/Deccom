@@ -51,10 +51,11 @@ import { ResponseWrapper, ITEMS_PER_PAGE } from '../../shared';
             (error: Response) => this.onError(error)
         )
         this.isSaving = false;
+        this.registerChangeInEvents();
     }
 
     ngOnDestroy() {
-        // this.eventManager.destroy(this.eventSubscriber);
+        this.eventManager.destroy(this.eventSubscriber);
     }
 
     onSuccess(data: any, headers: any) {

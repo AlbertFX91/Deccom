@@ -73,7 +73,7 @@ public class EventServiceImpl implements EventService {
 
 			if (!(event.getEndingDate().isAfter(event.getStartingDate()))) {
 				throw new EventServiceException("The starting date must be before or equal to the ending date",
-						"EventService", i18nCodeRoot + ".wrongdates");
+						i18nCodeRoot + ".wrongdates", "EventService");
 			}
 
 		}

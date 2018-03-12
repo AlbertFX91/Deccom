@@ -124,7 +124,7 @@ public class ControlVariableResource {
 	 *            the number of entries included in each controlvar
 	 * @return the list of core_controlvars with a limited number of entries
 	 */
-	@GetMapping("/controlvar/all_limited_entries")
+	@GetMapping("/controlvar/all_limited")
 	@Timed
 	public Page<ControlVariable> findAllLimitedNumberOfEntries(Pageable pageable, Integer numberOfEntries) {
 		log.debug("Request to get all Core_Connection");
