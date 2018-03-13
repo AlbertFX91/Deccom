@@ -25,7 +25,7 @@ public class ControlVariableExtractorService {
 	private static final String i18nCodeRoot = "operations.controlvariableextractor";
 
 	public Item_ControlVariableExtractor create(ControlVariableExtractor c) {
-		return new Item_ControlVariableExtractor(c.getClass().getName(), c.getStyle(), c.getUid());
+		return new Item_ControlVariableExtractor(c);
 	}
 
 	public List<Item_ControlVariableExtractor> getAllListExtractors() {
