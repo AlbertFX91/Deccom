@@ -20,9 +20,6 @@ import { ResponseWrapper, ITEMS_PER_PAGE } from '../../shared';
     reverse: any;
     totalItems: number;
     eventSubscriber: Subscription;
-    isSaving: boolean;
-    startingDateDp: any;
-    endingDateDp: any;
     predicate: any;
 
     constructor(
@@ -46,11 +43,7 @@ import { ResponseWrapper, ITEMS_PER_PAGE } from '../../shared';
             page: this.page,
             size: this.itemsPerPage
         };
-        this.eventService.findAll(pageSettings).subscribe(
-            (data: any) => this.onSuccess(data.json(), data.headers),
-            (error: Response) => this.onError(error)
-        )
-        this.isSaving = false;
+        this.loadAll();
         this.registerChangeInEvents();
     }
 

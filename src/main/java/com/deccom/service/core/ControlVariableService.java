@@ -87,6 +87,11 @@ public class ControlVariableService {
 		setNumberOfControlVariableEntries(result, numberOfEntries);
 		return result;
 	}
+	
+	public Page<ControlVariable> findAllLimitedNumberOfEntriesQuery(Pageable pageable, Integer numberOfEntries) {
+		log.debug("Request to get all Core_Connection");
+		return controlVariableRepository.findAllLimitedNumberOfEntriesQuery(pageable, -numberOfEntries);
+	}
 
 	public List<ControlVariable> findAll() {
 		log.debug("Request to get all Core_Connection");
