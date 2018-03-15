@@ -64,7 +64,7 @@ import { ResponseWrapper, ITEMS_PER_PAGE } from '../../shared';
     }
 
     loadAll() {
-        this.eventService.query({
+        this.eventService.findAll({
             page: this.page,
             size: this.itemsPerPage,
             sort: this.sort()

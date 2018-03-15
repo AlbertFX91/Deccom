@@ -1,12 +1,6 @@
 <div>
     <h2>
         <span jhiTranslate="deccomApp.event.home.title">Events</span>
-        <button class="btn btn-primary float-right jh-create-entity create-event" [routerLink]="['/', { outlets: { popup: ['event-new'] } }]">
-            <span class="fa fa-plus"></span>
-            <span jhiTranslate="deccomApp.event.home.create">
-                Create new event
-            </span>
-        </button>
     </h2>
     <jhi-alert></jhi-alert>
     <div class="row">
@@ -67,4 +61,10 @@
             </tbody>
         </table>
     </div>
+    <button class="btn btn-primary float-right jh-create-entity create-event" [routerLink]="['/', { outlets: { popup: ['event-new'] } }]">
+        <span class="fa fa-plus"></span>
+        <span jhiTranslate="deccomApp.event.home.create">
+            Create new event
+        </span>
+    </button>
 </div>

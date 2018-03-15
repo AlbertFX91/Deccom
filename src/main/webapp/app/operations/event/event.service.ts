@@ -20,10 +20,10 @@ export class EventService {
         });
     }
 
-    findAll(pageSettings: any): Observable<ResponseWrapper> {
-        const options = this.createRequestOption(pageSettings);
+    findAll(req?: any): Observable<ResponseWrapper> {
+        const options = createRequestOption(req);
         return this.http.get(this.resourceUrl + 'findAll', options)
-            .map((res: Response) => res);
+            .map((res: Response) => this.convertResponse(res));
     }
 
     create(req?: Event): Observable<ResponseWrapper> {
@@ -49,12 +49,6 @@ export class EventService {
         // const params: URLSearchParams = new URLSearchParams();
         // options.params = params;
         return options;
-    }
-
-    query(req?: any): Observable<ResponseWrapper> {
-        const options = createRequestOption(req);
-        return this.http.get(this.resourceUrl + 'findAll', options)
-            .map((res: Response) => this.convertResponse(res));
     }
 
     private convertResponse(res: Response): ResponseWrapper {
