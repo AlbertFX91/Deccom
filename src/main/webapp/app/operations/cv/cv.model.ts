@@ -1,3 +1,4 @@
+import { BaseEntity } from './../../shared';
 import { ExtractorItem } from '../extractor/extractor.model'
 
 export class CV {
@@ -36,5 +37,8 @@ export class NewCV {
         public extractorData?: any,
         public controlVariable?: CV
     ) {
+        this.extractorClass = '';
+        this.extractorData = {};
+        this.controlVariable = new CV();
     }
 }

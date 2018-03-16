@@ -1,5 +1,6 @@
 package com.deccom.web.rest.core;
 
+import java.net.URI;
 import java.net.URISyntaxException;
 
 import javax.validation.Valid;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
+import com.deccom.domain.Acme;
 import com.deccom.domain.core.ControlVariable;
 import com.deccom.domain.core.extractor.rest.RESTExtractor;
 import com.deccom.domain.core.extractor.sql.SQLExtractor;
@@ -44,7 +46,7 @@ public class ControlVariableResource {
 	 * 
 	 * @return the ResponseEntity with status 200 (OK)
 	 */
-	@GetMapping("/controlvariable/create")
+	@GetMapping("/controlvar/create")
 	@Timed
 	public ResponseEntity<String> create() {
 		log.debug("Creating example controlVariable objects");
@@ -80,7 +82,7 @@ public class ControlVariableResource {
 	 * 
 	 * @return the ResponseEntity with status 200 (OK)
 	 */
-	@GetMapping("/controlvariable/test")
+	@GetMapping("/controlvar/test")
 	@Timed
 	public ResponseEntity<String> test() {
 		log.debug("Printing controlVariable data");
@@ -90,16 +92,18 @@ public class ControlVariableResource {
 		return ResponseEntity.ok().build();
 	}
 
-	 @PostMapping("/controlvariable/new")
-	 @Timed
-	 public ResponseEntity<String> newControlVar(@RequestBody @Valid New_ControlVariable cv) throws URISyntaxException {
-		 log.debug("New Core_ControlVar object 3");
-		 
-		 ControlVariable res = controlVariableService.convert(cv);
-		 controlVariableService.save(res);
-		 
-		 return ResponseEntity.ok().build();
-	 }
+	@PostMapping("/controlvar")
+	@Timed
+	public ResponseEntity<ControlVariable> newControlVar(@RequestBody @Valid New_ControlVariable cv)
+			throws URISyntaxException {
+		log.debug("REST request to save ControlVariable: {}", cv);
+
+		ControlVariable res = controlVariableService.convert(cv);
+		res = controlVariableService.save(res);
+
+		return ResponseEntity.created(new URI("/controlvar" + res.getId()))
+				.headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, res.getId().toString())).body(res);
+	}
 
 	/**
 	 * Get all the controlvars.
@@ -113,6 +117,38 @@ public class ControlVariableResource {
 	public Page<ControlVariable> findAll(Pageable pageable) {
 		log.debug("Request to get all Core_Connection");
 		return controlVariableService.findAll(pageable);
+	}
+	
+	/**
+	 * Get all the controlvars with a limited number of entries.
+	 *
+	 * @param pageable
+	 *            the pagination information
+	 * @param numberOfEntries
+	 *            the number of entries included in each controlvar
+	 * @return the list of core_controlvars with a limited number of entries
+	 */
+	@GetMapping("/controlvar/all_limited")
+	@Timed
+	public Page<ControlVariable> findAllLimitedNumberOfEntries(Pageable pageable, Integer numberOfEntries) {
+		log.debug("Request to get all Core_Connection");
+		return controlVariableService.findAllLimitedNumberOfEntries(pageable, numberOfEntries);
+	}
+	
+	/**
+	 * Get all the controlvars with a limited number of entries.
+	 *
+	 * @param pageable
+	 *            the pagination information
+	 * @param numberOfEntries
+	 *            the number of entries included in each controlvar
+	 * @return the list of core_controlvars with a limited number of entries
+	 */
+	@GetMapping("/controlvar/all_limited_query")
+	@Timed
+	public Page<ControlVariable> findAllLimitedNumberOfEntriesQuery(Pageable pageable, Integer numberOfEntries) {
+		log.debug("Request to get all Core_Connection");
+		return controlVariableService.findAllLimitedNumberOfEntriesQuery(pageable, numberOfEntries);
 	}
 
 	/**
@@ -180,11 +216,8 @@ public class ControlVariableResource {
 
 	@ExceptionHandler(ControlVariableServiceException.class)
 	public ResponseEntity<String> panic(ControlVariableServiceException oops) {
-		return ResponseEntity
-				.badRequest()
-				.headers(
-						HeaderUtil.createFailureAlert(oops.getEntity(),
-								oops.getI18nCode(), oops.getMessage()))
+		return ResponseEntity.badRequest()
+				.headers(HeaderUtil.createFailureAlert(oops.getEntity(), oops.getI18nCode(), oops.getMessage()))
 				.body("{ \"error\": \"" + oops.getMessage() + "\" }");
 	}
 

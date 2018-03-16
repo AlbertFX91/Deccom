@@ -7,11 +7,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 import com.deccom.domain.Event;
 import com.deccom.repository.EventRepository;
 import com.deccom.service.EventService;
+import com.deccom.service.impl.util.EventServiceException;
 
 /**
  * Service Implementation for managing Event.
@@ -71,8 +71,10 @@ public class EventServiceImpl implements EventService {
 
 		if (event.getEndingDate() != null) {
 
-			Assert.isTrue(event.getStartingDate().isBefore(event.getEndingDate())
-					|| event.getStartingDate().isEqual(event.getEndingDate()), i18nCodeRoot + ".wrongDates");
+			if (!(event.getEndingDate().isAfter(event.getStartingDate()))) {
+				throw new EventServiceException("The starting date must be before or equal to the ending date",
+						i18nCodeRoot + ".wrongdates", "EventService");
+			}
 
 		}
 

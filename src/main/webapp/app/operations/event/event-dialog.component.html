@@ -1,0 +1,57 @@
+<form name="eventForm" role="form" novalidate (ngSubmit)="save()" #eventForm="ngForm">
+    <div class="modal-header">
+        <h4 class="modal-title" id="myEventLabel" jhiTranslate="deccomApp.event.home.edit">Edit an event</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="deccomApp.event.name" for="field_name">Name</label>
+            <input type="text" class="form-control" name="name" id="field_name" [(ngModel)]="event.name" required />
+            <div [hidden]="!(eventForm.controls.name?.dirty && eventForm.controls.name?.invalid)">
+                <small class="form-text text-danger" [hidden]="!eventForm.controls.name?.errors?.required" jhiTranslate="entity.validation.required">
+                    This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="deccomApp.event.startingDate" for="field_startingDate">Starting date</label>
+            <div class="input-group">
+                <input id="field_startingDate" type="text" class="form-control" name="startingDate" ngbDatepicker #startingDateDp="ngbDatepicker"
+                    [(ngModel)]="event.startingDate" required/>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" (click)="startingDateDp.toggle()">
+                        <i class="fa fa-calendar"></i>
+                    </button>
+                </span>
+            </div>
+            <div [hidden]="!(eventForm.controls.startingDate?.dirty && eventForm.controls.startingDate?.invalid)">
+                <small class="form-text text-danger" [hidden]="!eventForm.controls.startingDate?.errors?.required" jhiTranslate="entity.validation.required">
+                    This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="deccomApp.event.endingDate" for="field_endingDate">Ending date</label>
+            <div class="input-group">
+                <input id="field_endingDate" type="text" class="form-control" name="endingDate" ngbDatepicker #endingDateDp="ngbDatepicker"
+                    [(ngModel)]="event.endingDate" />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" (click)="endingDateDp.toggle()">
+                        <i class="fa fa-calendar"></i>
+                    </button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;
+            <span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="eventForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;
+            <span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

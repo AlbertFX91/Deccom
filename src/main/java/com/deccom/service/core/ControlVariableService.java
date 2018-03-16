@@ -3,16 +3,12 @@ package com.deccom.service.core;
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-import org.reflections.Reflections;
-import org.reflections.util.ClasspathHelper;
-import org.reflections.util.ConfigurationBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,10 +77,22 @@ public class ControlVariableService {
 		log.debug("Request to get ControlVariable : {}", id);
 		return controlVariableRepository.findOne(id);
 	}
-
+	
 	public Page<ControlVariable> findAll(Pageable pageable) {
 		log.debug("Request to get all Core_Connection");
 		return controlVariableRepository.findAll(pageable);
+	}
+
+	public Page<ControlVariable> findAllLimitedNumberOfEntries(Pageable pageable, Integer numberOfEntries) {
+		log.debug("Request to get all Core_Connection");
+		Page<ControlVariable> result = controlVariableRepository.findAll(pageable);
+		setNumberOfControlVariableEntries(result, numberOfEntries);
+		return result;
+	}
+	
+	public Page<ControlVariable> findAllLimitedNumberOfEntriesQuery(Pageable pageable, Integer numberOfEntries) {
+		log.debug("Request to get all Core_Connection");
+		return controlVariableRepository.findAllLimitedNumberOfEntriesQuery(pageable, -numberOfEntries);
 	}
 
 	public List<ControlVariable> findAll() {
@@ -126,9 +134,12 @@ public class ControlVariableService {
 
 	public ControlVariableEntry addEntry(ControlVariable cv, Integer value) {
 		ControlVariableEntry entry = new ControlVariableEntry();
-		entry.setCreationMoment(LocalDateTime.now());
+		LocalDateTime lastUpdate = LocalDateTime.now();
+		entry.setCreationMoment(lastUpdate);
 		entry.setValue(value);
 		cv.getControlVarEntries().add(entry);
+		cv.setValue(value);
+		cv.setLastUpdate(lastUpdate);
 		controlVariableRepository.save(cv);
 		return entry;
 	}
@@ -158,7 +169,7 @@ public class ControlVariableService {
 
 		return controlVariableRepository.save(controlVar);
 	}
-	
+
 	public ControlVariable convert(New_ControlVariable ncv) {
 		ControlVariable res;
 		ControlVariableExtractor extractor;
@@ -171,71 +182,123 @@ public class ControlVariableService {
 		injectData(ncv.getExtractorData(), extractor);
 		// 4. Check all extractors fields are added
 		checkFieldsNotNull(extractor);
-		
+
 		res.setExtractor(extractor);
 		return res;
 	}
-	
 
-	
 	private ControlVariableExtractor getExtractor(New_ControlVariable ncv) {
 		ControlVariableExtractor res = null;
 		String extractor = ncv.getExtractorClass();
-		
+
 		try {
 			Object cls = Class.forName(extractor).newInstance();
 			if (cls instanceof ControlVariableExtractor) {
 				res = (ControlVariableExtractor) cls;
-			}else {
-				throwException("the class '"+ncv.getExtractorClass()+"' is not an extrator", "extractorclassnotinstance");
+			} else {
+				throwException("the class '" + ncv.getExtractorClass() + "' is not an extrator",
+						"extractorclassnotinstance");
 			}
 		} catch (InstantiationException | IllegalAccessException e) {
-			throwException("the class '"+ncv.getExtractorClass()+"' cannot be instanciated", "extractorclasserror", e);
+			throwException("the class '" + ncv.getExtractorClass() + "' cannot be instanciated", "extractorclasserror",
+					e);
 		} catch (ClassNotFoundException e) {
-			throwException("the class '"+ncv.getExtractorClass()+"' cannot be founded", "extractorclassnotfound", e);
+			throwException("the class '" + ncv.getExtractorClass() + "' cannot be founded", "extractorclassnotfound",
+					e);
 		}
 		return res;
 	}
-	
-	private void checkFieldsNotNull(ControlVariableExtractor ncv){
+
+	private void checkFieldsNotNull(ControlVariableExtractor ncv) {
 		List<String> missingFields = new ArrayList<>();
-		for(Field f: ncv.getClass().getDeclaredFields()) {
+		missingFields = checkFieldsNotNull(ncv.getClass(), ncv);
+		
+		if (!missingFields.isEmpty()) {
+			throwException("The fields " + missingFields + " are null", "extractorclassfieldsnull");
+		}
+
+	}
+
+	private List<String> checkFieldsNotNull(Class<?> c, ControlVariableExtractor ncv) {
+		List<String> missingFields = new ArrayList<>();
+		// Base
+		if (c.equals(Object.class)) {
+			return missingFields;
+		}
+		for (Field f : c.getDeclaredFields()) {
 			f.setAccessible(true);
 			try {
-				if(f.get(ncv) == null) {
+				if (f.get(ncv) == null) {
 					missingFields.add(f.getName());
 				}
 			} catch (IllegalArgumentException | IllegalAccessException e) {
-				throwException("Error checking fields in extractor", "extractorclassfields");
+				missingFields.add(f.getName());
 			}
 		}
-		if(!missingFields.isEmpty()) {
-			throwException("The fields " + missingFields + " are null", "extractorclassfieldsnull");
+    
+		missingFields.addAll(checkFieldsNotNull(c.getSuperclass(), ncv));
+		return missingFields;
+	}
+
+	private <T, V extends ControlVariableExtractor> void injectData(Map<String, T> extractorData, V extractor) {
+		Class<?> clazz = extractor.getClass();
+		Set<String> keys = extractorData.keySet();
+		Set<String> keysInjected = new HashSet<>();
+		for (String key : keys) {
+			T value = extractorData.get(key);
+			Boolean res = inject(key, value, clazz, extractor);
+			if (res) {
+				keysInjected.add(key);
+			}
+		}
+    
+		if (!keysInjected.equals(keys)) {
+			keys.removeAll(keysInjected);
+			throwException("Error injecting fields into extractor " + extractor.getClass().getName() + keys,
+					"extractorclassinjectionerror");
+		}
+	}
+  
+	private <T, V extends ControlVariableExtractor> Boolean inject(String key, T value, Class<?> c, V extractor) {
+		// Base
+		if (c.equals(Object.class)) {
+			return false;
+		}
+
+		Field field;
+		try {
+			field = c.getDeclaredField(key);
+			field.setAccessible(true);
+			field.set(extractor, value);
+			return true;
+		} catch (Exception e) {
+			// Recursion
+			return inject(key, value, extractor.getClass().getSuperclass(), extractor);
 		}
 	}
 
-	private <T> void injectData(Map<String, T> extractorData, ControlVariableExtractor extractor) {
-		Class<?> clazz = extractor.getClass();
-		for (Entry<String, T> entry: extractorData.entrySet()) {
-			String f = entry.getKey();
-			T v = entry.getValue();
-			try {
-				Field field = clazz.getDeclaredField(f);
-				field.setAccessible(true);
-				field.set(extractor, v);
-			} catch (Exception  e) {
-				throwException("Error injectin data into extractor " + extractor.getClass().getName(), "extractorclassinjectionerror");
-			}
-		}
-	}
-	
 	private void throwException(String msg, String i18Code, Exception e) {
-		throw new ControlVariableServiceException(msg, i18nCodeRoot + "." + i18Code,
-				"ControlVariableService", e);
+		throw new ControlVariableServiceException(msg, i18nCodeRoot + "." + i18Code, "ControlVariableService", e);
 	}
-	
+
 	private void throwException(String msg, String i18Code) {
-		throw new ControlVariableServiceException(msg, i18nCodeRoot + "." + i18Code,
-				"ControlVariableService");
+		throw new ControlVariableServiceException(msg, i18nCodeRoot + "." + i18Code, "ControlVariableService");
 	}
+
+	private void setNumberOfControlVariableEntries(Page<ControlVariable> controlVariables, Integer i) {
+
+		for (ControlVariable controlVariable : controlVariables) {
+			
+			List<ControlVariableEntry> controlVariableEntries;
+			List<ControlVariableEntry> newControlVariableEntries;
+			
+			controlVariableEntries = controlVariable.getControlVarEntries();
+			newControlVariableEntries = controlVariableEntries.subList(Math.max(controlVariableEntries.size() - i, 0), controlVariableEntries.size());
+			
+			controlVariable.setControlVarEntries(newControlVariableEntries);
+			
+		}
+
+	}
+
 }

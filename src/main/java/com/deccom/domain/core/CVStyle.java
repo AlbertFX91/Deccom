@@ -1,34 +1,34 @@
 package com.deccom.domain.core;
 
-public class CVStyle{
-	
+public class CVStyle {
+
 	public static CVStyle create() {
 		return new CVStyle();
 	}
-	
+
 	public static CVStyle create(String defaultName, String icon, String backgroundColor, String fontColor) {
 		return new CVStyle(defaultName, icon, backgroundColor, fontColor);
 	}
-	
+
 	private String defaultName;
 	private String icon;
 	private String backgroundColor;
 	private String fontColor;
-	
+
 	public CVStyle() {
 		defaultName = "";
 		icon = "";
 		backgroundColor = "";
 		fontColor = "";
 	}
-	
+
 	public CVStyle(String defaultName, String icon, String backgroundColor, String fontColor) {
 		this.defaultName = defaultName;
 		this.icon = icon;
 		this.backgroundColor = backgroundColor;
 		this.fontColor = fontColor;
 	}
-	
+
 	public String getDefaultName() {
 		return defaultName;
 	}
@@ -60,5 +60,5 @@ public class CVStyle{
 	public void setFontColor(String fontColor) {
 		this.fontColor = fontColor;
 	}
-	
+
 }
