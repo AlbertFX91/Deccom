@@ -2,16 +2,17 @@
     "deccomApp": {
         "event": {
             "home": {
-                "title": "Events"
+                "title": "Events",
+                "create": "Create a new event",
+                "edit": "Edit an event"
             },
             "name": "Name",
             "creationMoment": "Since",
             "startingDate": "Starting date",
             "endingDate": "Ending date",
-            "error": {
-                "wrongDates": "The starting date must be before or equal to the ending date"
-            },
             "created": "The event has been created",
+            "updated": "The event has been updated",
+            "confirmDelete": "Are you sure you want to delete this event?",
             "deleted": "The event has been deleted"
         }
     }

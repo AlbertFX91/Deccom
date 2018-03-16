@@ -16,6 +16,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.codahale.metrics.annotation.Timed;
 import com.deccom.domain.Event;
 import com.deccom.service.EventService;
+import com.deccom.service.impl.util.EventServiceException;
 import com.deccom.web.rest.util.HeaderUtil;
 import com.deccom.web.rest.util.PaginationUtil;
 
@@ -63,9 +65,9 @@ public class EventResource {
 		// event = eventService.create();
 
 		log.debug("REST request to save Event : {}", event);
-		
+
 		LocalDateTime creationMoment;
-		
+
 		creationMoment = LocalDateTime.now();
 
 		event.setCreationMoment(creationMoment);
@@ -100,8 +102,8 @@ public class EventResource {
 	public ResponseEntity<Event> updateEvent(@Valid @RequestBody Event event) throws URISyntaxException {
 		log.debug("REST request to update Event : {}", event);
 		if (event.getId() == null) {
-            return create(event);
-        }
+			return create(event);
+		}
 		Event result = eventService.save(event);
 		return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, event.getId().toString()))
 				.body(result);
@@ -153,6 +155,13 @@ public class EventResource {
 		log.debug("REST request to delete Event : {}", id);
 		eventService.delete(id);
 		return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id)).build();
+	}
+
+	@ExceptionHandler(EventServiceException.class)
+	public ResponseEntity<String> panic(EventServiceException oops) {
+		return ResponseEntity.badRequest()
+				.headers(HeaderUtil.createFailureAlert(oops.getEntity(), oops.getI18nCode(), oops.getMessage()))
+				.body("{ \"error\": \"" + oops.getMessage() + "\" }");
 	}
 
 }

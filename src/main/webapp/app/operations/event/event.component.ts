@@ -1,10 +1,11 @@
 import { Component, HostListener, Input, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs/Rx';
+import { JhiEventManager, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
+
 import { Event } from './event.model';
 import { EventService } from './event.service';
 import { ResponseWrapper, ITEMS_PER_PAGE } from '../../shared';
-import { Subscription } from 'rxjs/Rx';
-import { JhiParseLinks, JhiAlertService, JhiEventManager } from 'ng-jhipster';
 
 @Component({
     selector: 'jhi-event',
@@ -19,14 +20,13 @@ import { JhiParseLinks, JhiAlertService, JhiEventManager } from 'ng-jhipster';
     reverse: any;
     totalItems: number;
     eventSubscriber: Subscription;
-    event: Event;
-    isSaving: boolean;
+    predicate: any;
 
     constructor(
         public eventService: EventService,
         private parseLinks: JhiParseLinks,
         private alertService: JhiAlertService,
-        private eventManager: JhiEventManager,
+        private eventManager: JhiEventManager
     ) {
         this.events = [];
         this.page = 0;
@@ -34,6 +34,8 @@ import { JhiParseLinks, JhiAlertService, JhiEventManager } from 'ng-jhipster';
         this.links = {
             last: 0
         };
+        this.predicate = 'id';
+        this.reverse = true;
     }
 
     ngOnInit() {
@@ -41,26 +43,17 @@ import { JhiParseLinks, JhiAlertService, JhiEventManager } from 'ng-jhipster';
             page: this.page,
             size: this.itemsPerPage
         };
-        this.eventService.findAll(pageSettings).subscribe(
-            (data: any) => this.onSuccess(data.json(), data.headers),
-            (error: Response) => this.onError(error)
-        )
-        this.isSaving = false;
-        this.event = {};
+        this.loadAll();
+        this.registerChangeInEvents();
     }
 
-    ngOnDestroy() { }
+    ngOnDestroy() {
+        this.eventManager.destroy(this.eventSubscriber);
+    }
 
     onSuccess(data: any, headers: any) {
         for (let i = 0; i < data.length; i++) {
-            const event: Event = {
-                id: data[i]['id'],
-                name: data[i]['name'],
-                creationMoment: data[i]['creationMoment'],
-                startingDate: data[i]['startingDate'],
-                endingDate: data[i]['endingDate']
-            };
-            this.events.push(event);
+            this.events.push(data[i]);
         }
         // this.links = this.parseLinks.parse(headers.get('link'));
         this.eventManager.broadcast({ name: 'all_success', content: 'OK' });
@@ -70,40 +63,11 @@ import { JhiParseLinks, JhiAlertService, JhiEventManager } from 'ng-jhipster';
         this.alertService.error(error.message, null, null);
     }
 
-    createEvent() {
-        this.isSaving = true;
-        this.eventService.create(this.event).subscribe(
-            (res: any) => this.onEventSuccess(res),
-            (error: Response) => this.onError(error)
-        )
-    }
-
-    onEventSuccess(res: any) {
-        this.isSaving = false;
-        // this.eventManager.broadcast({ name: 'event_success', content: 'OK' });
-        this.eventManager.broadcast({ name: 'eventListModification', content: 'OK' });
-        this.clear();
-        this.loadAll();
-    }
-
-    delete(id: string) {
-        this.eventService.delete(id).subscribe((response) => {
-            this.eventManager.broadcast({
-                name: 'eventListModification',
-                content: 'Deleted an event'
-            });
-        });
-        this.loadAll();
-    }
-
-    clear() {
-        this.event = {};
-    }
-
     loadAll() {
-        this.eventService.query({
+        this.eventService.findAll({
             page: this.page,
-            size: this.itemsPerPage
+            size: this.itemsPerPage,
+            sort: this.sort()
         }).subscribe(
             (res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
             (res: ResponseWrapper) => this.onError(res.json)
@@ -119,10 +83,23 @@ import { JhiParseLinks, JhiAlertService, JhiEventManager } from 'ng-jhipster';
         this.eventSubscriber = this.eventManager.subscribe('eventListModification', (response) => this.reset());
     }
 
+    sort() {
+        const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
+        if (this.predicate !== 'id') {
+            result.push('id');
+        }
+        return result;
+    }
+
     reset() {
         this.page = 0;
         this.events = [];
         this.loadAll();
+    }
+
+    reload() {
+        this.events = [];
+        this.ngOnInit();
     }
 
 }
