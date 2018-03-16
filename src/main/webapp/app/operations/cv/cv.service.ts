@@ -64,7 +64,6 @@ export class CVService {
    create(cv: NewCV): Observable<NewCV> {
     return this.http.post(this.resourceUrl, cv).map((res: Response) => {
         const jsonResponse = res.json();
-        // this.convertItemFromServer(jsonResponse);
         return jsonResponse;
     });
 }
