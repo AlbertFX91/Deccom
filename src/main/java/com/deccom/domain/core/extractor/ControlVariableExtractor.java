@@ -14,4 +14,7 @@ public interface ControlVariableExtractor {
 		// Get a positive uid by the class name
 		return "" + (this.getClass().getName().toString().hashCode() & 0xffffff);
 	};
+	default String getExtractorClass() {
+		return this.getClass().getName();
+	}
 }

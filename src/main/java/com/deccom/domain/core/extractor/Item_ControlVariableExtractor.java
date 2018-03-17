@@ -7,13 +7,13 @@ public class Item_ControlVariableExtractor {
 	private String extractorClass;
 
 	private CVStyle style;
-	
+
 	private String uid;
 
-	public Item_ControlVariableExtractor(String extractorClass, CVStyle style, String uid) {
-		this.extractorClass = extractorClass;
-		this.style = style;
-		this.uid = uid;
+	public Item_ControlVariableExtractor(ControlVariableExtractor c) {
+		this.extractorClass = c.getExtractorClass();
+		this.style = c.getStyle();
+		this.uid = c.getUid();
 	}
 
 	public Item_ControlVariableExtractor() {
@@ -81,6 +81,5 @@ public class Item_ControlVariableExtractor {
 		return "Item_ControlVariableExtractor [extractorClass=" + extractorClass + ", style=" + style + ", uid=" + uid
 				+ "]";
 	}
-
 
 }
