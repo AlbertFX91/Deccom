@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, URLSearchParams, BaseRequestOptions  } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { ExtractorItem } from './extractor.model';
+import { ExtractorNew } from './extractor.model';
 import { ResponseWrapper } from '../../shared';
 
 @Injectable()
@@ -15,8 +15,8 @@ export class ExtractorService {
         return this.http.get(this.resourceUrl).map((res: Response) => this.convertResponse(res));
     }
 
-    find(id: string): Observable<ExtractorItem> {
-        return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
+    find(id: string): Observable<ExtractorNew> {
+        return this.http.get(`${this.resourceUrl}/fields/${id}`).map((res: Response) => {
             const jsonResponse = res.json();
             return jsonResponse;
         });

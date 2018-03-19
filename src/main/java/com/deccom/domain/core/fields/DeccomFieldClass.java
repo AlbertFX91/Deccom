@@ -9,6 +9,10 @@ public class DeccomFieldClass {
 		return new DeccomFieldClass();
 	}
 
+	public static DeccomFieldClass create(String name) {
+		return new DeccomFieldClass(name, InputType.TEXT, "");
+	}
+	
 	public static DeccomFieldClass create(String name, InputType type, String component) {
 		return new DeccomFieldClass(name, type, component);
 	}

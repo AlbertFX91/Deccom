@@ -6,6 +6,44 @@
         <jhi-alert-error></jhi-alert-error>
 
         <div class="form-group" *ngFor="let field of extractorFields;">
+            <label class="form-control-label" for="field_{{field.name}}">{{field.name}}</label>
+            <input [attr.type]="field.type" class="form-control" name="{{field.name}}" id="field_{{field.name}}" [(ngModel)]="controlvar.extractor[field.name]"
+                required placeholder="{{controlvar.extractor[field.name]}}" [attr.disabled]="disableField(field)"/>
+            
+            <button type="button" *ngIf="field.component" [attr.disabled]="disableField(field)" class="btn btn-success">
+                    <span>Custom</span>
+            </button>
+
+            <div [hidden]="!(editForm.controls[field]?.dirty && editForm.controls[field]?.invalid)">
+                <small class="form-text text-danger" [hidden]="!editForm.controls[field]?.errors?.required">
+                    This field is required.
+                </small>
+            </div>
+        </div>
+
+        <br/>
+
+        <div class="form-group" *ngFor="let field of cvFields;">
+            <label class="form-control-label" for="field_{{field}}">{{field}}</label>
+            <input type="text" class="form-control" name="{{field}}" id="field_{{field}}" [(ngModel)]="controlvar[field]" required />
+            <div [hidden]="!(editForm.controls[field]?.dirty && editForm.controls[field]?.invalid)">
+                <small class="form-text text-danger" [hidden]="!editForm.controls[field]?.errors?.required">
+                    This field is required.
+                </small>
+            </div>
+        </div>
+
+        <br/>
+
+        <div>
+            <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                <span class="fa fa-save"></span>&nbsp;
+                <span jhiTranslate="entity.action.save">Save</span>
+            </button>
+        </div>
+
+        <!--
+        <div class="form-group" *ngFor="let field of extractorFields;">
             <label class="form-control-label" for="field_{{field}}">{{field}}</label>
             <input type="text" class="form-control" name="{{field}}" id="field_{{field}}" [(ngModel)]="controlvar.extractor[field]" [attr.required]="requiredField(field)"
                 placeholder="{{controlvar.extractor[field]}}" [attr.disabled]="disableField(field)" />
@@ -36,5 +74,6 @@
                 <span jhiTranslate="entity.action.save">Save</span>
             </button>
         </div>
+        -->
     </form>
 </div>

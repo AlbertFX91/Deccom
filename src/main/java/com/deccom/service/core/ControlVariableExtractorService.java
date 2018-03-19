@@ -1,7 +1,9 @@
 package com.deccom.service.core;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -14,9 +16,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.deccom.domain.core.CVStyle;
 import com.deccom.domain.core.extractor.ControlVariableExtractor;
 import com.deccom.domain.core.extractor.ControlVariableExtractorImpl;
 import com.deccom.domain.core.extractor.Item_ControlVariableExtractor;
+import com.deccom.domain.core.extractor.New_ControlVariableExtractor;
+import com.deccom.domain.core.fields.DeccomField;
+import com.deccom.domain.core.fields.DeccomFieldClass;
 
 @Service
 public class ControlVariableExtractorService {
@@ -24,15 +30,23 @@ public class ControlVariableExtractorService {
 	private final Logger log = LoggerFactory.getLogger(ControlVariableExtractorService.class);
 	private static final String i18nCodeRoot = "operations.controlvariableextractor";
 
-	public Item_ControlVariableExtractor create(ControlVariableExtractor c) {
+	public Item_ControlVariableExtractor createItem(ControlVariableExtractor c) {
 		return new Item_ControlVariableExtractor(c);
+	}
+
+	public New_ControlVariableExtractor createNew(ControlVariableExtractor extractor) {
+		Class<? extends ControlVariableExtractor> c = extractor.getClass();
+
+		Set<DeccomFieldClass> fields = generateFieldClass(c, extractor);
+
+		return New_ControlVariableExtractor.create(extractor, fields);
 	}
 
 	public List<Item_ControlVariableExtractor> getAllListExtractors() {
 		List<Item_ControlVariableExtractor> res = new ArrayList<>();
 		List<ControlVariableExtractor> aux = getAllExtractors();
 		for (ControlVariableExtractor c : aux) {
-			res.add(create(c));
+			res.add(createItem(c));
 		}
 		return res;
 	}
@@ -71,4 +85,29 @@ public class ControlVariableExtractorService {
 				.collect(Collectors.toSet());
 	}
 
+	private Set<DeccomFieldClass> generateFieldClass(Class<?> c, ControlVariableExtractor extractor) {
+		Set<DeccomFieldClass> res = new HashSet<>();
+		if (c.equals(Object.class)) {
+			return res;
+		}
+		for (Field f : c.getDeclaredFields()) {
+			DeccomFieldClass field;
+			String name = f.getName();
+
+			// Ignoring style attribute
+			if (f.getType().equals(CVStyle.class)) {
+				continue;
+			}
+
+			if (f.isAnnotationPresent(DeccomField.class)) {
+				DeccomField annotation = f.getAnnotation(DeccomField.class);
+				field = DeccomFieldClass.create(name, annotation);
+			} else {
+				field = DeccomFieldClass.create(name);
+			}
+			res.add(field);
+		}
+		res.addAll(generateFieldClass(c.getSuperclass(), extractor));
+		return res;
+	}
 }
