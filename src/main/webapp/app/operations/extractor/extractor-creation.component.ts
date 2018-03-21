@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ComponentFactoryResolver } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, Observable} from 'rxjs/Rx';
 import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, JhiAlertService } from 'ng-jhipster';
@@ -7,6 +7,9 @@ import { ExtractorItem, DeccomField } from './extractor.model';
 import { CV, NewCV } from '../cv/cv.model';
 import { ExtractorService } from './extractor.service';
 import { CVService } from '../cv/cv.service';
+import { ExtractorDirective } from './extractor.directive';
+
+import { FieldService } from './fields/fields.service';
 
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
@@ -25,6 +28,9 @@ export class ExtractorCreationComponent implements OnInit, OnDestroy {
     extractorDisableFields: DeccomField[];
     isSaving: boolean;
 
+    @ViewChild(ExtractorDirective) jhiExtractor: ExtractorDirective;
+    currentField: DeccomField;
+
     constructor(
         private extractorService: ExtractorService,
         private controlvarService: CVService,
@@ -34,8 +40,11 @@ export class ExtractorCreationComponent implements OnInit, OnDestroy {
         private principal: Principal,
         private router: ActivatedRoute,
         private mainRouter: Router,
+        private componentFactoryResolver: ComponentFactoryResolver,
+        private fieldService: FieldService,
     ) {
         this.controlvar = new CV();
+        this.currentField = null;
     }
 
     loadExtractor() {
@@ -122,5 +131,31 @@ export class ExtractorCreationComponent implements OnInit, OnDestroy {
 
     disableField(field: DeccomField) {
         return this.extractorDisableFields.indexOf(field) !== -1 ? '' : null;
+    }
+
+    onClickCustomField(field: DeccomField) {
+        if (field.component === '') {
+            return;
+        }
+        if (this.currentField === field) {
+            this.currentField = null;
+            this.jhiExtractor.viewContainerRef.clear();
+            return;
+        }
+        this.currentField = field;
+        this.loadCustomField(field.component);
+    }
+
+    private loadCustomField(comp: string) {
+        // this.currentAdIndex = (this.currentAdIndex + 1) % this.ads.length;
+        // let adItem = this.ads[this.currentAdIndex];
+
+        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.fieldService.get(comp));
+
+        const viewContainerRef = this.jhiExtractor.viewContainerRef;
+        viewContainerRef.clear();
+
+        const componentRef = viewContainerRef.createComponent(componentFactory);
+        // (<AdComponent>componentRef.instance).data = adItem.data;
     }
 }
