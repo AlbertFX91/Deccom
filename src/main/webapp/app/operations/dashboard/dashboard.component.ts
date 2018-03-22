@@ -3,32 +3,43 @@ import { CV } from '../cv/cv.model';
 import { CVService } from '../cv/cv.service';
 import { ITEMS_PER_PAGE } from '../../shared';
 import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
+import { Chart } from 'chart.js';
 
 @Component({
     selector: 'jhi-dashboard',
     templateUrl: './dashboard.component.html'
 }) export class DashboardComponent implements OnInit, OnDestroy {
 
-    cvCards: CV[];
     chartData: any[];
     chartDataAux: any[];
     page: any;
     itemsPerPage: number;
     chartOptions: any;
     chartLabels: string[];
+    chart: any[];
 
     constructor(
         public cvService: CVService,
         private alertService: JhiAlertService,
         private eventManager: JhiEventManager
     ) {
-        this.cvCards = [];
         this.chartData = [];
         this.chartDataAux = [];
         this.page = 0;
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.chartOptions = {
-            responsive: true
+            responsive: true,
+            legend: {
+                display: true
+            },
+            scales: {
+                xAxes: [{
+                    display: true
+                }],
+                yAxes: [{
+                    display: true
+                }],
+            }
         }
         this.chartLabels = ['January', 'February', 'Mars', 'April'];
     }
@@ -47,6 +58,14 @@ import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
             { data: [120, 455, 100, 340], label: 'Account B' },
             { data: [45, 67, 800, 500], label: 'Account C' }
         ]
+        this.chart = new Chart('canvas', {
+            type: 'line',
+            data: {
+                labels: this.chartLabels,
+                datasets: this.chartData
+            },
+            options: this.chartOptions
+        });
     }
 
     onSuccess(data: any, headers: any) {
@@ -64,10 +83,6 @@ import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
                 this.chartData.push(dato);
             }
         }
-        console.log('chartData:');
-        console.log(this.chartData);
-        console.log('chartDataAux:');
-        console.log(this.chartDataAux);
         // this.links = this.parseLinks.parse(headers.get('link'));
         this.eventManager.broadcast({ name: 'all_success', content: 'OK' });
     }
