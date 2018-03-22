@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Ng2Webstorage } from 'ng2-webstorage';
+import { ChartsModule } from 'ng2-charts';
 
 import { DeccomSharedModule, UserRouteAccessService } from './shared';
 import { DeccomHomeModule } from './home/home.module';
@@ -41,6 +42,7 @@ import {
         DeccomAccountModule,
         DeccomEntityModule,
         DeccomOperationModule,
+        ChartsModule
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [

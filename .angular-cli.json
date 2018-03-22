@@ -22,7 +22,9 @@
             "content/css/vendor.css",
             "content/css/global.css"
         ],
-        "scripts": []
+        "scripts": [
+            "../node_modules/chart.js/dist/Chart.min.js"
+        ]
     }],
     "e2e": {
         "protractor": {
