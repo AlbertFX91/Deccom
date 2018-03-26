@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CV } from '../cv/cv.model';
 import { CVService } from '../cv/cv.service';
 import { ITEMS_PER_PAGE } from '../../shared';
 import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
@@ -78,7 +77,8 @@ import { Chart } from 'chart.js';
                 }
                 const dato: any = {
                     data: dataAux,
-                    label: data.content[i]['name']
+                    label: data.content[i]['name'],
+                    backgroundColor: data.content[i]['extractor']['style']['backgroundColor']
                 }
                 this.chartData.push(dato);
             }

@@ -3,7 +3,8 @@
         <span jhiTranslate="deccomApp.dashboard.home.title">Dashboard</span>
     </h2>
     <jhi-alert></jhi-alert>
-    <div style="width: 80%;">
+    <div [hidden]="!chart" style="width: 80%;">
+        <!-- <canvas baseChart [chartType]="'line'" [datasets]="chartDataAux" [labels]="chartLabels" [options]="chartOptions"></canvas> -->
         <canvas id="canvas">{{chart}}</canvas>
     </div>
 </div>
