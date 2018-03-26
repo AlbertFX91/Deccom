@@ -2,10 +2,12 @@ package com.deccom.domain.core.extractor.rest;
 
 import com.deccom.domain.core.CVStyleUtil;
 import com.deccom.domain.core.extractor.ControlVariableExtractor;
+import com.deccom.domain.core.fields.DeccomField;
 import com.deccom.service.impl.util.RESTUtil;
 
 public class FacebookFansExtractor extends RESTExtractor implements ControlVariableExtractor {
 
+	@DeccomField()
 	private String facebookPageID;
 
 	public FacebookFansExtractor() {

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.codahale.metrics.annotation.Timed;
 import com.deccom.domain.core.extractor.ControlVariableExtractor;
 import com.deccom.domain.core.extractor.Item_ControlVariableExtractor;
+import com.deccom.domain.core.extractor.New_ControlVariableExtractor;
 import com.deccom.service.core.ControlVariableExtractorService;
 import com.deccom.service.core.util.ControlVariableServiceException;
 import com.deccom.web.rest.util.HeaderUtil;
@@ -61,6 +62,21 @@ public class ControlVariableExtractorResource {
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(extractor));
     }
 	
+    /**
+     * GET  /extractor/fields/:id : get the "id" extractor.
+     *
+     * @param id the id of the extractor to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the extractor, or with status 404 (Not Found)
+     */
+    @GetMapping("/extractor/fields/{id}")
+    @Timed
+    public ResponseEntity<New_ControlVariableExtractor> getNewExtractor(@PathVariable @Valid String id) {
+        log.debug("REST request to get Acme : {}", id);
+        ControlVariableExtractor extractor = controlVariableExtractorService.findOne(id);
+        New_ControlVariableExtractor res = controlVariableExtractorService.createNew(extractor);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(res));
+    }
+    
 	@ExceptionHandler(ControlVariableServiceException.class)
 	public ResponseEntity<String> panic(ControlVariableServiceException oops) {
 		return ResponseEntity

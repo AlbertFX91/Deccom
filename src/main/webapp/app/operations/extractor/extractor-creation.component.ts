@@ -1,12 +1,15 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ComponentFactoryResolver } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, Observable} from 'rxjs/Rx';
 import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, JhiAlertService } from 'ng-jhipster';
 
-import { ExtractorItem } from './extractor.model';
+import { ExtractorItem, DeccomField } from './extractor.model';
 import { CV, NewCV } from '../cv/cv.model';
 import { ExtractorService } from './extractor.service';
 import { CVService } from '../cv/cv.service';
+import { ExtractorDirective } from './extractor.directive';
+
+import { FieldService } from './fields/fields.service';
 
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
@@ -21,9 +24,12 @@ export class ExtractorCreationComponent implements OnInit, OnDestroy {
     controlvar: CV;
     currentAccount: any;
     cvFields: String[];
-    extractorFields: String[];
-    extractorDisableFields: String[];
+    extractorFields: DeccomField[];
+    extractorDisableFields: DeccomField[];
     isSaving: boolean;
+
+    @ViewChild(ExtractorDirective) jhiExtractor: ExtractorDirective;
+    currentField: DeccomField;
 
     constructor(
         private extractorService: ExtractorService,
@@ -34,17 +40,20 @@ export class ExtractorCreationComponent implements OnInit, OnDestroy {
         private principal: Principal,
         private router: ActivatedRoute,
         private mainRouter: Router,
+        private componentFactoryResolver: ComponentFactoryResolver,
+        private fieldService: FieldService,
     ) {
         this.controlvar = new CV();
+        this.currentField = null;
     }
 
     loadExtractor() {
         const uid = this.router.snapshot.paramMap.get('uid');
-        this.extractorService.find(uid).subscribe((extractor) => {
-            this.controlvar.extractor = extractor;
+        this.extractorService.find(uid).subscribe((extractorItem) => {
+            this.controlvar.extractor = extractorItem.extractor;
             this.cvFields = this.getFieldsCVToInclude().slice();
-            this.extractorFields = this.getFieldsExtractorToInclude().slice();
-            this.extractorDisableFields = this.extractorFields.filter((x) => (this.controlvar.extractor[x.toString()])).slice();
+            this.extractorFields = extractorItem.fields;
+            this.extractorDisableFields = this.extractorFields.filter((x) => (this.controlvar.extractor[x.name])).slice();
         });
     }
 
@@ -82,8 +91,7 @@ export class ExtractorCreationComponent implements OnInit, OnDestroy {
         newCV.extractorClass = this.controlvar.extractor.extractorClass;
         newCV.controlVariable = this.controlvar;
         this.extractorFields
-            .map((x) => x.toString())
-            .forEach((x) => (newCV.extractorData[x] = this.controlvar.extractor[x]));
+            .forEach((x) => (newCV.extractorData[x.name] = this.controlvar.extractor[x.name]));
         this.subscribeToSaveResponse(
             this.controlvarService.create(newCV));
     }
@@ -117,11 +125,37 @@ export class ExtractorCreationComponent implements OnInit, OnDestroy {
     cancel() {
     }
 
-    requiredField(field: String) {
-        return this.controlvar.extractor[field.toString()] ? '' : null
+    requiredField(field: DeccomField) {
+        return this.controlvar.extractor[field.name] ? '' : null
     }
 
-    disableField(field: String) {
+    disableField(field: DeccomField) {
         return this.extractorDisableFields.indexOf(field) !== -1 ? '' : null;
+    }
+
+    onClickCustomField(field: DeccomField) {
+        if (field.component === '') {
+            return;
+        }
+        if (this.currentField === field) {
+            this.currentField = null;
+            this.jhiExtractor.viewContainerRef.clear();
+            return;
+        }
+        this.currentField = field;
+        this.loadCustomField(field.component);
+    }
+
+    private loadCustomField(comp: string) {
+        // this.currentAdIndex = (this.currentAdIndex + 1) % this.ads.length;
+        // let adItem = this.ads[this.currentAdIndex];
+
+        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.fieldService.get(comp));
+
+        const viewContainerRef = this.jhiExtractor.viewContainerRef;
+        viewContainerRef.clear();
+
+        const componentRef = viewContainerRef.createComponent(componentFactory);
+        // (<AdComponent>componentRef.instance).data = adItem.data;
     }
 }
