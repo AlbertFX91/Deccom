@@ -10,21 +10,33 @@ import javax.validation.constraints.NotNull;
 
 import com.deccom.domain.core.CVStyle;
 import com.deccom.domain.core.extractor.ControlVariableExtractor;
+import com.deccom.domain.core.fields.DeccomField;
+import com.deccom.domain.core.fields.InputType;
 import com.deccom.service.impl.util.SQLUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class SQLExtractor implements ControlVariableExtractor {
 
 	@NotNull
+	@DeccomField()
 	private String username;
+	
 	@NotNull
+	@DeccomField(type=InputType.PASSWORD)
 	private String password;
+	
 	@NotNull
+	@DeccomField(type=InputType.URL)
 	private String url;
+	
 	@NotNull
+	@DeccomField(component="sql.query.field")
 	private String query;
+
 	@NotNull
+	@DeccomField()
 	private String jdbc;
+	
 	@NotNull
 	private CVStyle style;
 

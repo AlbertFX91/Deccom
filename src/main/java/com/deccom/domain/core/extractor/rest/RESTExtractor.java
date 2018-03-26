@@ -7,14 +7,19 @@ import javax.validation.constraints.NotNull;
 import com.deccom.domain.core.CVStyle;
 import com.deccom.domain.core.CVStyleUtil;
 import com.deccom.domain.core.extractor.ControlVariableExtractor;
+import com.deccom.domain.core.fields.DeccomField;
 import com.deccom.service.impl.util.RESTUtil;
 
 public class RESTExtractor implements ControlVariableExtractor {
 
 	@NotNull
+	@DeccomField()
 	private String url;
+	
 	@NotNull
+	@DeccomField(component="rest.jsonPath.field")
 	private String jsonPath;
+	
 	@NotNull
 	private CVStyle style;
 	
