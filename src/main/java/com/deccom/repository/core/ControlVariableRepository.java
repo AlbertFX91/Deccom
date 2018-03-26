@@ -11,7 +11,7 @@ import com.deccom.domain.core.ControlVariable;
 @Repository
 public interface ControlVariableRepository extends MongoRepository<ControlVariable, String> {
 
-	@Query("{}, { controlVarEntries: { $slice: ?0 } }")
+	@Query(value="{}", fields = "{'controlVarEntries': { '$slice': ?0 } }")
 	Page<ControlVariable> findAllLimitedNumberOfEntriesQuery(Pageable pageable, Integer numberOfEntries);
 
 }
