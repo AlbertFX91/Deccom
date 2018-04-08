@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="col" [style.display]="currentField?'block':'none'">
-                <ng-template jhiExtractor></ng-template>
+                <jhi-fields [field]="currentField" [cv]="controlvar"></jhi-fields>
             </div>
         </div>
         <div class="row">

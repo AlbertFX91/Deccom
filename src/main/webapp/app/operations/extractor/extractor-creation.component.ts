@@ -7,9 +7,6 @@ import { ExtractorItem, DeccomField } from './extractor.model';
 import { CV, NewCV } from '../cv/cv.model';
 import { ExtractorService } from './extractor.service';
 import { CVService } from '../cv/cv.service';
-import { ExtractorDirective } from './extractor.directive';
-
-import { FieldService } from './fields/fields.service';
 
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
@@ -28,7 +25,6 @@ export class ExtractorCreationComponent implements OnInit, OnDestroy {
     extractorDisableFields: DeccomField[];
     isSaving: boolean;
 
-    @ViewChild(ExtractorDirective) jhiExtractor: ExtractorDirective;
     currentField: DeccomField;
 
     constructor(
@@ -41,7 +37,6 @@ export class ExtractorCreationComponent implements OnInit, OnDestroy {
         private router: ActivatedRoute,
         private mainRouter: Router,
         private componentFactoryResolver: ComponentFactoryResolver,
-        private fieldService: FieldService,
     ) {
         this.controlvar = new CV();
         this.currentField = null;
@@ -139,23 +134,8 @@ export class ExtractorCreationComponent implements OnInit, OnDestroy {
         }
         if (this.currentField === field) {
             this.currentField = null;
-            this.jhiExtractor.viewContainerRef.clear();
             return;
         }
         this.currentField = field;
-        this.loadCustomField(field.component);
-    }
-
-    private loadCustomField(comp: string) {
-        // this.currentAdIndex = (this.currentAdIndex + 1) % this.ads.length;
-        // let adItem = this.ads[this.currentAdIndex];
-
-        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.fieldService.get(comp));
-
-        const viewContainerRef = this.jhiExtractor.viewContainerRef;
-        viewContainerRef.clear();
-
-        const componentRef = viewContainerRef.createComponent(componentFactory);
-        // (<AdComponent>componentRef.instance).data = adItem.data;
     }
 }
