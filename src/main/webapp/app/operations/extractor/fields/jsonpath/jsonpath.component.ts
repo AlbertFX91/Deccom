@@ -1,17 +1,21 @@
 import { Component, OnInit } from '@angular/core';
+import { FieldBaseComponent } from '../fields.component';
 
 @Component({
   selector: 'jhi-rest-jsonpath',
-  template: `
-    <div>
-      <h3>REST Json path field component</h3>
-    </div>
-  `
+  templateUrl: './jsonpath.component.html',
+  styleUrls: ['./jsonpath.component.css'],
 })
-export class FieldRESTJsonPathComponent implements OnInit {
+export class FieldRESTJsonPathComponent extends FieldBaseComponent implements OnInit {
 
-  constructor() {}
+  constructor() {
+    super();
+  }
 
   ngOnInit() {
+  }
+
+  onClick() {
+    this.setValue('Hello World from jsonpath component!');
   }
 }

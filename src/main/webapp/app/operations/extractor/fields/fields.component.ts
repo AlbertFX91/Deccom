@@ -60,6 +60,24 @@ export class FieldComponent implements OnInit, OnDestroy, OnChanges {
 
         const componentRef = viewContainerRef.createComponent(componentFactory);
 
-        // (<AdComponent>componentRef.instance).data = adItem.data;
+        const inst = <FieldBaseComponent> componentRef.instance;
+        inst['field'] = this.field;
+        inst['cv'] = this.cv;
+    }
+}
+
+@Component({
+    selector: 'jhi-fields-base'
+})
+export class FieldBaseComponent implements OnInit, OnDestroy {
+    @Input() field: DeccomField;
+    @Input() cv: CV;
+    ngOnInit() {
+    }
+
+    ngOnDestroy() {}
+
+    setValue(val: any) {
+        this.cv.extractor[this.field.name] = val;
     }
 }
