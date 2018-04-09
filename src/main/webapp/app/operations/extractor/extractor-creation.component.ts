@@ -138,4 +138,8 @@ export class ExtractorCreationComponent implements OnInit, OnDestroy {
         }
         this.currentField = field;
     }
+
+    onFinished() {
+        this.currentField = null;
+    }
 }

@@ -1,13 +1,13 @@
-import { Component, OnInit, OnDestroy, ViewChild, ComponentFactoryResolver, Input, OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ComponentFactoryResolver, Input, OnChanges, SimpleChange, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription, Observable} from 'rxjs/Rx';
+import { Subscription, Observable } from 'rxjs/Rx';
 import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, JhiAlertService } from 'ng-jhipster';
 
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../../shared';
 import { PaginationConfig } from '../../../blocks/config/uib-pagination.config';
 import { FieldDirective } from './fields.directive'
 import { FieldService } from './fields.service'
-import { DeccomField} from '../extractor.model'
+import { DeccomField } from '../extractor.model'
 import { CV } from '../../cv/cv.model';
 
 @Component({
@@ -18,6 +18,8 @@ import { CV } from '../../cv/cv.model';
 export class FieldComponent implements OnInit, OnDestroy, OnChanges {
     @Input() field: DeccomField;
     @Input() cv: CV;
+    @Output()
+    private finished = new EventEmitter<boolean>();
 
     private _init: boolean;
 
@@ -43,7 +45,7 @@ export class FieldComponent implements OnInit, OnDestroy, OnChanges {
         });
     }
 
-    ngOnDestroy() {}
+    ngOnDestroy() { }
 
     ngOnChanges(changes: SimpleChanges) {
         if (this._init && changes.field) {
@@ -60,9 +62,10 @@ export class FieldComponent implements OnInit, OnDestroy, OnChanges {
 
         const componentRef = viewContainerRef.createComponent(componentFactory);
 
-        const inst = <FieldBaseComponent> componentRef.instance;
+        const inst = <FieldBaseComponent>componentRef.instance;
         inst['field'] = this.field;
         inst['cv'] = this.cv;
+        inst['finished'].subscribe((res) => this.finished.emit(res) );
     }
 }
 
@@ -72,12 +75,27 @@ export class FieldComponent implements OnInit, OnDestroy, OnChanges {
 export class FieldBaseComponent implements OnInit, OnDestroy {
     @Input() field: DeccomField;
     @Input() cv: CV;
+    @Output()
+    private finished = new EventEmitter<boolean>();
+
     ngOnInit() {
     }
 
-    ngOnDestroy() {}
+    ngOnDestroy() { }
+
+    getValue(attr: string) {
+        return this.cv.extractor[attr];
+    }
 
     setValue(val: any) {
         this.cv.extractor[this.field.name] = val;
+    }
+
+    setValueByAttr(attr: string, val: any) {
+        this.cv.extractor[attr] = val;
+    }
+
+    finish() {
+        this.finished.emit(true);
     }
 }

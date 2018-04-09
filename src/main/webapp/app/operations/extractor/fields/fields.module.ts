@@ -5,12 +5,17 @@ import { DeccomSharedModule } from '../../../shared';
 
 import { FieldService } from './fields.service';
 
-import { components, FieldComponent, FieldDirective } from './';
+import { components, modules, FieldComponent, FieldDirective } from './';
+
+import { DeccomFieldsJsonPathModule } from './jsonpath/jsonpath.module'
+import { DeccomFieldsSQLQueryModule } from './query/query.module'
+
 @NgModule({
     imports: [
        DeccomSharedModule,
+       modules(),
     ],
-    declarations: [components(), FieldComponent, FieldDirective],
+    declarations: [FieldComponent, FieldDirective],
     entryComponents: [components(), FieldComponent],
     providers: [
         FieldService,

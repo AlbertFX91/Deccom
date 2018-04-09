@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="col" [style.display]="currentField?'block':'none'">
-                <jhi-fields [field]="currentField" [cv]="controlvar"></jhi-fields>
+                <jhi-fields [field]="currentField" [cv]="controlvar" (finished)="onFinished($event)"></jhi-fields>
             </div>
         </div>
         <div class="row">
