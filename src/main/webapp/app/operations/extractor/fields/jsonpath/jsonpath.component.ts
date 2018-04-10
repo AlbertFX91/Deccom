@@ -13,6 +13,7 @@ export class FieldRESTJsonPathComponent extends FieldBaseComponent implements On
   isSaving: boolean;
   json: any;
   path: string;
+  correct: boolean;
 
   constructor(
     public jsonPathService: JSONPathService,
@@ -27,6 +28,7 @@ export class FieldRESTJsonPathComponent extends FieldBaseComponent implements On
     this.isSaving = false;
     this.json = [];
     this.url = this.getValue('url');
+    this.correct = false;
   }
 
   onClose() {
@@ -38,7 +40,6 @@ export class FieldRESTJsonPathComponent extends FieldBaseComponent implements On
   }
   createPath(path: string) {
     this.path = path;
-    this.setValue(this.path);
   }
 
   onSubmit() {
@@ -69,5 +70,9 @@ export class FieldRESTJsonPathComponent extends FieldBaseComponent implements On
   onSuccess(data: any, headers: any) {
     this.isSaving = false;
     this.json = data;
+  }
+
+  onCorrectPath(e) {
+    this.correct = e;
   }
 }

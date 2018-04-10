@@ -17,6 +17,9 @@ import { PaginationConfig } from '../../../../../blocks/config/uib-pagination.co
     @Output()
     private path = new EventEmitter<String>();
 
+    @Output()
+    private correctPath = new EventEmitter<boolean>();
+
     constructor() { }
 
     ngOnInit() { }
@@ -42,5 +45,8 @@ import { PaginationConfig } from '../../../../../blocks/config/uib-pagination.co
         if (type === 'object' && data !== null) {
             return 'json';
         }
+    }
+    onCorrectPath(e) {
+        this.correctPath.emit(e);
     }
 }

@@ -128,6 +128,10 @@ export class ExtractorCreationComponent implements OnInit, OnDestroy {
         return this.extractorDisableFields.indexOf(field) !== -1 ? '' : null;
     }
 
+    disableInput(field: DeccomField) {
+        return this.extractorDisableFields.indexOf(field) !== -1 || field.component.length ? '' : null;
+    }
+
     onClickCustomField(field: DeccomField) {
         if (field.component === '') {
             return;

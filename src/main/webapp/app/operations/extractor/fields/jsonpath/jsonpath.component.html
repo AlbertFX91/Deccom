@@ -1,5 +1,4 @@
 <div>
-    <h5>REST Json path field component</h5>
     <div>
         <form name="restForm" role="form" novalidate (ngSubmit)="onSubmit()" #restForm="ngForm" style="width: 100%">
             <div class="form-group">
@@ -20,12 +19,12 @@
                     <span class="fa fa-download"></span>&nbsp;
                     <span jhiTranslate="entity.action.load">Load</span>
                 </button>
-                <button type="button" [disabled]="!path" class="btn btn-primary" (click)="onClose()">
+                <button type="button" *ngIf="correct" class="btn btn-primary" (click)="onClose()">
                         <span class="fa fa-save"></span>&nbsp;
-                        <span>Close</span>
+                        <span>Set</span>
                 </button>
             </div>
         </form>
-        <jhi-jsonvisualizer [(data)]="json" style="width: 100%" (path)="createPath($event)"></jhi-jsonvisualizer>
+        <jhi-jsonvisualizer [(data)]="json" style="width: 100%" (path)="createPath($event)" (correctPath)="onCorrectPath($event, e)"></jhi-jsonvisualizer>
     </div>
 </div>

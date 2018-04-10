@@ -12,7 +12,7 @@
                     <div class="row">
                         <div class="col-10">
                             <input [attr.type]="field.type" class="form-control" name="{{field.name}}" id="field_{{field.name}}" [(ngModel)]="controlvar.extractor[field.name]"
-                                required placeholder="{{controlvar.extractor[field.name]}}" [attr.disabled]="disableField(field)"
+                                required placeholder="{{controlvar.extractor[field.name]}}" [attr.disabled]="disableInput(field)"
                             />
                         </div>
                         <div class="col-2">
@@ -26,10 +26,10 @@
                             This field is required.
                         </small>
                     </div>
+                    <div [style.display]="currentField===field?'block':'none'">
+                        <jhi-fields [field]="currentField" [cv]="controlvar" (finished)="onFinished($event)"></jhi-fields>
+                    </div>  
                 </div>
-            </div>
-            <div class="col" [style.display]="currentField?'block':'none'">
-                <jhi-fields [field]="currentField" [cv]="controlvar" (finished)="onFinished($event)"></jhi-fields>
             </div>
         </div>
         <div class="row">

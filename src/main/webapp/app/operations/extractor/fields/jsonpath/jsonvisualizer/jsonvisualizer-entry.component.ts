@@ -20,6 +20,9 @@ import { PaginationConfig } from '../../../../../blocks/config/uib-pagination.co
     @Output()
     private selected = new EventEmitter<String>();
 
+    @Output()
+    private correctPath = new EventEmitter<boolean>();
+
     @Input()
     parentType: string;
 
@@ -33,8 +36,11 @@ import { PaginationConfig } from '../../../../../blocks/config/uib-pagination.co
         'json': ['keys', 'img-fluid']
     };
 
+    currentKey: string;
+
     constructor() {
         this.states = {};
+        this.currentKey = null;
      }
 
     ngOnInit() { }
@@ -82,6 +88,7 @@ import { PaginationConfig } from '../../../../../blocks/config/uib-pagination.co
     }
 
     fireSelected(path: string, key: string) {
+        this.currentKey = null;
         if (this.parentType === 'array') {
             this.selected.emit('[' + key + '].' + path);
         } else {
@@ -90,6 +97,12 @@ import { PaginationConfig } from '../../../../../blocks/config/uib-pagination.co
     }
 
     rowClicked(key: string) {
+        this.currentKey = key;
+        if (this.isSelected(key)) {
+            this.correctPath.emit(true);
+        } else {
+            this.correctPath.emit(false);
+        }
         this.toggleVisualization(key);
         this.startPath(key);
     }
@@ -107,7 +120,7 @@ import { PaginationConfig } from '../../../../../blocks/config/uib-pagination.co
         if (type === 'json' || type === 'array') {
             if (this.states[key]) {
                 this.states[key] = this.states[key] === 'out' ? 'in' : 'out';
-            }else {
+            } else {
                 this.states[key] = 'in';
             }
         }
@@ -117,5 +130,23 @@ import { PaginationConfig } from '../../../../../blocks/config/uib-pagination.co
         const type = this.typeByKey(key);
         // It can be visualized if its a json or and array, and if the object has been setted to visible because it has been clicked
         return (type === 'json' || type === 'array') && this.states[key] === 'in';
+    }
+
+    isSelected(key: string) {
+        if (key !== this.currentKey) {
+            return false;
+        }
+        const value = this.data[key];
+        const type = typeof (value);
+        return type === 'number';
+    }
+
+    onCorrectPath(e) {
+        if (e) {
+            this.currentKey = null;
+            this.correctPath.emit(true);
+        } else {
+            this.correctPath.emit(false);
+        }
     }
 }
