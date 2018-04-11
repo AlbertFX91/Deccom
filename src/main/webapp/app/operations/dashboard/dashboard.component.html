@@ -4,7 +4,7 @@
     </h2>
     <jhi-alert></jhi-alert>
     <div [hidden]="!chart" style="width: 80%;">
-        <!-- <canvas baseChart [chartType]="'line'" [datasets]="chartDataAux" [labels]="chartLabels" [options]="chartOptions"></canvas> -->
-        <canvas id="canvas">{{chart}}</canvas>
+        <canvas baseChart [chartType]="'line'" [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions"></canvas>
+        <!-- <canvas id="canvas">{{chart}}</canvas> -->
     </div>
 </div>
