@@ -45,7 +45,7 @@ import { Chart } from 'chart.js';
             { data: [120, 455, 100, 340], label: 'Account B', fill: false },
             { data: [45, 67, 800, 500], label: 'Account C', fill: false }
         ];
-        this.chartLabels = ['January', 'February', 'Mars', 'April'];
+        this.chartLabels = ['January', 'February', 'Mars', 'April', 'May'];
         this.chartOptions = {
             responsive: true,
             legend: {
