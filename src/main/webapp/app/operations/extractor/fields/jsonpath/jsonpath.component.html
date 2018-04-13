@@ -1,0 +1,30 @@
+<div>
+    <div>
+        <form name="restForm" role="form" novalidate (ngSubmit)="onSubmit()" #restForm="ngForm" style="width: 100%">
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="deccomApp.REST.url" for="field_url">URL</label>
+                <input type="url" class="form-control" name="url" id="field_url" pattern="https?://.+" title="Include http://" [(ngModel)]="url"
+                    required />
+                <div [hidden]="!(restForm.controls.url?.dirty && restForm.controls.url?.invalid)">
+                    <small class="form-text text-danger" [hidden]="!restForm.controls.url?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                    <small class="form-text text-danger" [hidden]="!restForm.controls.url?.errors?.pattern" jhiTranslate="deccomApp.REST.wrongURL">
+                        Wrong URL.
+                    </small>
+                </div>
+            </div>
+            <div>
+                <button type="submit" [disabled]="restForm.form.invalid || isSaving" class="btn">
+                    <span class="fa fa-download"></span>&nbsp;
+                    <span jhiTranslate="entity.action.load">Load</span>
+                </button>
+                <button type="button" *ngIf="correct" class="btn btn-primary" (click)="onClose()">
+                        <span class="fa fa-save"></span>&nbsp;
+                        <span>Set</span>
+                </button>
+            </div>
+        </form>
+        <jhi-jsonvisualizer [(data)]="json" style="width: 100%" (path)="createPath($event)" (correctPath)="onCorrectPath($event, e)"></jhi-jsonvisualizer>
+    </div>
+</div>
