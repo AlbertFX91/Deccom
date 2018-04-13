@@ -9,23 +9,43 @@ import { Chart } from 'chart.js';
     templateUrl: './dashboard.component.html'
 }) export class DashboardComponent implements OnInit, OnDestroy {
 
+    chart: any[];
     chartData: any[];
     chartDataAux: any[];
+    chartLabels: string[];
+    chartOptions: any;
     page: any;
     itemsPerPage: number;
-    chartOptions: any;
-    chartLabels: string[];
-    chart: any[];
 
     constructor(
         public cvService: CVService,
         private alertService: JhiAlertService,
         private eventManager: JhiEventManager
     ) {
+        this.chart = [];
         this.chartData = [];
         this.chartDataAux = [];
+        this.chartLabels = [];
+        this.chartOptions = {};
         this.page = 0;
         this.itemsPerPage = ITEMS_PER_PAGE;
+    }
+
+    ngOnInit() {
+        const pageSettings = {
+            page: this.page,
+            size: this.itemsPerPage
+        };
+        this.cvService.findAll(pageSettings).subscribe(
+            (data: any) => this.onSuccess(data.json(), data.headers),
+            (error: Response) => this.onError(error)
+        );
+        this.chartDataAux = [
+            { data: [330, 600, 260, 700], label: 'Account A', fill: false },
+            { data: [120, 455, 100, 340], label: 'Account B', fill: false },
+            { data: [45, 67, 800, 500], label: 'Account C', fill: false }
+        ];
+        this.chartLabels = ['January', 'February', 'Mars', 'April', 'May'];
         this.chartOptions = {
             responsive: true,
             legend: {
@@ -39,29 +59,13 @@ import { Chart } from 'chart.js';
                     display: true
                 }],
             }
-        }
-        this.chartLabels = ['January', 'February', 'Mars', 'April'];
-    }
-
-    ngOnInit() {
-        const pageSettings = {
-            page: this.page,
-            size: this.itemsPerPage
-        }
-        this.cvService.findAll(pageSettings).subscribe(
-            (data: any) => this.onSuccess(data.json(), data.headers),
-            (error: Response) => this.onError(error)
-        )
-        this.chartDataAux = [
-            { data: [330, 600, 260, 700], label: 'Account A' },
-            { data: [120, 455, 100, 340], label: 'Account B' },
-            { data: [45, 67, 800, 500], label: 'Account C' }
-        ]
+        };
         this.chart = new Chart('canvas', {
             type: 'line',
             data: {
                 labels: this.chartLabels,
                 datasets: this.chartData
+                // datasets: this.chartDataAux
             },
             options: this.chartOptions
         });
@@ -78,7 +82,8 @@ import { Chart } from 'chart.js';
                 const dato: any = {
                     data: dataAux,
                     label: data.content[i]['name'],
-                    backgroundColor: data.content[i]['extractor']['style']['backgroundColor']
+                    backgroundColor: data.content[i]['extractor']['style']['backgroundColor'],
+                    fill: false
                 }
                 this.chartData.push(dato);
             }
