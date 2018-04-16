@@ -12,4 +12,6 @@ public @interface DeccomField {
 	InputType type() default InputType.TEXT;
 
 	String component() default "";
+	
+	boolean display() default true;
 }

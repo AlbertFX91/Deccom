@@ -18,15 +18,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class SQLExtractor implements ControlVariableExtractor {
 
 	@NotNull
-	@DeccomField()
+	@DeccomField(display=false)
 	private String username;
 	
 	@NotNull
-	@DeccomField(type=InputType.PASSWORD)
+	@DeccomField(type=InputType.PASSWORD, display=false)
 	private String password;
 	
 	@NotNull
-	@DeccomField(type=InputType.URL)
+	@DeccomField(type=InputType.URL, display=false)
 	private String url;
 	
 	@NotNull
