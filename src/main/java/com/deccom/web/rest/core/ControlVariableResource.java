@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
-import com.deccom.domain.Acme;
 import com.deccom.domain.core.ControlVariable;
 import com.deccom.domain.core.extractor.rest.RESTExtractor;
 import com.deccom.domain.core.extractor.sql.SQLExtractor;

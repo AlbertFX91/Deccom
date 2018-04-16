@@ -54,7 +54,7 @@
             </form>
         </div>
         <div class="row" *ngIf="sqlDataRecover.connection">
-            <form name="sqlcontrolvarForm" role="form" novalidate (ngSubmit)="testControlVar()" #sqlControlVarForm="ngForm" style="width: 100%">
+            <form name="sqlcontrolvarForm" role="form" novalidate #sqlControlVarForm="ngForm" style="width: 100%">
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="deccomApp.sql.query" for="field_sql_finalQuery">Final query</label>
                     <input type="text" class="form-control" name="finalQuery" id="field_sql_finalQuery" [(ngModel)]="sqlDataRecover.query" required

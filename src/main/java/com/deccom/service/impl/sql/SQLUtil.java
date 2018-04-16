@@ -1,4 +1,4 @@
-package com.deccom.service.impl.util;
+package com.deccom.service.impl.sql;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -18,13 +18,12 @@ import java.util.stream.IntStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.deccom.service.impl.SQLServiceImpl;
 import com.google.common.collect.Lists;
 
 public class SQLUtil {
 
 	public static final String i18nCodeRoot = "operations.sql";
-	private final static Logger log = LoggerFactory.getLogger(SQLServiceImpl.class);
+	private final static Logger log = LoggerFactory.getLogger(SQLUtil.class);
 
 	/**
 	 * This function create an object DBMetadata with:
@@ -261,6 +260,33 @@ public class SQLUtil {
 			// throw new IllegalStateException("Query execution error", e);
 		}
 		return res;
+	}
+	
+	public static SQLResponse query(SQLQuery query) {
+		String url = query.getUrl();
+		String username = query.getUsername();
+		String password = query.getPassword();
+		String q = query.getQuery();
+		String jdbc = query.getJdbc();
+		
+		SQLMetadata dbMetadata;
+
+		// Data structure for the result data
+		List<Map<String, String>> data;
+
+		// Database connection
+		Connection connection = SQLUtil.connect(jdbc, url, username, password);
+
+		// Result of the query execution
+		ResultSet rs = SQLUtil.executeQuery(connection, q);
+
+		// Data collection
+		data = SQLUtil.collectAll(rs);
+
+		// Get the metadata from the query
+		dbMetadata = SQLUtil.getDBMetadata(connection, rs);
+
+		return new SQLResponse(dbMetadata, data);
 	}
 
 }

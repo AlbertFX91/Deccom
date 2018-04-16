@@ -3,10 +3,9 @@ package com.deccom.service.core;
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.HashSet;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -55,9 +54,8 @@ public class ControlVariableService {
 
 		try {
 
-			Integer value;
-
-			value = controlVariable.getExtractor().getData();
+			// Checking the extractor
+			controlVariable.getExtractor().getData();
 
 			ControlVariable cv = controlVariableRepository.save(controlVariable);
 

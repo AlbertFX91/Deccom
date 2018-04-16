@@ -12,7 +12,7 @@ import com.deccom.domain.core.CVStyle;
 import com.deccom.domain.core.extractor.ControlVariableExtractor;
 import com.deccom.domain.core.fields.DeccomField;
 import com.deccom.domain.core.fields.InputType;
-import com.deccom.service.impl.util.SQLUtil;
+import com.deccom.service.impl.sql.SQLUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class SQLExtractor implements ControlVariableExtractor {

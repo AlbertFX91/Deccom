@@ -1,8 +1,0 @@
-.field-hover:hover {
-    background-color: yellow;
-    cursor: pointer;
-}
-.field-selected {
-    background-color: lightgreen;
-    font-weight: 500;
-}
