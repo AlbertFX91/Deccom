@@ -40,10 +40,22 @@ import { Chart } from 'chart.js';
             (data: any) => this.onSuccess(data.json(), data.headers),
             (error: Response) => this.onError(error)
         );
+        /*
         this.chartDataAux = [
-            { data: [330, 600, 260, 700], label: 'Account A', fill: false },
+            { data: [330, 600, 260, 700, 800], label: 'Account A', fill: false },
             { data: [120, 455, 100, 340], label: 'Account B', fill: false },
             { data: [45, 67, 800, 500], label: 'Account C', fill: false }
+        ];
+        */
+        this.chartDataAux = [
+            {
+                data: [{ x: new Date(2018, 1, 1, 12, 50, 55), y: 1 }, { x: new Date(2018, 1, 15, 12, 50, 55), y: 8 }, { x: new Date(2018, 2, 2, 12, 50, 55), y: 3 }],
+                label: 'Account A', fill: false
+            }
+            /*
+            { data: [120, 455, 100, 340], label: 'Account B', fill: false },
+            { data: [45, 67, 800, 500], label: 'Account C', fill: false }
+            */
         ];
         this.chartLabels = ['January', 'February', 'Mars', 'April', 'May'];
         this.chartOptions = {
@@ -53,7 +65,14 @@ import { Chart } from 'chart.js';
             },
             scales: {
                 xAxes: [{
-                    display: true
+                    display: true,
+                    type: 'time',
+                    time: {
+                        displayFormats: {
+                            second: 'h:mm:ss a'
+                        },
+                        unit: 'second'
+                    }
                 }],
                 yAxes: [{
                     display: true
@@ -75,12 +94,16 @@ import { Chart } from 'chart.js';
         for (let i = 0; i < data.content.length; i++) {
             if (data.content[i]['status'] === 'RUNNING' && data.content[i]['controlVarEntries'].length > 0) {
                 const controlVarEntriesAux: any[] = data.content[i]['controlVarEntries'].slice(Math.max(data.content[i]['controlVarEntries'].length - 5, 0));
-                const dataAux: number[] = [];
+                const dataToInsert: any[] = [];
                 for (let j = 0; j < 5; j++) {
-                    dataAux.push(controlVarEntriesAux[j]['value']);
+                    const date: any = new Date(controlVarEntriesAux[j]['creationMoment']);
+                    dataToInsert.push({
+                        x: new Date(date.getFullYear(), date.getMonth(), date.getDay(), date.getHours(), date.getMinutes(), date.getSeconds()),
+                        y: controlVarEntriesAux[j]['value']
+                    });
                 }
                 const dato: any = {
-                    data: dataAux,
+                    data: dataToInsert,
                     label: data.content[i]['name'],
                     backgroundColor: data.content[i]['extractor']['style']['backgroundColor'],
                     fill: false
