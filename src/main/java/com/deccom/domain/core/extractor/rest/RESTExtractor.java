@@ -13,7 +13,7 @@ import com.deccom.service.impl.util.RESTUtil;
 public class RESTExtractor implements ControlVariableExtractor {
 
 	@NotNull
-	@DeccomField()
+	@DeccomField(display = false)
 	private String url;
 	
 	@NotNull

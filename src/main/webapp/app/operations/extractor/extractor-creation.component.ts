@@ -132,6 +132,12 @@ export class ExtractorCreationComponent implements OnInit, OnDestroy {
         return this.extractorDisableFields.indexOf(field) !== -1 || field.component.length ? '' : null;
     }
 
+    fieldsToList() {
+        if (this.extractorFields) {
+            return this.extractorFields.filter( (f) => f.display);
+        }
+    }
+
     onClickCustomField(field: DeccomField) {
         if (field.component === '') {
             return;

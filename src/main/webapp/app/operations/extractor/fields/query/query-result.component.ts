@@ -1,17 +1,17 @@
 import { Component, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, JhiAlertService } from 'ng-jhipster';
-import { SQLResponse, SQLField } from './sql.model'
-import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
+import { SQLResponse, SQLField } from './query.model'
+import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../../../shared';
 
 @Component({
     selector: 'jhi-sql-list',
-    templateUrl: './sql-result.component.html',
+    templateUrl: './query-result.component.html',
     styleUrls: [
-        'sql-result.css'
+        'query-result.css'
     ],
 })
-export class SQLResultComponent implements OnInit, OnDestroy {
+export class FieldSQLQueryResultComponent implements OnInit, OnDestroy {
 
     @Input()
     sqlResponse: SQLResponse;

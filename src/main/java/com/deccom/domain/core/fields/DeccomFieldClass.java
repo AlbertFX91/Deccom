@@ -4,33 +4,36 @@ public class DeccomFieldClass {
 	private InputType type;
 	private String component;
 	private String name;
+	private Boolean display;
 
 	public static DeccomFieldClass create() {
 		return new DeccomFieldClass();
 	}
 
 	public static DeccomFieldClass create(String name) {
-		return new DeccomFieldClass(name, InputType.TEXT, "");
+		return new DeccomFieldClass(name, InputType.TEXT, "", true);
 	}
 	
-	public static DeccomFieldClass create(String name, InputType type, String component) {
-		return new DeccomFieldClass(name, type, component);
+	public static DeccomFieldClass create(String name, InputType type, String component, Boolean display) {
+		return new DeccomFieldClass(name, type, component, display);
 	}
 
 	public static DeccomFieldClass create(String name, DeccomField field) {
-		return new DeccomFieldClass(name, field.type(), field.component());
+		return new DeccomFieldClass(name, field.type(), field.component(), field.display());
 	}
 
 	public DeccomFieldClass() {
 		this.name = "";
 		this.type = InputType.TEXT;
 		this.component = "";
+		this.display = true;
 	}
 
-	public DeccomFieldClass(String name, InputType type, String component) {
+	public DeccomFieldClass(String name, InputType type, String component, Boolean display) {
 		this.name = name;
 		this.type = type;
 		this.component = component;
+		this.display = display;
 	}
 
 	public InputType getType() {
@@ -56,6 +59,14 @@ public class DeccomFieldClass {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public boolean isDisplay() {
+		return display;
+	}
+
+	public void setDisplay(boolean display) {
+		this.display = display;
+	}
 
 	@Override
 	public int hashCode() {
@@ -64,6 +75,7 @@ public class DeccomFieldClass {
 		result = prime * result + ((component == null) ? 0 : component.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
+		result = prime * result + ((display == null) ? 0 : display.hashCode());
 		return result;
 	}
 

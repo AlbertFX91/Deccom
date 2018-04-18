@@ -13,9 +13,6 @@ import com.deccom.domain.Event;
 import com.deccom.domain.RESTConnection;
 import com.deccom.domain.RESTControlVar;
 import com.deccom.domain.RESTControlVarEntry;
-import com.deccom.domain.SQLConnection;
-import com.deccom.domain.SQLControlVar;
-import com.deccom.domain.SQLControlVarEntry;
 import com.deccom.domain.User;
 import com.deccom.domain.core.ControlVariable;
 import com.deccom.domain.core.Status;
@@ -123,32 +120,7 @@ public class InitialSetupMigration {
 		});
 
 	}
-
-	@ChangeSet(order = "04", author = "initiator", id = "04-addSQLControlVars")
-	public void addSQLControlVars(MongoTemplate mongoTemplate) {
-		SQLControlVar cv = new SQLControlVar();
-		cv.setId("SQLControlVar-1");
-		cv.setCreationMoment(LocalDateTime.now());
-		cv.setName("controlvar-1");
-		cv.setQuery("select age from author where idauthor='1' and name='name-1'");
-		cv.setFrequency_sec(30);
-		cv.setSqlConnection(new SQLConnection("developer", "developer", "jdbc:mysql://localhost:3306/deccom"));
-		cv.setSqlControlVarEntries(Lists.newArrayList(new SQLControlVarEntry("16", LocalDateTime.now()),
-				new SQLControlVarEntry("17", LocalDateTime.now()), new SQLControlVarEntry("18", LocalDateTime.now())));
-		mongoTemplate.save(cv);
-
-		cv = new SQLControlVar();
-		cv.setId("SQLControlVar-2");
-		cv.setCreationMoment(LocalDateTime.now());
-		cv.setName("controlvar-2");
-		cv.setQuery("select age from author where idauthor='2' and name='name-2'");
-		cv.setFrequency_sec(60);
-		cv.setSqlConnection(new SQLConnection("developer", "developer", "jdbc:mysql://localhost:3306/deccom"));
-		cv.setSqlControlVarEntries(Lists.newArrayList(new SQLControlVarEntry("16", LocalDateTime.now()),
-				new SQLControlVarEntry("17", LocalDateTime.now()), new SQLControlVarEntry("18", LocalDateTime.now())));
-		mongoTemplate.save(cv);
-	}
-
+	
 	@ChangeSet(order = "05", author = "initiator", id = "05-addRESTControlVars")
 	public void addRESTControlVars(MongoTemplate mongoTemplate) {
 		RESTControlVar r = new RESTControlVar();

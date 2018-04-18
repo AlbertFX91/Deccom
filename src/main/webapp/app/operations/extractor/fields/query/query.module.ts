@@ -3,16 +3,19 @@ import { RouterModule } from '@angular/router';
 
 import { DeccomSharedModule } from '../../../../shared';
 
-import { FieldSQLQueryComponent} from './';
+import {
+    FieldSQLQueryComponent,
+    FieldSQLQueryResultComponent,
+    SQLQueryService,
+} from './';
 @NgModule({
     imports: [
-       DeccomSharedModule,
+        DeccomSharedModule,
     ],
-    declarations: [FieldSQLQueryComponent],
+    declarations: [FieldSQLQueryComponent, FieldSQLQueryResultComponent],
     entryComponents: [FieldSQLQueryComponent],
-    providers: [
-    ],
     exports: [FieldSQLQueryComponent],
+    providers: [ SQLQueryService ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class DeccomFieldsSQLQueryModule {}
