@@ -1,4 +1,38 @@
-<nav class="navbar navbar-inverse navbar-toggleable-md jh-navbar">
+<nav class="navbar deccom-navbar navbar-inverse navbar-toggleable-md jh-navbar">
+
+    <div id="navbar-sidebar-icon">
+        <a class="fa fa-bars white-icon" href="javascript:void(0); " id="operation-menu" (click)="toggleSidebar()" style="text-decoration: none;">
+            <i aria-hidden="true"></i>
+            <b class="caret"></b>
+        </a>
+    </div>
+    <div id="navbar-title">
+        <a id="deccom-title" class="white-icon" routerLink="">Deccom</a>
+    </div>
+    <div id="navbar-buttons">
+        <div id="navbar-signin" *ngIf="!isAuthenticated()">
+            <button type="button" class="navbar-button" id="signin" (click)="login()">Sign in</button>
+        </div>
+        <div id="navbar-signup" *ngIf="!isAuthenticated()">
+            <button type="button" class="navbar-button" routerLink="register">Sign up</button>
+        </div>
+        <div id="navbar-languages">
+            <div ngbDropdown class="nav-item dropdown pointer" *ngIf="languages">
+                <a class="dropdown-toggle navbar-a" ngbDropdownToggle href="javascript:void(0); " id="languagesnavBarDropdown" *ngIf="languages.length> 1">
+                    <span class="fa-stack">
+                        <i class="fa fa-flag fa-stack-1x"></i>
+                    </span>
+                </a>
+                <ul class="dropdown-menu" ngbDropdownMenu *ngIf="languages.length > 1">
+                    <li *ngFor="let language of languages">
+                        <a class="dropdown-item roboto" [jhiActiveMenu]="language" href="javascript:void(0);" (click)="changeLanguage(language);collapseNavbar();">{{language | findLanguageFromKey}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!--
     <a class="jh-navbar-toggler hidden-lg-up float-right" href="javascript:void(0);" data-toggle="collapse" data-target="#navbarResponsive"
         aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">
     </a>
@@ -17,7 +51,6 @@
     </div>
     <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="isAuthenticated()">
         <ul class="navbar-nav ml-auto">
-            <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
             <li *jhiHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="operation-menu">
                     <span class="fa-stack">
@@ -123,4 +156,5 @@
             </li>
         </ul>
     </div>
+-->
 </nav>
