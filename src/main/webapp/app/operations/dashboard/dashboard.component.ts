@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CVService } from '../cv/cv.service';
-import { ITEMS_PER_PAGE } from '../../shared';
+import { Event } from '../event/event.model';
+import { EventService } from '../event/event.service';
+import { ResponseWrapper, ITEMS_PER_PAGE } from '../../shared';
 import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
 import { Chart } from 'chart.js';
 
@@ -14,11 +16,13 @@ import { Chart } from 'chart.js';
     chartDataAux: any[];
     chartLabels: string[];
     chartOptions: any;
+    events: Event[];
     page: any;
     itemsPerPage: number;
 
     constructor(
         public cvService: CVService,
+        public eventService: EventService,
         private alertService: JhiAlertService,
         private eventManager: JhiEventManager
     ) {
@@ -27,6 +31,7 @@ import { Chart } from 'chart.js';
         this.chartDataAux = [];
         this.chartLabels = [];
         this.chartOptions = {};
+        this.events = [];
         this.page = 0;
         this.itemsPerPage = ITEMS_PER_PAGE;
     }
@@ -37,8 +42,12 @@ import { Chart } from 'chart.js';
             size: this.itemsPerPage
         };
         this.cvService.findAll(pageSettings).subscribe(
-            (data: any) => this.onSuccess(data.json(), data.headers),
+            (data: any) => this.onSuccessCV(data.json(), data.headers),
             (error: Response) => this.onError(error)
+        );
+        this.eventService.findAll(pageSettings).subscribe(
+            (res: ResponseWrapper) => this.onSuccessEvent(res.json, res.headers),
+            (res: ResponseWrapper) => this.onError(res.json)
         );
         /*
         this.chartDataAux = [
@@ -88,9 +97,11 @@ import { Chart } from 'chart.js';
             },
             options: this.chartOptions
         });
+        console.log('events');
+        console.log(this.events);
     }
 
-    onSuccess(data: any, headers: any) {
+    onSuccessCV(data: any, headers: any) {
         for (let i = 0; i < data.content.length; i++) {
             if (data.content[i]['status'] === 'RUNNING' && data.content[i]['controlVarEntries'].length > 0) {
                 const controlVarEntriesAux: any[] = data.content[i]['controlVarEntries'].slice(Math.max(data.content[i]['controlVarEntries'].length - 5, 0));
@@ -110,6 +121,14 @@ import { Chart } from 'chart.js';
                 }
                 this.chartData.push(dato);
             }
+        }
+        // this.links = this.parseLinks.parse(headers.get('link'));
+        this.eventManager.broadcast({ name: 'all_success', content: 'OK' });
+    }
+
+    onSuccessEvent(data: any, headers: any) {
+        for (let i = 0; i < data.length; i++) {
+            this.events.push(data[i]);
         }
         // this.links = this.parseLinks.parse(headers.get('link'));
         this.eventManager.broadcast({ name: 'all_success', content: 'OK' });
