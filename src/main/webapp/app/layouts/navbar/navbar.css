@@ -30,7 +30,7 @@ Navbar
 }
 
 .jh-navbar .dropdown-toggle::after {
-    margin-left: 0.15em;
+    /* margin-left: 0.15em; */
 }
 
 .jh-navbar ul.navbar-nav {
@@ -99,6 +99,7 @@ Logo styles
 
 .white-icon {
     color: white;
+    text-decoration: none;
 }
 
 .dropdown-toggle::after {
@@ -130,6 +131,7 @@ Logo styles
     display: flex;
     font-weight: 400;
     font-size: 18px;
+    align-items: center;
 }
 
 #navbar-buttons > div {
@@ -139,7 +141,6 @@ Logo styles
 .deccom-title {
     text-decoration: none;
 }
-
 .navbar-a {
     color: white !important;
     text-decoration: none !important;
@@ -169,6 +170,7 @@ Logo styles
 }
 #navbar-languages {
     display: flex;
+    align-items: center;
 }
 
 #signin {
@@ -176,4 +178,8 @@ Logo styles
     border: solid;
     border-color: white;
     color: white;
+}
+
+.dropdown-toggle::after{
+    margin-left: 0;
 }
