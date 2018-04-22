@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CVService } from '../cv/cv.service';
-import { Event } from '../event/event.model';
 import { EventService } from '../event/event.service';
 import { ResponseWrapper, ITEMS_PER_PAGE } from '../../shared';
 import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
@@ -11,12 +10,12 @@ import { Chart } from 'chart.js';
     templateUrl: './dashboard.component.html'
 }) export class DashboardComponent implements OnInit, OnDestroy {
 
+    chartType: string;
     chart: any[];
-    chartData: any[];
+    CVs: any[];
+    events: any[];
     chartDataAux: any[];
-    chartLabels: string[];
     chartOptions: any;
-    events: Event[];
     page: any;
     itemsPerPage: number;
 
@@ -26,17 +25,18 @@ import { Chart } from 'chart.js';
         private alertService: JhiAlertService,
         private eventManager: JhiEventManager
     ) {
+        this.chartType = '';
         this.chart = [];
-        this.chartData = [];
-        this.chartDataAux = [];
-        this.chartLabels = [];
-        this.chartOptions = {};
+        this.CVs = [];
         this.events = [];
+        this.chartDataAux = [];
+        this.chartOptions = {};
         this.page = 0;
         this.itemsPerPage = ITEMS_PER_PAGE;
     }
 
     ngOnInit() {
+        this.chartType = 'line';
         const pageSettings = {
             page: this.page,
             size: this.itemsPerPage
@@ -66,7 +66,6 @@ import { Chart } from 'chart.js';
             { data: [45, 67, 800, 500], label: 'Account C', fill: false }
             */
         ];
-        this.chartLabels = ['January', 'February', 'Mars', 'April', 'May'];
         this.chartOptions = {
             responsive: true,
             legend: {
@@ -87,18 +86,52 @@ import { Chart } from 'chart.js';
                     display: true
                 }],
             }
+            /*
+            annotation: {
+                // Defines when the annotations are drawn.
+                // This allows positioning of the annotation relative to the other
+                // elements of the graph.
+                //
+                // Should be one of: afterDraw, afterDatasetsDraw, beforeDatasetsDraw
+                // See http://www.chartjs.org/docs/#advanced-usage-creating-plugins
+                drawTime: 'afterDatasetsDraw', // (default)
+
+                // Mouse events to enable on each annotation.
+                // Should be an array of one or more browser-supported mouse events
+                // See https://developer.mozilla.org/en-US/docs/Web/Events
+                events: ['click'],
+
+                // Double-click speed in ms used to distinguish single-clicks from
+                // double-clicks whenever you need to capture both. When listening for
+                // both click and dblclick, click events will be delayed by this
+                // amount.
+                dblClickSpeed: 350, // ms (default)
+
+                // Array of annotation configuration objects
+                // See below for detailed descriptions of the annotation options
+                annotations: [{
+                    drawTime: 'afterDraw', // overrides annotation.drawTime if set
+                    id: 'a-line-1', // optional
+                    type: 'line',
+                    mode: 'horizontal',
+                    scaleID: 'y-axis-0',
+                    value: '25',
+                    borderColor: 'red',
+                    borderWidth: 2
+                }]
+            }
+            */
         };
-        this.chart = new Chart('canvas', {
-            type: 'line',
+        const canvas: any = document.getElementById('myChart');
+        const ctx = canvas.getContext('2d');
+        this.chart = new Chart(ctx, {
+            type: this.chartType,
             data: {
-                labels: this.chartLabels,
-                datasets: this.chartData
+                datasets: this.CVs
                 // datasets: this.chartDataAux
             },
             options: this.chartOptions
         });
-        console.log('events');
-        console.log(this.events);
     }
 
     onSuccessCV(data: any, headers: any) {
@@ -119,7 +152,7 @@ import { Chart } from 'chart.js';
                     backgroundColor: data.content[i]['extractor']['style']['backgroundColor'],
                     fill: false
                 }
-                this.chartData.push(dato);
+                this.CVs.push(dato);
             }
         }
         // this.links = this.parseLinks.parse(headers.get('link'));
@@ -128,7 +161,19 @@ import { Chart } from 'chart.js';
 
     onSuccessEvent(data: any, headers: any) {
         for (let i = 0; i < data.length; i++) {
-            this.events.push(data[i]);
+            const startingDate: any = new Date(data[i]['startingDate']);
+            const dataToInsert: any[] = []
+            dataToInsert.push({
+                x: new Date(startingDate.getFullYear(), startingDate.getMonth(), startingDate.getDay(),
+                    startingDate.getHours(), startingDate.getMinutes(), startingDate.getSeconds())
+            });
+            const dato: any = {
+                data: dataToInsert,
+                label: data[i]['name'],
+                fill: true,
+                type: 'bar'
+            }
+            this.events.push(dato);
         }
         // this.links = this.parseLinks.parse(headers.get('link'));
         this.eventManager.broadcast({ name: 'all_success', content: 'OK' });

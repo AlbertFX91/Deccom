@@ -3,8 +3,8 @@
         <span jhiTranslate="deccomApp.dashboard.home.title">Dashboard</span>
     </h2>
     <jhi-alert></jhi-alert>
-    <div [hidden]="!chart" style="width: 80%;" *ngIf="chartData.length > 0">
-        <canvas baseChart [chartType]="'line'" [datasets]="chartData" [options]="chartOptions"></canvas>
-        <!-- <canvas id="canvas">{{chart}}</canvas> -->
+    <div [hidden]="!chart" style="width: 80%;" *ngIf="CVs.length > 0">
+        <!-- <canvas id="myChart" baseChart [chartType]="chartType" [datasets]="CVs" [options]="chartOptions"></canvas> -->
+        <canvas id="myChart"></canvas>
     </div>
 </div>
