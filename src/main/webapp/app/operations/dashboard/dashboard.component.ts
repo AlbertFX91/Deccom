@@ -3,7 +3,7 @@ import { CVService } from '../cv/cv.service';
 import { EventService } from '../event/event.service';
 import { ResponseWrapper, ITEMS_PER_PAGE } from '../../shared';
 import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
-import { Chart } from 'chart.js';
+// import { Chart } from 'chart.js';
 
 @Component({
     selector: 'jhi-dashboard',
@@ -12,8 +12,10 @@ import { Chart } from 'chart.js';
 
     chartType: string;
     chart: any[];
+    datos: any[];
     CVs: any[];
     events: any[];
+    max: number;
     chartDataAux: any[];
     chartOptions: any;
     page: any;
@@ -27,8 +29,10 @@ import { Chart } from 'chart.js';
     ) {
         this.chartType = '';
         this.chart = [];
+        this.datos = [];
         this.CVs = [];
         this.events = [];
+        this.max = 0;
         this.chartDataAux = [];
         this.chartOptions = {};
         this.page = 0;
@@ -62,6 +66,7 @@ import { Chart } from 'chart.js';
                 label: 'Account A', fill: false
             }
             /*
+            { data: [90, 130, 400, 120], label: 'Account A', fill: false },
             { data: [120, 455, 100, 340], label: 'Account B', fill: false },
             { data: [45, 67, 800, 500], label: 'Account C', fill: false }
             */
@@ -86,53 +91,22 @@ import { Chart } from 'chart.js';
                     display: true
                 }],
             }
-            /*
-            annotation: {
-                // Defines when the annotations are drawn.
-                // This allows positioning of the annotation relative to the other
-                // elements of the graph.
-                //
-                // Should be one of: afterDraw, afterDatasetsDraw, beforeDatasetsDraw
-                // See http://www.chartjs.org/docs/#advanced-usage-creating-plugins
-                drawTime: 'afterDatasetsDraw', // (default)
-
-                // Mouse events to enable on each annotation.
-                // Should be an array of one or more browser-supported mouse events
-                // See https://developer.mozilla.org/en-US/docs/Web/Events
-                events: ['click'],
-
-                // Double-click speed in ms used to distinguish single-clicks from
-                // double-clicks whenever you need to capture both. When listening for
-                // both click and dblclick, click events will be delayed by this
-                // amount.
-                dblClickSpeed: 350, // ms (default)
-
-                // Array of annotation configuration objects
-                // See below for detailed descriptions of the annotation options
-                annotations: [{
-                    drawTime: 'afterDraw', // overrides annotation.drawTime if set
-                    id: 'a-line-1', // optional
-                    type: 'line',
-                    mode: 'horizontal',
-                    scaleID: 'y-axis-0',
-                    value: '25',
-                    borderColor: 'red',
-                    borderWidth: 2
-                }]
-            }
-            */
         };
+        /*
         const canvas: any = document.getElementById('myChart');
         const ctx = canvas.getContext('2d');
         this.chart = new Chart(ctx, {
             type: this.chartType,
             data: {
                 datasets: this.CVs
-                // datasets: this.chartDataAux
             },
             options: this.chartOptions
         });
+        */
+        console.log(this.datos);
     }
+
+    ngOnDestroy() { }
 
     onSuccessCV(data: any, headers: any) {
         for (let i = 0; i < data.content.length; i++) {
@@ -145,6 +119,9 @@ import { Chart } from 'chart.js';
                         x: new Date(date.getFullYear(), date.getMonth(), date.getDay(), date.getHours(), date.getMinutes(), date.getSeconds()),
                         y: controlVarEntriesAux[j]['value']
                     });
+                    if (controlVarEntriesAux[j]['value'] > this.max) {
+                        this.max = controlVarEntriesAux[j]['value'];
+                    }
                 }
                 const dato: any = {
                     data: dataToInsert,
@@ -153,6 +130,7 @@ import { Chart } from 'chart.js';
                     fill: false
                 }
                 this.CVs.push(dato);
+                this.datos.push(dato);
             }
         }
         // this.links = this.parseLinks.parse(headers.get('link'));
@@ -161,11 +139,13 @@ import { Chart } from 'chart.js';
 
     onSuccessEvent(data: any, headers: any) {
         for (let i = 0; i < data.length; i++) {
-            const startingDate: any = new Date(data[i]['startingDate']);
+            // const startingDate: any = new Date(data[i]['startingDate']);
+            const startingDate: any = new Date();
             const dataToInsert: any[] = []
             dataToInsert.push({
                 x: new Date(startingDate.getFullYear(), startingDate.getMonth(), startingDate.getDay(),
-                    startingDate.getHours(), startingDate.getMinutes(), startingDate.getSeconds())
+                    startingDate.getHours(), startingDate.getMinutes(), startingDate.getSeconds()),
+                y: 20
             });
             const dato: any = {
                 data: dataToInsert,
@@ -174,6 +154,7 @@ import { Chart } from 'chart.js';
                 type: 'bar'
             }
             this.events.push(dato);
+            this.datos.push(dato);
         }
         // this.links = this.parseLinks.parse(headers.get('link'));
         this.eventManager.broadcast({ name: 'all_success', content: 'OK' });
@@ -182,7 +163,5 @@ import { Chart } from 'chart.js';
     private onError(error) {
         this.alertService.error(error.message, null, null);
     }
-
-    ngOnDestroy() { }
 
 }
