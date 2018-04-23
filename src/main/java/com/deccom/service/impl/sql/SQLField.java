@@ -1,4 +1,4 @@
-package com.deccom.service.impl.util;
+package com.deccom.service.impl.sql;
 
 import java.io.Serializable;
 

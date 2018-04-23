@@ -31,7 +31,7 @@ public class ControlVariableExtractorResource {
 
 	private final Logger log = LoggerFactory.getLogger(ControlVariableExtractorResource.class);
 
-	private static final String ENTITY_NAME = "ControlVariableExtractor";
+	// private static final String ENTITY_NAME = "ControlVariableExtractor";
 
 	@Autowired
 	private ControlVariableExtractorService controlVariableExtractorService;

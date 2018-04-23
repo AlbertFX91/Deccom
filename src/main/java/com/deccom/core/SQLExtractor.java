@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.deccom.service.impl.util.SQLUtil;
+import com.deccom.service.impl.sql.SQLUtil;
 
 public class SQLExtractor implements DataExtractor{
 	

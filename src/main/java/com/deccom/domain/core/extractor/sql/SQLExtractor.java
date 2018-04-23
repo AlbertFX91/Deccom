@@ -12,21 +12,21 @@ import com.deccom.domain.core.CVStyle;
 import com.deccom.domain.core.extractor.ControlVariableExtractor;
 import com.deccom.domain.core.fields.DeccomField;
 import com.deccom.domain.core.fields.InputType;
-import com.deccom.service.impl.util.SQLUtil;
+import com.deccom.service.impl.sql.SQLUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class SQLExtractor implements ControlVariableExtractor {
 
 	@NotNull
-	@DeccomField()
+	@DeccomField(display=false)
 	private String username;
 	
 	@NotNull
-	@DeccomField(type=InputType.PASSWORD)
+	@DeccomField(type=InputType.PASSWORD, display=false)
 	private String password;
 	
 	@NotNull
-	@DeccomField(type=InputType.URL)
+	@DeccomField(type=InputType.URL, display=false)
 	private String url;
 	
 	@NotNull

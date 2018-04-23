@@ -7,35 +7,35 @@ import { Observable } from 'rxjs/Rx';
 import { JhiDateUtils, JhiDataUtils, JhiEventManager, JhiParseLinks } from 'ng-jhipster';
 import { DeccomTestModule } from '../../../test.module';
 import { MockActivatedRoute } from '../../../helpers/mock-route.service';
-import { SQLResultComponent } from '../../../../../../main/webapp/app/operations/sql/sql-result.component';
-import { SQLService } from '../../../../../../main/webapp/app/operations/sql/sql.service';
-import { SQLQuery } from '../../../../../../main/webapp/app/operations/sql/sql.model';
+import { FieldSQLQueryResultComponent } from '../../../../../../main/webapp/app/operations/extractor/fields/query/query-result.component';
+import { SQLQueryService } from '../../../../../../main/webapp/app/operations/extractor/fields/query/query.service';
+import { SQLQuery } from '../../../../../../main/webapp/app/operations/extractor/fields/query/query.model';
 import { Principal } from '../../../../../../main/webapp/app/shared';
 
 describe('Component Tests', () => {
 
     describe('SQL Result Component', () => {
-        let comp: SQLResultComponent;
-        let fixture: ComponentFixture<SQLResultComponent>;
-        let service: SQLService;
+        let comp: FieldSQLQueryResultComponent;
+        let fixture: ComponentFixture<FieldSQLQueryResultComponent>;
+        let service: SQLQueryService;
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
                 imports: [DeccomTestModule],
-                declarations: [SQLResultComponent],
+                declarations: [SQLQueryService],
                 providers: [
                     JhiDateUtils,
-                    SQLService,
+                    SQLQueryService,
                     JhiEventManager,
                 ]
-            }).overrideTemplate(SQLResultComponent, '')
+            }).overrideTemplate(FieldSQLQueryResultComponent, '')
                 .compileComponents();
         }));
 
         beforeEach(() => {
-            fixture = TestBed.createComponent(SQLResultComponent);
+            fixture = TestBed.createComponent(FieldSQLQueryResultComponent);
             comp = fixture.componentInstance;
-            service = fixture.debugElement.injector.get(SQLService);
+            service = fixture.debugElement.injector.get(SQLQueryService);
         });
 
         describe('properties', () => {

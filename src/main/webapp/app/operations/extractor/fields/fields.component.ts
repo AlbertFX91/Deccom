@@ -50,10 +50,10 @@ export class FieldComponent implements OnInit, OnDestroy, OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         if (this._init && changes.field) {
             this._init = false;
-            this.loadCustomField(this.field.component);
+            this.loadDynamicField(this.field.component);
         }
     }
-    private loadCustomField(comp: string) {
+    private loadDynamicField(comp: string) {
 
         const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.fieldService.get(comp));
 
