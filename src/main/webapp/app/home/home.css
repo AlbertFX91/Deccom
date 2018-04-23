@@ -110,3 +110,65 @@ only screen and (                min-resolution: 2dppx) {
 .feature-box-description {
     margin-top: 30px;
 }
+
+
+/*
+ * DEVELOPER
+ */
+ #developer {
+    background-color: #1e1e1e;
+    color: white !important;
+    width: 100%;
+    height: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+ #developer-container{
+     background-color: #1e1e1e;
+     color: white !important;
+     width: 100%;
+     height: 80%;
+     display: flex;
+     flex-direction: row;    
+     margin: 0 10%;
+
+
+ }
+ #developer-img {
+    background: url("../../content/images/developer-javasource.png");
+    background-repeat:no-repeat;
+    background-size:contain;
+    background-position:center;
+ }
+ #developer-points {
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+ }
+ .developer-point {
+    margin: 20px 0;
+ }
+ #developer-logos {
+     height: 80%;
+ }
+ #java {
+    background: url("../../content/images/java_logo.png");
+    background-repeat:no-repeat;
+    background-size:contain;
+    background-position:center;
+ }
+ #angular2 {
+    background: url("../../content/images/angular2.png");
+    background-repeat:no-repeat;
+    background-size:contain;
+    background-position:center;
+ }
+ #mongodb {
+    background: url("../../content/images/mongo_db.png");
+    background-repeat:no-repeat;
+    background-size:contain;
+    background-position:center;
+ }

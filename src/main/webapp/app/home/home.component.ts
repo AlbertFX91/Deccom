@@ -26,7 +26,6 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
-        
         if (this.isAuthenticated()) {
             this.router.navigate(['cv']);
         }
