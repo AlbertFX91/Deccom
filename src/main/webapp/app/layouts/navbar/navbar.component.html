@@ -14,7 +14,7 @@
             <button type="button" class="navbar-button" id="signin" (click)="login()">Sign in</button>
         </div>
         <div id="navbar-signup" *ngIf="!isAuthenticated()">
-            <button type="button" class="navbar-button" routerLink="register">Sign up</button>
+            <button type="button" class="navbar-button" id="signup" routerLink="register">Sign up</button>
         </div>
 
         <div id="navbar-bell" *ngIf="isAuthenticated()">

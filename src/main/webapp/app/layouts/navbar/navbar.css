@@ -180,6 +180,11 @@ Logo styles
     color: white;
 }
 
+#signup {
+    border: solid;
+    border-color: white;
+}
+
 .dropdown-toggle::after{
     margin-left: 0;
 }
