@@ -28,7 +28,7 @@
             "contact": "Contact us",
             "find": "Find us"
         },
-        "title": "Welcome, Java Hipster!",
+        "title": "Deccom",
         "subtitle": "This is your homepage",
         "logged": {
             "message": "You are logged in as user \"{{username}}\"."
