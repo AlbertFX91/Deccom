@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
@@ -17,6 +18,7 @@ export class HomeComponent implements OnInit {
     modalRef: NgbModalRef;
 
     constructor(
+        private router: Router,
         private principal: Principal,
         private loginModalService: LoginModalService,
         private eventManager: JhiEventManager
@@ -24,6 +26,9 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
+        if (this.isAuthenticated()) {
+            this.router.navigate(['cv']);
+        }
         this.principal.identity().then((account) => {
             this.account = account;
         });

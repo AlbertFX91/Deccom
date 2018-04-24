@@ -1,66 +1,135 @@
-<div id="home" class="container" style="width: 100%; height: 100%;">
-    <div class="row">
-        <div class="col">
-            <h1 class="display-1">DECCOM</h1>
+<div id="home" style="width: 100%; height: 100%;">
+    <div id="header">
+        <div id="header-center">
+            <div>
+                <h1 id="header-title">DECCOM</h1>
+            </div>
+            <div id="header-container">
+                <div>
+                    <span jhiTranslate="home.header.capture">Capture your company</span>
+                    <span class="header-key" jhiTranslate="home.header.data">data</span>
+                    <span jhiTranslate="home.header.easily">easily</span>
+                </div>
+                <div>
+                    <span jhiTranslate="home.header.impact">Check the impact of your</span>
+                    <span class="header-key" jhiTranslate="home.header.decisions">decisions</span>
+                </div>
+                <div>
+                    <span jhiTranslate="home.header.predict">Predict what your</span>
+                    <span class="header-key" jhiTranslate="home.header.customers">customers</span> 
+                    <span jhiTranslate="home.header.want">want</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="features">
+        <div id="features-container">
+            <div id="features-header">
+                <h3 id="features-title">Features</h3>
+                <div id="features-description">
+                    <div>
+                        <span class="header-key">Deccom</span> monitoring system allows your company to keep track of all of its data
+                    </div>
+                    <div>
+                        structuring it to be exploited by your favourites data analysis tools.
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm feature-box">
+                    <div class="feature-box-icon">
+                        <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                    </div>
+                    <div class="feature-box-header">
+                        <h4 jhiTranslate="home.features.easy">Easy</h4>
+                    </div>
+                    <div class="feature-box-description" jhiTranslate="home.features.analyzing">
+                        Analyzing your data with us is a piece of cake!
+                    </div>
+                </div>
+                <div class="col-sm feature-box">
+                    <div class="feature-box-icon">
+                        <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                    </div>
+                    <div class="feature-box-header">
+                        <h4 jhiTranslate="home.features.social">Social media</h4>
+                    </div>
+                    <div class="feature-box-description">
+                        <div jhiTranslate="home.features.check">
+                            Check your impact on the main social media platforms
+                            and developer your own extractors!
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm feature-box">
+                    <div class="feature-box-icon">
+                        <i class="fa fa fa-line-chart" aria-hidden="true"></i>
+                    </div>
+                    <div class="feature-box-header">
+                        <h4 jhiTranslate="home.features.predict">Predict</h4>
+                    </div>
+                    <div class="feature-box-description">
+                        <div jhiTranslate="home.features.ahead">
+                            Get ahead of your competitors integrating your data with your favourite business tools
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="developer">
+        <div id="developer-container" class="row">
+            <div id="developer-body" class="col-sm">
+                <h3><i class="fa fa-code" aria-hidden="true"></i>  API</h3>
+                <div id="developer-points">
+                    <div class="developer-point">
+                        <span style="color: #0097a7; font-weight: bold;">-</span> 
+                        <span jhiTranslate="home.developer.1">Use our API to create new data extractors which could be used for other people</span>
+                    </div>
+                    <div class="developer-point">
+                        <span style="color: #0097a7; font-weight: bold;">-</span>  
+                        <span jhiTranslate="home.developer.2">Forms created for your awesome extractors dynamically</span>
+                    </div>
+                    <div class="developer-point">
+                        <span style="color: #0097a7; font-weight: bold;">-</span>  
+                        <span jhiTranslate="home.developer.3">Embed your powerful Angular components to increase the usability of your extractors using our components</span>
+                    </div>
+                    <div id="developer-logos" class="developer-point row">
+                        <div id="java" class="col-sm"></div>
+                        <div id="angular2" class="col-sm"></div>
+                        <div id="mongodb" class="col-sm"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="developer-img" class="col-sm">
+            </div>
+        </div>
+    </div>
+    <div id="contact" class="container">
+        <div id="contact-container" class="row">
+            <div class="col contact-col">
+                <span jhiTranslate="home.contact.hello">Hello from Seville.</span>
+            </div>
+            <div class="col contact-col contact-data">
+                <div>
+                    <h5 jhiTranslate="home.contact.contact">Contact us</h5>
+                </div>
+                <div style="font-size: 1.5rem;">
+                    <a style="margin: 5px;" class="white" href="https://twitter.com/deccom2018" target="blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                    <i style="margin: 5px;" class="fa fa-facebook-official" aria-hidden="true"></i>
+                    <a style="margin: 5px;" class="white" href="https://github.com/AlbertFX91/Deccom" target="blank"><i class="fa fa-github" aria-hidden="true"></i></a>
+                        
+                </div>
+            </div>
+            <div class="col contact-col contact-data">
+                <div>
+                    <h5 jhiTranslate="home.contact.find">Find us</h5>
+                </div>
+                <div>
+                    Avenida Reina Mercedes s/n
+                    41012 Sevilla
+                </div>
+            </div>
         </div>
     </div>
 </div>
-<!--<div class="row">
-    <div class="col-md-3">
-        <span class="hipster img-fluid img-rounded"></span>
-    </div>
-    <div class="col-md-9">
-        <h1 class="display-4 roboto" jhiTranslate="home.title">Welcome, Java Hipster!</h1>
-        <p class="lead roboto" jhiTranslate="home.subtitle">This is your homepage</p>
-
-        <div [ngSwitch]="isAuthenticated()">
-            <div class="alert alert-success" *ngSwitchCase="true">
-                <span *ngIf="account" jhiTranslate="home.logged.message" translateValues="{username: '{{account.login}}'}" class="roboto">
-                You are logged in as user "{{account.login}}". </span>
-            </div>
-
-            <div class="alert alert-warning" *ngSwitchCase="false">
-                <span jhiTranslate="global.messages.info.authenticated.prefix" class="roboto">If you want to </span>
-                <a class="alert-link roboto" (click)="login()" jhiTranslate="global.messages.info.authenticated.link">sign in</a>
-                <span jhiTranslate="global.messages.info.authenticated.suffix" class="roboto">, you can try the default accounts:
-                    <br/>- Administrator (login="admin" and password="admin")
-                    <br/>- User (login="user" and password="user").</span>
-            </div>
-
-            <div class="alert alert-warning" *ngSwitchCase="false">
-                <span jhiTranslate="global.messages.info.register.noaccount" class="roboto">You don't have an account yet?</span>
-                <a class="alert-link roboto" routerLink="register" jhiTranslate="global.messages.info.register.link">Register a new account</a>
-            </div>
-        </div>
-
-        <p jhiTranslate="home.question" class="roboto">
-            If you have any question on JHipster:
-        </p>
-
-        <ul>
-            <li>
-                <a href="https://jhipster.github.io/" target="_blank" rel="noopener" jhiTranslate="home.link.homepage" class="roboto">JHipster homepage</a>
-            </li>
-            <li>
-                <a href="http://stackoverflow.com/tags/jhipster/info" target="_blank" rel="noopener" jhiTranslate="home.link.stackoverflow"
-                    class="roboto">JHipster on Stack Overflow</a>
-            </li>
-            <li>
-                <a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank" rel="noopener" jhiTranslate="home.link.bugtracker"
-                    class="roboto">JHipster bug tracker</a>
-            </li>
-            <li>
-                <a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener" jhiTranslate="home.link.chat" class="roboto">JHipster public chat room</a>
-            </li>
-            <li>
-                <a href="https://twitter.com/java_hipster" target="_blank" rel="noopener" jhiTranslate="home.link.follow" class="roboto">follow @java_hipster on Twitter</a>
-            </li>
-        </ul>
-
-        <p>
-            <span jhiTranslate="home.like" class="roboto">If you like JHipster, don't forget to give us a star on</span>
-            <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener" jhiTranslate="home.github" class="roboto">GitHub</a>!
-        </p>
-    </div>
-</div>
--->

@@ -34,7 +34,7 @@ public class ControlVariableResource {
 
 	private final Logger log = LoggerFactory.getLogger(ControlVariableResource.class);
 
-	private static final String ENTITY_NAME = "ControlVariable";
+	private static final String ENTITY_NAME = "ControlVar";
 
 	@Autowired
 	private ControlVariableService controlVariableService;

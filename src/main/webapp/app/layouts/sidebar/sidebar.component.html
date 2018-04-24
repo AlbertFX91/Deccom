@@ -1,4 +1,4 @@
-<div id="sidebar" [class.displayed]="canBeDisplayed()" [class.hidded]="!canBeDisplayed()">
+<div id="sidebar" [class.displayed]="canBeDisplayed()" [class.hidded]="!canBeDisplayed()" *ngIf="isAuthenticated()">
     <div id="sidebar-logo-container">
         <div id="sidebar-logo-circle" [class.displayed]="canBeDisplayed()" [class.hidded]="!canBeDisplayed()">
              <img id="sidebar-logo" [src]="LOGO" />
