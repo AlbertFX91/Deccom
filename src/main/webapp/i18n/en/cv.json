@@ -10,7 +10,8 @@
             "last_update": "Last",
             "running": "Running",
             "paused": "Paused",
-            "blocked": "Blocked"
+            "blocked": "Blocked",
+            "created": "Control variable created successfully"
         }
     }
 }
