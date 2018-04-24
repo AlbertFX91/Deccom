@@ -118,7 +118,7 @@ export class FieldSQLQueryComponent extends FieldBaseComponent implements OnInit
             sql = sql + sqlpks;
         } else {
             // Adding WHERE plus primary keys if where doesnt exist in the query
-            let sqlpks = ' where ';
+            let sqlpks = ' where';
             metadata.fields
                 .filter((f) => f.isPrimaryKey)
                 .forEach((f, i) => {
