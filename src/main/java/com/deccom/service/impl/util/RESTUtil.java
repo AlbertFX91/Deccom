@@ -266,6 +266,7 @@ public class RESTUtil {
 	 *            the URL to request the token
 	 * @return the bearer token as a string
 	 */
+	@SuppressWarnings("unused")
 	private static String requestTwitterBearerToken(String endPointUrl) throws IOException {
 		HttpsURLConnection connection = null;
 		String encodedCredentials = encodeKeys(applicationProperties.getTwitterConsumerKey(),
@@ -405,6 +406,7 @@ public class RESTUtil {
 		con.setRequestProperty("Authorization", "Bearer " + bearerToken);
 	}
 
+	@SuppressWarnings("unused")
 	private static String requestFacebookBearerToken(String endPointUrl) throws IOException {
 		String applicationKey, secretKey, accessTokenRequestURL;
 		HttpsURLConnection connection;

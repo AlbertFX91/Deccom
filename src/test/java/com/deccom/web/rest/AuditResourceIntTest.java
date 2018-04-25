@@ -1,10 +1,14 @@
 package com.deccom.web.rest;
 
-import com.deccom.DeccomApp;
-import com.deccom.config.audit.AuditEventConverter;
-import com.deccom.domain.PersistentAuditEvent;
-import com.deccom.repository.PersistenceAuditEventRepository;
-import com.deccom.service.AuditEventService;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.time.Instant;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,12 +23,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.time.Instant;
-import java.time.format.DateTimeFormatter;
-
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.deccom.DeccomApp;
+import com.deccom.config.audit.AuditEventConverter;
+import com.deccom.domain.PersistentAuditEvent;
+import com.deccom.repository.PersistenceAuditEventRepository;
+import com.deccom.service.AuditEventService;
 
 /**
  * Test class for the AuditResource REST controller.

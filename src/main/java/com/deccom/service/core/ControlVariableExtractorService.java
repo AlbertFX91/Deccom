@@ -27,7 +27,9 @@ import com.deccom.domain.core.fields.DeccomFieldClass;
 @Service
 public class ControlVariableExtractorService {
 
+	@SuppressWarnings("unused")
 	private final Logger log = LoggerFactory.getLogger(ControlVariableExtractorService.class);
+	@SuppressWarnings("unused")
 	private static final String i18nCodeRoot = "operations.controlvariableextractor";
 
 	public Item_ControlVariableExtractor createItem(ControlVariableExtractor c) {
