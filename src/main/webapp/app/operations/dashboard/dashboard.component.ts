@@ -10,7 +10,6 @@ import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
     templateUrl: './dashboard.component.html'
 }) export class DashboardComponent implements OnInit, OnDestroy {
 
-    chartType: string;
     chart: any[];
     datos: any[];
     CVs: any[];
@@ -27,7 +26,6 @@ import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
         private alertService: JhiAlertService,
         private eventManager: JhiEventManager
     ) {
-        this.chartType = '';
         this.chart = [];
         this.datos = [];
         this.CVs = [];
@@ -40,7 +38,6 @@ import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
     }
 
     ngOnInit() {
-        this.chartType = 'line';
         const pageSettings = {
             page: this.page,
             size: this.itemsPerPage
@@ -89,7 +86,21 @@ import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
                 }],
                 yAxes: [{
                     display: true
-                }],
+                }]
+            },
+            annotation: {
+                drawTime: 'afterDatasetsDraw',
+                annotations: [{
+                    type: 'line',
+                    // type: 'box',
+                    mode: 'horizontal',
+                    yScaleID: 'y-axis-0',
+                    value: 10
+                    /*
+                    yMin: 10,
+                    yMax: 15,
+                    */
+                }]
             }
         };
         /*
@@ -103,14 +114,13 @@ import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
             options: this.chartOptions
         });
         */
-        console.log(this.datos);
     }
 
     ngOnDestroy() { }
 
     onSuccessCV(data: any, headers: any) {
         for (let i = 0; i < data.content.length; i++) {
-            if (data.content[i]['status'] === 'RUNNING' && data.content[i]['controlVarEntries'].length > 0) {
+            if (data.content[i]['status'] === 'RUNNING' && data.content[i]['controlVarEntries'].length > 4) {
                 const controlVarEntriesAux: any[] = data.content[i]['controlVarEntries'].slice(Math.max(data.content[i]['controlVarEntries'].length - 5, 0));
                 const dataToInsert: any[] = [];
                 for (let j = 0; j < 5; j++) {
@@ -141,11 +151,11 @@ import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
         for (let i = 0; i < data.length; i++) {
             // const startingDate: any = new Date(data[i]['startingDate']);
             const startingDate: any = new Date();
-            const dataToInsert: any[] = []
+            const dataToInsert: any[] = [];
             dataToInsert.push({
                 x: new Date(startingDate.getFullYear(), startingDate.getMonth(), startingDate.getDay(),
                     startingDate.getHours(), startingDate.getMinutes(), startingDate.getSeconds()),
-                y: 20
+                y: 25
             });
             const dato: any = {
                 data: dataToInsert,
