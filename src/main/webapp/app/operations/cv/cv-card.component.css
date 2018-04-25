@@ -15,7 +15,6 @@
     flex-direction: row;
 }
 .header-state {
-    background-color: #44aa44;
     width: 2%;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
@@ -30,13 +29,53 @@
     border-right-width: 1px;
     border-right-style: solid;
     border-right-color: white;
+    display: flex;
 }
+
+.header-body-icon {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8rem;
+}
+
+.header-body-name {
+    width: 80%;
+    display: flex;
+    align-content: center;
+    align-items: center;
+}
+.header-body-text {
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .header-value {
     background-color: gray;    
     width: 20%;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
+    padding-left: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
+.green {
+    background-color: #44aa44;
+}
+
+.yellow {
+    background-color: #fb8c00;
+}
+
+.red {
+    background-color: #cc240a;
+}
+
 /*
 
 */

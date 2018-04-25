@@ -1,13 +1,18 @@
 <div id="mainbox">
     <div class="card">
         <div class="header">
-            <div class="header-state">
+            <div class="header-state" [ngClass]="getClassByStatus()">
             </div>
             <div class="header-body" [ngStyle]="{ 'background-color': cvCard.extractor.style.backgroundColor, 'color': cvCard.extractor.style.fontColor }">
-
+                <div class="header-body-icon">
+                    <i class="fa {{cvCard.extractor.style.icon}}"></i>
+                </div>
+                <div class="header-body-name">
+                    <span class="header-body-text" title="{{cvCard.name}}">{{cvCard.name}}</span>
+                </div>
             </div>
             <div class="header-value">
-
+                <span>{{cvCard.value}}</span>
             </div>
         </div>
         <!--

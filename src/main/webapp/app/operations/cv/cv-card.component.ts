@@ -26,4 +26,13 @@ export class CVCardComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() { }
 
+    getClassByStatus() {
+        const data = {
+            'RUNNING': 'green',
+            'PAUSED': 'yellow',
+            'BLOCKED': 'red'
+        };
+        return data[this.cvCard.status];
+
+    }
 }
