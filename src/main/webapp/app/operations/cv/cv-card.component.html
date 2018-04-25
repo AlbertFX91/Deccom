@@ -1,5 +1,16 @@
 <div id="mainbox">
-    <div class="card" style="text-align: center;">
+    <div class="card">
+        <div class="header">
+            <div class="header-state">
+            </div>
+            <div class="header-body" [ngStyle]="{ 'background-color': cvCard.extractor.style.backgroundColor, 'color': cvCard.extractor.style.fontColor }">
+
+            </div>
+            <div class="header-value">
+
+            </div>
+        </div>
+        <!--
         <div class="fondo">
             <div [ngClass]="cvCard.extractor.style">
                 &nbsp;
@@ -38,5 +49,6 @@
                 <img src="../../../content/images/icons/graph.png" class="img1" alt="">
             </p>
         </div>
+        -->
     </div>
 </div>
