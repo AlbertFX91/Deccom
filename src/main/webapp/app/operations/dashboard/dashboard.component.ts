@@ -15,10 +15,11 @@ import 'chartjs-plugin-annotation';
     datos: any[];
     CVs: any[];
     events: any[];
-    max: number;
     chartDataAux: any[];
     chartOptions: any;
     chartAnnotations: any[];
+    today: Date;
+    last: Date;
     page: any;
     itemsPerPage: number;
 
@@ -32,10 +33,11 @@ import 'chartjs-plugin-annotation';
         this.datos = [];
         this.CVs = [];
         this.events = [];
-        this.max = 0;
         this.chartDataAux = [];
         this.chartOptions = {};
         this.chartAnnotations = [];
+        this.today = new Date();
+        this.last = new Date(this.today.getTime() - (7 * 24 * 60 * 60 * 1000));
         this.page = 0;
         this.itemsPerPage = ITEMS_PER_PAGE;
     }
@@ -61,25 +63,39 @@ import 'chartjs-plugin-annotation';
         ];
         */
         this.chartDataAux = [
+            /*
             {
                 data: [{ x: new Date(2018, 1, 1, 12, 50, 55), y: 1 }, { x: new Date(2018, 1, 15, 12, 50, 55), y: 8 }, { x: new Date(2018, 2, 2, 12, 50, 55), y: 3 }],
                 label: 'Account A', fill: false
             }
+            */
             /*
             { data: [90, 130, 400, 120], label: 'Account A', fill: false },
             { data: [120, 455, 100, 340], label: 'Account B', fill: false },
             { data: [45, 67, 800, 500], label: 'Account C', fill: false }
             */
+            // { data: [{ x: 0, y: 1 }, { x: 5.5, y: 2 }, { x: 10, y: 4 }], label: 'Account A', fill: false, showLine: true }
+            {
+                data: [{ x: this.dateToNumber(new Date(new Date().getTime() - (7 * 24 * 60 * 60 * 1000))), y: 10 },
+                { x: this.dateToNumber(new Date(new Date().getTime() - (6 * 24 * 60 * 60 * 1000))), y: 1 },
+                { x: this.dateToNumber(new Date(new Date().getTime() - (5 * 24 * 60 * 60 * 1000))), y: 2 },
+                { x: this.dateToNumber(new Date(new Date().getTime() - (4 * 24 * 60 * 60 * 1000))), y: 4 },
+                { x: this.dateToNumber(new Date(new Date().getTime() - (3 * 24 * 60 * 60 * 1000))), y: 5 },
+                { x: this.dateToNumber(new Date(new Date().getTime() - (2 * 24 * 60 * 60 * 1000))), y: 6 },
+                { x: this.dateToNumber(new Date(new Date().getTime() - (1 * 24 * 60 * 60 * 1000))), y: 8 },
+                { x: this.dateToNumber(new Date(new Date().getTime() - (0 * 24 * 60 * 60 * 1000))), y: 9 }],
+                label: 'Account A', fill: false, showLine: true
+            }
         ];
         this.chartAnnotations = [
             {
                 borderColor: 'red',
                 mode: 'horizontal',
                 type: 'line',
-                value: 18,
+                value: 5,
                 scaleID: 'y-axis-0',
                 label: {
-                    backgroundColor: 'rgba(0,0,0,0.8)',
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
                     enabled: true,
                     content: 'Event'
                 }
@@ -93,7 +109,12 @@ import 'chartjs-plugin-annotation';
             scales: {
                 xAxes: [{
                     id: 'x-axis-0',
-                    display: true,
+                    display: false,
+                    ticks: {
+                        suggestedMin: this.dateToNumber(this.last),
+                        suggestedMax: this.dateToNumber(this.today)
+                    }
+                    /*
                     type: 'time',
                     time: {
                         displayFormats: {
@@ -101,11 +122,35 @@ import 'chartjs-plugin-annotation';
                         },
                         unit: 'second'
                     }
+                    */
                 }],
                 yAxes: [{
                     id: 'y-axis-0',
-                    display: true
+                    display: true,
+                    ticks: {
+                        suggestedMin: 0,
+                        suggestedMax: 10
+                    }
                 }]
+            },
+            tooltips: {
+                callbacks: {
+                    title: function(tooltipItem, data) {
+                        const showDate = new Date(tooltipItem[0].xLabel).toUTCString();
+
+                        return showDate.substring(0, showDate.length - 4);
+                    },
+                    label: function(tooltipItem, data) {
+                        let label = '' + data.datasets[tooltipItem.datasetIndex].label || '';
+
+                        if (label) {
+                            label += ': ';
+                        }
+
+                        label += tooltipItem.yLabel;
+                        return label;
+                    }
+                }
             },
             annotation: {
                 annotations: this.chartAnnotations
@@ -137,9 +182,6 @@ import 'chartjs-plugin-annotation';
                         x: new Date(date.getFullYear(), date.getMonth(), date.getDay(), date.getHours(), date.getMinutes(), date.getSeconds()),
                         y: controlVarEntriesAux[j]['value']
                     });
-                    if (controlVarEntriesAux[j]['value'] > this.max) {
-                        this.max = controlVarEntriesAux[j]['value'];
-                    }
                 }
                 const dato: any = {
                     data: dataToInsert,
@@ -180,6 +222,10 @@ import 'chartjs-plugin-annotation';
 
     private onError(error) {
         this.alertService.error(error.message, null, null);
+    }
+
+    private dateToNumber(date: Date) {
+        return date.getTime();
     }
 
 }
