@@ -4,6 +4,7 @@ import { EventService } from '../event/event.service';
 import { ResponseWrapper, ITEMS_PER_PAGE } from '../../shared';
 import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
 // import { Chart } from 'chart.js';
+import 'chartjs-plugin-annotation';
 
 @Component({
     selector: 'jhi-dashboard',
@@ -17,6 +18,7 @@ import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
     max: number;
     chartDataAux: any[];
     chartOptions: any;
+    chartAnnotations: any[];
     page: any;
     itemsPerPage: number;
 
@@ -33,6 +35,7 @@ import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
         this.max = 0;
         this.chartDataAux = [];
         this.chartOptions = {};
+        this.chartAnnotations = [];
         this.page = 0;
         this.itemsPerPage = ITEMS_PER_PAGE;
     }
@@ -68,6 +71,20 @@ import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
             { data: [45, 67, 800, 500], label: 'Account C', fill: false }
             */
         ];
+        this.chartAnnotations = [
+            {
+                borderColor: 'red',
+                mode: 'horizontal',
+                type: 'line',
+                value: 18,
+                scaleID: 'y-axis-0',
+                label: {
+                    backgroundColor: 'rgba(0,0,0,0.8)',
+                    enabled: true,
+                    content: 'Event'
+                }
+            }
+        ];
         this.chartOptions = {
             responsive: true,
             legend: {
@@ -75,6 +92,7 @@ import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
             },
             scales: {
                 xAxes: [{
+                    id: 'x-axis-0',
                     display: true,
                     type: 'time',
                     time: {
@@ -85,22 +103,12 @@ import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
                     }
                 }],
                 yAxes: [{
+                    id: 'y-axis-0',
                     display: true
                 }]
             },
             annotation: {
-                drawTime: 'afterDatasetsDraw',
-                annotations: [{
-                    type: 'line',
-                    // type: 'box',
-                    mode: 'horizontal',
-                    yScaleID: 'y-axis-0',
-                    value: 10
-                    /*
-                    yMin: 10,
-                    yMax: 15,
-                    */
-                }]
+                annotations: this.chartAnnotations
             }
         };
         /*
