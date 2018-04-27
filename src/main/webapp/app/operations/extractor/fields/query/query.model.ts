@@ -4,6 +4,7 @@ export class SQLQuery {
         public password?: string,
         public url?: string,
         public query?: string,
+        public jdbc?: string,
     ) {
     }
 }

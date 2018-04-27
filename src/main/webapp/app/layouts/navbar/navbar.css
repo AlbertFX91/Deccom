@@ -19,13 +19,18 @@ Navbar
     border-radius: 50%;
 }
 
+.dropdown-item {
+    color: black;
+}
+
 .jh-navbar .dropdown-item.active, .jh-navbar .dropdown-item.active:focus, .jh-navbar .dropdown-item.active:hover {
     /* background-color: #353d47; */
     background-color: #0097a7;
+    color: white;
 }
 
 .jh-navbar .dropdown-toggle::after {
-    margin-left: 0.15em;
+    /* margin-left: 0.15em; */
 }
 
 .jh-navbar ul.navbar-nav {
@@ -94,8 +99,92 @@ Logo styles
 
 .white-icon {
     color: white;
+    text-decoration: none;
 }
 
 .dropdown-toggle::after {
     border: none;
+}
+
+
+
+.deccom-navbar {
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+}
+
+#navbar-sidebar-icon {
+    flex: 0.3;
+    font-weight: 400;
+    font-size: 1.5em;
+}
+
+#navbar-title {
+    flex: 8;
+    font-weight: 400;
+    font-size: 1.5em;
+}
+
+#navbar-buttons {
+    flex: 2;
+    display: flex;
+    font-weight: 400;
+    font-size: 18px;
+    align-items: center;
+}
+
+#navbar-buttons > div {
+    margin: 0px 4px;
+}
+
+.deccom-title {
+    text-decoration: none;
+}
+.navbar-a {
+    color: white !important;
+    text-decoration: none !important;
+
+}
+
+.navbar-button {
+    background-color: white;
+    color: #0097a7;
+    padding: 0px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 2px;
+    font-family: roboto;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+#navbar-signin {
+    display: flex;
+}
+#navbar-signup {
+    display: flex;
+}
+#navbar-languages {
+    display: flex;
+    align-items: center;
+}
+
+#signin {
+    background-color: transparent;
+    border: solid;
+    border-color: white;
+    color: white;
+}
+
+#signup {
+    border: solid;
+    border-color: white;
+}
+
+.dropdown-toggle::after{
+    margin-left: 0;
 }

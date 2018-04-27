@@ -44,7 +44,8 @@ public class MailServiceIntTest {
     @Spy
     private JavaMailSenderImpl javaMailSender;
 
-    @Captor
+    @SuppressWarnings("rawtypes")
+	@Captor
     private ArgumentCaptor messageCaptor;
 
     private MailService mailService;

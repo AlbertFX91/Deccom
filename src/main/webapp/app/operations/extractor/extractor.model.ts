@@ -13,7 +13,8 @@ export class DeccomField {
     constructor(
         public name?: string,
         public type?: string,
-        public component?: string
+        public component?: string,
+        public display?: boolean
     ) {
     }
 }

@@ -1,6 +1,34 @@
 {
     "home": {
-        "title": "Welcome, Java Hipster!",
+        "header": {
+            "capture": "Capture your company",
+            "data": "data",
+            "easily": "easily",
+            "impact": "Check the impact of your",
+            "decisions": "decisions",
+            "predict": "Predict what your",
+            "customers": "customers",
+            "want": "want"
+        },
+        "features": {
+            "easy": "Easy",
+            "analyzing": "Analyzing your data with us is a piece of cake!",
+            "social": "Social media",
+            "check": "Check your impact on the main social media platforms and developer your own extractors!",
+            "predict": "Predict",
+            "ahead": "Get ahead of your competitors integrating your data with your favourite business tools"
+        },
+        "developer": {
+            "1": "Use our API to create new data extractors which could be used for other people",
+            "2": "Forms created for your awesome extractors dynamically",
+            "3": "Embed your powerful Angular components to increase the usability of your extractors using our components"
+        },
+        "contact": {
+            "hello": "Hello from Seville",
+            "contact": "Contact us",
+            "find": "Find us"
+        },
+        "title": "Deccom",
         "subtitle": "This is your homepage",
         "logged": {
             "message": "You are logged in as user \"{{username}}\"."

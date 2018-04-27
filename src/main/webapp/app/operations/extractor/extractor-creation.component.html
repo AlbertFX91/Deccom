@@ -7,7 +7,7 @@
 
         <div class="row">
             <div class="col">
-                <div class="form-group" *ngFor="let field of extractorFields;">
+                <div class="form-group" *ngFor="let field of fieldsToList();">
                     <label class="form-control-label" for="field_{{field.name}}">{{field.name}}</label>
                     <div class="row">
                         <div class="col-10">

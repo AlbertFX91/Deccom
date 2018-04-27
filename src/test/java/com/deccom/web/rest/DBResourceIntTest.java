@@ -20,8 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.deccom.DeccomApp;
-import com.deccom.service.SQLControlVarService;
-import com.deccom.service.SQLService;
+import com.deccom.web.rest.core.sql.SQLResource;
 import com.deccom.web.rest.errors.ExceptionTranslator;
 
 /**
@@ -39,12 +38,6 @@ public class DBResourceIntTest {
     private static final String QUERY = "SELECT * FROM AUTHOR";
 
     @Autowired
-    private SQLService dbService;
-    
-    @Autowired
-    private SQLControlVarService sqlControlVarService;
-
-    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -59,7 +52,7 @@ public class DBResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        SQLResource dbResource = new SQLResource(dbService, sqlControlVarService);
+        SQLResource dbResource = new SQLResource();
         this.restAcmeMockMvc = MockMvcBuilders.standaloneSetup(dbResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
