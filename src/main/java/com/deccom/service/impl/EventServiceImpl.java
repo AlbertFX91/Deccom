@@ -1,6 +1,7 @@
 package com.deccom.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -93,6 +94,20 @@ public class EventServiceImpl implements EventService {
 	public Page<Event> findAll(Pageable pageable) {
 		log.debug("Request to get all Events");
 		return eventRepository.findAll(pageable);
+	}
+
+	/**
+     *  Get all the events between two dates.
+     *
+     *  @param pageable the pagination information
+     *  @param startingDate the starting date of the range
+     *  @param endingDate the ending date of the range
+     *  @return the list of entities
+     */
+	@Override
+	public Page<Event> findEventsBetweenDates(Pageable pageable, Date startingDate, Date endingDate) {
+		log.debug("Request to get the events between two dates");
+		return eventRepository.findEventsBetweenDates(pageable, startingDate, endingDate);
 	}
 
 	/**

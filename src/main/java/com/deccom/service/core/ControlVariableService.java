@@ -3,6 +3,7 @@ package com.deccom.service.core;
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -75,22 +76,28 @@ public class ControlVariableService {
 		log.debug("Request to get ControlVariable : {}", id);
 		return controlVariableRepository.findOne(id);
 	}
-	
+
 	public Page<ControlVariable> findAll(Pageable pageable) {
 		log.debug("Request to get all Core_Connection");
 		return controlVariableRepository.findAll(pageable);
 	}
 
 	public Page<ControlVariable> findAllLimitedNumberOfEntries(Pageable pageable, Integer numberOfEntries) {
-		log.debug("Request to get all Core_Connection");
+		log.debug("Request to get all CVs with limited entries");
 		Page<ControlVariable> result = controlVariableRepository.findAll(pageable);
 		setNumberOfControlVariableEntries(result, numberOfEntries);
 		return result;
 	}
-	
+
 	public Page<ControlVariable> findAllLimitedNumberOfEntriesQuery(Pageable pageable, Integer numberOfEntries) {
-		log.debug("Request to get all Core_Connection");
+		log.debug("Request to get all CVs with limited entries");
 		return controlVariableRepository.findAllLimitedNumberOfEntriesQuery(pageable, -numberOfEntries);
+	}
+
+	public Page<ControlVariable> findRunningControlVariablelsBetweenDates(Pageable pageable, Date startingDate,
+			Date endingDate) {
+		log.debug("Request to get the running CVs between two dates");
+		return controlVariableRepository.findRunningControlVariablelsBetweenDates(pageable, startingDate, endingDate);
 	}
 
 	public List<ControlVariable> findAll() {
@@ -210,7 +217,7 @@ public class ControlVariableService {
 	private void checkFieldsNotNull(ControlVariableExtractor ncv) {
 		List<String> missingFields = new ArrayList<>();
 		missingFields = checkFieldsNotNull(ncv.getClass(), ncv);
-		
+
 		if (!missingFields.isEmpty()) {
 			throwException("The fields " + missingFields + " are null", "extractorclassfieldsnull");
 		}
@@ -233,7 +240,7 @@ public class ControlVariableService {
 				missingFields.add(f.getName());
 			}
 		}
-    
+
 		missingFields.addAll(checkFieldsNotNull(c.getSuperclass(), ncv));
 		return missingFields;
 	}
@@ -249,14 +256,14 @@ public class ControlVariableService {
 				keysInjected.add(key);
 			}
 		}
-    
+
 		if (!keysInjected.equals(keys)) {
 			keys.removeAll(keysInjected);
 			throwException("Error injecting fields into extractor " + extractor.getClass().getName() + keys,
 					"extractorclassinjectionerror");
 		}
 	}
-  
+
 	private <T, V extends ControlVariableExtractor> Boolean inject(String key, T value, Class<?> c, V extractor) {
 		// Base
 		if (c.equals(Object.class)) {
@@ -286,15 +293,16 @@ public class ControlVariableService {
 	private void setNumberOfControlVariableEntries(Page<ControlVariable> controlVariables, Integer i) {
 
 		for (ControlVariable controlVariable : controlVariables) {
-			
+
 			List<ControlVariableEntry> controlVariableEntries;
 			List<ControlVariableEntry> newControlVariableEntries;
-			
+
 			controlVariableEntries = controlVariable.getControlVarEntries();
-			newControlVariableEntries = controlVariableEntries.subList(Math.max(controlVariableEntries.size() - i, 0), controlVariableEntries.size());
-			
+			newControlVariableEntries = controlVariableEntries.subList(Math.max(controlVariableEntries.size() - i, 0),
+					controlVariableEntries.size());
+
 			controlVariable.setControlVarEntries(newControlVariableEntries);
-			
+
 		}
 
 	}

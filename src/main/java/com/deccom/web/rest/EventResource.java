@@ -3,6 +3,7 @@ package com.deccom.web.rest;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -122,6 +123,28 @@ public class EventResource {
 	public ResponseEntity<List<Event>> getAllEvents(@ApiParam Pageable pageable) {
 		log.debug("REST request to get a page of Events");
 		Page<Event> page = eventService.findAll(pageable);
+		HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/events");
+		return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+	}
+
+	/**
+	 * GET /events : get the events between two dates.
+	 *
+	 * @param pageable
+	 *            the pagination information
+	 * @param startingDate
+	 *            the starting date of the range
+	 * @param endingDate
+	 *            the ending date of the range
+	 * @return the ResponseEntity with status 200 (OK) and the list of events in
+	 *         body
+	 */
+	@GetMapping("/event/dates")
+	@Timed
+	public ResponseEntity<List<Event>> getEventsBetweenDates(@ApiParam Pageable pageable, Date startingDate,
+			Date endingDate) {
+		log.debug("REST request to get a page of events between two dates");
+		Page<Event> page = eventService.findEventsBetweenDates(pageable, startingDate, endingDate);
 		HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/events");
 		return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
 	}

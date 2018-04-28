@@ -1,5 +1,7 @@
 package com.deccom.service;
 
+import java.util.Date;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -32,6 +34,16 @@ public interface EventService {
      *  @return the list of entities
      */
     Page<Event> findAll(Pageable pageable);
+    
+    /**
+     *  Get all the events between two dates.
+     *
+     *  @param pageable the pagination information
+     *  @param startingDate the starting date of the range
+     *  @param endingDate the ending date of the range
+     *  @return the list of entities
+     */
+    Page<Event> findEventsBetweenDates(Pageable pageable, Date startingDate, Date endingDate);
 
     /**
      *  Get the "id" event.
