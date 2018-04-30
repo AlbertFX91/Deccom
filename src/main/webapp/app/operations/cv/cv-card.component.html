@@ -8,13 +8,22 @@
                     <i class="fa {{cvCard.extractor.style.icon}}"></i>
                 </div>
                 <div class="header-body-name">
-                    <span class="header-body-text" title="{{cvCard.name}}">{{cvCard.name}}</span>
+                    <span class="header-body-text" title="{{cvCard.name}}">{{cvCard.name}}: {{cvCard.value}}</span>
+                </div>
+                <div class="header-body-menu">
+                    <i class="fa fa-bars"></i>
                 </div>
             </div>
+        </div>
+        <div class="body">
+            body
+        </div>
+            <!--
             <div class="header-value">
                 <span>{{cvCard.value}}</span>
             </div>
-        </div>
+            -->
+    </div>
         <!--
         <div class="fondo">
             <div [ngClass]="cvCard.extractor.style">
@@ -55,5 +64,4 @@
             </p>
         </div>
         -->
-    </div>
 </div>
