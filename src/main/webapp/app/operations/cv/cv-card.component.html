@@ -1,21 +1,19 @@
 <div id="mainbox">
     <div class="card">
-        <div class="header">
+        <div class="header" [ngStyle]="{ 'background-color': cvCard.extractor.style.backgroundColor, 'color': cvCard.extractor.style.fontColor }" >
             <div class="header-state" [ngClass]="getClassByStatus()">
             </div>
-            <div class="header-body" [ngStyle]="{ 'background-color': cvCard.extractor.style.backgroundColor, 'color': cvCard.extractor.style.fontColor }">
-                <div class="header-body-icon">
-                    <i class="fa {{cvCard.extractor.style.icon}}"></i>
-                </div>
-                <div class="header-body-name">
-                    <span class="header-body-text" title="{{cvCard.name}}">{{cvCard.name}}: {{cvCard.value}}</span>
-                </div>
-                <div class="header-body-menu">
-                    <i class="fa fa-bars"></i>
-                </div>
+            <div class="header-body-icon">
+                <i class="fa {{cvCard.extractor.style.icon}}"></i>
+            </div>
+            <div class="header-body-name" (click)="toggle()">
+                <span class="header-body-text" title="{{cvCard.name}}">{{cvCard.name}}: {{cvCard.value}}</span>
+            </div>
+            <div class="header-body-menu">
+                <i class="fa fa-bars"></i>
             </div>
         </div>
-        <div class="body">
+        <div class="body" [ngClass]="{'body-descolated': !isCollapsed }">
             body
         </div>
             <!--

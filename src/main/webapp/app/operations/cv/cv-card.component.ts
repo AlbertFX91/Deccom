@@ -35,4 +35,8 @@ export class CVCardComponent implements OnInit, OnDestroy {
         return data[this.cvCard.status];
 
     }
+
+    toggle() {
+        this.isCollapsed = !this.isCollapsed;
+    }
 }

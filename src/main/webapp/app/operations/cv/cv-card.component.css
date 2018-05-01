@@ -19,6 +19,10 @@
     height: 45px;
     display: flex;
     flex-direction: row;
+    border-radius: 5px;
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-right-color: white;
 }
 .header-state {
     width: 2%;
@@ -39,7 +43,7 @@
 }
 
 .header-body-icon {
-    width: 20%;
+    width: 13%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -52,6 +56,7 @@
     align-content: center;
     align-items: center;
     font-weight: 700;
+    cursor: pointer;
 }
 .header-body-text {
     max-width: 100%;
@@ -83,10 +88,16 @@
 }
 
 .body {
-    height: 30px;
+    height: 0;
     width: 100%;
     background-color: white;
     overflow: hidden;
+    transition: height 0.25s ease-out;
+}
+
+.body-descolated {
+    height: 200px;
+    transition: height 0.25s ease-out;
 }
 
 .green {
