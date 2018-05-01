@@ -93,6 +93,10 @@
     background-color: white;
     overflow: hidden;
     transition: height 0.25s ease-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .body-descolated {

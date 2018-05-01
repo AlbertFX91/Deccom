@@ -1,6 +1,6 @@
 <div id="mainbox">
     <div class="card">
-        <div class="header" [ngStyle]="{ 'background-color': cvCard.extractor.style.backgroundColor, 'color': cvCard.extractor.style.fontColor }" >
+        <div class="header" [ngStyle]="{ 'background-color': cvCard.extractor.style.backgroundColor, 'color': cvCard.extractor.style.fontColor }">
             <div class="header-state" [ngClass]="getClassByStatus()">
             </div>
             <div class="header-body-icon">
@@ -14,15 +14,23 @@
             </div>
         </div>
         <div class="body" [ngClass]="{'body-descolated': !isCollapsed }">
-            body
+            <div>
+                <span jhiTranslate="deccomApp.ControlVar.creation_moment"></span>: {{cvCard.creationMoment | date : "dd.MM.yyyy HH:mm:ss"}}
+            </div>
+            <div>
+                <span jhiTranslate="deccomApp.ControlVar.last_update"></span>: {{cvCard.lastUpdate  | date : "dd.MM.yyyy HH:mm:ss"}}
+            </div>
+            <div>
+                <span jhiTranslate="deccomApp.ControlVar.entries"></span>: {{cvCard.controlVarEntries.length}}
+            </div>
         </div>
-            <!--
+        <!--
             <div class="header-value">
                 <span>{{cvCard.value}}</span>
             </div>
             -->
     </div>
-        <!--
+    <!--
         <div class="fondo">
             <div [ngClass]="cvCard.extractor.style">
                 &nbsp;
