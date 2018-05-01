@@ -1,9 +1,5 @@
-.div {
-    background: #ffffff;
-    display: flex;
-    padding: 0 5px;
-    height: 100vh;
-    overflow-x: scroll;
+#cv-list-container {
+    padding: 20px;
 }
 
 verde {
@@ -49,11 +45,13 @@ verde {
 .cardtitle {
     font-family: 'Roboto', sans-serif;
     color: white;
-    font-size: 150%;
+    font-size: 1.5rem;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 .list-surroundings {
-    border-radius: 5%;
-    padding-left: 0.5%;
-    padding-right: 0.5%;
+    border-radius: 5px;
+    padding: 0px;
+    background-color: rgb(221, 212, 212);
 }
