@@ -15,8 +15,8 @@ import com.deccom.domain.Event;
  */
 @Repository
 public interface EventRepository extends MongoRepository<Event, String> {
-	
-	@Query(value = "{}", fields = "{ $and: [ { startingDate: { $gte:  ?0 } }, { startingDate: { $lte:  ?1 } } ] }")
+
+	@Query(value = "{}", fields = "{ $and: [ { 'startingDate': { $gte: ?0 } }, { 'startingDate': { $lte: ?1 } } ] }")
 	Page<Event> findEventsBetweenDates(Pageable pageable, Date startingDate, Date endingDate);
 
 }

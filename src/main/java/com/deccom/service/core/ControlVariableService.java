@@ -94,10 +94,9 @@ public class ControlVariableService {
 		return controlVariableRepository.findAllLimitedNumberOfEntriesQuery(pageable, -numberOfEntries);
 	}
 
-	public Page<ControlVariable> findRunningControlVariablelsBetweenDates(Pageable pageable, Date startingDate,
-			Date endingDate) {
+	public Page<ControlVariable> findRunningControlVariablelsBetweenDates(Pageable pageable, Date startingDate) {
 		log.debug("Request to get the running CVs between two dates");
-		return controlVariableRepository.findRunningControlVariablelsBetweenDates(pageable, startingDate, endingDate);
+		return controlVariableRepository.findRunningControlVariablelsBetweenDates(pageable, startingDate);
 	}
 
 	public List<ControlVariable> findAll() {

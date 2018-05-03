@@ -16,12 +16,12 @@ export class CVService {
         this.cvCards = [];
     }
 
-   create(cv: NewCV): Observable<NewCV> {
-    return this.http.post(this.resourceUrl, cv).map((res: Response) => {
-        const jsonResponse = res.json();
-        return jsonResponse;
-    });
-}
+    create(cv: NewCV): Observable<NewCV> {
+        return this.http.post(this.resourceUrl, cv).map((res: Response) => {
+            const jsonResponse = res.json();
+            return jsonResponse;
+        });
+    }
 
     findAll(pageSettings: any): Observable<ResponseWrapper> {
         const options = this.createRequestOption(pageSettings);

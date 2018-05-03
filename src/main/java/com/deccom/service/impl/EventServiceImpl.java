@@ -97,13 +97,16 @@ public class EventServiceImpl implements EventService {
 	}
 
 	/**
-     *  Get all the events between two dates.
-     *
-     *  @param pageable the pagination information
-     *  @param startingDate the starting date of the range
-     *  @param endingDate the ending date of the range
-     *  @return the list of entities
-     */
+	 * Get all the events between two dates.
+	 *
+	 * @param pageable
+	 *            the pagination information
+	 * @param startingDate
+	 *            the starting date of the range
+	 * @param endingDate
+	 *            the ending date of the range
+	 * @return the list of entities
+	 */
 	@Override
 	public Page<Event> findEventsBetweenDates(Pageable pageable, Date startingDate, Date endingDate) {
 		log.debug("Request to get the events between two dates");

@@ -13,11 +13,10 @@ import com.deccom.domain.core.ControlVariable;
 @Repository
 public interface ControlVariableRepository extends MongoRepository<ControlVariable, String> {
 
-	@Query(value = "{}", fields = "{'controlVarEntries': { '$slice': ?0 } }")
+	@Query(value = "{}", fields = "{ 'controlVarEntries': { '$slice': ?0 } }")
 	Page<ControlVariable> findAllLimitedNumberOfEntriesQuery(Pageable pageable, Integer numberOfEntries);
 
-	@Query(value = "{}", fields = "{ $and: [ { 'status': 'RUNNING' }, { controlVarEntries: { $elemMatch: { creationMoment: { $gte:  ?0 } } } }, { controlVarEntries: { $elemMatch: { creationMoment: { $lte:  ?1 } } } } ] }")
-	Page<ControlVariable> findRunningControlVariablelsBetweenDates(Pageable pageable, Date startingDate,
-			Date endingDate);
+	@Query(value = "{ $match: { 'status': 'RUNNING' } }", fields = "{ $addFields: { 'controlVarEntries': { $filter: { input: '$controlVarEntries', cond: { $gte: [ '$$this.creationMoment', ?0 ] } } } } }")
+	Page<ControlVariable> findRunningControlVariablelsBetweenDates(Pageable pageable, Date startingDate);
 
 }

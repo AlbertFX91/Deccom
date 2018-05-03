@@ -161,17 +161,14 @@ public class ControlVariableResource {
 	 *            the pagination information
 	 * @param startingDate
 	 *            the starting date in the range
-	 * @param endingDate
-	 *            the ending date in the range
 	 * @return the list of running control variables with their entries between two
 	 *         dates
 	 */
 	@GetMapping("/controlvar/dates")
 	@Timed
-	public Page<ControlVariable> findRunningControlVariablelsBetweenDates(Pageable pageable, Date startingDate,
-			Date endingDate) {
+	public Page<ControlVariable> findRunningControlVariablelsBetweenDates(Pageable pageable, Date startingDate) {
 		log.debug("Request to get the running CVs between two dates");
-		return controlVariableService.findRunningControlVariablelsBetweenDates(pageable, startingDate, endingDate);
+		return controlVariableService.findRunningControlVariablelsBetweenDates(pageable, startingDate);
 	}
 
 	/**
