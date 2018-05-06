@@ -23,6 +23,10 @@
     border-right-width: 1px;
     border-right-style: solid;
     border-right-color: white;
+    border-bottom-width: 1px;
+    border-bottom-color: white;
+    border-bottom-style: solid;
+}
 }
 .header-state {
     width: 2%;
@@ -116,80 +120,34 @@
     background-color: #cc240a;
 }
 
-/*
-
-*/
-
-/*
-.property {
-  margin: 0px;
+.carousel-container {
+    display: grid;
+    background-color: #BDBDBD;
+    width: 100%;
+    height: 100%;
 }
 
-.img1 {
-    border-radius: 50%;
-    width: 300px;
-    margin: 10px;
+.carousel-container /deep/ .carousel-inner {
+    width: 100%;
+    height: 100%;
+
 }
-    
-h1 {
-    font-weight: lighter;
-    margin-left: 100px;
-    margin-top: -40px;
-    font-size: x-large;
+
+.carousel-container /deep/ .carousel-item {
+    width: 100%;
+    height: 100%;
 }
-    
-p {
-    margin: 10px;
-    font-family: segoe ui;
-    line-height: 1.4em;
-    font-size: 1.2em;
-}
-    
-#mainbox {
-    font-family: calibri;
-    box-sizing: border-box;
-    justify-content: center;
+
+.carousel-page {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
 }
 
-.fondo {
-  background-color: #5555FF; 
-  flex-grow: 1; color: white; 
-  border-radius: 6px; 
-  flex-direction: row; 
-  display: flex; 
-  align-items: stretch;
-  border-color: black;
-  border-width: 1px;
-  border-style: solid;
-  z-index: 1;
-  min-height: 35px;
-  cursor: pointer;
+.img-graph {
+    width: 60%;
+    height: 60%;
 }
-
-.Running {
-    background-color: #44aa44;
-    flex-grow: 0.3; 
-    border-top-left-radius: 6px;
-    border-bottom-left-radius: 6px;
-}
-
-.Paused {
-    background-color: #fb8c00;
-    flex-grow: 0.3; 
-    border-top-left-radius: 6px;
-    border-bottom-left-radius: 6px;
-}
-
-.Blocked {
-    background-color: #cc240a;
-    flex-grow: 0.3; 
-    border-top-left-radius: 6px;
-    border-bottom-left-radius: 6px;
-}
-
-.roboto {
-    font-family: 'Roboto', sans-serif;
-}
-*/
