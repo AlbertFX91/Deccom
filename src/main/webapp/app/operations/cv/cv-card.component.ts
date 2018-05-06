@@ -3,11 +3,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CV } from './cv.model';
 import { CVService } from './cv.service';
 import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
+import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
+
+import * as $ from 'jquery';
 
 @Component({
     selector: 'jhi-cv-card',
     templateUrl: './cv-card.component.html',
-    styleUrls: ['./cv-card.component.css']
+    styleUrls: ['./cv-card.component.css'],
+    providers: [NgbCarouselConfig]
 })
 export class CVCardComponent implements OnInit, OnDestroy {
 
@@ -17,9 +21,13 @@ export class CVCardComponent implements OnInit, OnDestroy {
     public isCollapsed;
 
     constructor(
-        private cvService: CVService
+        private cvService: CVService,
+        config: NgbCarouselConfig
     ) {
         this.isCollapsed = true;
+        config.interval = 0;
+        config.wrap = false;
+        config.keyboard = false;
     }
 
     ngOnInit() { }

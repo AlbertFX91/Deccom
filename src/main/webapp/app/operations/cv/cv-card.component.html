@@ -14,6 +14,8 @@
             </div>
         </div>
         <div class="body" [ngClass]="{'body-descolated': !isCollapsed }">
+            <!--
+
             <div>
                 <span jhiTranslate="deccomApp.ControlVar.creation_moment"></span>: {{cvCard.creationMoment | date : "dd.MM.yyyy HH:mm:ss"}}
             </div>
@@ -22,6 +24,29 @@
             </div>
             <div>
                 <span jhiTranslate="deccomApp.ControlVar.entries"></span>: {{cvCard.controlVarEntries.length}}
+            </div>
+            -->
+            <div class="carousel-container">
+                <ngb-carousel>
+                    <ng-template ngbSlide>
+                        <div class="carousel-page">
+                            <div>
+                                <span jhiTranslate="deccomApp.ControlVar.creation_moment"></span>: {{cvCard.creationMoment | date : "dd.MM.yyyy HH:mm:ss"}}
+                            </div>
+                            <div>
+                                <span jhiTranslate="deccomApp.ControlVar.last_update"></span>: {{cvCard.lastUpdate | date : "dd.MM.yyyy HH:mm:ss"}}
+                            </div>
+                            <div>
+                                <span jhiTranslate="deccomApp.ControlVar.entries"></span>: {{cvCard.controlVarEntries.length}}
+                            </div>
+                        </div>
+                    </ng-template>
+                    <ng-template ngbSlide>
+                        <div class="carousel-page">
+                            <img src="../../../content/images/icons/graph.png" class="img-graph" alt="">
+                        </div>
+                    </ng-template>
+                </ngb-carousel>
             </div>
         </div>
         <!--
