@@ -30,8 +30,7 @@ export class CVCardComponent implements OnInit, OnDestroy {
         config.keyboard = false;
     }
 
-    ngOnInit() { 
-    }
+    ngOnInit() { }
 
     ngOnDestroy() { }
 
