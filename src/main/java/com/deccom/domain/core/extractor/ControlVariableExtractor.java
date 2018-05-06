@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 public interface ControlVariableExtractor {
 
 	@JsonIgnore
-	Integer getData();
+	Double getData();
 	CVStyle getStyle();
 	default String getUid() {
 		// Get a positive uid by the class name

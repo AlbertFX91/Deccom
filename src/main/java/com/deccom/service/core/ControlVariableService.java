@@ -114,7 +114,7 @@ public class ControlVariableService {
 
 	public void executeMonitorize(ControlVariable controlVar) {
 		if (controlVar.getStatus() == Status.RUNNING) {
-			Integer value;
+			Double value;
 			ControlVariableExtractor extractor;
 			extractor = controlVar.getExtractor();
 			try {
@@ -130,7 +130,7 @@ public class ControlVariableService {
 		}
 	}
 
-	public ControlVariableEntry addEntry(ControlVariable cv, Integer value) {
+	public ControlVariableEntry addEntry(ControlVariable cv, Double value) {
 		ControlVariableEntry entry = new ControlVariableEntry();
 		LocalDateTime lastUpdate = LocalDateTime.now();
 		entry.setCreationMoment(lastUpdate);

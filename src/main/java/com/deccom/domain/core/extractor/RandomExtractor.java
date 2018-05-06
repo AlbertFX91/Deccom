@@ -14,8 +14,8 @@ public class RandomExtractor implements ControlVariableExtractor {
 	}
 
 	@Override
-	public Integer getData() {
-		return (int) (Math.random() * 100);
+	public Double getData() {
+		return (Math.random() * 100);
 	}
 
 	@Override

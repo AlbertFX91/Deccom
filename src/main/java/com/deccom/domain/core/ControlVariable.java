@@ -27,7 +27,7 @@ public class ControlVariable implements Serializable {
 	@Field("name")
 	private String name;
 	@Field("value")
-	private Integer value;
+	private Double value;
 	@Field("lastUpdate")
 	private LocalDateTime lastUpdate;
 	@NotNull
@@ -63,11 +63,11 @@ public class ControlVariable implements Serializable {
 		this.status = status;
 	}
 	
-	public Integer getValue() {
+	public Double getValue() {
 		return value;
 	}
 
-	public void setValue(Integer value) {
+	public void setValue(Double value) {
 		this.value = value;
 	}
 

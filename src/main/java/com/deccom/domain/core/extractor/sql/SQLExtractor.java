@@ -95,9 +95,9 @@ public class SQLExtractor implements ControlVariableExtractor {
 
 	@Override
 	@JsonIgnore
-	public Integer getData() {
+	public Double getData() {
 		// TODO Auto-generated method stub
-		return Integer.parseInt(getFromSQL());
+		return Double.parseDouble(getFromSQL());
 	}
 
 	protected String getFromSQL() {
