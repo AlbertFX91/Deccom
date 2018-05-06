@@ -3,7 +3,6 @@ package com.deccom.service.core;
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -94,7 +93,7 @@ public class ControlVariableService {
 		return controlVariableRepository.findAllLimitedNumberOfEntriesQuery(pageable, -numberOfEntries);
 	}
 
-	public Page<ControlVariable> findRunningControlVariablelsBetweenDates(Pageable pageable, Date startingDate) {
+	public Page<ControlVariable> findRunningControlVariablelsBetweenDates(Pageable pageable, String startingDate) {
 		log.debug("Request to get the running CVs between two dates");
 		return controlVariableRepository.findRunningControlVariablelsBetweenDates(pageable, startingDate);
 	}

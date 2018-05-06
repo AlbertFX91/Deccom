@@ -1,7 +1,5 @@
 package com.deccom.repository.core;
 
-import java.util.Date;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -16,7 +14,7 @@ public interface ControlVariableRepository extends MongoRepository<ControlVariab
 	@Query(value = "{}", fields = "{ 'controlVarEntries': { '$slice': ?0 } }")
 	Page<ControlVariable> findAllLimitedNumberOfEntriesQuery(Pageable pageable, Integer numberOfEntries);
 
-	@Query(value = "{ $match: { 'status': 'RUNNING' } }", fields = "{ $addFields: { 'controlVarEntries': { $filter: { input: '$controlVarEntries', cond: { $gte: [ '$$this.creationMoment', ?0 ] } } } } }")
-	Page<ControlVariable> findRunningControlVariablelsBetweenDates(Pageable pageable, Date startingDate);
+	@Query(value = "{}", fields = "{ $match: { 'status': 'RUNNING' }, $addFields: { 'controlVarEntries': { $filter: { input: '$controlVarEntries', cond: { $gte: [ '$$this.creationMoment', ?0 ] } } } } }")
+	Page<ControlVariable> findRunningControlVariablelsBetweenDates(Pageable pageable, String startingDate);
 
 }

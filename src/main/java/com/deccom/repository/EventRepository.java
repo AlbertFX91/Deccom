@@ -1,7 +1,5 @@
 package com.deccom.repository;
 
-import java.util.Date;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -17,6 +15,6 @@ import com.deccom.domain.Event;
 public interface EventRepository extends MongoRepository<Event, String> {
 
 	@Query(value = "{}", fields = "{ $and: [ { 'startingDate': { $gte: ?0 } }, { 'startingDate': { $lte: ?1 } } ] }")
-	Page<Event> findEventsBetweenDates(Pageable pageable, Date startingDate, Date endingDate);
+	Page<Event> findEventsBetweenDates(Pageable pageable, String startingDate, String endingDate);
 
 }
