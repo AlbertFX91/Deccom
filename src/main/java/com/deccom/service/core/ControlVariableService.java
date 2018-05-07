@@ -160,7 +160,7 @@ public class ControlVariableService {
 
 		controlVar = findOne(controlVarId);
 
-		if (controlVar.getStatus().equals(Status.PAUSED)) {
+		if (controlVar.getStatus().equals(Status.PAUSED) || controlVar.getStatus().equals(Status.BLOCKED)) {
 			controlVar.setStatus(Status.RUNNING);
 			schedulingService.newJob(controlVar);
 		}

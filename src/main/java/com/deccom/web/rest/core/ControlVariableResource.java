@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -119,7 +118,7 @@ public class ControlVariableResource {
 		log.debug("Request to get all Core_Connection");
 		return controlVariableService.findAll(pageable);
 	}
-	
+
 	/**
 	 * Get all the controlvars with a limited number of entries.
 	 *
@@ -135,7 +134,7 @@ public class ControlVariableResource {
 		log.debug("Request to get all Core_Connection");
 		return controlVariableService.findAllLimitedNumberOfEntries(pageable, numberOfEntries);
 	}
-	
+
 	/**
 	 * Get all the controlvars with a limited number of entries.
 	 *
@@ -153,7 +152,7 @@ public class ControlVariableResource {
 	}
 
 	/**
-	 * PUT /controlvar/pause : Pauses a running control var.
+	 * GET /controlvar/pause : Pauses a running control var.
 	 *
 	 * @param controlVarId
 	 *            the id of the control var to update
@@ -164,7 +163,7 @@ public class ControlVariableResource {
 	 * @throws URISyntaxException
 	 *             if the Location URI syntax is incorrect
 	 */
-	@PutMapping("/controlvar/pause")
+	@GetMapping("/controlvar/pause")
 	@Timed
 	public ResponseEntity<ControlVariable> pause(String controlVarId) throws URISyntaxException {
 		log.debug("REST request to pause Core_ControlVar with id: {}", controlVarId);
@@ -174,7 +173,7 @@ public class ControlVariableResource {
 	}
 
 	/**
-	 * PUT /controlvar/pause : Restarts a paused control var.
+	 * GET /controlvar/restart : Restarts a paused control var.
 	 *
 	 * @param controlVarId
 	 *            the id of the control var to update
@@ -185,7 +184,7 @@ public class ControlVariableResource {
 	 * @throws URISyntaxException
 	 *             if the Location URI syntax is incorrect
 	 */
-	@PutMapping("/controlvar/restart")
+	@GetMapping("/controlvar/restart")
 	@Timed
 	public ResponseEntity<ControlVariable> restart(String controlVarId) throws URISyntaxException {
 		log.debug("REST request to restart Core_ControlVar with id: {}", controlVarId);
@@ -214,21 +213,21 @@ public class ControlVariableResource {
 
 		return ResponseEntity.ok().build();
 	}
-	
-    /**
-     * DELETE  /controlvar/:id : delete the "id" controlvar.
-     *
-     * @param id the id of the controlvar to delete
-     * @return the ResponseEntity with status 200 (OK)
-     */
-    @DeleteMapping("/controlvar/{id}")
-    @Timed
-    public ResponseEntity<Void> deleteAcme(@PathVariable String id) {
-        log.debug("REST request to delete Acme : {}", id);
-        controlVariableService.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id)).build();
-    }
-	
+
+	/**
+	 * DELETE /controlvar/:id : delete the "id" controlvar.
+	 *
+	 * @param id
+	 *            the id of the controlvar to delete
+	 * @return the ResponseEntity with status 200 (OK)
+	 */
+	@DeleteMapping("/controlvar/{id}")
+	@Timed
+	public ResponseEntity<Void> deleteAcme(@PathVariable String id) {
+		log.debug("REST request to delete Acme : {}", id);
+		controlVariableService.delete(id);
+		return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id)).build();
+	}
 
 	@ExceptionHandler(ControlVariableServiceException.class)
 	public ResponseEntity<String> panic(ControlVariableServiceException oops) {

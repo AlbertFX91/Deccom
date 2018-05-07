@@ -23,7 +23,7 @@
                             </a>
                         </li>
                         <li *ngIf="cvCard.status === 'PAUSED' || cvCard.status === 'BLOCKED'">
-                            <a class="dropdown-item">
+                            <a class="dropdown-item" (click)="play()">
                                 <i class="fa fa-play" aria-hidden="true"></i>
                                 <span jhiTranslate="deccomApp.ControlVar.menu.play" class="roboto">Play</span>
                             </a>

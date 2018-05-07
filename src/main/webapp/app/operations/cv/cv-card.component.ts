@@ -61,4 +61,13 @@ export class CVCardComponent implements OnInit, OnDestroy {
             });
         }
     }
+
+    play() {
+        this.cvService.restart(this.cvCard.id).subscribe((response) => {
+            this.eventManager.broadcast({
+                name: 'cvListModification',
+                content: 'Running a controlVariable'
+            });
+        });
+    }
 }

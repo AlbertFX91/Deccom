@@ -13,6 +13,7 @@
             "blocked": "Blocked",
             "created": "Control variable created successfully",
             "deleted": "Control variable deleted successfully",
+            "updated": "Control variable updated successfully",
             "menu": {
                 "edit": "Edit",
                 "remove": "Remove",

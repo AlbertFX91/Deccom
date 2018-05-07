@@ -13,6 +13,7 @@
             "blocked": "Bloqueado",
             "created": "Variable de control creada correctamente",
             "deleted": "Variable de control borrada correctamente",
+            "updated": "Variable de control actualizada correctamente",
             "menu": {
                 "edit": "Editar",
                 "remove": "Eliminar",

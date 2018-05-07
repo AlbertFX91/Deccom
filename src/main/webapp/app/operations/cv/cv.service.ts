@@ -39,6 +39,10 @@ export class CVService {
         return this.http.delete(`${this.resourceUrl}/${id}`);
     }
 
+    restart(id: string): Observable<Response> {
+        return this.http.get(this.resourceUrl + 'restart', this.createGetRequest(id));
+    }
+
     private convertResponse(res: Response): ResponseWrapper {
         const jsonResponse = res.json();
         for (let i = 0; i < jsonResponse.length; i++) {
@@ -56,6 +60,14 @@ export class CVService {
         const options: BaseRequestOptions = createRequestOption(pageSettings);
         // const params: URLSearchParams = new URLSearchParams();
         // options.params = params;
+        return options;
+    }
+
+    public createGetRequest(id: string): BaseRequestOptions {
+        const options: BaseRequestOptions = new BaseRequestOptions();
+        const params: URLSearchParams = new URLSearchParams();
+        params.set('controlVarId', id);
+        options.params = params;
         return options;
     }
 }
