@@ -145,12 +145,12 @@ import 'chartjs-plugin-annotation';
             },
             tooltips: {
                 callbacks: {
-                    title: function (tooltipItem, data) {
+                    title: function(tooltipItem, data) {
                         const showDate = new Date(tooltipItem[0].xLabel).toUTCString();
 
                         return showDate.substring(0, showDate.length - 4);
                     },
-                    label: function (tooltipItem, data) {
+                    label: function(tooltipItem, data) {
                         let label = '' + data.datasets[tooltipItem.datasetIndex].label || '';
 
                         if (label) {
@@ -177,9 +177,6 @@ import 'chartjs-plugin-annotation';
             options: this.chartOptions
         });
         */
-        console.log('last: ', this.last.toISOString());
-        console.log('today: ', this.today.toISOString());
-        console.log(this.events);
     }
 
     ngOnDestroy() { }

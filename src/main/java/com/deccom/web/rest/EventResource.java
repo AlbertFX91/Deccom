@@ -2,6 +2,7 @@ package com.deccom.web.rest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -141,7 +142,7 @@ public class EventResource {
 	@GetMapping("/event/dates")
 	@Timed
 	public ResponseEntity<List<Event>> getEventsBetweenDates(@ApiParam Pageable pageable, String startingDate,
-			String endingDate) {
+			String endingDate) throws ParseException {
 		log.debug("REST request to get a page of events between two dates");
 		Page<Event> page = eventService.findEventsBetweenDates(pageable, startingDate, endingDate);
 		HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/events");

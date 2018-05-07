@@ -1,5 +1,7 @@
 package com.deccom.service;
 
+import java.text.ParseException;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -46,7 +48,7 @@ public interface EventService {
 	 *            the ending date of the range
 	 * @return the list of entities
 	 */
-	Page<Event> findEventsBetweenDates(Pageable pageable, String startingDate, String endingDate);
+	Page<Event> findEventsBetweenDates(Pageable pageable, String startingDate, String endingDate) throws ParseException;
 
 	/**
 	 * Get the "id" event.

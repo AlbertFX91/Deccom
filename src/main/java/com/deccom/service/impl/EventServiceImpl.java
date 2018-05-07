@@ -1,6 +1,9 @@
 package com.deccom.service.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -107,9 +110,11 @@ public class EventServiceImpl implements EventService {
 	 * @return the list of entities
 	 */
 	@Override
-	public Page<Event> findEventsBetweenDates(Pageable pageable, String startingDate, String endingDate) {
+	public Page<Event> findEventsBetweenDates(Pageable pageable, String startingDate, String endingDate) throws ParseException {
 		log.debug("Request to get the events between two dates");
-		return eventRepository.findEventsBetweenDates(pageable, startingDate, endingDate);
+		Date date1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(startingDate);
+		Date date2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(endingDate);
+		return eventRepository.findEventsBetweenDates(pageable, date1, date2);
 	}
 
 	/**
