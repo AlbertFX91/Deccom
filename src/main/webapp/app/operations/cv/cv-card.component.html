@@ -10,22 +10,42 @@
                 <span class="header-body-text" title="{{cvCard.name}}">{{cvCard.name}}: {{cvCard.value}}</span>
             </div>
             <div class="header-body-menu">
-                <i class="fa fa-bars"></i>
+                <!--<i class="fa fa-bars"></i>-->
+                <div ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                    <span ngbDropdownToggle href="javascript:void(0);" class="contextual-menu">
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <ul class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
+                        <li>
+                            <a class="dropdown-item">
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                <span jhiTranslate="deccomApp.ControlVar.menu.edit" class="roboto">Edit</span>
+                            </a>
+                        </li>
+                        <li *ngIf="cvCard.status === 'PAUSED' || cvCard.status === 'BLOCKED'">
+                            <a class="dropdown-item">
+                                <i class="fa fa-play" aria-hidden="true"></i>
+                                <span jhiTranslate="deccomApp.ControlVar.menu.play" class="roboto">Play</span>
+                            </a>
+                        </li>
+                        <li *ngIf="cvCard.status === 'RUNNING'">
+                            <a class="dropdown-item">
+                                <i class="fa fa-pause" aria-hidden="true"></i>
+                                <span jhiTranslate="deccomApp.ControlVar.menu.pause" class="roboto">Pause</span>
+                            </a>
+                        </li>
+                        <div class="dropdown-divider"></div>
+                        <li>
+                            <a class="dropdown-item">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                <span jhiTranslate="deccomApp.ControlVar.menu.remove" class="roboto">Remove</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
         <div class="body" [ngClass]="{'body-descolated': !isCollapsed }">
-            <!--
-
-            <div>
-                <span jhiTranslate="deccomApp.ControlVar.creation_moment"></span>: {{cvCard.creationMoment | date : "dd.MM.yyyy HH:mm:ss"}}
-            </div>
-            <div>
-                <span jhiTranslate="deccomApp.ControlVar.last_update"></span>: {{cvCard.lastUpdate  | date : "dd.MM.yyyy HH:mm:ss"}}
-            </div>
-            <div>
-                <span jhiTranslate="deccomApp.ControlVar.entries"></span>: {{cvCard.controlVarEntries.length}}
-            </div>
-            -->
             <div class="carousel-container">
                 <ngb-carousel>
                     <ng-template ngbSlide>

@@ -150,3 +150,11 @@
     width: 60%;
     height: 60%;
 }
+
+.contextual-menu {
+    cursor: pointer;
+}
+
+.header-body-menu /deep/ .dropdown-toggle::after {
+    display: none !important;
+}

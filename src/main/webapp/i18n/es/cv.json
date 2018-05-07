@@ -11,7 +11,13 @@
             "running": "Funcionando",
             "paused": "En pausa",
             "blocked": "Bloqueado",
-            "created": "Variable de control creada correctamente"
+            "created": "Variable de control creada correctamente",
+            "menu": {
+                "edit": "Editar",
+                "remove": "Eliminar",
+                "play": "Lanzar",
+                "pause": "Pausar"
+            }
         }
     }
 }
