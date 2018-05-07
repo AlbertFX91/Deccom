@@ -12,6 +12,7 @@
             "paused": "En pausa",
             "blocked": "Bloqueado",
             "created": "Variable de control creada correctamente",
+            "deleted": "Variable de control borrada correctamente",
             "menu": {
                 "edit": "Editar",
                 "remove": "Eliminar",

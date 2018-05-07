@@ -4,6 +4,7 @@ import { CV } from './cv.model';
 import { CVService } from './cv.service';
 import { ResponseWrapper, ITEMS_PER_PAGE } from '../../shared';
 import { JhiParseLinks, JhiAlertService, JhiEventManager } from 'ng-jhipster';
+import { Subscription } from 'rxjs/Rx';
 
 @Component({
     selector: 'jhi-cv',
@@ -16,6 +17,8 @@ export class CVComponent implements OnInit, OnDestroy {
     page: any;
     itemsPerPage: number;
     links: any;
+
+    eventSubscriber: Subscription;
 
     constructor(
         public cvService: CVService,
@@ -32,14 +35,8 @@ export class CVComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        const pageSettings = {
-            page: this.page,
-            size: this.itemsPerPage
-        };
-        this.cvService.findAll(pageSettings).subscribe(
-            (data: any) => this.onSuccess(data.json(), data.headers),
-            (error: Response) => this.onError(error)
-        )
+        this.reset();
+        this.registerChangeInCVs();
     }
 
     ngOnDestroy() { }
@@ -102,4 +99,24 @@ export class CVComponent implements OnInit, OnDestroy {
 
     }
 
+    reset() {
+        this.page = 0;
+        this.cvCards = [];
+        this.loadAll();
+    }
+
+    loadAll() {
+        const pageSettings = {
+            page: this.page,
+            size: this.itemsPerPage
+        };
+        this.cvService.findAll(pageSettings).subscribe(
+            (data: any) => this.onSuccess(data.json(), data.headers),
+            (error: Response) => this.onError(error)
+        )
+    }
+
+    registerChangeInCVs() {
+        this.eventSubscriber = this.eventManager.subscribe('cvListModification', (response) => this.reset());
+    }
 }

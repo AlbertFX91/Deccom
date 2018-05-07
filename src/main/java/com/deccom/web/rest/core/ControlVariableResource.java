@@ -11,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -212,6 +214,21 @@ public class ControlVariableResource {
 
 		return ResponseEntity.ok().build();
 	}
+	
+    /**
+     * DELETE  /controlvar/:id : delete the "id" controlvar.
+     *
+     * @param id the id of the controlvar to delete
+     * @return the ResponseEntity with status 200 (OK)
+     */
+    @DeleteMapping("/controlvar/{id}")
+    @Timed
+    public ResponseEntity<Void> deleteAcme(@PathVariable String id) {
+        log.debug("REST request to delete Acme : {}", id);
+        controlVariableService.delete(id);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id)).build();
+    }
+	
 
 	@ExceptionHandler(ControlVariableServiceException.class)
 	public ResponseEntity<String> panic(ControlVariableServiceException oops) {

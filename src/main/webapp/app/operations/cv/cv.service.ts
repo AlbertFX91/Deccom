@@ -35,6 +35,10 @@ export class CVService {
             .map((res: Response) => this.convertResponse(res));
     }
 
+    delete(id: string): Observable<Response> {
+        return this.http.delete(`${this.resourceUrl}/${id}`);
+    }
+
     private convertResponse(res: Response): ResponseWrapper {
         const jsonResponse = res.json();
         for (let i = 0; i < jsonResponse.length; i++) {

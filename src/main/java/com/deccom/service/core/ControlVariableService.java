@@ -184,6 +184,13 @@ public class ControlVariableService {
 		res.setExtractor(extractor);
 		return res;
 	}
+	
+    public void delete(String id) {
+        log.debug("Request to remove ControlVariable : {}", id);
+    	ControlVariable cv = controlVariableRepository.findOne(id);
+        schedulingService.stopJob(cv);
+        controlVariableRepository.delete(id);
+    } 
 
 	private ControlVariableExtractor getExtractor(New_ControlVariable ncv) {
 		ControlVariableExtractor res = null;

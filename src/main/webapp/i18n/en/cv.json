@@ -12,6 +12,7 @@
             "paused": "Paused",
             "blocked": "Blocked",
             "created": "Control variable created successfully",
+            "deleted": "Control variable deleted successfully",
             "menu": {
                 "edit": "Edit",
                 "remove": "Remove",

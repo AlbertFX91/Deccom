@@ -4,6 +4,7 @@ import { CV } from './cv.model';
 import { CVService } from './cv.service';
 import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
+import { JhiEventManager } from 'ng-jhipster';
 
 import * as $ from 'jquery';
 
@@ -22,6 +23,7 @@ export class CVCardComponent implements OnInit, OnDestroy {
 
     constructor(
         private cvService: CVService,
+        private eventManager: JhiEventManager,
         config: NgbCarouselConfig
     ) {
         this.isCollapsed = true;
@@ -46,5 +48,17 @@ export class CVCardComponent implements OnInit, OnDestroy {
 
     toggle() {
         this.isCollapsed = !this.isCollapsed;
+    }
+
+    remove() {
+        const res = confirm('Remove this cv?');
+        if (res) {
+            this.cvService.delete(this.cvCard.id).subscribe((response) => {
+                this.eventManager.broadcast({
+                    name: 'cvListModification',
+                    content: 'Deleted a controlVariable'
+                });
+            });
+        }
     }
 }
