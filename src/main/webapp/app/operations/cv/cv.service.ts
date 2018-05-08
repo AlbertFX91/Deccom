@@ -43,6 +43,10 @@ export class CVService {
         return this.http.get(this.resourceUrl + 'restart', this.createGetRequest(id));
     }
 
+    pause(id: string): Observable<Response> {
+        return this.http.get(this.resourceUrl + 'pause', this.createGetRequest(id));
+    }
+
     private convertResponse(res: Response): ResponseWrapper {
         const jsonResponse = res.json();
         for (let i = 0; i < jsonResponse.length; i++) {
@@ -56,7 +60,7 @@ export class CVService {
             .convertLocalDateFromServer(entity.publication_date);
     }
 
-    public createRequestOption(pageSettings: any): BaseRequestOptions {
+    private createRequestOption(pageSettings: any): BaseRequestOptions {
         const options: BaseRequestOptions = createRequestOption(pageSettings);
         // const params: URLSearchParams = new URLSearchParams();
         // options.params = params;

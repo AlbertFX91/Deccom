@@ -29,7 +29,7 @@
                             </a>
                         </li>
                         <li *ngIf="cvCard.status === 'RUNNING'">
-                            <a class="dropdown-item">
+                            <a class="dropdown-item" (click)="pause()">
                                 <i class="fa fa-pause" aria-hidden="true"></i>
                                 <span jhiTranslate="deccomApp.ControlVar.menu.pause" class="roboto">Pause</span>
                             </a>
