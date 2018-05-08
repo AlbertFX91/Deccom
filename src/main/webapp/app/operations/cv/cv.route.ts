@@ -5,6 +5,7 @@ import { UserRouteAccessService } from '../../shared';
 import { JhiPaginationUtil } from 'ng-jhipster';
 
 import { CVComponent } from './cv.component';
+import { CVPopupComponent } from './cv-dialog.component';
 
 export const cvRoute: Routes = [
     {
@@ -15,5 +16,18 @@ export const cvRoute: Routes = [
             pageTitle: 'deccomApp.ControlVar.home.title'
         },
         canActivate: [UserRouteAccessService]
+    }
+];
+
+export const cvPopupRoute: Routes = [
+    {
+        path: 'cv/:id/edit',
+        component: CVPopupComponent,
+        data: {
+            authorities: ['ROLE_USER'],
+            pageTitle: 'deccomApp.acme.home.title'
+        },
+        canActivate: [UserRouteAccessService],
+        outlet: 'popup'
     }
 ];

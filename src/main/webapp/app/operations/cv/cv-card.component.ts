@@ -79,4 +79,8 @@ export class CVCardComponent implements OnInit, OnDestroy {
             });
         });
     }
+
+    edit() {
+        console.log('Edit');
+    }
 }

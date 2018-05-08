@@ -98,6 +98,22 @@ public class ControlVariableService {
 		return controlVariableRepository.findAll();
 	}
 
+	public ControlVariable updateGeneral(ControlVariable cv) {
+		ControlVariable res = findOne(cv.getId());
+		
+		res.setFrequency(cv.getFrequency());
+		res.setName(cv.getName());
+		
+		res = controlVariableRepository.save(res);
+		
+		if (schedulingService.isRunning(res)) {
+			schedulingService.stopJob(res);
+			schedulingService.newJob(res);
+		}
+		
+		return res;
+	}
+	
 	public void testLaunchCVS() {
 		for (ControlVariable cv : findAll()) {
 			System.out.println(cv.getName() + ": " + cv.getExtractor().getData());

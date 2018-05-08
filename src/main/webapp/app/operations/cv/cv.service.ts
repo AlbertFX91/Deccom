@@ -16,12 +16,28 @@ export class CVService {
         this.cvCards = [];
     }
 
-   create(cv: NewCV): Observable<NewCV> {
-    return this.http.post(this.resourceUrl, cv).map((res: Response) => {
-        const jsonResponse = res.json();
-        return jsonResponse;
-    });
-}
+    create(cv: NewCV): Observable<NewCV> {
+        return this.http.post(this.resourceUrl, cv).map((res: Response) => {
+            const jsonResponse = res.json();
+            return jsonResponse;
+        });
+    }
+
+    find(id: string): Observable<CV> {
+        return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
+            const jsonResponse = res.json();
+            this.convertItemFromServer(jsonResponse);
+            return jsonResponse;
+        });
+    }
+
+    update(cv: CV): Observable<CV> {
+        return this.http.put(this.resourceUrl + '/general/', cv).map((res: Response) => {
+            const jsonResponse = res.json();
+            this.convertItemFromServer(jsonResponse);
+            return jsonResponse;
+        });
+    }
 
     findAll(pageSettings: any): Observable<ResponseWrapper> {
         const options = this.createRequestOption(pageSettings);

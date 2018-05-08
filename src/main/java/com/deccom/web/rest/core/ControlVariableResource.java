@@ -2,6 +2,7 @@ package com.deccom.web.rest.core;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -16,11 +17,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
+import com.deccom.domain.Acme;
 import com.deccom.domain.core.ControlVariable;
 import com.deccom.domain.core.extractor.rest.RESTExtractor;
 import com.deccom.domain.core.extractor.sql.SQLExtractor;
@@ -28,6 +31,8 @@ import com.deccom.domain.core.wrapper.New_ControlVariable;
 import com.deccom.service.core.ControlVariableService;
 import com.deccom.service.core.util.ControlVariableServiceException;
 import com.deccom.web.rest.util.HeaderUtil;
+
+import io.github.jhipster.web.util.ResponseUtil;
 
 @RestController
 @RequestMapping("/api")
@@ -92,6 +97,20 @@ public class ControlVariableResource {
 		return ResponseEntity.ok().build();
 	}
 
+	/**
+     * GET  /controlvar/:id : get the "id" controlvar.
+     *
+     * @param id the id of the controlvar to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the controlvar, or with status 404 (Not Found)
+     */
+    @GetMapping("/controlvar/{id}")
+    @Timed
+    public ResponseEntity<ControlVariable> getCV(@PathVariable String id) {
+        log.debug("REST request to get CV : {}", id);
+        ControlVariable cv = controlVariableService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(cv));
+    }
+	
 	@PostMapping("/controlvar")
 	@Timed
 	public ResponseEntity<ControlVariable> newControlVar(@RequestBody @Valid New_ControlVariable cv)
@@ -104,6 +123,25 @@ public class ControlVariableResource {
 		return ResponseEntity.created(new URI("/controlvar" + res.getId()))
 				.headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, res.getId().toString())).body(res);
 	}
+	
+    /**
+     * PUT  /controlvar/general : Updates an existing CV editing all the data except the extractor data.
+     *
+     * @param cv the cv to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated cv,
+     * or with status 400 (Bad Request) if the cv is not valid,
+     * or with status 500 (Internal Server Error) if the cv couldn't be updated
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @PutMapping("/controlvar/general")
+    @Timed
+    public ResponseEntity<ControlVariable> updateAcme(@Valid @RequestBody ControlVariable cv) throws URISyntaxException {
+        log.debug("REST request to update ControlVariable General : {}", cv);
+        ControlVariable result = controlVariableService.updateGeneral(cv);
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, cv.getId().toString()))
+            .body(result);
+    }
 
 	/**
 	 * Get all the controlvars.

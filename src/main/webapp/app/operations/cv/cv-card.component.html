@@ -17,7 +17,8 @@
                     </span>
                     <ul class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
                         <li>
-                            <a class="dropdown-item">
+                            <a class="dropdown-item" 
+                                [routerLink]="['/', { outlets: { popup: 'cv/'+ cvCard.id + '/edit'} }]">
                                 <i class="fa fa-pencil" aria-hidden="true"></i>
                                 <span jhiTranslate="deccomApp.ControlVar.menu.edit" class="roboto">Edit</span>
                             </a>
@@ -69,50 +70,5 @@
                 </ngb-carousel>
             </div>
         </div>
-        <!--
-            <div class="header-value">
-                <span>{{cvCard.value}}</span>
-            </div>
-            -->
     </div>
-    <!--
-        <div class="fondo">
-            <div [ngClass]="cvCard.extractor.style">
-                &nbsp;
-            </div>
-            <div class="logo" style="flex-grow: 3; justify-content: center; align-items: center; display: flex;">
-                <i class="fa {{cvCard.extractor.style.icon}}"></i>
-            </div>
-            <div class="title" style="flex-grow: 8; font-weight: 700; display: flex; align-items: center; border-color: black; border-width: 0 1px 0 0; border-style: solid; border-top-right-radius: 6px;
-                    border-bottom-right-radius: 6px;" [ngStyle]="{ 'background-color': cvCard.extractor.style.backgroundColor, 'color': cvCard.extractor.style.fontColor }">
-                <strong class="roboto" style="margin: auto;">{{cvCard.name}}</strong>
-            </div>
-            <div class="data" style="background-color: #A8A8A8; flex-grow: 3; font-weight: 700; display:flex; align-items: center; color: black; justify-content: center; border-top-right-radius: 6px;
-                    border-bottom-right-radius: 6px; display: flex; flex-direction: row; text-align:center">
-                <div style="flex-grow: 1">
-                    <strong class="roboto">{{cvCard.value}}</strong>
-                </div>
-                <div style="flex-grow: 1; cursor:pointer;">
-                    <p>
-                        <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
-                            aria-controls="collapseExample">
-                            <div style="color:#000000" *ngIf="isCollapsed">+</div>
-                            <div style="color:#000000" *ngIf="!isCollapsed">-</div>
-                        </button>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div id="collapseExample" [ngbCollapse]="isCollapsed">
-            <p>
-                <span class="roboto" jhiTranslate="deccomApp.ControlVar.creation_moment"></span>: {{cvCard.creationMoment | date : "dd.MM.yyyy HH:mm:ss"}}</p>
-            <p>
-                <span class="roboto" jhiTranslate="deccomApp.ControlVar.entries"></span>: {{cvCard.controlVarEntries.length}}</p>
-            <p>
-                <span class="roboto" jhiTranslate="deccomApp.ControlVar.last_update"></span>: {{cvCard.last_update}}</p>
-            <p>
-                <img src="../../../content/images/icons/graph.png" class="img1" alt="">
-            </p>
-        </div>
-        -->
 </div>

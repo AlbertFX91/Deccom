@@ -8,11 +8,16 @@ import {
     CVService,
     CVComponent,
     CVCardComponent,
-    cvRoute
+    cvRoute,
+    cvPopupRoute,
+    CVPopupService,
+    CVDialogComponent,
+    CVPopupComponent
 } from './';
 
 const ENTITY_STATES = [
     ...cvRoute,
+    ...cvPopupRoute,
 ];
 
 @NgModule({
@@ -23,14 +28,19 @@ const ENTITY_STATES = [
     ],
     declarations: [
         CVComponent,
-        CVCardComponent
+        CVCardComponent,
+        CVDialogComponent,
+        CVPopupComponent,
     ],
     entryComponents: [
         CVComponent,
-        CVCardComponent
+        CVCardComponent,
+        CVDialogComponent,
+        CVPopupComponent
     ],
     providers: [
-        CVService
+        CVService,
+        CVPopupService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
