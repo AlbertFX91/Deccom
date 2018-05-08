@@ -1,7 +1,9 @@
 package com.deccom.service.core;
 
 import java.lang.reflect.Field;
+import java.text.ParseException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -93,9 +95,27 @@ public class ControlVariableService {
 		return controlVariableRepository.findAllLimitedNumberOfEntriesQuery(pageable, -numberOfEntries);
 	}
 
-	public Page<ControlVariable> findRunningControlVariablelsBetweenDates(Pageable pageable, String startingDate) {
+	public Page<ControlVariable> findRunningControlVariablelsBetweenDates(Pageable pageable, String startingDate)
+			throws ParseException {
 		log.debug("Request to get the running CVs between two dates");
-		return controlVariableRepository.findRunningControlVariablelsBetweenDates(pageable, startingDate);
+
+		Page<ControlVariable> result;
+		LocalDateTime date;
+		DateTimeFormatter formatter;
+
+		result = controlVariableRepository.findRunningControlVariables(pageable);
+		formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+		date = LocalDateTime.parse(startingDate, formatter);
+
+		for (ControlVariable controlVariable : result) {
+			for (ControlVariableEntry controlVariableEntry : controlVariable.getControlVarEntries()) {
+				if (controlVariableEntry.getCreationMoment().isBefore(date)) {
+					controlVariable.getControlVarEntries().remove(controlVariableEntry);
+				}
+			}
+		}
+
+		return result;
 	}
 
 	public List<ControlVariable> findAll() {

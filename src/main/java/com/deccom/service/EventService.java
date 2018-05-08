@@ -47,6 +47,7 @@ public interface EventService {
 	 * @param endingDate
 	 *            the ending date of the range
 	 * @return the list of entities
+	 * @throws ParseException
 	 */
 	Page<Event> findEventsBetweenDates(Pageable pageable, String startingDate, String endingDate) throws ParseException;
 

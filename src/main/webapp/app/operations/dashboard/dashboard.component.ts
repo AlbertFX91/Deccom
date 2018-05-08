@@ -45,16 +45,16 @@ import 'chartjs-plugin-annotation';
             page: this.page,
             size: this.itemsPerPage
         };
+        /*
         this.cvService.findAll(pageSettings).subscribe(
             (data: any) => this.onSuccessCV(data.json(), data.headers),
             (error: Response) => this.onError(error)
         );
-        /*
-        this.cvService.dates(this.today.toISOString(), pageSettings).subscribe(
+        */
+        this.cvService.dates(this.last.toISOString(), pageSettings).subscribe(
             (data: any) => this.onSuccessCV(data.json(), data.headers),
             (error: Response) => this.onError(error)
         );
-        */
         /*
          this.eventService.findAll(pageSettings).subscribe(
              (res: ResponseWrapper) => this.onSuccessEvent(res.json, res.headers),
@@ -97,20 +97,6 @@ import 'chartjs-plugin-annotation';
                 label: 'Account A', fill: false, showLine: true
             }
         ];
-        this.chartAnnotations = [
-            {
-                borderColor: 'red',
-                mode: 'horizontal',
-                type: 'line',
-                value: 5,
-                scaleID: 'y-axis-0',
-                label: {
-                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                    enabled: true,
-                    content: 'Event'
-                }
-            }
-        ];
         this.chartOptions = {
             responsive: true,
             legend: {
@@ -119,20 +105,18 @@ import 'chartjs-plugin-annotation';
             scales: {
                 xAxes: [{
                     id: 'x-axis-0',
-                    display: false,
+                    display: true,
                     ticks: {
                         suggestedMin: this.dateToNumber(this.last),
                         suggestedMax: this.dateToNumber(this.today)
-                    }
-                    /*
+                    },
                     type: 'time',
                     time: {
                         displayFormats: {
-                            second: 'h:mm:ss a'
+                            week: 'll'
                         },
-                        unit: 'second'
+                        unit: 'week'
                     }
-                    */
                 }],
                 yAxes: [{
                     id: 'y-axis-0',
@@ -182,6 +166,8 @@ import 'chartjs-plugin-annotation';
     ngOnDestroy() { }
 
     onSuccessCV(data: any, headers: any) {
+        console.log('data:');
+        console.log(data);
         for (let i = 0; i < data.content.length; i++) {
             if (data.content[i]['status'] === 'RUNNING' && data.content[i]['controlVarEntries'].length > 4) {
                 const controlVarEntriesAux: any[] = data.content[i]['controlVarEntries'].slice(Math.max(data.content[i]['controlVarEntries'].length - 5, 0));
@@ -206,18 +192,19 @@ import 'chartjs-plugin-annotation';
         this.eventManager.broadcast({ name: 'all_success', content: 'OK' });
     }
 
-    onSuccessEvent(data: any, headers: any) {
-        console.log('data:');
-        console.log(data);
+    onSuccessEvent1(data: any, headers: any) {
         for (let i = 0; i < data.length; i++) {
-            // const startingDate: any = new Date(data[i]['startingDate']);
-            const startingDate: any = new Date();
+            const startingDate: any = new Date(data[i]['startingDate']);
+            console.log('startingDate:');
+            console.log(startingDate);
             const dataToInsert: any[] = [];
+            /*
             dataToInsert.push({
                 x: new Date(startingDate.getFullYear(), startingDate.getMonth(), startingDate.getDay(),
                     startingDate.getHours(), startingDate.getMinutes(), startingDate.getSeconds()),
                 y: 25
             });
+            */
             const dato: any = {
                 data: dataToInsert,
                 label: data[i]['name'],
@@ -225,6 +212,26 @@ import 'chartjs-plugin-annotation';
                 type: 'bar'
             }
             this.events.push(dato);
+        }
+        // this.links = this.parseLinks.parse(headers.get('link'));
+        this.eventManager.broadcast({ name: 'all_success', content: 'OK' });
+    }
+
+    onSuccessEvent(data: any, headers: any) {
+        for (let i = 0; i < data.length; i++) {
+            const chartAnnotation: any = {
+                borderColor: 'red',
+                mode: 'vertical',
+                type: 'line',
+                value: data[i]['startingDate'],
+                scaleID: 'x-axis-0',
+                label: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    enabled: true,
+                    content: data[i]['name']
+                }
+            };
+            this.chartAnnotations.push(chartAnnotation);
         }
         // this.links = this.parseLinks.parse(headers.get('link'));
         this.eventManager.broadcast({ name: 'all_success', content: 'OK' });

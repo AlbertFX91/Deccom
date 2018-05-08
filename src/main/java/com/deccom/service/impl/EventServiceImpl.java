@@ -108,9 +108,11 @@ public class EventServiceImpl implements EventService {
 	 * @param endingDate
 	 *            the ending date of the range
 	 * @return the list of entities
+	 * @throws ParseException
 	 */
 	@Override
-	public Page<Event> findEventsBetweenDates(Pageable pageable, String startingDate, String endingDate) throws ParseException {
+	public Page<Event> findEventsBetweenDates(Pageable pageable, String startingDate, String endingDate)
+			throws ParseException {
 		log.debug("Request to get the events between two dates");
 		Date date1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(startingDate);
 		Date date2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(endingDate);
