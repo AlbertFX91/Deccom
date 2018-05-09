@@ -2,7 +2,6 @@ package com.deccom.web.rest.core;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.text.ParseException;
 
 import javax.validation.Valid;
 
@@ -167,10 +166,9 @@ public class ControlVariableResource {
 	 */
 	@GetMapping("/controlvar/dates")
 	@Timed
-	public Page<ControlVariable> findRunningControlVariablelsBetweenDates(Pageable pageable, String startingDate)
-			throws ParseException {
+	public Page<ControlVariable> findRunningControlVariablelsBetweenDates(Pageable pageable, String startingDate) {
 		log.debug("Request to get the running CVs between two dates");
-		return controlVariableService.findRunningControlVariablelsBetweenDates(pageable, startingDate);
+		return controlVariableService.findRunningControlVariablesBetweenDates(pageable, startingDate);
 	}
 
 	/**
