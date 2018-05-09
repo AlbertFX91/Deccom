@@ -14,7 +14,8 @@ public interface ControlVariableRepository extends MongoRepository<ControlVariab
 	@Query(value = "{}", fields = "{ 'controlVarEntries': { '$slice': ?0 } }")
 	Page<ControlVariable> findAllLimitedNumberOfEntriesQuery(Pageable pageable, Integer numberOfEntries);
 
-	@Query("{ 'status': 'RUNNING' }")
+	// @Query("{ 'status': 'RUNNING' }")
+	@Query("{ $and: [ { 'status': 'RUNNING' }, { $where: 'this.controlVarEntries.length > 0' } ] }")
 	Page<ControlVariable> findRunningControlVariables(Pageable pageable);
 
 }

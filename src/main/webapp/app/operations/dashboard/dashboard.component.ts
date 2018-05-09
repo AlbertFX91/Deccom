@@ -166,27 +166,23 @@ import 'chartjs-plugin-annotation';
     ngOnDestroy() { }
 
     onSuccessCV(data: any, headers: any) {
-        console.log('data:');
-        console.log(data);
         for (let i = 0; i < data.content.length; i++) {
-            if (data.content[i]['status'] === 'RUNNING' && data.content[i]['controlVarEntries'].length > 4) {
-                const controlVarEntriesAux: any[] = data.content[i]['controlVarEntries'].slice(Math.max(data.content[i]['controlVarEntries'].length - 5, 0));
-                const dataToInsert: any[] = [];
-                for (let j = 0; j < 5; j++) {
-                    const date: any = new Date(controlVarEntriesAux[j]['creationMoment']);
-                    dataToInsert.push({
-                        x: new Date(date.getFullYear(), date.getMonth(), date.getDay(), date.getHours(), date.getMinutes(), date.getSeconds()),
-                        y: controlVarEntriesAux[j]['value']
-                    });
-                }
-                const dato: any = {
-                    data: dataToInsert,
-                    label: data.content[i]['name'],
-                    backgroundColor: data.content[i]['extractor']['style']['backgroundColor'],
-                    fill: false
-                }
-                this.CVs.push(dato);
+            const dataToInsert: any[] = [];
+            for (let j = 0; j < data.content[i]['controlVarEntries'].length; j++) {
+                const date: any = new Date(data.content[i]['controlVarEntries'][j]['creationMoment']);
+                dataToInsert.push({
+                    x: this.dateToNumber(new Date(date.getFullYear(), date.getMonth(), date.getDay(), date.getHours() + 2, date.getMinutes(), date.getSeconds())),
+                    y: data.content[i]['controlVarEntries'][j]['value']
+                });
             }
+            const dato: any = {
+                data: dataToInsert,
+                label: data.content[i]['name'],
+                backgroundColor: data.content[i]['extractor']['style']['backgroundColor'],
+                fill: false,
+                showLine: true
+            }
+            this.CVs.push(dato);
         }
         // this.links = this.parseLinks.parse(headers.get('link'));
         this.eventManager.broadcast({ name: 'all_success', content: 'OK' });
