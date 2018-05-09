@@ -120,11 +120,7 @@ import 'chartjs-plugin-annotation';
                 }],
                 yAxes: [{
                     id: 'y-axis-0',
-                    display: true,
-                    ticks: {
-                        suggestedMin: 0,
-                        suggestedMax: 10
-                    }
+                    display: true
                 }]
             },
             tooltips: {
