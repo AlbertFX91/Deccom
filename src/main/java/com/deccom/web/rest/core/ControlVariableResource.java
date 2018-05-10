@@ -162,7 +162,6 @@ public class ControlVariableResource {
 	 *            the starting date in the range
 	 * @return the list of running control variables with their entries between two
 	 *         dates
-	 * @throws ParseException
 	 */
 	@GetMapping("/controlvar/dates")
 	@Timed

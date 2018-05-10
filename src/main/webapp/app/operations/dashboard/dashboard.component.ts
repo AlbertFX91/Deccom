@@ -107,20 +107,23 @@ import 'chartjs-plugin-annotation';
                     id: 'x-axis-0',
                     display: true,
                     ticks: {
-                        suggestedMin: this.dateToNumber(this.last),
-                        suggestedMax: this.dateToNumber(this.today)
+                        suggestedMin: this.last.toUTCString(),
+                        suggestedMax: this.last.toUTCString()
                     },
                     type: 'time',
                     time: {
                         displayFormats: {
-                            week: 'll'
+                            day: 'll'
                         },
-                        unit: 'week'
+                        unit: 'day'
                     }
                 }],
                 yAxes: [{
                     id: 'y-axis-0',
-                    display: true
+                    display: true,
+                    ticks: {
+                        beginAtZero: true
+                    }
                 }]
             },
             tooltips: {
