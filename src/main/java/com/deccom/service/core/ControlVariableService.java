@@ -2,6 +2,7 @@ package com.deccom.service.core;
 
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -75,22 +76,44 @@ public class ControlVariableService {
 		log.debug("Request to get ControlVariable : {}", id);
 		return controlVariableRepository.findOne(id);
 	}
-	
+
 	public Page<ControlVariable> findAll(Pageable pageable) {
 		log.debug("Request to get all Core_Connection");
 		return controlVariableRepository.findAll(pageable);
 	}
 
 	public Page<ControlVariable> findAllLimitedNumberOfEntries(Pageable pageable, Integer numberOfEntries) {
-		log.debug("Request to get all Core_Connection");
+		log.debug("Request to get all CVs with limited entries");
 		Page<ControlVariable> result = controlVariableRepository.findAll(pageable);
 		setNumberOfControlVariableEntries(result, numberOfEntries);
 		return result;
 	}
-	
+
 	public Page<ControlVariable> findAllLimitedNumberOfEntriesQuery(Pageable pageable, Integer numberOfEntries) {
-		log.debug("Request to get all Core_Connection");
+		log.debug("Request to get all CVs with limited entries");
 		return controlVariableRepository.findAllLimitedNumberOfEntriesQuery(pageable, -numberOfEntries);
+	}
+
+	public Page<ControlVariable> findRunningControlVariablesBetweenDates(Pageable pageable, String startingDate) {
+		log.debug("Request to get the running CVs between two dates");
+
+		Page<ControlVariable> result;
+		LocalDateTime date;
+		DateTimeFormatter formatter;
+
+		result = controlVariableRepository.findRunningControlVariables(pageable);
+		formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+		date = LocalDateTime.parse(startingDate, formatter);
+
+		for (ControlVariable controlVariable : result) {
+			for (ControlVariableEntry controlVariableEntry : controlVariable.getControlVarEntries()) {
+				if (controlVariableEntry.getCreationMoment().isBefore(date)) {
+					controlVariable.getControlVarEntries().remove(controlVariableEntry);
+				}
+			}
+		}
+
+		return result;
 	}
 
 	public List<ControlVariable> findAll() {
@@ -98,6 +121,22 @@ public class ControlVariableService {
 		return controlVariableRepository.findAll();
 	}
 
+	public ControlVariable updateGeneral(ControlVariable cv) {
+		ControlVariable res = findOne(cv.getId());
+		
+		res.setFrequency(cv.getFrequency());
+		res.setName(cv.getName());
+		
+		res = controlVariableRepository.save(res);
+		
+		if (schedulingService.isRunning(res)) {
+			schedulingService.stopJob(res);
+			schedulingService.newJob(res);
+		}
+		
+		return res;
+	}
+	
 	public void testLaunchCVS() {
 		for (ControlVariable cv : findAll()) {
 			System.out.println(cv.getName() + ": " + cv.getExtractor().getData());
@@ -114,7 +153,7 @@ public class ControlVariableService {
 
 	public void executeMonitorize(ControlVariable controlVar) {
 		if (controlVar.getStatus() == Status.RUNNING) {
-			Integer value;
+			Double value;
 			ControlVariableExtractor extractor;
 			extractor = controlVar.getExtractor();
 			try {
@@ -130,7 +169,7 @@ public class ControlVariableService {
 		}
 	}
 
-	public ControlVariableEntry addEntry(ControlVariable cv, Integer value) {
+	public ControlVariableEntry addEntry(ControlVariable cv, Double value) {
 		ControlVariableEntry entry = new ControlVariableEntry();
 		LocalDateTime lastUpdate = LocalDateTime.now();
 		entry.setCreationMoment(lastUpdate);
@@ -160,7 +199,7 @@ public class ControlVariableService {
 
 		controlVar = findOne(controlVarId);
 
-		if (controlVar.getStatus().equals(Status.PAUSED)) {
+		if (controlVar.getStatus().equals(Status.PAUSED) || controlVar.getStatus().equals(Status.BLOCKED)) {
 			controlVar.setStatus(Status.RUNNING);
 			schedulingService.newJob(controlVar);
 		}
@@ -184,6 +223,13 @@ public class ControlVariableService {
 		res.setExtractor(extractor);
 		return res;
 	}
+	
+    public void delete(String id) {
+        log.debug("Request to remove ControlVariable : {}", id);
+    	ControlVariable cv = controlVariableRepository.findOne(id);
+        schedulingService.stopJob(cv);
+        controlVariableRepository.delete(id);
+    } 
 
 	private ControlVariableExtractor getExtractor(New_ControlVariable ncv) {
 		ControlVariableExtractor res = null;
@@ -210,7 +256,7 @@ public class ControlVariableService {
 	private void checkFieldsNotNull(ControlVariableExtractor ncv) {
 		List<String> missingFields = new ArrayList<>();
 		missingFields = checkFieldsNotNull(ncv.getClass(), ncv);
-		
+
 		if (!missingFields.isEmpty()) {
 			throwException("The fields " + missingFields + " are null", "extractorclassfieldsnull");
 		}
@@ -233,7 +279,7 @@ public class ControlVariableService {
 				missingFields.add(f.getName());
 			}
 		}
-    
+
 		missingFields.addAll(checkFieldsNotNull(c.getSuperclass(), ncv));
 		return missingFields;
 	}
@@ -249,14 +295,14 @@ public class ControlVariableService {
 				keysInjected.add(key);
 			}
 		}
-    
+
 		if (!keysInjected.equals(keys)) {
 			keys.removeAll(keysInjected);
 			throwException("Error injecting fields into extractor " + extractor.getClass().getName() + keys,
 					"extractorclassinjectionerror");
 		}
 	}
-  
+
 	private <T, V extends ControlVariableExtractor> Boolean inject(String key, T value, Class<?> c, V extractor) {
 		// Base
 		if (c.equals(Object.class)) {
@@ -286,15 +332,16 @@ public class ControlVariableService {
 	private void setNumberOfControlVariableEntries(Page<ControlVariable> controlVariables, Integer i) {
 
 		for (ControlVariable controlVariable : controlVariables) {
-			
+
 			List<ControlVariableEntry> controlVariableEntries;
 			List<ControlVariableEntry> newControlVariableEntries;
-			
+
 			controlVariableEntries = controlVariable.getControlVarEntries();
-			newControlVariableEntries = controlVariableEntries.subList(Math.max(controlVariableEntries.size() - i, 0), controlVariableEntries.size());
-			
+			newControlVariableEntries = controlVariableEntries.subList(Math.max(controlVariableEntries.size() - i, 0),
+					controlVariableEntries.size());
+
 			controlVariable.setControlVarEntries(newControlVariableEntries);
-			
+
 		}
 
 	}

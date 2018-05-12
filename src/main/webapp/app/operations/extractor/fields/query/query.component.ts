@@ -137,7 +137,7 @@ export class FieldSQLQueryComponent extends FieldBaseComponent implements OnInit
         const name = selected.field.name;
         const val = selected.row[name];
         // If is a number
-        this.canSave = isFinite(val);
+        this.canSave = !isNaN(val);
 
     }
 

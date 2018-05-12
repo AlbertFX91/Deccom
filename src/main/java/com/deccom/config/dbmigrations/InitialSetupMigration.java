@@ -155,7 +155,7 @@ public class InitialSetupMigration {
 		rest1.setUrl("http://jsonplaceholder.typicode.com/users");
 
 		RESTExtractor rest2 = new RESTExtractor();
-		rest2.setJsonPath("$[2].phone");
+		rest2.setJsonPath("$[2].id");
 		rest2.setUrl("http://jsonplaceholder.typicode.com/users");
 
 		MySQLExtractor sql3 = new MySQLExtractor();
@@ -182,7 +182,7 @@ public class InitialSetupMigration {
 		ControlVariable c2 = new ControlVariable();
 		c2.setExtractor(rest2);
 		c2.setCreationMoment(LocalDateTime.now());
-		c2.setStatus(Status.RUNNING);
+		c2.setStatus(Status.BLOCKED);
 		c2.setFrequency(10);
 		c2.setName("RESTControlVar2");
 		c2.setControlVarEntries(Lists.newArrayList());

@@ -11,6 +11,9 @@
             "want": "quieren"
         },
         "features": {
+            "features": "Características",
+            "monitoring": "y su sistema de monitorización permite a tu compañia hacer un seguimiento de todos sus datos",
+            "structuring": "estructurándolos para ser explotados por tus herramientas favoritas de análisis de datos",
             "easy": "Facilidad",
             "analyzing": "¡Analizar los datos con nosotros está chupado!",
             "social": "Redes sociales",
@@ -21,7 +24,7 @@
         "developer": {
             "1": "Usa nuestra API para crear nuevos extractores los cuales pueden ser usados por otras personas",
             "2": "Formularios creados de forma automática a partir de tus extractores",
-            "3": "Embebe tus increibles componentes Angular para mejorar la usabilidad de tus extractores usando nuestros componentes"
+            "3": "Embebe tus increibles componentes Angular para mejorar la usabilidad de tus extractores"
         },
         "contact": {
             "hello": "Saludos desde Sevilla",

@@ -36,7 +36,7 @@ public class FacebookFansExtractor extends RESTExtractor implements ControlVaria
 	}
 
 	@Override
-	public Integer getData() {
+	public Double getData() {
 
 		String url, body, value;
 
@@ -45,7 +45,7 @@ public class FacebookFansExtractor extends RESTExtractor implements ControlVaria
 		body = RESTUtil.getResponseFacebook(url);
 		value = getByJSONPath(body, getJsonPath());
 
-		return Integer.parseInt(value);
+		return Double.parseDouble(value);
 
 	}
 

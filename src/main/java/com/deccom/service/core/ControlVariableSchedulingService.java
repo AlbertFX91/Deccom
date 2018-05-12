@@ -72,7 +72,7 @@ public class ControlVariableSchedulingService {
 				cv.getFrequency(), TimeUnit.SECONDS);
 		jobs.put(cv.getId(), job);
 	}
-
+	
 	public synchronized void stopJob(ControlVariable cv) {
 		if (cv.getStatus().equals(Status.PAUSED)
 				|| cv.getStatus().equals(Status.BLOCKED)) {

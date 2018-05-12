@@ -16,12 +16,28 @@ export class CVService {
         this.cvCards = [];
     }
 
-   create(cv: NewCV): Observable<NewCV> {
-    return this.http.post(this.resourceUrl, cv).map((res: Response) => {
-        const jsonResponse = res.json();
-        return jsonResponse;
-    });
-}
+    create(cv: NewCV): Observable<NewCV> {
+        return this.http.post(this.resourceUrl, cv).map((res: Response) => {
+            const jsonResponse = res.json();
+            return jsonResponse;
+        });
+    }
+
+    find(id: string): Observable<CV> {
+        return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
+            const jsonResponse = res.json();
+            this.convertItemFromServer(jsonResponse);
+            return jsonResponse;
+        });
+    }
+
+    update(cv: CV): Observable<CV> {
+        return this.http.put(this.resourceUrl + '/general/', cv).map((res: Response) => {
+            const jsonResponse = res.json();
+            this.convertItemFromServer(jsonResponse);
+            return jsonResponse;
+        });
+    }
 
     findAll(pageSettings: any): Observable<ResponseWrapper> {
         const options = this.createRequestOption(pageSettings);
@@ -29,10 +45,28 @@ export class CVService {
             .map((res: Response) => res);
     }
 
+    dates(startingDate: string, pageSettings: any): Observable<ResponseWrapper> {
+        const options = this.createRequestOptionDate(startingDate, pageSettings);
+        return this.http.get(this.resourceUrl + 'dates', options)
+            .map((res: Response) => res);
+    }
+
     query(req?: any): Observable<ResponseWrapper> {
         const options = createRequestOption(req);
         return this.http.get(this.resourceUrl, options)
             .map((res: Response) => this.convertResponse(res));
+    }
+
+    delete(id: string): Observable<Response> {
+        return this.http.delete(`${this.resourceUrl}/${id}`);
+    }
+
+    restart(id: string): Observable<Response> {
+        return this.http.get(this.resourceUrl + 'restart', this.createGetRequest(id));
+    }
+
+    pause(id: string): Observable<Response> {
+        return this.http.get(this.resourceUrl + 'pause', this.createGetRequest(id));
     }
 
     private convertResponse(res: Response): ResponseWrapper {
@@ -48,9 +82,25 @@ export class CVService {
             .convertLocalDateFromServer(entity.publication_date);
     }
 
-    public createRequestOption(pageSettings: any): BaseRequestOptions {
+    private createRequestOption(pageSettings: any): BaseRequestOptions {
         const options: BaseRequestOptions = createRequestOption(pageSettings);
         // const params: URLSearchParams = new URLSearchParams();
+        // options.params = params;
+        return options;
+    }
+  
+    public createGetRequest(id: string): BaseRequestOptions {
+        const options: BaseRequestOptions = new BaseRequestOptions();
+        const params: URLSearchParams = new URLSearchParams();
+        params.set('controlVarId', id);
+        options.params = params;
+        return options;
+    }
+  
+    public createRequestOptionDate(startingDate: string, pageSettings: any): BaseRequestOptions {
+        const options: BaseRequestOptions = createRequestOption(pageSettings);
+        // const params: URLSearchParams = new URLSearchParams();
+        options.params.set('startingDate', startingDate);
         // options.params = params;
         return options;
     }

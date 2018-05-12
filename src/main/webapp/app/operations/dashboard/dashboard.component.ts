@@ -12,13 +12,13 @@ import 'chartjs-plugin-annotation';
 }) export class DashboardComponent implements OnInit, OnDestroy {
 
     chart: any[];
-    datos: any[];
     CVs: any[];
     events: any[];
-    max: number;
     chartDataAux: any[];
     chartOptions: any;
     chartAnnotations: any[];
+    today: Date;
+    last: Date;
     page: any;
     itemsPerPage: number;
 
@@ -29,13 +29,13 @@ import 'chartjs-plugin-annotation';
         private eventManager: JhiEventManager
     ) {
         this.chart = [];
-        this.datos = [];
         this.CVs = [];
         this.events = [];
-        this.max = 0;
         this.chartDataAux = [];
         this.chartOptions = {};
         this.chartAnnotations = [];
+        this.today = new Date();
+        this.last = new Date(this.today.getTime() - (7 * 24 * 60 * 60 * 1000));
         this.page = 0;
         this.itemsPerPage = ITEMS_PER_PAGE;
     }
@@ -45,11 +45,23 @@ import 'chartjs-plugin-annotation';
             page: this.page,
             size: this.itemsPerPage
         };
+        /*
         this.cvService.findAll(pageSettings).subscribe(
             (data: any) => this.onSuccessCV(data.json(), data.headers),
             (error: Response) => this.onError(error)
         );
-        this.eventService.findAll(pageSettings).subscribe(
+        */
+        this.cvService.dates(this.last.toISOString(), pageSettings).subscribe(
+            (data: any) => this.onSuccessCV(data.json(), data.headers),
+            (error: Response) => this.onError(error)
+        );
+        /*
+         this.eventService.findAll(pageSettings).subscribe(
+             (res: ResponseWrapper) => this.onSuccessEvent(res.json, res.headers),
+             (res: ResponseWrapper) => this.onError(res.json)
+         );
+         */
+        this.eventService.dates(this.last.toISOString(), this.today.toISOString(), pageSettings).subscribe(
             (res: ResponseWrapper) => this.onSuccessEvent(res.json, res.headers),
             (res: ResponseWrapper) => this.onError(res.json)
         );
@@ -61,28 +73,28 @@ import 'chartjs-plugin-annotation';
         ];
         */
         this.chartDataAux = [
+            /*
             {
                 data: [{ x: new Date(2018, 1, 1, 12, 50, 55), y: 1 }, { x: new Date(2018, 1, 15, 12, 50, 55), y: 8 }, { x: new Date(2018, 2, 2, 12, 50, 55), y: 3 }],
                 label: 'Account A', fill: false
             }
+            */
             /*
             { data: [90, 130, 400, 120], label: 'Account A', fill: false },
             { data: [120, 455, 100, 340], label: 'Account B', fill: false },
             { data: [45, 67, 800, 500], label: 'Account C', fill: false }
             */
-        ];
-        this.chartAnnotations = [
+            // { data: [{ x: 0, y: 1 }, { x: 5.5, y: 2 }, { x: 10, y: 4 }], label: 'Account A', fill: false, showLine: true }
             {
-                borderColor: 'red',
-                mode: 'horizontal',
-                type: 'line',
-                value: 18,
-                scaleID: 'y-axis-0',
-                label: {
-                    backgroundColor: 'rgba(0,0,0,0.8)',
-                    enabled: true,
-                    content: 'Event'
-                }
+                data: [{ x: this.dateToNumber(new Date(new Date().getTime() - (7 * 24 * 60 * 60 * 1000))), y: 10 },
+                { x: this.dateToNumber(new Date(new Date().getTime() - (6 * 24 * 60 * 60 * 1000))), y: 1 },
+                { x: this.dateToNumber(new Date(new Date().getTime() - (5 * 24 * 60 * 60 * 1000))), y: 2 },
+                { x: this.dateToNumber(new Date(new Date().getTime() - (4 * 24 * 60 * 60 * 1000))), y: 4 },
+                { x: this.dateToNumber(new Date(new Date().getTime() - (3 * 24 * 60 * 60 * 1000))), y: 5 },
+                { x: this.dateToNumber(new Date(new Date().getTime() - (2 * 24 * 60 * 60 * 1000))), y: 6 },
+                { x: this.dateToNumber(new Date(new Date().getTime() - (1 * 24 * 60 * 60 * 1000))), y: 8 },
+                { x: this.dateToNumber(new Date(new Date().getTime() - (0 * 24 * 60 * 60 * 1000))), y: 9 }],
+                label: 'Account A', fill: false, showLine: true
             }
         ];
         this.chartOptions = {
@@ -94,18 +106,44 @@ import 'chartjs-plugin-annotation';
                 xAxes: [{
                     id: 'x-axis-0',
                     display: true,
+                    ticks: {
+                        suggestedMin: this.last.toUTCString(),
+                        suggestedMax: this.last.toUTCString()
+                    },
                     type: 'time',
                     time: {
                         displayFormats: {
-                            second: 'h:mm:ss a'
+                            day: 'll'
                         },
-                        unit: 'second'
+                        unit: 'day'
                     }
                 }],
                 yAxes: [{
                     id: 'y-axis-0',
-                    display: true
+                    display: true,
+                    ticks: {
+                        beginAtZero: true
+                    }
                 }]
+            },
+            tooltips: {
+                callbacks: {
+                    title: function(tooltipItem, data) {
+                        const showDate = new Date(tooltipItem[0].xLabel).toUTCString();
+
+                        return showDate.substring(0, showDate.length - 4);
+                    },
+                    label: function(tooltipItem, data) {
+                        let label = '' + data.datasets[tooltipItem.datasetIndex].label || '';
+
+                        if (label) {
+                            label += ': ';
+                        }
+
+                        label += tooltipItem.yLabel;
+                        return label;
+                    }
+                }
             },
             annotation: {
                 annotations: this.chartAnnotations
@@ -128,43 +166,40 @@ import 'chartjs-plugin-annotation';
 
     onSuccessCV(data: any, headers: any) {
         for (let i = 0; i < data.content.length; i++) {
-            if (data.content[i]['status'] === 'RUNNING' && data.content[i]['controlVarEntries'].length > 4) {
-                const controlVarEntriesAux: any[] = data.content[i]['controlVarEntries'].slice(Math.max(data.content[i]['controlVarEntries'].length - 5, 0));
-                const dataToInsert: any[] = [];
-                for (let j = 0; j < 5; j++) {
-                    const date: any = new Date(controlVarEntriesAux[j]['creationMoment']);
-                    dataToInsert.push({
-                        x: new Date(date.getFullYear(), date.getMonth(), date.getDay(), date.getHours(), date.getMinutes(), date.getSeconds()),
-                        y: controlVarEntriesAux[j]['value']
-                    });
-                    if (controlVarEntriesAux[j]['value'] > this.max) {
-                        this.max = controlVarEntriesAux[j]['value'];
-                    }
-                }
-                const dato: any = {
-                    data: dataToInsert,
-                    label: data.content[i]['name'],
-                    backgroundColor: data.content[i]['extractor']['style']['backgroundColor'],
-                    fill: false
-                }
-                this.CVs.push(dato);
-                this.datos.push(dato);
+            const dataToInsert: any[] = [];
+            for (let j = 0; j < data.content[i]['controlVarEntries'].length; j++) {
+                const date: any = new Date(data.content[i]['controlVarEntries'][j]['creationMoment']);
+                dataToInsert.push({
+                    x: this.dateToNumber(new Date(date.getFullYear(), date.getMonth(), date.getDay(), date.getHours() + 2, date.getMinutes(), date.getSeconds())),
+                    y: data.content[i]['controlVarEntries'][j]['value']
+                });
             }
+            const dato: any = {
+                data: dataToInsert,
+                label: data.content[i]['name'],
+                backgroundColor: data.content[i]['extractor']['style']['backgroundColor'],
+                fill: false,
+                showLine: true
+            }
+            this.CVs.push(dato);
         }
         // this.links = this.parseLinks.parse(headers.get('link'));
         this.eventManager.broadcast({ name: 'all_success', content: 'OK' });
     }
 
-    onSuccessEvent(data: any, headers: any) {
+    onSuccessEvent1(data: any, headers: any) {
         for (let i = 0; i < data.length; i++) {
-            // const startingDate: any = new Date(data[i]['startingDate']);
-            const startingDate: any = new Date();
+            const startingDate: any = new Date(data[i]['startingDate']);
+            console.log('startingDate:');
+            console.log(startingDate);
             const dataToInsert: any[] = [];
+            /*
             dataToInsert.push({
                 x: new Date(startingDate.getFullYear(), startingDate.getMonth(), startingDate.getDay(),
                     startingDate.getHours(), startingDate.getMinutes(), startingDate.getSeconds()),
                 y: 25
             });
+            */
             const dato: any = {
                 data: dataToInsert,
                 label: data[i]['name'],
@@ -172,7 +207,26 @@ import 'chartjs-plugin-annotation';
                 type: 'bar'
             }
             this.events.push(dato);
-            this.datos.push(dato);
+        }
+        // this.links = this.parseLinks.parse(headers.get('link'));
+        this.eventManager.broadcast({ name: 'all_success', content: 'OK' });
+    }
+
+    onSuccessEvent(data: any, headers: any) {
+        for (let i = 0; i < data.length; i++) {
+            const chartAnnotation: any = {
+                borderColor: 'red',
+                mode: 'vertical',
+                type: 'line',
+                value: data[i]['startingDate'],
+                scaleID: 'x-axis-0',
+                label: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    enabled: true,
+                    content: data[i]['name']
+                }
+            };
+            this.chartAnnotations.push(chartAnnotation);
         }
         // this.links = this.parseLinks.parse(headers.get('link'));
         this.eventManager.broadcast({ name: 'all_success', content: 'OK' });
@@ -180,6 +234,10 @@ import 'chartjs-plugin-annotation';
 
     private onError(error) {
         this.alertService.error(error.message, null, null);
+    }
+
+    private dateToNumber(date: Date) {
+        return date.getTime();
     }
 
 }

@@ -11,17 +11,20 @@
             "want": "want"
         },
         "features": {
+            "features": "Features",
+            "monitoring": "monitoring system allows your company to keep track of all of its data",
+            "structuring": "structuring it to be exploited by your favourite data analysis tools",
             "easy": "Easy",
             "analyzing": "Analyzing your data with us is a piece of cake!",
             "social": "Social media",
-            "check": "Check your impact on the main social media platforms and developer your own extractors!",
+            "check": "Check your impact on the main social media platforms and create your own extractors!",
             "predict": "Predict",
             "ahead": "Get ahead of your competitors integrating your data with your favourite business tools"
         },
         "developer": {
-            "1": "Use our API to create new data extractors which could be used for other people",
-            "2": "Forms created for your awesome extractors dynamically",
-            "3": "Embed your powerful Angular components to increase the usability of your extractors using our components"
+            "1": "Use our API to create new data extractors for everyone to use",
+            "2": "Dynamically created forms for your awesome extractors",
+            "3": "Embed your powerful Angular components to increase the usability of your extractors"
         },
         "contact": {
             "hello": "Hello from Seville",

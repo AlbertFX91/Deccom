@@ -1,28 +1,27 @@
-<div class="container">
-    
+<div id="cv-list-container" class="container">
     <jhi-alert></jhi-alert>
     <div class="row cv-cols-container">
-        <div class="col container list-surroundings" style="background-color: rgb(221, 212, 212);">
+        <div class="col list-surroundings">
             <strong>
-                <div class="card-header center-in-bar cardtitle" style="background-color: #44aa44;" jhiTranslate="deccomApp.ControlVar.running">Running</div>
+                <div class="center-in-bar cardtitle" style="background-color: #44aa44;" jhiTranslate="deccomApp.ControlVar.running">Running</div>
             </strong>
-            <div class="row" *ngFor="let cvCard of getRunningCards()">
+            <div *ngFor="let cvCard of getRunningCards()">
                 <jhi-cv-card [cvCard]="cvCard"></jhi-cv-card>
             </div>
         </div>
-        <div class="col container list-surroundings" style="background-color: rgb(221, 212, 212);">
+        <div class="col list-surroundings">
             <strong>
-                <div class="card-header center-in-bar cardtitle" style="background-color: #fb8c00;" jhiTranslate="deccomApp.ControlVar.paused">Paused</div>
+                <div class="center-in-bar cardtitle" style="background-color: #fb8c00;" jhiTranslate="deccomApp.ControlVar.paused">Paused</div>
             </strong>
-            <div class="row" *ngFor="let cvCard of getPausedCards()">
+            <div *ngFor="let cvCard of getPausedCards()">
                 <jhi-cv-card [cvCard]="cvCard"></jhi-cv-card>
             </div>
         </div>
-        <div class="col container list-surroundings" style="background-color: rgb(221, 212, 212);">
+        <div class="col list-surroundings">
             <strong>
-                <div class="card-header center-in-bar cardtitle" style="background-color: #cc240a;" jhiTranslate="deccomApp.ControlVar.blocked">Blocked</div>
+                <div class="center-in-bar cardtitle" style="background-color: #cc240a;" jhiTranslate="deccomApp.ControlVar.blocked">Blocked</div>
             </strong>
-            <div class="row" *ngFor="let cvCard of getBlockedCards()">
+            <div *ngFor="let cvCard of getBlockedCards()">
                 <jhi-cv-card [cvCard]="cvCard"></jhi-cv-card>
             </div>
         </div>

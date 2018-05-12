@@ -1,81 +1,160 @@
-.card {
-    width: 350px;
-    border: 1px solid gray;
-    box-shadow: 1px 1px 3px #888;
-    /* min-height: 250px; */
-    padding-: 10px;
-    margin: 10px;
-    display: flex;
-}
-
-.property {
-  margin: 0px;
-}
-
-.img1 {
-    border-radius: 50%;
-    width: 300px;
-    margin: 10px;
-}
-    
-h1 {
-    font-weight: lighter;
-    margin-left: 100px;
-    margin-top: -40px;
-    font-size: x-large;
-}
-    
-p {
-    margin: 10px;
-    font-family: segoe ui;
-    line-height: 1.4em;
-    font-size: 1.2em;
-}
-    
 #mainbox {
-    font-family: calibri;
     box-sizing: border-box;
     justify-content: center;
     display: flex;
     flex-wrap: wrap;
 }
 
-.fondo {
-  background-color: #5555FF; 
-  flex-grow: 1; color: white; 
-  border-radius: 6px; 
-  flex-direction: row; 
-  display: flex; 
-  align-items: stretch;
-  border-color: black;
-  border-width: 1px;
-  border-style: solid;
-  z-index: 1;
-  min-height: 35px;
-  cursor: pointer;
+.card {
+    width: 350px;
+    border: 1px solid white;
+    box-shadow: 1px 1px 3px #888;
+    margin: 5px 0px;
+    display: flex;
+    text-align: center;
+    border-radius: 5px;
+}
+.header {
+    width: 100%;
+    height: 45px;
+    display: flex;
+    flex-direction: row;
+    border-radius: 5px;
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-right-color: white;
+    border-bottom-width: 1px;
+    border-bottom-color: white;
+    border-bottom-style: solid;
+}
+.header-state {
+    width: 2%;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+.header-body {
+    background-color: black;
+    width: 100%;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    margin-right: -5px;
+    z-index: 1;
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-right-color: white;
+    display: flex;
 }
 
-.Running {
+.header-body-icon {
+    width: 13%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8rem;
+}
+
+.header-body-name {
+    width: 80%;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    font-weight: 700;
+    cursor: pointer;
+}
+.header-body-text {
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.header-body-menu {
+    width: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-style: solid;
+    border-width: 0 0 0 1px;
+    border-color: white;
+    font-size: 1.2rem;
+}
+
+.header-value {
+    background-color: gray;    
+    width: 20%;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding-left: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.body {
+    height: 0;
+    width: 100%;
+    background-color: white;
+    overflow: hidden;
+    transition: height 0.25s ease-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.body-descolated {
+    height: 200px;
+    transition: height 0.25s ease-out;
+}
+
+.green {
     background-color: #44aa44;
-    flex-grow: 0.3; 
-    border-top-left-radius: 6px;
-    border-bottom-left-radius: 6px;
 }
 
-.Paused {
+.yellow {
     background-color: #fb8c00;
-    flex-grow: 0.3; 
-    border-top-left-radius: 6px;
-    border-bottom-left-radius: 6px;
 }
 
-.Blocked {
+.red {
     background-color: #cc240a;
-    flex-grow: 0.3; 
-    border-top-left-radius: 6px;
-    border-bottom-left-radius: 6px;
 }
 
-.roboto {
-    font-family: 'Roboto', sans-serif;
+.carousel-container {
+    display: grid;
+    background-color: #BDBDBD;
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-container /deep/ .carousel-inner {
+    width: 100%;
+    height: 100%;
+
+}
+
+.carousel-container /deep/ .carousel-item {
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.img-graph {
+    width: 60%;
+    height: 60%;
+}
+
+.contextual-menu {
+    cursor: pointer;
+}
+
+.header-body-menu /deep/ .dropdown-toggle::after {
+    display: none !important;
 }

@@ -44,14 +44,14 @@ public class RESTExtractor implements ControlVariableExtractor {
 	}
 
 	@Override
-	public Integer getData() {
+	public Double getData() {
 		
 		String body, value;
 		
 		body = getResponse(url);
 		value = getByJSONPath(body, getJsonPath());
 		
-		return Integer.parseInt(value);
+		return Double.parseDouble(value);
 		
 	}
 

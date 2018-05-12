@@ -10,15 +10,15 @@ import javax.validation.constraints.NotNull;
 public class ControlVariableEntry {
 
 	@NotNull
-	private Integer value;
+	private Double value;
 	@NotNull
 	private LocalDateTime creationMoment;
 
-	public Integer getValue() {
+	public Double getValue() {
 		return value;
 	}
 
-	public void setValue(Integer value) {
+	public void setValue(Double value) {
 		this.value = value;
 	}
 
