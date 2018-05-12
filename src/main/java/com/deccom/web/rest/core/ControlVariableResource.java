@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -117,7 +118,7 @@ public class ControlVariableResource {
 		log.debug("Request to get all Core_Connection");
 		return controlVariableService.findAll(pageable);
 	}
-	
+
 	/**
 	 * Get all the controlvars with a limited number of entries.
 	 *
@@ -127,13 +128,14 @@ public class ControlVariableResource {
 	 *            the number of entries included in each controlvar
 	 * @return the list of core_controlvars with a limited number of entries
 	 */
-	@GetMapping("/controlvar/all_limited")
+	@GetMapping("/controlvar/all_limited/{numberOfEntries}")
 	@Timed
-	public Page<ControlVariable> findAllLimitedNumberOfEntries(Pageable pageable, Integer numberOfEntries) {
-		log.debug("Request to get all Core_Connection");
+	public Page<ControlVariable> findAllLimitedNumberOfEntries(Pageable pageable,
+			@PathVariable Integer numberOfEntries) {
+		log.debug("Request to get all CVs with limited entries");
 		return controlVariableService.findAllLimitedNumberOfEntries(pageable, numberOfEntries);
 	}
-	
+
 	/**
 	 * Get all the controlvars with a limited number of entries.
 	 *
@@ -143,11 +145,29 @@ public class ControlVariableResource {
 	 *            the number of entries included in each controlvar
 	 * @return the list of core_controlvars with a limited number of entries
 	 */
-	@GetMapping("/controlvar/all_limited_query")
+	@GetMapping("/controlvar/all_limited_query/{numberOfEntries}")
 	@Timed
-	public Page<ControlVariable> findAllLimitedNumberOfEntriesQuery(Pageable pageable, Integer numberOfEntries) {
-		log.debug("Request to get all Core_Connection");
+	public Page<ControlVariable> findAllLimitedNumberOfEntriesQuery(Pageable pageable,
+			@PathVariable Integer numberOfEntries) {
+		log.debug("Request to get all CVs with limited entries");
 		return controlVariableService.findAllLimitedNumberOfEntriesQuery(pageable, numberOfEntries);
+	}
+
+	/**
+	 * Get the running control variables with their entries between two dates.
+	 *
+	 * @param pageable
+	 *            the pagination information
+	 * @param startingDate
+	 *            the starting date in the range
+	 * @return the list of running control variables with their entries between two
+	 *         dates
+	 */
+	@GetMapping("/controlvar/dates")
+	@Timed
+	public Page<ControlVariable> findRunningControlVariablelsBetweenDates(Pageable pageable, String startingDate) {
+		log.debug("Request to get the running CVs between two dates");
+		return controlVariableService.findRunningControlVariablesBetweenDates(pageable, startingDate);
 	}
 
 	/**

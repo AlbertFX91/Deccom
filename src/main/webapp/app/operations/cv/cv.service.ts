@@ -16,16 +16,22 @@ export class CVService {
         this.cvCards = [];
     }
 
-   create(cv: NewCV): Observable<NewCV> {
-    return this.http.post(this.resourceUrl, cv).map((res: Response) => {
-        const jsonResponse = res.json();
-        return jsonResponse;
-    });
-}
+    create(cv: NewCV): Observable<NewCV> {
+        return this.http.post(this.resourceUrl, cv).map((res: Response) => {
+            const jsonResponse = res.json();
+            return jsonResponse;
+        });
+    }
 
     findAll(pageSettings: any): Observable<ResponseWrapper> {
         const options = this.createRequestOption(pageSettings);
         return this.http.get(this.resourceUrl + 'all', options)
+            .map((res: Response) => res);
+    }
+
+    dates(startingDate: string, pageSettings: any): Observable<ResponseWrapper> {
+        const options = this.createRequestOptionDate(startingDate, pageSettings);
+        return this.http.get(this.resourceUrl + 'dates', options)
             .map((res: Response) => res);
     }
 
@@ -51,6 +57,14 @@ export class CVService {
     public createRequestOption(pageSettings: any): BaseRequestOptions {
         const options: BaseRequestOptions = createRequestOption(pageSettings);
         // const params: URLSearchParams = new URLSearchParams();
+        // options.params = params;
+        return options;
+    }
+
+    public createRequestOptionDate(startingDate: string, pageSettings: any): BaseRequestOptions {
+        const options: BaseRequestOptions = createRequestOption(pageSettings);
+        // const params: URLSearchParams = new URLSearchParams();
+        options.params.set('startingDate', startingDate);
         // options.params = params;
         return options;
     }

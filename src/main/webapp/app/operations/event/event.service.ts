@@ -26,6 +26,12 @@ export class EventService {
             .map((res: Response) => this.convertResponse(res));
     }
 
+    dates(startingDate: string, endingDate: string, req?: any): Observable<ResponseWrapper> {
+        const options = this.createRequestOptionDates(startingDate, endingDate, req);
+        return this.http.get(this.resourceUrl + 'dates', options)
+            .map((res: Response) => this.convertResponse(res));
+    }
+
     create(req?: Event): Observable<ResponseWrapper> {
         return this.http.post(this.resourceUrl + 'create', req)
             .map((res: Response) => res);
@@ -81,6 +87,15 @@ export class EventService {
                 .convertLocalDateToServer(event.endingDate);
         }
         return copy;
+    }
+
+    public createRequestOptionDates(startingDate: string, endingDate: string, pageSettings: any): BaseRequestOptions {
+        const options: BaseRequestOptions = createRequestOption(pageSettings);
+        // const params: URLSearchParams = new URLSearchParams();
+        options.params.set('startingDate', startingDate);
+        options.params.set('endingDate', endingDate);
+        // options.params = params;
+        return options;
     }
 
 }
