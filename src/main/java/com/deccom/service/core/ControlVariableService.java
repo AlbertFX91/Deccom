@@ -121,6 +121,22 @@ public class ControlVariableService {
 		return controlVariableRepository.findAll();
 	}
 
+	public ControlVariable updateGeneral(ControlVariable cv) {
+		ControlVariable res = findOne(cv.getId());
+		
+		res.setFrequency(cv.getFrequency());
+		res.setName(cv.getName());
+		
+		res = controlVariableRepository.save(res);
+		
+		if (schedulingService.isRunning(res)) {
+			schedulingService.stopJob(res);
+			schedulingService.newJob(res);
+		}
+		
+		return res;
+	}
+	
 	public void testLaunchCVS() {
 		for (ControlVariable cv : findAll()) {
 			System.out.println(cv.getName() + ": " + cv.getExtractor().getData());
@@ -183,7 +199,7 @@ public class ControlVariableService {
 
 		controlVar = findOne(controlVarId);
 
-		if (controlVar.getStatus().equals(Status.PAUSED)) {
+		if (controlVar.getStatus().equals(Status.PAUSED) || controlVar.getStatus().equals(Status.BLOCKED)) {
 			controlVar.setStatus(Status.RUNNING);
 			schedulingService.newJob(controlVar);
 		}
@@ -207,6 +223,13 @@ public class ControlVariableService {
 		res.setExtractor(extractor);
 		return res;
 	}
+	
+    public void delete(String id) {
+        log.debug("Request to remove ControlVariable : {}", id);
+    	ControlVariable cv = controlVariableRepository.findOne(id);
+        schedulingService.stopJob(cv);
+        controlVariableRepository.delete(id);
+    } 
 
 	private ControlVariableExtractor getExtractor(New_ControlVariable ncv) {
 		ControlVariableExtractor res = null;

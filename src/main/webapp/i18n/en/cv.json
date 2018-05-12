@@ -11,7 +11,15 @@
             "running": "Running",
             "paused": "Paused",
             "blocked": "Blocked",
-            "created": "Control variable created successfully"
+            "created": "Control variable created successfully",
+            "deleted": "Control variable deleted successfully",
+            "updated": "Control variable updated successfully",
+            "menu": {
+                "edit": "Edit",
+                "remove": "Remove",
+                "play": "Play",
+                "pause": "Pause"
+            }
         }
     }
 }
