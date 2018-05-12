@@ -8,7 +8,8 @@ import 'chartjs-plugin-annotation';
 
 @Component({
     selector: 'jhi-dashboard',
-    templateUrl: './dashboard.component.html'
+    templateUrl: './dashboard.component.html',
+    styleUrls: ['./dashboard.component.css']
 }) export class DashboardComponent implements OnInit, OnDestroy {
 
     chart: any[];
@@ -129,8 +130,13 @@ import 'chartjs-plugin-annotation';
             tooltips: {
                 callbacks: {
                     title: function(tooltipItem, data) {
-                        const showDate = new Date(tooltipItem[0].xLabel).toUTCString();
-
+                        // Removing milliseconds from the xLabel
+                        let s_date = tooltipItem[0].xLabel;
+                        const i = s_date.lastIndexOf('.');
+                        const j = s_date.lastIndexOf(' ');
+                        // Constructing the new date string
+                        s_date = s_date.substring(0, i) + s_date.substring(j, s_date.length);
+                        const showDate = new Date(s_date).toUTCString();
                         return showDate.substring(0, showDate.length - 4);
                     },
                     label: function(tooltipItem, data) {
@@ -160,7 +166,6 @@ import 'chartjs-plugin-annotation';
             options: this.chartOptions
         });
         */
-        console.log(this.last.toISOString());
     }
 
     ngOnDestroy() { }
@@ -169,7 +174,8 @@ import 'chartjs-plugin-annotation';
         for (let i = 0; i < data.content.length; i++) {
             const dataToInsert: any[] = [];
             for (let j = 0; j < data.content[i]['controlVarEntries'].length; j++) {
-                const date: any = new Date(data.content[i]['controlVarEntries'][j]['creationMoment']);
+                const date: Date = new Date(data.content[i]['controlVarEntries'][j]['creationMoment']);
+                date.setHours(date.getHours() + 2);
                 dataToInsert.push({
                     x: this.dateToNumber(date),
                     y: data.content[i]['controlVarEntries'][j]['value']
@@ -191,8 +197,6 @@ import 'chartjs-plugin-annotation';
     onSuccessEvent1(data: any, headers: any) {
         for (let i = 0; i < data.length; i++) {
             const startingDate: any = new Date(data[i]['startingDate']);
-            console.log('startingDate:');
-            console.log(startingDate);
             const dataToInsert: any[] = [];
             /*
             dataToInsert.push({

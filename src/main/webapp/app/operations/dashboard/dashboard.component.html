@@ -1,10 +1,15 @@
-<div>
+<div id="dashboard-container">
     <h2>
         <span jhiTranslate="deccomApp.dashboard.home.title">Dashboard</span>
     </h2>
     <jhi-alert></jhi-alert>
-    <div [hidden]="!chart" style="width: 80%;" *ngIf="CVs.length > 0 ">
-        <canvas id="myChart" baseChart [chartType]="'scatter'" [datasets]="CVs" [options]="chartOptions"></canvas>
-        <!-- <canvas id="myChart"></canvas> -->
+    <div id="dashboard-body">
+        <div [hidden]="!chart" class="full" *ngIf="CVs.length > 0" style="width: 80%">
+            <canvas id="myChart" class="full" baseChart [chartType]="'scatter'" [datasets]="CVs" [options]="chartOptions"></canvas>
+            <!-- <canvas id="myChart"></canvas> -->
+        </div>
+        <div [hidden]="!chart" class="message" *ngIf="!CVs.length > 0">
+            <span jhiTranslate="deccomApp.dashboard.noCVs"></span>
+        </div>
     </div>
 </div>

@@ -11,9 +11,9 @@
             "running": "Running",
             "paused": "Paused",
             "blocked": "Blocked",
-            "created": "Control variable created successfully",
-            "deleted": "Control variable deleted successfully",
-            "updated": "Control variable updated successfully",
+            "created": "Control variable successfully created",
+            "deleted": "Control variable successfully deleted",
+            "updated": "Control variable successfully updated",
             "menu": {
                 "edit": "Edit",
                 "remove": "Remove",
