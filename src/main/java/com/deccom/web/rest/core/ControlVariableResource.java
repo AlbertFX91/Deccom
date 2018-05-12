@@ -97,19 +97,21 @@ public class ControlVariableResource {
 	}
 
 	/**
-     * GET  /controlvar/:id : get the "id" controlvar.
-     *
-     * @param id the id of the controlvar to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the controlvar, or with status 404 (Not Found)
-     */
-    @GetMapping("/controlvar/{id}")
-    @Timed
-    public ResponseEntity<ControlVariable> getCV(@PathVariable String id) {
-        log.debug("REST request to get CV : {}", id);
-        ControlVariable cv = controlVariableService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(cv));
-    }
-	
+	 * GET /controlvar/:id : get the "id" controlvar.
+	 *
+	 * @param id
+	 *            the id of the controlvar to retrieve
+	 * @return the ResponseEntity with status 200 (OK) and with body the controlvar,
+	 *         or with status 404 (Not Found)
+	 */
+	@GetMapping("/controlvar/{id}")
+	@Timed
+	public ResponseEntity<ControlVariable> getCV(@PathVariable String id) {
+		log.debug("REST request to get CV : {}", id);
+		ControlVariable cv = controlVariableService.findOne(id);
+		return ResponseUtil.wrapOrNotFound(Optional.ofNullable(cv));
+	}
+
 	@PostMapping("/controlvar")
 	@Timed
 	public ResponseEntity<ControlVariable> newControlVar(@RequestBody @Valid New_ControlVariable cv)
@@ -122,25 +124,28 @@ public class ControlVariableResource {
 		return ResponseEntity.created(new URI("/controlvar" + res.getId()))
 				.headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, res.getId().toString())).body(res);
 	}
-	
-    /**
-     * PUT  /controlvar/general : Updates an existing CV editing all the data except the extractor data.
-     *
-     * @param cv the cv to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated cv,
-     * or with status 400 (Bad Request) if the cv is not valid,
-     * or with status 500 (Internal Server Error) if the cv couldn't be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
-    @PutMapping("/controlvar/general")
-    @Timed
-    public ResponseEntity<ControlVariable> updateAcme(@Valid @RequestBody ControlVariable cv) throws URISyntaxException {
-        log.debug("REST request to update ControlVariable General : {}", cv);
-        ControlVariable result = controlVariableService.updateGeneral(cv);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, cv.getId().toString()))
-            .body(result);
-    }
+
+	/**
+	 * PUT /controlvar/general : Updates an existing CV editing all the data except
+	 * the extractor data.
+	 *
+	 * @param cv
+	 *            the cv to update
+	 * @return the ResponseEntity with status 200 (OK) and with body the updated cv,
+	 *         or with status 400 (Bad Request) if the cv is not valid, or with
+	 *         status 500 (Internal Server Error) if the cv couldn't be updated
+	 * @throws URISyntaxException
+	 *             if the Location URI syntax is incorrect
+	 */
+	@PutMapping("/controlvar/general")
+	@Timed
+	public ResponseEntity<ControlVariable> updateGeneral(@Valid @RequestBody ControlVariable cv)
+			throws URISyntaxException {
+		log.debug("REST request to update ControlVariable General : {}", cv);
+		ControlVariable result = controlVariableService.updateGeneral(cv);
+		return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, cv.getId().toString()))
+				.body(result);
+	}
 
 	/**
 	 * Get all the controlvars.

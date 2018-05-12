@@ -160,6 +160,7 @@ import 'chartjs-plugin-annotation';
             options: this.chartOptions
         });
         */
+        console.log(this.last.toISOString());
     }
 
     ngOnDestroy() { }
@@ -170,7 +171,7 @@ import 'chartjs-plugin-annotation';
             for (let j = 0; j < data.content[i]['controlVarEntries'].length; j++) {
                 const date: any = new Date(data.content[i]['controlVarEntries'][j]['creationMoment']);
                 dataToInsert.push({
-                    x: this.dateToNumber(new Date(date.getFullYear(), date.getMonth(), date.getDay(), date.getHours() + 2, date.getMinutes(), date.getSeconds())),
+                    x: this.dateToNumber(date),
                     y: data.content[i]['controlVarEntries'][j]['value']
                 });
             }
