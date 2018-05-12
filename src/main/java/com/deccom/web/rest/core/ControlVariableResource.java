@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
-import com.deccom.domain.Acme;
 import com.deccom.domain.core.ControlVariable;
 import com.deccom.domain.core.extractor.rest.RESTExtractor;
 import com.deccom.domain.core.extractor.sql.SQLExtractor;
@@ -166,10 +165,11 @@ public class ControlVariableResource {
 	 *            the number of entries included in each controlvar
 	 * @return the list of core_controlvars with a limited number of entries
 	 */
-	@GetMapping("/controlvar/all_limited")
+	@GetMapping("/controlvar/all_limited/{numberOfEntries}")
 	@Timed
-	public Page<ControlVariable> findAllLimitedNumberOfEntries(Pageable pageable, Integer numberOfEntries) {
-		log.debug("Request to get all Core_Connection");
+	public Page<ControlVariable> findAllLimitedNumberOfEntries(Pageable pageable,
+			@PathVariable Integer numberOfEntries) {
+		log.debug("Request to get all CVs with limited entries");
 		return controlVariableService.findAllLimitedNumberOfEntries(pageable, numberOfEntries);
 	}
 
@@ -182,15 +182,33 @@ public class ControlVariableResource {
 	 *            the number of entries included in each controlvar
 	 * @return the list of core_controlvars with a limited number of entries
 	 */
-	@GetMapping("/controlvar/all_limited_query")
+	@GetMapping("/controlvar/all_limited_query/{numberOfEntries}")
 	@Timed
-	public Page<ControlVariable> findAllLimitedNumberOfEntriesQuery(Pageable pageable, Integer numberOfEntries) {
-		log.debug("Request to get all Core_Connection");
+	public Page<ControlVariable> findAllLimitedNumberOfEntriesQuery(Pageable pageable,
+			@PathVariable Integer numberOfEntries) {
+		log.debug("Request to get all CVs with limited entries");
 		return controlVariableService.findAllLimitedNumberOfEntriesQuery(pageable, numberOfEntries);
 	}
 
 	/**
-	 * GET /controlvar/pause : Pauses a running control var.
+	 * Get the running control variables with their entries between two dates.
+	 *
+	 * @param pageable
+	 *            the pagination information
+	 * @param startingDate
+	 *            the starting date in the range
+	 * @return the list of running control variables with their entries between two
+	 *         dates
+	 */
+	@GetMapping("/controlvar/dates")
+	@Timed
+	public Page<ControlVariable> findRunningControlVariablelsBetweenDates(Pageable pageable, String startingDate) {
+		log.debug("Request to get the running CVs between two dates");
+		return controlVariableService.findRunningControlVariablesBetweenDates(pageable, startingDate);
+	}
+
+	/**
+	 * PUT /controlvar/pause : Pauses a running control var.
 	 *
 	 * @param controlVarId
 	 *            the id of the control var to update
@@ -261,8 +279,8 @@ public class ControlVariableResource {
 	 */
 	@DeleteMapping("/controlvar/{id}")
 	@Timed
-	public ResponseEntity<Void> deleteAcme(@PathVariable String id) {
-		log.debug("REST request to delete Acme : {}", id);
+	public ResponseEntity<Void> deleteCV(@PathVariable String id) {
+		log.debug("REST request to delete CV : {}", id);
 		controlVariableService.delete(id);
 		return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id)).build();
 	}

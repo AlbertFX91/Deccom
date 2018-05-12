@@ -45,6 +45,12 @@ export class CVService {
             .map((res: Response) => res);
     }
 
+    dates(startingDate: string, pageSettings: any): Observable<ResponseWrapper> {
+        const options = this.createRequestOptionDate(startingDate, pageSettings);
+        return this.http.get(this.resourceUrl + 'dates', options)
+            .map((res: Response) => res);
+    }
+
     query(req?: any): Observable<ResponseWrapper> {
         const options = createRequestOption(req);
         return this.http.get(this.resourceUrl, options)
@@ -82,12 +88,20 @@ export class CVService {
         // options.params = params;
         return options;
     }
-
+  
     public createGetRequest(id: string): BaseRequestOptions {
         const options: BaseRequestOptions = new BaseRequestOptions();
         const params: URLSearchParams = new URLSearchParams();
         params.set('controlVarId', id);
         options.params = params;
+        return options;
+    }
+  
+    public createRequestOptionDate(startingDate: string, pageSettings: any): BaseRequestOptions {
+        const options: BaseRequestOptions = createRequestOption(pageSettings);
+        // const params: URLSearchParams = new URLSearchParams();
+        options.params.set('startingDate', startingDate);
+        // options.params = params;
         return options;
     }
 }
