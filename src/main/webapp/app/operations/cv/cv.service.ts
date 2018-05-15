@@ -88,7 +88,7 @@ export class CVService {
         // options.params = params;
         return options;
     }
-  
+
     public createGetRequest(id: string): BaseRequestOptions {
         const options: BaseRequestOptions = new BaseRequestOptions();
         const params: URLSearchParams = new URLSearchParams();
@@ -96,7 +96,7 @@ export class CVService {
         options.params = params;
         return options;
     }
-  
+
     public createRequestOptionDate(startingDate: string, pageSettings: any): BaseRequestOptions {
         const options: BaseRequestOptions = createRequestOption(pageSettings);
         // const params: URLSearchParams = new URLSearchParams();
