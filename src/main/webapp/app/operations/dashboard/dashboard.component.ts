@@ -22,6 +22,7 @@ import 'chartjs-plugin-annotation';
     last: Date;
     page: any;
     itemsPerPage: number;
+    pageSettings: any;
 
     constructor(
         public cvService: CVService,
@@ -39,20 +40,20 @@ import 'chartjs-plugin-annotation';
         this.last = new Date(this.today.getTime() - (7 * 24 * 60 * 60 * 1000));
         this.page = 0;
         this.itemsPerPage = ITEMS_PER_PAGE;
-    }
-
-    ngOnInit() {
-        const pageSettings = {
+        this.pageSettings = {
             page: this.page,
             size: this.itemsPerPage
         };
+    }
+
+    ngOnInit() {
         /*
         this.cvService.findAll(pageSettings).subscribe(
             (data: any) => this.onSuccessCV(data.json(), data.headers),
             (error: Response) => this.onError(error)
         );
         */
-        this.cvService.dates(this.last.toISOString(), pageSettings).subscribe(
+        this.cvService.dates(this.last.toISOString(), this.pageSettings).subscribe(
             (data: any) => this.onSuccessCV(data.json(), data.headers),
             (error: Response) => this.onError(error)
         );
@@ -62,10 +63,6 @@ import 'chartjs-plugin-annotation';
              (res: ResponseWrapper) => this.onError(res.json)
          );
          */
-        this.eventService.dates(this.last.toISOString(), this.today.toISOString(), pageSettings).subscribe(
-            (res: ResponseWrapper) => this.onSuccessEvent(res.json, res.headers),
-            (res: ResponseWrapper) => this.onError(res.json)
-        );
         /*
         this.chartDataAux = [
             { data: [330, 600, 260, 700, 800], label: 'Account A', fill: false },
@@ -108,15 +105,16 @@ import 'chartjs-plugin-annotation';
                     id: 'x-axis-0',
                     display: true,
                     ticks: {
-                        suggestedMin: this.last.toUTCString(),
-                        suggestedMax: this.last.toUTCString()
+                        suggestedMin: this.dateToNumber(new Date(this.last)),
+                        suggestedMax: this.dateToNumber(new Date(this.today))
                     },
                     type: 'time',
                     time: {
+                        unit: 'day',
+                        unitStepSize: 1,
                         displayFormats: {
                             day: 'll'
-                        },
-                        unit: 'day'
+                        }
                     }
                 }],
                 yAxes: [{
@@ -192,6 +190,10 @@ import 'chartjs-plugin-annotation';
         }
         // this.links = this.parseLinks.parse(headers.get('link'));
         this.eventManager.broadcast({ name: 'all_success', content: 'OK' });
+        this.eventService.dates(this.last.toISOString(), this.today.toISOString(), this.pageSettings).subscribe(
+            (res: ResponseWrapper) => this.onSuccessEvent(res.json, res.headers),
+            (res: ResponseWrapper) => this.onError(res.json)
+        );
     }
 
     onSuccessEvent1(data: any, headers: any) {
@@ -218,19 +220,36 @@ import 'chartjs-plugin-annotation';
     }
 
     onSuccessEvent(data: any, headers: any) {
+        /*
         for (let i = 0; i < data.length; i++) {
             const chartAnnotation: any = {
                 borderColor: 'red',
                 mode: 'vertical',
                 type: 'line',
-                value: data[i]['startingDate'],
+                value: 1526315013589,
                 scaleID: 'x-axis-0',
                 label: {
-                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    backgroundColor: 'rgba(0,0,0,0.8)',
+                    enabled: true,
+                    content: 'Event'
+                }
+            }
+            this.chartAnnotations.push(chartAnnotation);
+        }
+        */
+        for (let i = 0; i < data.length; i++) {
+            const chartAnnotation: any = {
+                borderColor: 'red',
+                mode: 'vertical',
+                type: 'line',
+                value: this.dateToNumber(new Date(data[i]['startingDate'])),
+                scaleID: 'x-axis-0',
+                label: {
+                    backgroundColor: 'rgba(0,0,0,0.8)',
                     enabled: true,
                     content: data[i]['name']
                 }
-            };
+            }
             this.chartAnnotations.push(chartAnnotation);
         }
         // this.links = this.parseLinks.parse(headers.get('link'));

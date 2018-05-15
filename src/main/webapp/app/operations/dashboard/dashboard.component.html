@@ -4,7 +4,7 @@
     </h2>
     <jhi-alert></jhi-alert>
     <div id="dashboard-body">
-        <div [hidden]="!chart" class="full" *ngIf="CVs.length > 0" style="width: 80%">
+        <div [hidden]="!chart" class="full" *ngIf="CVs.length > 0 && chartAnnotations.length" style="width: 80%">
             <canvas id="myChart" class="full" baseChart [chartType]="'scatter'" [datasets]="CVs" [options]="chartOptions"></canvas>
             <!-- <canvas id="myChart"></canvas> -->
         </div>
