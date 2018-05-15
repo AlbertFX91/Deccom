@@ -23,6 +23,7 @@ import 'chartjs-plugin-annotation';
     page: any;
     itemsPerPage: number;
     pageSettings: any;
+    loaded: boolean;
 
     constructor(
         public cvService: CVService,
@@ -44,6 +45,7 @@ import 'chartjs-plugin-annotation';
             page: this.page,
             size: this.itemsPerPage
         };
+        this.loaded = false;
     }
 
     ngOnInit() {
@@ -104,14 +106,11 @@ import 'chartjs-plugin-annotation';
                 xAxes: [{
                     id: 'x-axis-0',
                     display: true,
-                    ticks: {
-                        suggestedMin: this.dateToNumber(new Date(this.last)),
-                        suggestedMax: this.dateToNumber(new Date(this.today))
-                    },
                     type: 'time',
                     time: {
                         unit: 'day',
                         unitStepSize: 1,
+                        min: this.dateToNumber(new Date(this.last)),
                         displayFormats: {
                             day: 'll'
                         }
@@ -196,53 +195,30 @@ import 'chartjs-plugin-annotation';
         );
     }
 
-    onSuccessEvent1(data: any, headers: any) {
-        for (let i = 0; i < data.length; i++) {
-            const startingDate: any = new Date(data[i]['startingDate']);
-            const dataToInsert: any[] = [];
-            /*
-            dataToInsert.push({
-                x: new Date(startingDate.getFullYear(), startingDate.getMonth(), startingDate.getDay(),
-                    startingDate.getHours(), startingDate.getMinutes(), startingDate.getSeconds()),
-                y: 25
-            });
-            */
-            const dato: any = {
-                data: dataToInsert,
-                label: data[i]['name'],
-                fill: true,
-                type: 'bar'
-            }
-            this.events.push(dato);
-        }
-        // this.links = this.parseLinks.parse(headers.get('link'));
-        this.eventManager.broadcast({ name: 'all_success', content: 'OK' });
-    }
-
     onSuccessEvent(data: any, headers: any) {
-        /*
         for (let i = 0; i < data.length; i++) {
-            const chartAnnotation: any = {
-                borderColor: 'red',
-                mode: 'vertical',
-                type: 'line',
-                value: 1526315013589,
-                scaleID: 'x-axis-0',
-                label: {
-                    backgroundColor: 'rgba(0,0,0,0.8)',
-                    enabled: true,
-                    content: 'Event'
+            const endingDate: any = data[i]['endingDate'];
+            let type: string;
+            let value, xMin, xMax: number;
+            if (endingDate === null) {
+                type = 'line';
+                value = this.dateToNumber(new Date(data[i]['startingDate']))
+            } else {
+                type = 'box';
+                xMin = this.dateToNumber(new Date(data[i]['startingDate']));
+                if (this.dateToNumber(new Date(data[i]['endingDate'])) > this.dateToNumber(new Date(this.today))) {
+                    xMax = this.dateToNumber(new Date(this.today));
+                } else {
+                    xMax = this.dateToNumber(new Date(data[i]['endingDate']));
                 }
             }
-            this.chartAnnotations.push(chartAnnotation);
-        }
-        */
-        for (let i = 0; i < data.length; i++) {
             const chartAnnotation: any = {
                 borderColor: 'red',
                 mode: 'vertical',
-                type: 'line',
-                value: this.dateToNumber(new Date(data[i]['startingDate'])),
+                type: type,
+                value: value,
+                xMin: xMin,
+                xMax: xMax,
                 scaleID: 'x-axis-0',
                 label: {
                     backgroundColor: 'rgba(0,0,0,0.8)',
@@ -254,6 +230,7 @@ import 'chartjs-plugin-annotation';
         }
         // this.links = this.parseLinks.parse(headers.get('link'));
         this.eventManager.broadcast({ name: 'all_success', content: 'OK' });
+        this.loaded = true;
     }
 
     private onError(error) {
