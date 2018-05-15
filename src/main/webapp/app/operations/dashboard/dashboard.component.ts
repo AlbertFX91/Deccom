@@ -131,9 +131,11 @@ import 'chartjs-plugin-annotation';
                         let s_date = tooltipItem[0].xLabel;
                         const i = s_date.lastIndexOf('.');
                         const j = s_date.lastIndexOf(' ');
+
                         // Constructing the new date string
                         s_date = s_date.substring(0, i) + s_date.substring(j, s_date.length);
                         const showDate = new Date(s_date).toUTCString();
+
                         return showDate.substring(0, showDate.length - 4);
                     },
                     label: function(tooltipItem, data) {
@@ -197,19 +199,20 @@ import 'chartjs-plugin-annotation';
 
     onSuccessEvent(data: any, headers: any) {
         for (let i = 0; i < data.length; i++) {
+            const startingDate: any = data[i]['startingDate'];
             const endingDate: any = data[i]['endingDate'];
             let type: string;
             let value, xMin, xMax: number;
             if (endingDate === null) {
                 type = 'line';
-                value = this.dateToNumber(new Date(data[i]['startingDate']))
+                value = this.dateToNumber(new Date(startingDate))
             } else {
                 type = 'box';
-                xMin = this.dateToNumber(new Date(data[i]['startingDate']));
-                if (this.dateToNumber(new Date(data[i]['endingDate'])) > this.dateToNumber(new Date(this.today))) {
+                xMin = this.dateToNumber(new Date(startingDate));
+                if (this.dateToNumber(new Date(endingDate)) > this.dateToNumber(new Date(this.today))) {
                     xMax = this.dateToNumber(new Date(this.today));
                 } else {
-                    xMax = this.dateToNumber(new Date(data[i]['endingDate']));
+                    xMax = this.dateToNumber(new Date(endingDate));
                 }
             }
             const chartAnnotation: any = {
