@@ -223,12 +223,15 @@ import 'chartjs-plugin-annotation';
                 xMin: xMin,
                 xMax: xMax,
                 scaleID: 'x-axis-0',
+                xScaleID: 'x-axis-0',
                 label: {
-                    backgroundColor: 'rgba(0,0,0,0.8)',
+                    fontFamily: 'roboto',
                     enabled: true,
                     content: data[i]['name']
                 }
             }
+            console.log(xMin);
+            console.log(xMax);
             this.chartAnnotations.push(chartAnnotation);
         }
         // this.links = this.parseLinks.parse(headers.get('link'));
