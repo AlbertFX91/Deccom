@@ -77,8 +77,11 @@ public class ControlVariableSchedulingService {
 		if (cv.getStatus().equals(Status.PAUSED)
 				|| cv.getStatus().equals(Status.BLOCKED)) {
 			log.debug("Stopping job with name: " + cv.getName());
-			jobs.get(cv.getId()).cancel(false);
-			jobs.remove(cv.getId());
+			ScheduledFuture<?> job = jobs.get(cv.getId());
+			if(job == null) {
+				job.cancel(false);
+				jobs.remove(cv.getId());
+			}
 		}
 	}
 	
