@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { DeccomSharedModule } from '../../shared';
+import { DeccomDashboardModule } from '../dashboard';
 
 import {
     CVService,
@@ -24,6 +25,7 @@ const ENTITY_STATES = [
     imports: [
         DeccomSharedModule,
         InfiniteScrollModule,
+        DeccomDashboardModule,
         RouterModule.forRoot(ENTITY_STATES, { useHash: true })
     ],
     declarations: [
