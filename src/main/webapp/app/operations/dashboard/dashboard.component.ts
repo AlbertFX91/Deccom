@@ -110,7 +110,7 @@ import 'chartjs-plugin-annotation';
                     time: {
                         unit: 'day',
                         unitStepSize: 1,
-                        min: this.dateToNumber(new Date(this.last)),
+                        // min: this.dateToNumber(new Date(this.last)),
                         displayFormats: {
                             day: 'll'
                         }
@@ -118,7 +118,9 @@ import 'chartjs-plugin-annotation';
                 }],
                 yAxes: [{
                     id: 'y-axis-0',
+                    type: 'logarithmic',
                     display: true,
+                    min: 0,
                     ticks: {
                         beginAtZero: true
                     }
