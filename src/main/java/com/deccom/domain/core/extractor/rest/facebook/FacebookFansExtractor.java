@@ -1,7 +1,8 @@
-package com.deccom.domain.core.extractor.rest;
+package com.deccom.domain.core.extractor.rest.facebook;
 
 import com.deccom.domain.core.CVStyleUtil;
 import com.deccom.domain.core.extractor.ControlVariableExtractor;
+import com.deccom.domain.core.extractor.rest.RESTExtractor;
 import com.deccom.domain.core.fields.DeccomField;
 import com.deccom.service.impl.util.RESTUtil;
 
