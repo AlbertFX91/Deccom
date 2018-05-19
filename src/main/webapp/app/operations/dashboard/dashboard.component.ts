@@ -49,54 +49,10 @@ import 'chartjs-plugin-annotation';
     }
 
     ngOnInit() {
-        /*
-        this.cvService.findAll(pageSettings).subscribe(
-            (data: any) => this.onSuccessCV(data.json(), data.headers),
-            (error: Response) => this.onError(error)
-        );
-        */
         this.cvService.dates(this.last.toISOString(), this.pageSettings).subscribe(
             (data: any) => this.onSuccessCV(data.json(), data.headers),
             (error: Response) => this.onError(error)
         );
-        /*
-         this.eventService.findAll(pageSettings).subscribe(
-             (res: ResponseWrapper) => this.onSuccessEvent(res.json, res.headers),
-             (res: ResponseWrapper) => this.onError(res.json)
-         );
-         */
-        /*
-        this.chartDataAux = [
-            { data: [330, 600, 260, 700, 800], label: 'Account A', fill: false },
-            { data: [120, 455, 100, 340], label: 'Account B', fill: false },
-            { data: [45, 67, 800, 500], label: 'Account C', fill: false }
-        ];
-        */
-        this.chartDataAux = [
-            /*
-            {
-                data: [{ x: new Date(2018, 1, 1, 12, 50, 55), y: 1 }, { x: new Date(2018, 1, 15, 12, 50, 55), y: 8 }, { x: new Date(2018, 2, 2, 12, 50, 55), y: 3 }],
-                label: 'Account A', fill: false
-            }
-            */
-            /*
-            { data: [90, 130, 400, 120], label: 'Account A', fill: false },
-            { data: [120, 455, 100, 340], label: 'Account B', fill: false },
-            { data: [45, 67, 800, 500], label: 'Account C', fill: false }
-            */
-            // { data: [{ x: 0, y: 1 }, { x: 5.5, y: 2 }, { x: 10, y: 4 }], label: 'Account A', fill: false, showLine: true }
-            {
-                data: [{ x: this.dateToNumber(new Date(new Date().getTime() - (7 * 24 * 60 * 60 * 1000))), y: 10 },
-                { x: this.dateToNumber(new Date(new Date().getTime() - (6 * 24 * 60 * 60 * 1000))), y: 1 },
-                { x: this.dateToNumber(new Date(new Date().getTime() - (5 * 24 * 60 * 60 * 1000))), y: 2 },
-                { x: this.dateToNumber(new Date(new Date().getTime() - (4 * 24 * 60 * 60 * 1000))), y: 4 },
-                { x: this.dateToNumber(new Date(new Date().getTime() - (3 * 24 * 60 * 60 * 1000))), y: 5 },
-                { x: this.dateToNumber(new Date(new Date().getTime() - (2 * 24 * 60 * 60 * 1000))), y: 6 },
-                { x: this.dateToNumber(new Date(new Date().getTime() - (1 * 24 * 60 * 60 * 1000))), y: 8 },
-                { x: this.dateToNumber(new Date(new Date().getTime() - (0 * 24 * 60 * 60 * 1000))), y: 9 }],
-                label: 'Account A', fill: false, showLine: true
-            }
-        ];
         this.chartOptions = {
             responsive: true,
             legend: {
@@ -110,7 +66,7 @@ import 'chartjs-plugin-annotation';
                     time: {
                         unit: 'day',
                         unitStepSize: 1,
-                        // min: this.dateToNumber(new Date(this.last)),
+                        min: this.dateToNumber(new Date(this.last)),
                         displayFormats: {
                             day: 'll'
                         }
@@ -232,8 +188,6 @@ import 'chartjs-plugin-annotation';
                     content: data[i]['name']
                 }
             }
-            console.log(xMin);
-            console.log(xMax);
             this.chartAnnotations.push(chartAnnotation);
         }
         // this.links = this.parseLinks.parse(headers.get('link'));
