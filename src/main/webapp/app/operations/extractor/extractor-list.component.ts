@@ -52,6 +52,15 @@ export class ExtractorListComponent implements OnInit, OnDestroy {
     }
 
     private onSuccess(data, headers) {
+        data.sort( (a, b) => {
+            if (a.style.icon < b.style.icon) {
+                return -1;
+            }
+            if (a.style.icon > b.style.icon) {
+                return 1;
+            }
+            return a.style.name < b.style.name ? -1 : 1;
+          });
         for (let i = 0; i < data.length; i++) {
             this.extractors.push(data[i]);
         }
