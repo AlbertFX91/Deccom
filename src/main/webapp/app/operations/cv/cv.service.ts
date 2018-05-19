@@ -17,6 +17,11 @@ export class CVService {
     }
 
     create(cv: NewCV): Observable<NewCV> {
+        const f: any = cv.controlVariable.frequency;
+        // Check if the string is a number
+        if (!isNaN(f)) {
+            cv.controlVariable.frequency = '0/' + f + ' * * * * *';
+        }
         return this.http.post(this.resourceUrl, cv).map((res: Response) => {
             const jsonResponse = res.json();
             return jsonResponse;
@@ -32,6 +37,11 @@ export class CVService {
     }
 
     update(cv: CV): Observable<CV> {
+        const f: any = cv.frequency;
+        // Check if the string is a number
+        if (!isNaN(f)) {
+            cv.frequency = '0/' + f + ' * * * * *';
+        }
         return this.http.put(this.resourceUrl + '/general/', cv).map((res: Response) => {
             const jsonResponse = res.json();
             this.convertItemFromServer(jsonResponse);

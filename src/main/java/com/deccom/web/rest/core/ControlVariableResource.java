@@ -62,8 +62,8 @@ public class ControlVariableResource {
 
 		restControlVariable.setName("restControlVariable");
 		sqlControlVariable.setName("sqlControlVariable");
-		restControlVariable.setFrequency(30);
-		sqlControlVariable.setFrequency(15);
+		restControlVariable.setFrequency("0/"+30+" * * * * *");
+		sqlControlVariable.setFrequency("0/"+15+" * * * * *");
 		restExtractor.setUrl("http://jsonplaceholder.typicode.com/users");
 		restExtractor.setJsonPath("$[2].phone");
 		sqlExtractor.setUsername("developer");
