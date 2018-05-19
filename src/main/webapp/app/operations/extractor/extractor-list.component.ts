@@ -19,6 +19,8 @@ export class ExtractorListComponent implements OnInit, OnDestroy {
     extractorSelected: ExtractorItem;
     extractors: ExtractorItem[];
     currentAccount: any;
+    extractorGroups: any;
+    groupSelected: string;
 
     constructor(
         private extractorService: ExtractorService,
@@ -29,6 +31,8 @@ export class ExtractorListComponent implements OnInit, OnDestroy {
     ) {
         this.extractors = [];
         this.extractorSelected = null;
+        this.extractorGroups = {};
+        this.groupSelected = null;
     }
 
     loadAll() {
@@ -51,6 +55,25 @@ export class ExtractorListComponent implements OnInit, OnDestroy {
         this.extractorSelected = extractor;
     }
 
+    getGroups() {
+        return Object.keys(this.extractorGroups);
+    }
+    selectGroup(icon) {
+        if (this.groupSelected === icon) {
+            this.groupSelected = null;
+        } else {
+            this.groupSelected = icon;
+        }
+    }
+
+    getExtractors() {
+        if (this.groupSelected === null) {
+            return this.extractors;
+        } else {
+            return this.extractors.filter((e) => e.style.icon === this.groupSelected);
+        }
+    }
+
     private onSuccess(data, headers) {
         data.sort( (a, b) => {
             if (a.style.icon < b.style.icon) {
@@ -62,7 +85,12 @@ export class ExtractorListComponent implements OnInit, OnDestroy {
             return a.style.name < b.style.name ? -1 : 1;
           });
         for (let i = 0; i < data.length; i++) {
-            this.extractors.push(data[i]);
+            const extractor: ExtractorItem = data[i];
+            this.extractors.push(extractor);
+
+            if (!(extractor.style.icon in this.extractorGroups)) {
+                this.extractorGroups[extractor.style.icon] = extractor.style;
+            }
         }
     }
 
