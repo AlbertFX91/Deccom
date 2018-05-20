@@ -65,7 +65,7 @@ public class ControlVariableSchedulingService {
 
 	public void newJob(ControlVariable cv) {
 		log.debug("New job");
-		ScheduledFuture<?> job = str.getScheduler().schedule(new ControlVariableRunnable(cv, cvService), new CronTrigger("* * * * * *"));
+		ScheduledFuture<?> job = str.getScheduler().schedule(new ControlVariableRunnable(cv, cvService), new CronTrigger(cv.getFrequency()));
 		jobs.put(cv.getId(), job);
 	}
 	

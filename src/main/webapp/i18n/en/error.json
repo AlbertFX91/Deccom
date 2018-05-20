@@ -23,7 +23,7 @@
             },
             "controlvariable": {
                 "nointeger": "Data must be an integer number",
-                "notValidCronExpresion": "Frequency: The cron expresion is not valid"
+                "notValidCronExpresion": "Frequency: the cron expression is not valid"
             },
             "event": {
                 "wrongdates": "The starting date must be before or equal to the ending date"
