@@ -217,6 +217,8 @@ public class InitialSetupMigration {
 
 		facebookFansExtractor = new FacebookFansExtractor();
 
+		facebookFansExtractor.setFacebookPageID("546664955726052");
+		
 		ControlVariable controlVariable = new ControlVariable();
 		controlVariable.setExtractor(facebookFansExtractor);
 		controlVariable.setCreationMoment(LocalDateTime.now());

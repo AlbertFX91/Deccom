@@ -4,26 +4,25 @@ import com.deccom.domain.core.CVStyleUtil;
 import com.deccom.domain.core.extractor.ControlVariableExtractor;
 import com.deccom.domain.core.extractor.rest.RESTExtractor;
 import com.deccom.domain.core.fields.DeccomField;
+import com.deccom.domain.core.fields.InputType;
 import com.deccom.service.impl.util.RESTUtil;
 
 public class FacebookFansExtractor extends RESTExtractor implements ControlVariableExtractor {
 
-	@DeccomField()
+	@DeccomField(type=InputType.NUMBER)
 	private String facebookPageID;
 
 	public FacebookFansExtractor() {
 
 		super();
 
-		String url, jsonPath, facebookPageID;
+		String url, jsonPath;
 
 		url = "https://graph.facebook.com/v2.11/";
 		jsonPath = "$.fan_count";
-		facebookPageID = "546664955726052";
 
 		setUrl(url);
 		setJsonPath(jsonPath);
-		setFacebookPageID(facebookPageID);
 		setStyle(CVStyleUtil.facebook);
 
 	}
