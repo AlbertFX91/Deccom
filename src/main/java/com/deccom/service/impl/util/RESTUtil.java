@@ -104,11 +104,7 @@ public class RESTUtil {
 
 			// Facebook authentication settings
 			setFacebookAuthentication(con);
-<<<<<<< HEAD
-			
-=======
 
->>>>>>> 22f48dcc19b3c3f6a2be5390ca46444863392def
 			result = getResponse(con);
 
 			return result;

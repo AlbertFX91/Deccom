@@ -7,7 +7,6 @@ import { DeccomSharedModule } from '../../shared';
 
 import {
     DashboardComponent,
-    DashboardMinifiedComponent,
     dashboardRoute
 } from './';
 
@@ -23,14 +22,10 @@ const ENTITY_STATES = [
         ChartsModule
     ],
     declarations: [
-        DashboardComponent,
-        DashboardMinifiedComponent
+        DashboardComponent
     ],
     entryComponents: [
         DashboardComponent
-    ],
-    exports: [
-        DashboardMinifiedComponent
     ],
     providers: [
     ],
