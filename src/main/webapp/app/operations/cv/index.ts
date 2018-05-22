@@ -5,3 +5,5 @@ export * from './cv-popup.service';
 export * from './cv.route';
 export * from './cv.service';
 export * from './cv.module';
+export * from './cv-dialog.component';
+export * from './cv-delete-dialog.component';

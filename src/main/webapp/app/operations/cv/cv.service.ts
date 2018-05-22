@@ -8,7 +8,7 @@ import { JhiDateUtils } from 'ng-jhipster';
 @Injectable()
 export class CVService {
 
-    private resourceUrl = 'api/controlvar/';
+    private resourceUrl = 'api/controlvar';
 
     cvCards: CV[];
 
@@ -41,13 +41,13 @@ export class CVService {
 
     findAll(pageSettings: any): Observable<ResponseWrapper> {
         const options = this.createRequestOption(pageSettings);
-        return this.http.get(this.resourceUrl + 'all', options)
+        return this.http.get(this.resourceUrl + '/all', options)
             .map((res: Response) => res);
     }
 
     dates(startingDate: string, pageSettings: any): Observable<ResponseWrapper> {
         const options = this.createRequestOptionDate(startingDate, pageSettings);
-        return this.http.get(this.resourceUrl + 'dates', options)
+        return this.http.get(this.resourceUrl + '/dates', options)
             .map((res: Response) => res);
     }
 
@@ -58,15 +58,15 @@ export class CVService {
     }
 
     delete(id: string): Observable<Response> {
-        return this.http.delete(`${this.resourceUrl}/${id}`);
+        return this.http.delete(`${this.resourceUrl + '/delete'}/${id}`);
     }
 
     restart(id: string): Observable<Response> {
-        return this.http.get(this.resourceUrl + 'restart', this.createGetRequest(id));
+        return this.http.get(this.resourceUrl + '/restart', this.createGetRequest(id));
     }
 
     pause(id: string): Observable<Response> {
-        return this.http.get(this.resourceUrl + 'pause', this.createGetRequest(id));
+        return this.http.get(this.resourceUrl + '/pause', this.createGetRequest(id));
     }
 
     private convertResponse(res: Response): ResponseWrapper {

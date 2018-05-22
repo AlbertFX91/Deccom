@@ -12,7 +12,9 @@ import {
     cvPopupRoute,
     CVPopupService,
     CVDialogComponent,
-    CVPopupComponent
+    CVPopupComponent,
+    CVDeletePopupComponent,
+    CVDeleteDialogComponent,
 } from './';
 
 const ENTITY_STATES = [
@@ -31,12 +33,16 @@ const ENTITY_STATES = [
         CVCardComponent,
         CVDialogComponent,
         CVPopupComponent,
+        CVDeletePopupComponent,
+        CVDeleteDialogComponent
     ],
     entryComponents: [
         CVComponent,
         CVCardComponent,
         CVDialogComponent,
-        CVPopupComponent
+        CVPopupComponent,
+        CVDeletePopupComponent,
+        CVDeleteDialogComponent
     ],
     providers: [
         CVService,

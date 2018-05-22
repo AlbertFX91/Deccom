@@ -282,7 +282,7 @@ public class ControlVariableResource {
 	 *            the id of the controlvar to delete
 	 * @return the ResponseEntity with status 200 (OK)
 	 */
-	@DeleteMapping("/controlvar/{id}")
+	@DeleteMapping("/controlvar/delete/{id}")
 	@Timed
 	public ResponseEntity<Void> deleteCV(@PathVariable String id) {
 		log.debug("REST request to delete CV : {}", id);

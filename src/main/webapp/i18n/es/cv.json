@@ -11,12 +11,13 @@
             "running": "En ejecución",
             "paused": "En pausa",
             "blocked": "Bloqueado",
-            "created": "Variable de control creada correctamente",
-            "deleted": "Variable de control borrada correctamente",
-            "updated": "Variable de control actualizada correctamente",
+            "confirmDelete": "¿Está seguro de que quiere borrar esta variable de control?",
+            "created": "La variable de control ha sido creada",
+            "deleted": "La variable de control ha sido borrada",
+            "updated": "La variable de control ha sido actualizada",
             "menu": {
                 "edit": "Editar",
-                "remove": "Eliminar",
+                "delete": "Eliminar",
                 "play": "Lanzar",
                 "pause": "Pausar"
             }

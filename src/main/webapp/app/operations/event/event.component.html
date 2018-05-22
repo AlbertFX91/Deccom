@@ -1,6 +1,6 @@
 <div>
     <h2>
-        <span jhiTranslate="deccomApp.event.home.title">Events</span>
+        <span jhiTranslate="deccomApp.event.home.title" class="roboto">Events</span>
     </h2>
     <jhi-alert></jhi-alert>
     <div class="row">
@@ -11,18 +11,18 @@
             <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
                     <th>
-                        <span jhiTranslate="deccomApp.event.name">Name</span>
+                        <span jhiTranslate="deccomApp.event.name" class="roboto">Name</span>
                     </th>
                     <th jhiSortBy="creationMoment" sortable-column="'creationMoment'">
-                        <span jhiTranslate="deccomApp.event.creationMoment">Creation moment</span>
+                        <span jhiTranslate="deccomApp.event.creationMoment" class="roboto">Creation moment</span>
                         <span class="fa fa-sort"></span>
                     </th>
                     <th jhiSortBy="startingDate" sortable-column="'startingDate'">
-                        <span jhiTranslate="deccomApp.event.startingDate">Starting date</span>
+                        <span jhiTranslate="deccomApp.event.startingDate" class="roboto">Starting date</span>
                         <span class="fa fa-sort"></span>
                     </th>
                     <th jhiSortBy="endingDate" sortable-column="'endingDate'">
-                        <span jhiTranslate="deccomApp.event.endingDate">Ending date</span>
+                        <span jhiTranslate="deccomApp.event.endingDate" class="roboto">Ending date</span>
                         <span class="fa fa-sort"></span>
                     </th>
                     <th></th>
@@ -49,11 +49,11 @@
                             -->
                             <button type="submit" [routerLink]="['/', { outlets: { popup: 'event/'+ event.id + '/edit'} }]" replaceUrl="true" class="btn btn-primary btn-sm">
                                 <span class="fa fa-pencil"></span>
-                                <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
+                                <span class="hidden-md-down roboto" jhiTranslate="entity.action.edit">Edit</span>
                             </button>
                             <button type="submit" [routerLink]="['/', { outlets: { popup: 'event/'+ event.id + '/delete'} }]" replaceUrl="true" class="btn btn-danger btn-sm">
                                 <span class="fa fa-remove"></span>
-                                <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
+                                <span class="hidden-md-down roboto" jhiTranslate="entity.action.delete">Delete</span>
                             </button>
                         </div>
                     </td>
@@ -63,8 +63,6 @@
     </div>
     <button class="btn btn-primary float-right jh-create-entity create-event" [routerLink]="['/', { outlets: { popup: ['event-new'] } }]">
         <span class="fa fa-plus"></span>
-        <span jhiTranslate="deccomApp.event.home.create">
-            Create new event
-        </span>
+        <span jhiTranslate="deccomApp.event.home.create" class="roboto">Create new event</span>
     </button>
 </div>

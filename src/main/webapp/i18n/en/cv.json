@@ -11,12 +11,13 @@
             "running": "Running",
             "paused": "Paused",
             "blocked": "Blocked",
-            "created": "Control variable successfully created",
-            "deleted": "Control variable successfully deleted",
-            "updated": "Control variable successfully updated",
+            "confirmDelete": "Are you sure you want to delete this control variable?",
+            "created": "The control variable has been created",
+            "deleted": "The control variable has been deleted",
+            "updated": "The control variable has been updated",
             "menu": {
                 "edit": "Edit",
-                "remove": "Remove",
+                "delete": "Delete",
                 "play": "Play",
                 "pause": "Pause"
             }
