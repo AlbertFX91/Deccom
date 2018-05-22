@@ -15,18 +15,18 @@ public class RESTExtractor implements ControlVariableExtractor {
 	@NotNull
 	@DeccomField(display = false)
 	private String url;
-	
+
 	@NotNull
-	@DeccomField(component="rest.jsonPath.field")
+	@DeccomField(component = "rest.jsonPath.field")
 	private String jsonPath;
-	
+
 	@NotNull
 	private CVStyle style;
-	
+
 	public RESTExtractor() {
 		style = CVStyleUtil.rest;
 	}
-	
+
 	public String getUrl() {
 		return url;
 	}
@@ -45,37 +45,37 @@ public class RESTExtractor implements ControlVariableExtractor {
 
 	@Override
 	public Double getData() {
-		
+
 		String body, value;
-		
+
 		body = getResponse(url);
 		value = getByJSONPath(body, getJsonPath());
-		
+
 		return Double.parseDouble(value);
-		
+
 	}
 
 	@Override
 	public CVStyle getStyle() {
 		return style;
 	}
-	
+
 	public void setStyle(CVStyle style) {
 		this.style = style;
 	}
-  
+
 	protected String getResponse(String url) {
 		return RESTUtil.getResponse(url);
 	}
-	
+
 	protected String getResponse(HttpURLConnection con) {
 		return RESTUtil.getResponse(con);
 	}
-	
+
 	protected String getByJSONPath(String body, String jsonPath) {
 		return RESTUtil.getByJSONPath(body, jsonPath);
 	}
-  
+
 	@Override
 	public String toString() {
 		return "RESTExtractor [url=" + url + ", jsonPath=" + jsonPath + "]";
