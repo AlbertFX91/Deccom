@@ -226,7 +226,11 @@ public class ControlVariableService {
 
 	public void delete(String id) {
 		log.debug("Request to remove ControlVariable : {}", id);
-		ControlVariable cv = controlVariableRepository.findOne(id);
+		
+		ControlVariable cv;
+		cv = controlVariableRepository.findOne(id);
+		
+		cv.setStatus(Status.BLOCKED);
 		schedulingService.stopJob(cv);
 		controlVariableRepository.delete(id);
 	}
