@@ -9,7 +9,7 @@ export class CV {
         public creationMoment?: any,
         public lastUpdate?: any,
         public controlVarEntries?: any,
-        public frequency?: number,
+        public frequency?: string,
         public extractor?: ExtractorItem
     ) {
         this.id = null;
@@ -19,7 +19,7 @@ export class CV {
         this.lastUpdate = new Date();
         this.controlVarEntries = [];
         this.extractor = new ExtractorItem();
-        this.frequency = 0;
+        this.frequency = '';
     }
 }
 

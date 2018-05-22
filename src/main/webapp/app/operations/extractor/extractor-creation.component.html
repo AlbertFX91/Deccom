@@ -28,19 +28,37 @@
                     </div>
                     <div [style.display]="currentField===field?'block':'none'">
                         <jhi-fields [field]="currentField" [cv]="controlvar" (finished)="onFinished($event)"></jhi-fields>
-                    </div>  
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <div class="form-group" *ngFor="let field of cvFields;">
-                    <label class="form-control-label" for="field_{{field}}">{{field}}</label>
-                    <input type="text" class="form-control" name="{{field}}" id="field_{{field}}" [(ngModel)]="controlvar[field]" required />
-                    <div [hidden]="!(editForm.controls[field]?.dirty && editForm.controls[field]?.invalid)">
-                        <small class="form-text text-danger" [hidden]="!editForm.controls[field]?.errors?.required">
+                <div class="form-group">
+                    <label class="form-control-label" for="field_name">Name</label>
+                    <input type="text" class="form-control" name="name" id="field_name" [(ngModel)]="controlvar.name" required />
+                    <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
+                        <small class="form-text text-danger" [hidden]="!editForm.controls.name?.errors?.required">
                             This field is required.
                         </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_frequency">{{ advanzed ? 'Cron expression' : 'Frequency (in seconds)'}}</label>
+                    <div class="row">
+                        <div class="col-10">
+                            <input type="{{advanzed ? 'text' : 'number'}}" class="form-control" name="field_frequency" id="frequency" [(ngModel)]="controlvar.frequency" required />
+                            <div [hidden]="!(editForm.controls.frequency?.dirty && editForm.controls.frequency?.invalid)">
+                                <small class="form-text text-danger" [hidden]="!editForm.controls.frequency?.errors?.required">
+                                    This field is required.
+                                </small>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <button type="button" class="btn btn-success" (click)="toggleFrequency()">
+                                <span>{{advanzed ? 'Advanzed' : 'Simple'}}</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

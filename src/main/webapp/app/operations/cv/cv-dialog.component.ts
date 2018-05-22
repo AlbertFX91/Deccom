@@ -20,6 +20,8 @@ export class CVDialogComponent implements OnInit {
     isSaving: boolean;
     publication_dateDp: any;
 
+    advanzed: boolean;
+
     constructor(
         public activeModal: NgbActiveModal,
         private alertService: JhiAlertService,
@@ -29,7 +31,9 @@ export class CVDialogComponent implements OnInit {
     }
 
     ngOnInit() {
+        const f: any = this.cv.frequency
         this.isSaving = false;
+        this.advanzed = isNaN(f);
     }
 
     clear() {
@@ -42,6 +46,9 @@ export class CVDialogComponent implements OnInit {
             this.subscribeToSaveResponse(
                 this.cvService.update(this.cv));
         }
+    }
+    toggleFrequency() {
+        this.advanzed = !this.advanzed;
     }
 
     private subscribeToSaveResponse(result: Observable<CV>) {

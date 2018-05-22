@@ -23,24 +23,23 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="form-control-label"for="field_frequency">Frequency</label>
-            <input type="number" class="form-control" name="rating" id="field_frequency"
-                [(ngModel)]="cv.frequency" required min="0"/>
-            <div [hidden]="!(editForm.controls.rating?.dirty && editForm.controls.rating?.invalid)">
-                <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.rating?.errors?.required" jhiTranslate="entity.validation.required">
-                   This field is required.
-                </small>
-                <small class="form-text text-danger"
-                    [hidden]="!editForm.controls.rating?.errors?.min" jhiTranslate="entity.validation.min" translateValues="{ min: 0 }">
-                    This field should be at least 0.
-                </small>
-                <small class="form-text text-danger"
-                    [hidden]="!editForm.controls.rating?.errors?.number" jhiTranslate="entity.validation.number">
-                    This field should be a number.
-                </small>
+                <label class="form-control-label" for="field_frequency">{{ advanzed ? 'Cron Expression' : 'Frequency (sec)'}}</label>
+                <div class="row">
+                    <div class="col-10">
+                        <input type="{{advanzed ? 'text' : 'number'}}" class="form-control" name="field_frequency" id="frequency" [(ngModel)]="cv.frequency" required />
+                        <div [hidden]="!(editForm.controls.frequency?.dirty && editForm.controls.frequency?.invalid)">
+                            <small class="form-text text-danger" [hidden]="!editForm.controls.frequency?.errors?.required">
+                                This field is required.
+                            </small>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <button type="button" class="btn btn-success" (click)="toggleFrequency()">
+                            <span>{{advanzed ? 'Advanzed' : 'Simple'}}</span>
+                        </button>
+                    </div>
+                </div>
             </div>
-        </div>
 
     </div>
     <div class="modal-footer">

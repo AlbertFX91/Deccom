@@ -22,7 +22,8 @@
                 "monitoringerror": "Se produjo un error al comprobar el valor de la variable"
             },
             "controlvariable": {
-                "nointeger": "El dato debe ser un número entero"
+                "nointeger": "El dato debe ser un número entero",
+                "notValidCronExpresion": "Frecuencia: La 'cron expresion' no es valida"
             },
             "event": {
                 "wrongdates": "La fecha de inicio debe ser anterior o igual a la fecha de fin"

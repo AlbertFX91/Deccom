@@ -28,7 +28,7 @@ public class DeccomSchedulingConfigurer implements SchedulingConfigurer {
 		log.debug("Scheduled ControlVar tasks initialization");
 		ScheduledExecutorService str = taskExecutor();
 		taskRegistrar.setScheduler(str);
-		schedulingService.startJobs(str);
+		schedulingService.startJobs(taskRegistrar);
 	}
 
 	@Bean(destroyMethod = "shutdown")

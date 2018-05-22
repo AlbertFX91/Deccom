@@ -3,13 +3,13 @@ package com.deccom.service.core;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.config.ScheduledTaskRegistrar;
+import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 
 import com.deccom.domain.core.ControlVariable;
@@ -24,7 +24,7 @@ public class ControlVariableSchedulingService {
 	private final Logger log = LoggerFactory
 			.getLogger(ControlVariableSchedulingService.class);
 
-	private ScheduledExecutorService str;
+	private ScheduledTaskRegistrar str;
 
 	@Autowired
 	private ControlVariableService cvService;
@@ -36,14 +36,12 @@ public class ControlVariableSchedulingService {
 		log.debug("Starting Jobs");
 		jobs = new HashMap<>();
 		for (ControlVariable cv : cvService.findAll()) {
-			ScheduledFuture<?> job = str.scheduleAtFixedRate(
-					new ControlVariableRunnable(cv, cvService), 0,
-					cv.getFrequency(), TimeUnit.SECONDS);
+			ScheduledFuture<?> job = str.getScheduler().schedule(new ControlVariableRunnable(cv, cvService), new CronTrigger(cv.getFrequency()));
 			jobs.put(cv.getId(), job);
 		}
 	}
 
-	public synchronized void startJobs(ScheduledExecutorService newstr) {
+	public synchronized void startJobs(ScheduledTaskRegistrar newstr) {
 		this.str = newstr;
 		startJobs();
 	}
@@ -67,9 +65,7 @@ public class ControlVariableSchedulingService {
 
 	public void newJob(ControlVariable cv) {
 		log.debug("New job");
-		ScheduledFuture<?> job = str.scheduleAtFixedRate(
-				new ControlVariableRunnable(cv, cvService), 0,
-				cv.getFrequency(), TimeUnit.SECONDS);
+		ScheduledFuture<?> job = str.getScheduler().schedule(new ControlVariableRunnable(cv, cvService), new CronTrigger(cv.getFrequency()));
 		jobs.put(cv.getId(), job);
 	}
 	
@@ -77,8 +73,11 @@ public class ControlVariableSchedulingService {
 		if (cv.getStatus().equals(Status.PAUSED)
 				|| cv.getStatus().equals(Status.BLOCKED)) {
 			log.debug("Stopping job with name: " + cv.getName());
-			jobs.get(cv.getId()).cancel(false);
-			jobs.remove(cv.getId());
+			ScheduledFuture<?> job = jobs.get(cv.getId());
+			if(job != null) {
+				job.cancel(true);
+				jobs.remove(cv.getId());
+			}
 		}
 	}
 	

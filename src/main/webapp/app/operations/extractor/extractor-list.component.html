@@ -1,12 +1,21 @@
 <div>
-    <div id="extractor-list">
-        <a class="extractor-list-element" *ngFor="let extractor of extractors;" title="{{extractor.style.defaultName}}" [routerLink]="['/extractors', extractor.uid]">
-            <div class="extractor-list-element-icon">
-                <i class="fa {{extractor.style.icon}}"></i>
+    <div id="extractor-types">
+        <div *ngFor="let icon of getGroups()" [ngStyle]="{'display': groupSelected===null || groupSelected === icon ? 'flex':'none'}">
+            <div [ngStyle]="{ 'background-color':extractorGroups[icon].backgroundColor, 'color': extractorGroups[icon].fontColor }"
+                (click)="selectGroup(icon)">
+                <i class="fa {{extractorGroups[icon].icon}}"></i>
             </div>
-            <div class="extractor-list-element-name" data-toggle="tooltip">
-                {{extractor.style.defaultName}}
-            </div>
-        </a>
+        </div>
     </div>
+</div>
+<div id="extractor-list">
+    <a class="extractor-list-element" *ngFor="let extractor of getExtractors();" title="{{extractor.style.defaultName}}" [routerLink]="['/extractors', extractor.uid]">
+        <div class="extractor-list-element-icon">
+            <i class="fa {{extractor.style.icon}}"></i>
+        </div>
+        <div class="extractor-list-element-name" data-toggle="tooltip">
+            {{extractor.style.defaultName}}
+        </div>
+    </a>
+</div>
 </div>
