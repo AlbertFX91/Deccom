@@ -159,4 +159,8 @@ export class ExtractorCreationComponent implements OnInit, OnDestroy {
     toggleFrequency() {
         this.advanzed = !this.advanzed;
     }
+
+    formatLabel(label: string) {
+        return label.charAt(0).toUpperCase() + label.slice(1);
+    }
 }

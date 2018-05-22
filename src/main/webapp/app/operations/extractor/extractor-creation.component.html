@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col">
                 <div class="form-group" *ngFor="let field of fieldsToList();">
-                    <label class="form-control-label" for="field_{{field.name}}">{{field.name}}</label>
+                    <label class="form-control-label" for="field_{{field.name}}">{{formatLabel(field.name)}}</label>
                     <div class="row">
                         <div class="col-10">
                             <input [attr.type]="field.type" class="form-control" name="{{field.name}}" id="field_{{field.name}}" [(ngModel)]="controlvar.extractor[field.name]"
