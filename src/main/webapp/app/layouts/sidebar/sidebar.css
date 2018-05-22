@@ -33,12 +33,12 @@ sidebar
 sidebar logo
 ========================================================================== */
 
-#sidebar-logo-container{
+#sidebar-logo-container {
     flex-grow: 1;
     justify-content: flex-start;
 }
 
-#sidebar-logo-circle{
+#sidebar-logo-circle {
     margin: 10px;
     background: #0097A7;
     padding: 20px;
@@ -48,14 +48,14 @@ sidebar logo
     box-shadow: 0px 0px 40px -7px rgba(0,0,0,0.75);
 }
 
-#sidebar-logo-circle.hidded{
+#sidebar-logo-circle.hidded {
     width: 0px;
     height: 0px;
     padding: 0px;
     margin-top: -80px;
     transition: all 100ms linear;
 }
-#sidebar-logo-circle.displayed{
+#sidebar-logo-circle.displayed {
     width: 80px;
     height: 80px;
     padding: 20px;
@@ -63,7 +63,7 @@ sidebar logo
     transition-delay: 200ms;
 }
 
-#sidebar-logo{
+#sidebar-logo {
     max-width: 100%;
     height: auto;
     margin: auto;
@@ -74,11 +74,11 @@ sidebar logo
 sidebar operations
 ========================================================================== */
 
-#sidebar-operations-container{
+#sidebar-operations-container {
     flex-grow: 4;
     justify-content: center;
 }
-.sidebar-selection{
+.sidebar-selection {
     height: 50px;
     align-items: center;
     display: flex;
@@ -91,12 +91,12 @@ sidebar operations
     transition-delay: 200ms;
 }
 
-.sidebar-selection:hover{
+.sidebar-selection:hover {
     background-color:#26C6DA;
     transition: background-color 100ms linear;
 }
 
-.sidebar-selection.active{
+.sidebar-selection.active {
     border-left: #29B6F6;
     border-left-style: solid;
     border-left-width: 7px;
@@ -106,7 +106,7 @@ sidebar operations
     transition-delay: 200ms;
 }
 
-.hidded > #sidebar-operations-container > .sidebar-selection{
+.hidded > #sidebar-operations-container > .sidebar-selection {
     border-left: black;
     border-left-width: 0px;
     padding-right: 0px;
@@ -120,4 +120,11 @@ sidebar settings
 #sidebar-settings-container{
     flex-grow: 1;
     justify-content: flex-end;
+}
+
+.hidded > #sidebar-settings-container > .sidebar-selection {
+    border-left: black;
+    border-left-width: 0px;
+    padding-right: 0px;
+    font-size: 0px;
 }
