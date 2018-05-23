@@ -17,8 +17,7 @@
                     </span>
                     <ul class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
                         <li>
-                            <a class="dropdown-item" 
-                                [routerLink]="['/', { outlets: { popup: 'cv/'+ cvCard.id + '/edit'} }]">
+                            <a class="dropdown-item" [routerLink]="['/', { outlets: { popup: 'cv/'+ cvCard.id + '/edit'} }]">
                                 <i class="fa fa-pencil" aria-hidden="true"></i>
                                 <span jhiTranslate="deccomApp.ControlVar.menu.edit" class="roboto">Edit</span>
                             </a>
@@ -35,11 +34,10 @@
                                 <span jhiTranslate="deccomApp.ControlVar.menu.pause" class="roboto">Pause</span>
                             </a>
                         </li>
-                        <div class="dropdown-divider"></div>
                         <li>
-                            <a class="dropdown-item" (click)="remove()">
-                                <i class="fa fa-trash" aria-hidden="true"></i>
-                                <span jhiTranslate="deccomApp.ControlVar.menu.remove" class="roboto">Remove</span>
+                            <a class="dropdown-item" [routerLink]="['/', { outlets: { popup: 'cv/'+ cvCard.id + '/delete'} }]" replaceUrl="true">
+                                <i class="fa fa-remove" aria-hidden="true"></i>
+                                <span jhiTranslate="deccomApp.ControlVar.menu.delete" class="roboto">Delete</span>
                             </a>
                         </li>
                     </ul>

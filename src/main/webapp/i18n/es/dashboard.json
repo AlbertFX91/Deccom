@@ -3,7 +3,8 @@
         "dashboard": {
             "home": {
                 "title": "Cuadro de mando"
-            }
+            },
+            "noCVs": "No hay variables de control que mostrar en este momento"
         }
     }
 }

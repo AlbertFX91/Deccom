@@ -32,14 +32,14 @@ const ENTITY_STATES = [
         EventDialogComponent,
         EventPopupComponent,
         EventDeletePopupComponent,
-        EventDeleteDialogComponent,
+        EventDeleteDialogComponent
     ],
     entryComponents: [
         EventComponent,
         EventDialogComponent,
         EventPopupComponent,
         EventDeletePopupComponent,
-        EventDeleteDialogComponent,
+        EventDeleteDialogComponent
     ],
     providers: [
         EventService,

@@ -1,10 +1,22 @@
-<div>
+<div id="dashboard-container">
     <h2>
-        <span jhiTranslate="deccomApp.dashboard.home.title">Dashboard</span>
+        <span jhiTranslate="deccomApp.dashboard.home.title" class="roboto">Dashboard</span>
     </h2>
     <jhi-alert></jhi-alert>
-    <div [hidden]="!chart" style="width: 80%;" *ngIf="CVs.length > 0 ">
-        <canvas id="myChart" baseChart [chartType]="'scatter'" [datasets]="CVs" [options]="chartOptions"></canvas>
-        <!-- <canvas id="myChart"></canvas> -->
+    <div id="dashboard-body">
+        <div [hidden]="!chart" class="full" *ngIf="loaded === true" style="width: 80%; height: 0%; position: relative;">
+            <div id="intervals-container">
+                <div *ngFor="let i of getIntervals()" (click)="setInterval(i)" [class.current]="i===interval">
+                    {{i}}
+                </div>
+            </div>
+            <canvas id="myChart" class="full" baseChart [chartType]="'scatter'" [datasets]="CVs" [options]="chartOptions" style="position: absolute;"></canvas>
+            <!-- <canvas id="myChart"></canvas> -->
+            <div id="overlay" style="position: absolute; width: 80%; height: 100%;" >
+            </div>
+        </div>
+        <div [hidden]="!chart" class="message" *ngIf="loaded === false">
+            <span jhiTranslate="deccomApp.dashboard.noCVs"></span>
+        </div>
     </div>
 </div>

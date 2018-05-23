@@ -8,7 +8,7 @@ import { JhiDateUtils } from 'ng-jhipster';
 @Injectable()
 export class EventService {
 
-    private resourceUrl = 'api/event/';
+    private resourceUrl = 'api/event';
 
     constructor(private http: Http, private dateUtils: JhiDateUtils) { }
 
@@ -22,18 +22,18 @@ export class EventService {
 
     findAll(req?: any): Observable<ResponseWrapper> {
         const options = createRequestOption(req);
-        return this.http.get(this.resourceUrl + 'findAll', options)
+        return this.http.get(this.resourceUrl + '/findAll', options)
             .map((res: Response) => this.convertResponse(res));
     }
 
     dates(startingDate: string, endingDate: string, req?: any): Observable<ResponseWrapper> {
         const options = this.createRequestOptionDates(startingDate, endingDate, req);
-        return this.http.get(this.resourceUrl + 'dates', options)
+        return this.http.get(this.resourceUrl + '/dates', options)
             .map((res: Response) => this.convertResponse(res));
     }
 
     create(req?: Event): Observable<ResponseWrapper> {
-        return this.http.post(this.resourceUrl + 'create', req)
+        return this.http.post(this.resourceUrl + '/create', req)
             .map((res: Response) => res);
     }
 
