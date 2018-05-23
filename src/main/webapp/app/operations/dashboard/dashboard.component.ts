@@ -6,6 +6,8 @@ import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
 // import { Chart } from 'chart.js';
 import 'chartjs-plugin-annotation';
 
+import * as $ from 'jquery';
+
 @Component({
     selector: 'jhi-dashboard',
     templateUrl: './dashboard.component.html',
@@ -109,7 +111,8 @@ import 'chartjs-plugin-annotation';
                 }
             },
             annotation: {
-                annotations: this.chartAnnotations
+                events: ['mouseenter'],
+                annotations: this.chartAnnotations,
             }
         };
         /*
@@ -173,8 +176,11 @@ import 'chartjs-plugin-annotation';
                     xMax = this.dateToNumber(new Date(endingDate));
                 }
             }
+
+            const borderColor = type === 'line' ? 'red' : 'lightgray';
+
             const chartAnnotation: any = {
-                borderColor: 'red',
+                borderColor: borderColor,
                 mode: 'vertical',
                 type: type,
                 value: value,
@@ -186,6 +192,53 @@ import 'chartjs-plugin-annotation';
                     fontFamily: 'roboto',
                     enabled: true,
                     content: data[i]['name']
+                },
+                backgroundColor: 'rgba(0,151,167,0.4)',
+                onMouseenter: function(e) {
+                    const element = this;
+                    if (element.options.type !== 'box') {
+                        return;
+                    }
+                    const left = element._model.left;
+                    const right = element._model.right;
+                    const top = element._model.top;
+                    const bottom = element._model.bottom;
+
+                    // It is mandatory to embed the CSS because the CSS of the ts component does not apply to this element
+
+                    const msg = $('<div>' + element.options.label.content + '</div>')
+                        .addClass('tooltiptext')
+                        .css({
+                            'visibility': 'visible',
+                            'width': '100px',
+                            'background-color': 'rgb(0,0,0,0.75)',
+                            'color': '#fff',
+                            'text-align': 'center',
+                            'border-radius': '6px',
+                            'padding': '5px 0',
+                            'z-index': '500',
+                            'position': 'relative',
+                            'font-family': 'roboto',
+                            'font-size': '12px',
+                            'font-weight': 'bold',
+                            'left': right + 5,
+                            'top': (top + bottom) / 2
+                        });
+                    msg.append('<style>.tooltiptext:after{\
+                        content: "";\
+                        position: absolute;\
+                        top: 50%;\
+                        right: 100%;\
+                        margin-top: -5px;\
+                        border-width: 5px;\
+                        border-style: solid;\
+                        border-color: transparent rgb(0,0,0,0.75) transparent transparent;\
+                    }</style>');
+
+                    $('#overlay').append(msg);
+                },
+                onMouseout: function(e) {
+                    $('#overlay').text('');
                 }
             }
             this.chartAnnotations.push(chartAnnotation);
