@@ -5,6 +5,11 @@
     <jhi-alert></jhi-alert>
     <div id="dashboard-body">
         <div [hidden]="!chart" class="full" *ngIf="loaded === true" style="width: 80%; height: 0%; position: relative;">
+            <div id="intervals-container">
+                <div *ngFor="let i of getIntervals()" (click)="setInterval(i)" [class.current]="i===interval">
+                    {{i}}
+                </div>
+            </div>
             <canvas id="myChart" class="full" baseChart [chartType]="'scatter'" [datasets]="CVs" [options]="chartOptions" style="position: absolute;"></canvas>
             <!-- <canvas id="myChart"></canvas> -->
             <div id="overlay" style="position: absolute; width: 80%; height: 100%;" >

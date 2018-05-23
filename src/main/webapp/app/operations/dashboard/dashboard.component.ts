@@ -27,12 +27,25 @@ import * as $ from 'jquery';
     pageSettings: any;
     loaded: boolean;
 
+    interval: string;
+
     constructor(
         public cvService: CVService,
         public eventService: EventService,
         private alertService: JhiAlertService,
         private eventManager: JhiEventManager
     ) {
+        this.init();
+    }
+
+    ngOnInit() {
+        this.init();
+        this.loadAll();
+    }
+
+    ngOnDestroy() { }
+
+    init() {
         this.chart = [];
         this.CVs = [];
         this.events = [];
@@ -48,9 +61,10 @@ import * as $ from 'jquery';
             size: this.itemsPerPage
         };
         this.loaded = false;
+        this.interval = 'WEEK';
     }
 
-    ngOnInit() {
+    loadAll() {
         this.cvService.dates(this.last.toISOString(), this.pageSettings).subscribe(
             (data: any) => this.onSuccessCV(data.json(), data.headers),
             (error: Response) => this.onError(error)
@@ -66,7 +80,7 @@ import * as $ from 'jquery';
                     display: true,
                     type: 'time',
                     time: {
-                        unit: 'day',
+                        unit: this.getUnitByInterval(this.interval),
                         unitStepSize: 1,
                         min: this.dateToNumber(new Date(this.last)),
                         displayFormats: {
@@ -127,8 +141,6 @@ import * as $ from 'jquery';
         });
         */
     }
-
-    ngOnDestroy() { }
 
     onSuccessCV(data: any, headers: any) {
         for (let i = 0; i < data.content.length; i++) {
@@ -248,6 +260,14 @@ import * as $ from 'jquery';
         this.loaded = true;
     }
 
+    setInterval(name) {
+        this.init();
+        this.interval = name;
+        this.last = this.getDictIntervals()[name](new Date());
+        console.log(this.last);
+        this.loadAll();
+    }
+
     private onError(error) {
         this.alertService.error(error.message, null, null);
     }
@@ -255,5 +275,28 @@ import * as $ from 'jquery';
     private dateToNumber(date: Date) {
         return date.getTime();
     }
+    getDictIntervals() {
+        return {
+            'HOUR':  (today) => new Date(today.setHours(today.getHours() - 1)),
+            'DAY':   (today) => new Date(new Date().setDate(today.getDate() - 1)),
+            'WEEK':  (today) => new Date(new Date().setDate(today.getDate() - 7)),
+            'MONTH': (today) => new Date(today.setMonth(today.getMonth() - 1)),
+            'YEAR':  (today) => new Date(today.setFullYear(today.getFullYear() - 1)),
+        };
+    }
 
+    getIntervals() {
+        return Object.keys(this.getDictIntervals());
+    }
+
+    getUnitByInterval(interval: string) {
+        const units = {
+            'HOUR':  'hour',
+            'DAY':   'hour',
+            'WEEK':  'day',
+            'MONTH': 'day',
+            'YEAR':  'month',
+        }
+        return units[interval];
+    }
 }
