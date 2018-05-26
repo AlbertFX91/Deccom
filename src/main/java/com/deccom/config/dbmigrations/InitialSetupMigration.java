@@ -120,7 +120,7 @@ public class InitialSetupMigration {
 		});
 
 	}
-	
+
 	@ChangeSet(order = "05", author = "initiator", id = "05-addRESTControlVars")
 	public void addRESTControlVars(MongoTemplate mongoTemplate) {
 		RESTControlVar r = new RESTControlVar();
@@ -175,7 +175,7 @@ public class InitialSetupMigration {
 		c1.setExtractor(rest1);
 		c1.setCreationMoment(LocalDateTime.now());
 		c1.setStatus(Status.RUNNING);
-		c1.setFrequency("0/"+10+" * * * * *");
+		c1.setFrequency("0/" + 10 + " * * * * *");
 		c1.setName("RESTControlVar1");
 		c1.setControlVarEntries(Lists.newArrayList());
 
@@ -183,7 +183,7 @@ public class InitialSetupMigration {
 		c2.setExtractor(rest2);
 		c2.setCreationMoment(LocalDateTime.now());
 		c2.setStatus(Status.BLOCKED);
-		c2.setFrequency("0/"+10+" * * * * *");
+		c2.setFrequency("0/" + 10 + " * * * * *");
 		c2.setName("RESTControlVar2");
 		c2.setControlVarEntries(Lists.newArrayList());
 
@@ -191,7 +191,7 @@ public class InitialSetupMigration {
 		c3.setExtractor(sql3);
 		c3.setCreationMoment(LocalDateTime.now());
 		c3.setStatus(Status.RUNNING);
-		c3.setFrequency("0/"+10+" * * * * *");
+		c3.setFrequency("0/" + 10 + " * * * * *");
 		c3.setName("MySQLControlVar");
 		c3.setControlVarEntries(Lists.newArrayList());
 
@@ -199,7 +199,7 @@ public class InitialSetupMigration {
 		c4.setExtractor(sql4);
 		c4.setCreationMoment(LocalDateTime.now());
 		c4.setStatus(Status.RUNNING);
-		c4.setFrequency("0/"+10+" * * * * *");
+		c4.setFrequency("0/" + 10 + " * * * * *");
 		c4.setName("SQLControlVar");
 		c4.setControlVarEntries(Lists.newArrayList());
 
@@ -217,20 +217,20 @@ public class InitialSetupMigration {
 
 		facebookFansExtractor = new FacebookFansExtractor();
 
-		facebookFansExtractor.setFacebookPageID("546664955726052");
-		
+		facebookFansExtractor.setFacebookPageURL("https://www.facebook.com/Deccom-546664955726052");
+
 		ControlVariable controlVariable = new ControlVariable();
 		controlVariable.setExtractor(facebookFansExtractor);
 		controlVariable.setCreationMoment(LocalDateTime.now());
 		controlVariable.setStatus(Status.RUNNING);
-		controlVariable.setFrequency("0/"+10+" * * * * *");
+		controlVariable.setFrequency("0/" + 10 + " * * * * *");
 		controlVariable.setName("FBFansControlVar");
 		controlVariable.setControlVarEntries(Lists.newArrayList());
 
 		mongoTemplate.save(controlVariable);
 
 	}
-	
+
 	@ChangeSet(order = "08", author = "initiator", id = "08-addEvents")
 	public void addEvents(MongoTemplate mongoTemplate) {
 
@@ -238,7 +238,7 @@ public class InitialSetupMigration {
 		String event1Name, event2Name;
 		LocalDateTime event1CreationMoment, event2CreationMoment;
 		LocalDate event1StartingDate, event2StartingDate, event2EndingDate;
-		
+
 		event1 = new Event();
 		event2 = new Event();
 		event1Name = "event1Name";
@@ -248,7 +248,7 @@ public class InitialSetupMigration {
 		event1StartingDate = LocalDate.of(2018, 12, 18);
 		event2StartingDate = LocalDate.of(2018, 03, 18);
 		event2EndingDate = LocalDate.of(2018, 05, 01);
-		
+
 		event1.setName(event1Name);
 		event2.setName(event2Name);
 		event1.setCreationMoment(event1CreationMoment);

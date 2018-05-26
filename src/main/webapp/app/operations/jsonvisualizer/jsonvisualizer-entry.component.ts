@@ -52,7 +52,11 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
         const type = typeof (value);
         // Get type if value is not an array, dict or null (string, number or boolean)
         if (type !== 'object' && type !== 'undefined') {
-            return type;
+            if (isNaN(value)) {
+                return 'number';
+            } else {
+                return type;
+            }
         }
         // Get type of value when value is array
         if (Array.isArray(value)) {

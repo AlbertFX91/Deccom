@@ -9,8 +9,8 @@ import com.deccom.service.impl.util.RESTUtil;
 
 public class FacebookFansExtractor extends RESTExtractor implements ControlVariableExtractor {
 
-	@DeccomField(type=InputType.NUMBER)
-	private String facebookPageID;
+	@DeccomField(type = InputType.URL)
+	private String facebookPageURL;
 
 	public FacebookFansExtractor() {
 
@@ -18,7 +18,7 @@ public class FacebookFansExtractor extends RESTExtractor implements ControlVaria
 
 		String url, jsonPath;
 
-		url = "https://graph.facebook.com/v2.11/";
+		url = "https://graph.facebook.com/";
 		jsonPath = "$.fan_count";
 
 		setUrl(url);
@@ -27,26 +27,34 @@ public class FacebookFansExtractor extends RESTExtractor implements ControlVaria
 
 	}
 
-	public String getFacebookPageID() {
-		return facebookPageID;
+	public String getFacebookPageURL() {
+		return facebookPageURL;
 	}
 
-	public void setFacebookPageID(String facebookPageID) {
-		this.facebookPageID = facebookPageID;
+	public void setFacebookPageURL(String facebookPageURL) {
+		this.facebookPageURL = facebookPageURL;
+	}
+
+	public String obtainFacebookPageID() {
+		String url, body, key, value;
+
+		url = getUrl() + "?ids=" + getFacebookPageURL();
+		body = RESTUtil.getResponseFacebook(url);
+		key = "\"id\":";
+		value = body.substring(body.indexOf(key) + key.length() + 1, body.lastIndexOf("\""));
+
+		return value;
 	}
 
 	@Override
 	public Double getData() {
-
 		String url, body, value;
 
-		url = getUrl() + getFacebookPageID() + "?fields=fan_count";
-
+		url = getUrl() + obtainFacebookPageID() + "?fields=fan_count";
 		body = RESTUtil.getResponseFacebook(url);
 		value = getByJSONPath(body, getJsonPath());
 
 		return Double.parseDouble(value);
-
 	}
 
 	public static String getResponseFacebook(String url) {
