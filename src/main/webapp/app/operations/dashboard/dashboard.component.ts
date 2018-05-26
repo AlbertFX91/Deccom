@@ -94,6 +94,7 @@ import * as $ from 'jquery';
                     display: true,
                     min: 0,
                     ticks: {
+                        display: false,
                         beginAtZero: true
                     }
                 }]
@@ -153,10 +154,13 @@ import * as $ from 'jquery';
                     y: data.content[i]['controlVarEntries'][j]['value']
                 });
             }
+            const color = this.getRandomColor();
             const dato: any = {
                 data: dataToInsert,
                 label: data.content[i]['name'],
-                backgroundColor: data.content[i]['extractor']['style']['backgroundColor'],
+                backgroundColor: color,
+                borderColor: color,
+                borderWidth: '2px',
                 fill: false,
                 showLine: true
             }
@@ -298,5 +302,9 @@ import * as $ from 'jquery';
             'YEAR':  'month',
         }
         return units[interval];
+    }
+
+    private getRandomColor() {
+        return '#' + Math.floor(Math.random() * 16777215).toString(16);
     }
 }
