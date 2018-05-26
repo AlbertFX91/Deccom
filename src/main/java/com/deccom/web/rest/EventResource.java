@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
-import com.deccom.domain.Event;
+import com.deccom.domain.core.Event;
 import com.deccom.service.EventService;
 import com.deccom.service.impl.util.EventServiceException;
 import com.deccom.web.rest.util.HeaderUtil;

@@ -1,4 +1,4 @@
-package com.deccom.domain;
+package com.deccom.domain.core;
 
 import java.io.Serializable;
 import java.time.LocalDate;

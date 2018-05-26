@@ -3,24 +3,16 @@ package com.deccom.config.dbmigrations;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.stream.IntStream;
 
 import org.springframework.data.mongodb.core.MongoTemplate;
 
-import com.deccom.domain.Acme;
 import com.deccom.domain.Authority;
-import com.deccom.domain.Event;
-import com.deccom.domain.RESTConnection;
-import com.deccom.domain.RESTControlVar;
-import com.deccom.domain.RESTControlVarEntry;
 import com.deccom.domain.User;
 import com.deccom.domain.core.ControlVariable;
+import com.deccom.domain.core.Event;
 import com.deccom.domain.core.Status;
-import com.deccom.domain.core.extractor.rest.RESTExtractor;
 import com.deccom.domain.core.extractor.rest.facebook.FacebookFansExtractor;
 import com.deccom.domain.core.extractor.rest.twitter.TwitterFollowersExtractor;
-import com.deccom.domain.core.extractor.sql.MySQLExtractor;
-import com.deccom.domain.core.extractor.sql.SQLExtractor;
 import com.deccom.security.AuthoritiesConstants;
 import com.github.mongobee.changeset.ChangeLog;
 import com.github.mongobee.changeset.ChangeSet;
@@ -107,6 +99,7 @@ public class InitialSetupMigration {
 		mongoTemplate.save(userUser);
 	}
 
+	/*
 	@ChangeSet(order = "03", author = "initiator", id = "03-addAcmes")
 	public void addAcmes(MongoTemplate mongoTemplate) {
 		Integer numAcmes = 40;
@@ -121,7 +114,9 @@ public class InitialSetupMigration {
 		});
 
 	}
+	*/
 
+	/*
 	@ChangeSet(order = "05", author = "initiator", id = "05-addRESTControlVars")
 	public void addRESTControlVars(MongoTemplate mongoTemplate) {
 		RESTControlVar r = new RESTControlVar();
@@ -148,7 +143,9 @@ public class InitialSetupMigration {
 
 		mongoTemplate.save(r);
 	}
+	*/
 
+	/*
 	@ChangeSet(order = "06", author = "initiator", id = "06-addCoreControlVars")
 	public void addCoreControlVars(MongoTemplate mongoTemplate) {
 		RESTExtractor rest1 = new RESTExtractor();
@@ -210,7 +207,9 @@ public class InitialSetupMigration {
 		mongoTemplate.save(c4);
 
 	}
+	*/
 
+	/*
 	@ChangeSet(order = "07", author = "initiator", id = "07-addFacebookFansControlVars")
 	public void addFacebookFansControlVars(MongoTemplate mongoTemplate) {
 
@@ -231,7 +230,8 @@ public class InitialSetupMigration {
 		mongoTemplate.save(controlVariable);
 
 	}
-
+	*/
+	/*
 	@ChangeSet(order = "08", author = "initiator", id = "08-addEvents")
 	public void addEvents(MongoTemplate mongoTemplate) {
 
@@ -262,6 +262,7 @@ public class InitialSetupMigration {
 		mongoTemplate.save(event2);
 
 	}
+	*/
 	
 	@ChangeSet(order = "07", author = "initiator", id = "09-addPoliticiansTwitterAccounts")
 	public void addPoliticiansTwitterAccounts(MongoTemplate mongoTemplate) {
@@ -278,6 +279,21 @@ public class InitialSetupMigration {
 
 	}
 	
+	@ChangeSet(order = "08", author = "initiator", id = "10-addPoliticalPartyFacebookAccounts")
+	public void addPoliticalPartyFacebookAccounts(MongoTemplate mongoTemplate) {
+
+		ControlVariable ppCV = createFacebookFansCV("pp", "PP fans");
+		ControlVariable psoeCV = createFacebookFansCV("psoe", "PSOE fans");
+		ControlVariable csCV = createFacebookFansCV("Cs.Ciudadanos", "Ciudadanos fans");
+		ControlVariable pCV = createFacebookFansCV("ahorapodemos", "PODEMOS fans");
+		
+		mongoTemplate.save(ppCV);
+		mongoTemplate.save(psoeCV);
+		mongoTemplate.save(csCV);
+		mongoTemplate.save(pCV);
+
+	}
+	
 	public ControlVariable createTwitterFollowersCV(String username, String cvName) {
 		TwitterFollowersExtractor extractor = new TwitterFollowersExtractor();
 		ControlVariable res = new ControlVariable();
@@ -288,6 +304,24 @@ public class InitialSetupMigration {
 		res.setCreationMoment(LocalDateTime.now());
 		res.setStatus(Status.RUNNING);
 		res.setFrequency("0/"+30+" * * * * *");
+		res.setName(cvName);
+		res.setControlVarEntries(Lists.newArrayList());
+		
+		return res;
+	}
+	
+	public ControlVariable createFacebookFansCV(String page, String cvName) {
+		FacebookFansExtractor extractor = new FacebookFansExtractor();
+		ControlVariable res = new ControlVariable();
+
+		String url = "https://www.facebook.com/"+page+"/";
+		
+		extractor.setFacebookPageURL(url);
+		
+		res.setExtractor(extractor);
+		res.setCreationMoment(LocalDateTime.now());
+		res.setStatus(Status.RUNNING);
+		res.setFrequency("0/"+60+" * * * * *");
 		res.setName(cvName);
 		res.setControlVarEntries(Lists.newArrayList());
 		

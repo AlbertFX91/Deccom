@@ -5,12 +5,12 @@ import com.deccom.domain.core.extractor.ControlVariableExtractor;
 import com.deccom.domain.core.extractor.rest.RESTExtractor;
 import com.deccom.domain.core.fields.DeccomField;
 
-public class GithubUserFollowersExtractor extends RESTExtractor implements ControlVariableExtractor {
+public class GitHubUserFollowersExtractor extends RESTExtractor implements ControlVariableExtractor {
 
 	@DeccomField()
 	private String username;
 
-	public GithubUserFollowersExtractor() {
+	public GitHubUserFollowersExtractor() {
 
 		super();
 

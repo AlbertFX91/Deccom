@@ -148,7 +148,7 @@ import * as $ from 'jquery';
             const dataToInsert: any[] = [];
             for (let j = 0; j < data.content[i]['controlVarEntries'].length; j++) {
                 const date: Date = new Date(data.content[i]['controlVarEntries'][j]['creationMoment']);
-                date.setHours(date.getHours() + 2);
+                // date.setHours(date.getHours() + 2);
                 dataToInsert.push({
                     x: this.dateToNumber(date),
                     y: data.content[i]['controlVarEntries'][j]['value']
@@ -277,6 +277,7 @@ import * as $ from 'jquery';
     }
 
     private dateToNumber(date: Date) {
+        date.setHours(date.getHours() + 2);
         return date.getTime();
     }
     getDictIntervals() {
