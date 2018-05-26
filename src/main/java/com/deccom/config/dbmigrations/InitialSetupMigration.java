@@ -18,6 +18,7 @@ import com.deccom.domain.core.ControlVariable;
 import com.deccom.domain.core.Status;
 import com.deccom.domain.core.extractor.rest.RESTExtractor;
 import com.deccom.domain.core.extractor.rest.facebook.FacebookFansExtractor;
+import com.deccom.domain.core.extractor.rest.twitter.TwitterFollowersExtractor;
 import com.deccom.domain.core.extractor.sql.MySQLExtractor;
 import com.deccom.domain.core.extractor.sql.SQLExtractor;
 import com.deccom.security.AuthoritiesConstants;
@@ -260,6 +261,37 @@ public class InitialSetupMigration {
 		mongoTemplate.save(event1);
 		mongoTemplate.save(event2);
 
+	}
+	
+	@ChangeSet(order = "07", author = "initiator", id = "09-addPoliticiansTwitterAccounts")
+	public void addPoliticiansTwitterAccounts(MongoTemplate mongoTemplate) {
+
+		ControlVariable rajoyCV = createTwitterFollowersCV("marianorajoy", "Mariano Rajoy followers");
+		ControlVariable sanchezCV = createTwitterFollowersCV("sanchezcastejon", "Pedro Sánchez followers");
+		ControlVariable riveraCV = createTwitterFollowersCV("Albert_Rivera", "Albert Rivera followers");
+		ControlVariable iglesiasCV = createTwitterFollowersCV("Pablo_Iglesias_", "Pablo Iglesias followers");
+		
+		mongoTemplate.save(rajoyCV);
+		mongoTemplate.save(sanchezCV);
+		mongoTemplate.save(riveraCV);
+		mongoTemplate.save(iglesiasCV);
+
+	}
+	
+	public ControlVariable createTwitterFollowersCV(String username, String cvName) {
+		TwitterFollowersExtractor extractor = new TwitterFollowersExtractor();
+		ControlVariable res = new ControlVariable();
+
+		extractor.setUsername(username);
+		
+		res.setExtractor(extractor);
+		res.setCreationMoment(LocalDateTime.now());
+		res.setStatus(Status.RUNNING);
+		res.setFrequency("0/"+30+" * * * * *");
+		res.setName(cvName);
+		res.setControlVarEntries(Lists.newArrayList());
+		
+		return res;
 	}
 
 }
