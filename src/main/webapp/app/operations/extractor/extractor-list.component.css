@@ -35,3 +35,26 @@
     overflow: hidden; 
     text-overflow: ellipsis;
 }
+
+#extractor-types {
+    display: flex;
+    flex-direction: row;
+    height: 40px;
+    font-size: 1.5em;
+}
+#extractor-types > div {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+#extractor-types > div > div {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    height: 100%;
+}

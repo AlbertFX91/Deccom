@@ -16,8 +16,8 @@ import com.deccom.domain.RESTControlVarEntry;
 import com.deccom.domain.User;
 import com.deccom.domain.core.ControlVariable;
 import com.deccom.domain.core.Status;
-import com.deccom.domain.core.extractor.rest.FacebookFansExtractor;
 import com.deccom.domain.core.extractor.rest.RESTExtractor;
+import com.deccom.domain.core.extractor.rest.facebook.FacebookFansExtractor;
 import com.deccom.domain.core.extractor.sql.MySQLExtractor;
 import com.deccom.domain.core.extractor.sql.SQLExtractor;
 import com.deccom.security.AuthoritiesConstants;
@@ -175,7 +175,7 @@ public class InitialSetupMigration {
 		c1.setExtractor(rest1);
 		c1.setCreationMoment(LocalDateTime.now());
 		c1.setStatus(Status.RUNNING);
-		c1.setFrequency(10);
+		c1.setFrequency("0/"+10+" * * * * *");
 		c1.setName("RESTControlVar1");
 		c1.setControlVarEntries(Lists.newArrayList());
 
@@ -183,7 +183,7 @@ public class InitialSetupMigration {
 		c2.setExtractor(rest2);
 		c2.setCreationMoment(LocalDateTime.now());
 		c2.setStatus(Status.BLOCKED);
-		c2.setFrequency(10);
+		c2.setFrequency("0/"+10+" * * * * *");
 		c2.setName("RESTControlVar2");
 		c2.setControlVarEntries(Lists.newArrayList());
 
@@ -191,7 +191,7 @@ public class InitialSetupMigration {
 		c3.setExtractor(sql3);
 		c3.setCreationMoment(LocalDateTime.now());
 		c3.setStatus(Status.RUNNING);
-		c3.setFrequency(10);
+		c3.setFrequency("0/"+10+" * * * * *");
 		c3.setName("MySQLControlVar");
 		c3.setControlVarEntries(Lists.newArrayList());
 
@@ -199,7 +199,7 @@ public class InitialSetupMigration {
 		c4.setExtractor(sql4);
 		c4.setCreationMoment(LocalDateTime.now());
 		c4.setStatus(Status.RUNNING);
-		c4.setFrequency(10);
+		c4.setFrequency("0/"+10+" * * * * *");
 		c4.setName("SQLControlVar");
 		c4.setControlVarEntries(Lists.newArrayList());
 
@@ -217,11 +217,13 @@ public class InitialSetupMigration {
 
 		facebookFansExtractor = new FacebookFansExtractor();
 
+		facebookFansExtractor.setFacebookPageID("546664955726052");
+		
 		ControlVariable controlVariable = new ControlVariable();
 		controlVariable.setExtractor(facebookFansExtractor);
 		controlVariable.setCreationMoment(LocalDateTime.now());
 		controlVariable.setStatus(Status.RUNNING);
-		controlVariable.setFrequency(10);
+		controlVariable.setFrequency("0/"+10+" * * * * *");
 		controlVariable.setName("FBFansControlVar");
 		controlVariable.setControlVarEntries(Lists.newArrayList());
 

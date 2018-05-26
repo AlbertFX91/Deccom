@@ -179,7 +179,6 @@ only screen and (                min-resolution: 2dppx) {
 #contact {
     background-color: #006064; 
     width: 100%; 
-    height: 10%;
     padding: 20px 15%;
 }
 #contact-container {

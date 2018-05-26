@@ -104,8 +104,6 @@ public class RESTUtil {
 
 			// Facebook authentication settings
 			setFacebookAuthentication(con);
-			
-			System.out.println("Facebook con: " + con);
 
 			result = getResponse(con);
 

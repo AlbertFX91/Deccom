@@ -8,7 +8,7 @@ import { JhiDateUtils } from 'ng-jhipster';
 @Injectable()
 export class CVService {
 
-    private resourceUrl = 'api/controlvar/';
+    private resourceUrl = 'api/controlvar';
 
     cvCards: CV[];
 
@@ -17,6 +17,11 @@ export class CVService {
     }
 
     create(cv: NewCV): Observable<NewCV> {
+        const f: any = cv.controlVariable.frequency;
+        // Check if the string is a number
+        if (!isNaN(f)) {
+            cv.controlVariable.frequency = '0/' + f + ' * * * * *';
+        }
         return this.http.post(this.resourceUrl, cv).map((res: Response) => {
             const jsonResponse = res.json();
             return jsonResponse;
@@ -32,6 +37,11 @@ export class CVService {
     }
 
     update(cv: CV): Observable<CV> {
+        const f: any = cv.frequency;
+        // Check if the string is a number
+        if (!isNaN(f)) {
+            cv.frequency = '0/' + f + ' * * * * *';
+        }
         return this.http.put(this.resourceUrl + '/general/', cv).map((res: Response) => {
             const jsonResponse = res.json();
             this.convertItemFromServer(jsonResponse);
@@ -41,13 +51,13 @@ export class CVService {
 
     findAll(pageSettings: any): Observable<ResponseWrapper> {
         const options = this.createRequestOption(pageSettings);
-        return this.http.get(this.resourceUrl + 'all', options)
+        return this.http.get(this.resourceUrl + '/all', options)
             .map((res: Response) => res);
     }
 
     dates(startingDate: string, pageSettings: any): Observable<ResponseWrapper> {
         const options = this.createRequestOptionDate(startingDate, pageSettings);
-        return this.http.get(this.resourceUrl + 'dates', options)
+        return this.http.get(this.resourceUrl + '/dates', options)
             .map((res: Response) => res);
     }
 
@@ -58,15 +68,15 @@ export class CVService {
     }
 
     delete(id: string): Observable<Response> {
-        return this.http.delete(`${this.resourceUrl}/${id}`);
+        return this.http.delete(`${this.resourceUrl + '/delete'}/${id}`);
     }
 
     restart(id: string): Observable<Response> {
-        return this.http.get(this.resourceUrl + 'restart', this.createGetRequest(id));
+        return this.http.get(this.resourceUrl + '/restart', this.createGetRequest(id));
     }
 
     pause(id: string): Observable<Response> {
-        return this.http.get(this.resourceUrl + 'pause', this.createGetRequest(id));
+        return this.http.get(this.resourceUrl + '/pause', this.createGetRequest(id));
     }
 
     private convertResponse(res: Response): ResponseWrapper {
@@ -88,7 +98,7 @@ export class CVService {
         // options.params = params;
         return options;
     }
-  
+
     public createGetRequest(id: string): BaseRequestOptions {
         const options: BaseRequestOptions = new BaseRequestOptions();
         const params: URLSearchParams = new URLSearchParams();
@@ -96,7 +106,7 @@ export class CVService {
         options.params = params;
         return options;
     }
-  
+
     public createRequestOptionDate(startingDate: string, pageSettings: any): BaseRequestOptions {
         const options: BaseRequestOptions = createRequestOption(pageSettings);
         // const params: URLSearchParams = new URLSearchParams();

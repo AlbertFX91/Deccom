@@ -37,9 +37,8 @@ public class ControlVariable implements Serializable {
 	@Field("creationMoment")
 	private LocalDateTime creationMoment;
 	@NotNull
-	@Min(value = 1)
 	@Field("frequency")
-	private Integer frequency;
+	private String frequency;
 	@NotNull
 	@Field("controlVarEntries")
 	private List<ControlVariableEntry> controlVarEntries;
@@ -95,11 +94,11 @@ public class ControlVariable implements Serializable {
 		this.creationMoment = creationMoment;
 	}
 
-	public Integer getFrequency() {
+	public String getFrequency() {
 		return frequency;
 	}
 
-	public void setFrequency(Integer frequency) {
+	public void setFrequency(String frequency) {
 		this.frequency = frequency;
 	}
 

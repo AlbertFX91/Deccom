@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.support.CronSequenceGenerator;
 import org.springframework.stereotype.Service;
 
 import com.deccom.domain.core.ControlVariable;
@@ -55,6 +56,11 @@ public class ControlVariableService {
 
 		try {
 
+			// Checking the frequency expresion
+			if(!CronSequenceGenerator.isValidExpression(controlVariable.getFrequency())) {
+				throwException("Frequency: Cron expresion is not valid", "notValidCronExpresion", new Exception());
+			}
+			
 			// Checking the extractor
 			controlVariable.getExtractor().getData();
 
@@ -123,6 +129,10 @@ public class ControlVariableService {
 
 	public ControlVariable updateGeneral(ControlVariable cv) {
 		ControlVariable res = findOne(cv.getId());
+		
+		if(!CronSequenceGenerator.isValidExpression(cv.getFrequency())) {
+			throwException("Frequency: Cron expresion is not valid", "notValidCronExpresion", new Exception());
+		}
 		
 		res.setFrequency(cv.getFrequency());
 		res.setName(cv.getName());
@@ -227,6 +237,7 @@ public class ControlVariableService {
     public void delete(String id) {
         log.debug("Request to remove ControlVariable : {}", id);
     	ControlVariable cv = controlVariableRepository.findOne(id);
+    	cv.setStatus(Status.BLOCKED);
         schedulingService.stopJob(cv);
         controlVariableRepository.delete(id);
     } 

@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { DeccomSharedModule } from '../../shared';
+import { DeccomDashboardModule } from '../dashboard';
 
 import {
     CVService,
@@ -12,7 +13,9 @@ import {
     cvPopupRoute,
     CVPopupService,
     CVDialogComponent,
-    CVPopupComponent
+    CVPopupComponent,
+    CVDeletePopupComponent,
+    CVDeleteDialogComponent,
 } from './';
 
 const ENTITY_STATES = [
@@ -24,6 +27,7 @@ const ENTITY_STATES = [
     imports: [
         DeccomSharedModule,
         InfiniteScrollModule,
+        DeccomDashboardModule,
         RouterModule.forRoot(ENTITY_STATES, { useHash: true })
     ],
     declarations: [
@@ -31,12 +35,16 @@ const ENTITY_STATES = [
         CVCardComponent,
         CVDialogComponent,
         CVPopupComponent,
+        CVDeletePopupComponent,
+        CVDeleteDialogComponent
     ],
     entryComponents: [
         CVComponent,
         CVCardComponent,
         CVDialogComponent,
-        CVPopupComponent
+        CVPopupComponent,
+        CVDeletePopupComponent,
+        CVDeleteDialogComponent
     ],
     providers: [
         CVService,

@@ -97,9 +97,9 @@ jhipster:
 # ===================================================================
 
 application:
-    twitterUsername: XXXXXX
-    twitterConsumerKey: XXXXXX
-    twitterConsumerSecret: XXXXXX
-    facebookPageID: XXXXXX
-    facebookApplicationKey: XXXXXX
-    facebookSecretKey: XXXXXX
+    twitterUsername: XXXXXXXX
+    twitterConsumerKey: XXXXXXXX
+    twitterConsumerSecret: XXXXXXXX
+    facebookPageID: XXXXXXXX
+    facebookApplicationKey: XXXXXXXX
+    facebookSecretKey: XXXXXXXX

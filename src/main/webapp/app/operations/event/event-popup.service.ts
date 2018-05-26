@@ -26,29 +26,6 @@ export class EventPopupService {
 
             if (id) {
                 this.eventService.findOne(id).subscribe((event) => {
-                    /*
-                    if (event.creationMoment) {
-                        event.creationMoment = {
-                            year: event.creationMoment.getFullYear(),
-                            month: event.creationMoment.getMonth() + 1,
-                            day: event.creationMoment.getDate()
-                        };
-                    }
-                    if (event.startingDate) {
-                        event.startingDate = {
-                            year: event.startingDate.getFullYear(),
-                            month: event.startingDate.getMonth() + 1,
-                            day: event.startingDate.getDate()
-                        };
-                    }
-                    if (event.endingDate) {
-                        event.endingDate = {
-                            year: event.endingDate.getFullYear(),
-                            month: event.endingDate.getMonth() + 1,
-                            day: event.endingDate.getDate()
-                        };
-                    }
-                    */
                     this.ngbModalRef = this.eventModalRef(component, event);
                     resolve(this.ngbModalRef);
                 });

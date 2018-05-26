@@ -25,6 +25,8 @@ export class ExtractorCreationComponent implements OnInit, OnDestroy {
     extractorDisableFields: DeccomField[];
     isSaving: boolean;
 
+    advanzed: boolean;
+
     currentField: DeccomField;
 
     constructor(
@@ -40,6 +42,7 @@ export class ExtractorCreationComponent implements OnInit, OnDestroy {
     ) {
         this.controlvar = new CV();
         this.currentField = null;
+        this.advanzed = false;
     }
 
     loadExtractor() {
@@ -151,5 +154,13 @@ export class ExtractorCreationComponent implements OnInit, OnDestroy {
 
     onFinished() {
         this.currentField = null;
+    }
+
+    toggleFrequency() {
+        this.advanzed = !this.advanzed;
+    }
+
+    formatLabel(label: string) {
+        return label.charAt(0).toUpperCase() + label.slice(1);
     }
 }
