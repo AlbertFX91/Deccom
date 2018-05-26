@@ -7,22 +7,22 @@ import com.deccom.domain.core.fields.DeccomField;
 import com.deccom.domain.core.fields.InputType;
 import com.deccom.service.impl.util.RESTUtil;
 
-public class FacebookFansExtractor extends RESTExtractor implements ControlVariableExtractor {
-
+public class FacebookTalkingAboutExtractor extends RESTExtractor implements ControlVariableExtractor {
+	
 	@DeccomField(type = InputType.URL)
 	private String facebookPageURL;
 
-	public FacebookFansExtractor() {
+	public FacebookTalkingAboutExtractor() {
 		super();
 
 		String url, jsonPath;
 
 		url = "https://graph.facebook.com/";
-		jsonPath = "$.fan_count";
+		jsonPath = "$.talking_about_count";
 
 		setUrl(url);
 		setJsonPath(jsonPath);
-		setStyle(CVStyleUtil.facebookFans);
+		setStyle(CVStyleUtil.facebookTalkingAbout);
 	}
 
 	public String getFacebookPageURL() {
@@ -37,7 +37,7 @@ public class FacebookFansExtractor extends RESTExtractor implements ControlVaria
 	public Double getData() {
 		String url, body, value;
 
-		url = getUrl() + RESTUtil.getFacebookPageID(getUrl(), getFacebookPageURL()) + "?fields=fan_count";
+		url = getUrl() + RESTUtil.getFacebookPageID(getUrl(), getFacebookPageURL()) + "?fields=talking_about_count";
 		body = RESTUtil.getResponseFacebook(url);
 		value = getByJSONPath(body, getJsonPath());
 
