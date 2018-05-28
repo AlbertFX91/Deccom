@@ -207,7 +207,7 @@ public class ControlVariableResource {
 	 */
 	@GetMapping("/controlvar/dates")
 	@Timed
-	public Page<ControlVariable> findRunningControlVariablelsBetweenDates(Pageable pageable, String startingDate) {
+	public Page<ControlVariable> findRunningControlVariablesBetweenDates(Pageable pageable, String startingDate) {
 		log.debug("Request to get the running CVs between two dates");
 		return controlVariableService.findRunningControlVariablesBetweenDates(pageable, startingDate);
 	}
@@ -282,7 +282,7 @@ public class ControlVariableResource {
 	 *            the id of the controlvar to delete
 	 * @return the ResponseEntity with status 200 (OK)
 	 */
-	@DeleteMapping("/controlvar/delete/{id}")
+	@DeleteMapping("/controlvar/{id}")
 	@Timed
 	public ResponseEntity<Void> deleteCV(@PathVariable String id) {
 		log.debug("REST request to delete CV : {}", id);

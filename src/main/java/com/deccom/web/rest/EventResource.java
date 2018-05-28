@@ -172,7 +172,7 @@ public class EventResource {
 	 *            the id of the event to delete
 	 * @return the ResponseEntity with status 200 (OK)
 	 */
-	@DeleteMapping("/event/delete/{id}")
+	@DeleteMapping("/event/{id}")
 	@Timed
 	public ResponseEntity<Void> deleteEvent(@PathVariable String id) {
 		log.debug("REST request to delete Event : {}", id);

@@ -15,6 +15,7 @@ import * as $ from 'jquery';
 }) export class DashboardComponent implements OnInit, OnDestroy {
 
     chart: any[];
+    chartType: string;
     CVs: any[];
     events: any[];
     chartDataAux: any[];
@@ -47,6 +48,7 @@ import * as $ from 'jquery';
 
     init() {
         this.chart = [];
+        this.chartType = 'scatter';
         this.CVs = [];
         this.events = [];
         this.chartDataAux = [];
@@ -268,7 +270,6 @@ import * as $ from 'jquery';
         this.init();
         this.interval = name;
         this.last = this.getDictIntervals()[name](new Date());
-        console.log(this.last);
         this.loadAll();
     }
 
@@ -282,11 +283,11 @@ import * as $ from 'jquery';
     }
     getDictIntervals() {
         return {
-            'HOUR':  (today) => new Date(today.setHours(today.getHours() - 1)),
-            'DAY':   (today) => new Date(new Date().setDate(today.getDate() - 1)),
-            'WEEK':  (today) => new Date(new Date().setDate(today.getDate() - 7)),
+            'HOUR': (today) => new Date(today.setHours(today.getHours() - 1)),
+            'DAY': (today) => new Date(new Date().setDate(today.getDate() - 1)),
+            'WEEK': (today) => new Date(new Date().setDate(today.getDate() - 7)),
             'MONTH': (today) => new Date(today.setMonth(today.getMonth() - 1)),
-            'YEAR':  (today) => new Date(today.setFullYear(today.getFullYear() - 1)),
+            'YEAR': (today) => new Date(today.setFullYear(today.getFullYear() - 1)),
         };
     }
 
@@ -296,11 +297,11 @@ import * as $ from 'jquery';
 
     getUnitByInterval(interval: string) {
         const units = {
-            'HOUR':  'hour',
-            'DAY':   'hour',
-            'WEEK':  'day',
+            'HOUR': 'hour',
+            'DAY': 'hour',
+            'WEEK': 'day',
             'MONTH': 'day',
-            'YEAR':  'month',
+            'YEAR': 'month',
         }
         return units[interval];
     }

@@ -112,11 +112,13 @@ public class ControlVariableService {
 		date = LocalDateTime.parse(startingDate, formatter);
 
 		for (ControlVariable controlVariable : result) {
+			List<ControlVariableEntry> controlVariableEntries = new ArrayList<ControlVariableEntry>();
 			for (ControlVariableEntry controlVariableEntry : controlVariable.getControlVarEntries()) {
 				if (controlVariableEntry.getCreationMoment().isBefore(date)) {
-					controlVariable.getControlVarEntries().remove(controlVariableEntry);
+					controlVariableEntries.add(controlVariableEntry);
 				}
 			}
+			controlVariable.getControlVarEntries().removeAll(controlVariableEntries);
 		}
 
 		return result;
