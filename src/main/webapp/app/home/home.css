@@ -201,3 +201,52 @@ only screen and (                min-resolution: 2dppx) {
     color: white;
     text-decoration: none;
 }
+
+#team-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.team-member-data {
+    display: flex;
+    flex-direction: row;
+}
+
+.team-member-container {
+    margin: 0 10px;
+    flex-grow: 1;
+}
+
+.team-member-contact {
+    display: flex;
+    flex-direction: column;
+}
+.team-member-name {
+    text-align: center;
+}
+
+.team-member-img-container {
+    display: flex;
+    flex-grow: 10;
+    justify-content: center;
+}
+
+.team-member-img {
+    height: 100px;
+    width: 100px;
+    border-radius: 100%;
+    border: lightblue solid 1px;
+}
+
+.team-member-contact {
+    display: flex;
+    flex-grow: 1;
+}
+
+.team-member-contact > a {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+}
