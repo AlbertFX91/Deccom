@@ -30,7 +30,6 @@ import { CV } from '../cv/cv.model';
         private eventManager: JhiEventManager
     ) {
         this.CVs = [];
-        // this.init();
     }
 
     ngOnInit() {
@@ -39,9 +38,7 @@ import { CV } from '../cv/cv.model';
 
     ngOnDestroy() { }
 
-
     init() {
-        // console.log(this.cvCard);
         this.chartType = 'scatter';
         this.chartOptions = {
             responsive: true,
@@ -54,7 +51,7 @@ import { CV } from '../cv/cv.model';
                     display: true,
                     type: 'time',
                     time: {
-                        unit: "day",
+                        unit: 'day',
                         min: this.dateToNumber(new Date(new Date().getTime() - (7 * 24 * 60 * 60 * 1000))),
                         unitStepSize: 1,
                         displayFormats: {
@@ -103,7 +100,7 @@ import { CV } from '../cv/cv.model';
                 }
             },
         };
-        
+
         const dataToInsert = [];
         for (let j = 0; j < this.cvCard.controlVarEntries.length; j++) {
             const date: Date = new Date(this.cvCard.controlVarEntries[j].creationMoment);
@@ -112,7 +109,7 @@ import { CV } from '../cv/cv.model';
                 y: this.cvCard.controlVarEntries[j].value
             });
         }
-        
+
         const color = this.cvCard.extractor.style.backgroundColor;
         const dato: any = {
             data: dataToInsert,

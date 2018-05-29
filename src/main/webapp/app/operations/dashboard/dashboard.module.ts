@@ -30,8 +30,8 @@ const ENTITY_STATES = [
         DashboardComponent,
         DashboardMinComponent
     ],
-    exports: [ 
-        DashboardMinComponent 
+    exports: [
+        DashboardMinComponent
     ],
     providers: [
     ],
