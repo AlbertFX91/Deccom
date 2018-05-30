@@ -1,4 +1,4 @@
-package com.deccom.domain.core.extractor.github;
+package com.deccom.domain.core.extractor.rest.github;
 
 import com.deccom.domain.core.CVStyleUtil;
 import com.deccom.domain.core.extractor.ControlVariableExtractor;
@@ -20,7 +20,7 @@ public class GitHubUserFollowersExtractor extends RESTExtractor implements Contr
 
 		setUrl(url);
 		setJsonPath("$.followers");
-		setStyle(CVStyleUtil.githubUserFollowers);
+		setStyle(CVStyleUtil.gitHubUserFollowers);
 	}
 
 	public String getUsername() {

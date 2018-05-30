@@ -10,5 +10,5 @@ public class CVStyleUtil {
 	public static CVStyle oraclesql = CVStyle.create("OracleSQL", "fa-table", "#F5B078", "#000000");
 	public static CVStyle twitterFollowers = CVStyle.create("Twitter followers", "fa-twitter-square", "#00ACED", "#FFFFFF");
 	public static CVStyle twitterTweetsCount = CVStyle.create("Twitter tweets count", "fa-twitter-square", "#00ACED", "#FFFFFF");
-	public static CVStyle githubUserFollowers = CVStyle.create("Github followers user", "fa-github", "#000000", "#FFFFFF");
+	public static CVStyle gitHubUserFollowers = CVStyle.create("GitHub user followers", "fa-github", "#000000", "#FFFFFF");
 }
