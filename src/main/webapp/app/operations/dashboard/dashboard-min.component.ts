@@ -3,8 +3,6 @@ import { CVService } from '../cv/cv.service';
 import { EventService } from '../event/event.service';
 import { ResponseWrapper, ITEMS_PER_PAGE } from '../../shared';
 import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
-// import { Chart } from 'chart.js';
-import 'chartjs-plugin-annotation';
 
 import * as $ from 'jquery';
 import { CV } from '../cv/cv.model';
@@ -16,13 +14,13 @@ import { CV } from '../cv/cv.model';
 }) export class DashboardMinComponent implements OnInit, OnDestroy {
 
     @Input()
+    id: string;
     cvCard: CV;
-
     chartType: string;
     CVs: any[];
     chartOptions: any;
-
-    interval: string;
+    numberOfEntries: number;
+    loaded: boolean;
 
     constructor(
         public cvService: CVService,
@@ -30,6 +28,8 @@ import { CV } from '../cv/cv.model';
         private eventManager: JhiEventManager
     ) {
         this.CVs = [];
+        this.numberOfEntries = 20;
+        this.loaded = false;
     }
 
     ngOnInit() {
@@ -39,6 +39,10 @@ import { CV } from '../cv/cv.model';
     ngOnDestroy() { }
 
     init() {
+        this.cvService.findLimitedNumberOfEntries(this.id, this.numberOfEntries).subscribe((cvCard) => {
+            this.cvCard = cvCard;
+            this.onSuccess();
+        });
         this.chartType = 'scatter';
         this.chartOptions = {
             responsive: true,
@@ -51,24 +55,22 @@ import { CV } from '../cv/cv.model';
                     display: true,
                     type: 'time',
                     time: {
-                        unit: 'day',
-                        min: this.dateToNumber(new Date(new Date().getTime() - (7 * 24 * 60 * 60 * 1000))),
+                        unit: 'minute',
                         unitStepSize: 1,
                         displayFormats: {
-                            day: 'll'
+                            day: 'hh:mm:ss'
                         }
                     },
                     ticks: {
-                        display: false
+                        display: true
                     }
                 }],
                 yAxes: [{
                     id: 'y-axis-0',
-                    type: 'logarithmic',
                     display: true,
                     min: 0,
                     ticks: {
-                        display: false,
+                        display: true,
                         beginAtZero: true
                     }
                 }]
@@ -100,7 +102,9 @@ import { CV } from '../cv/cv.model';
                 }
             },
         };
+    }
 
+    onSuccess() {
         const dataToInsert = [];
         for (let j = 0; j < this.cvCard.controlVarEntries.length; j++) {
             const date: Date = new Date(this.cvCard.controlVarEntries[j].creationMoment);
@@ -121,6 +125,11 @@ import { CV } from '../cv/cv.model';
             showLine: true
         }
         this.CVs.push(dato);
+        this.loaded = true;
+    }
+
+    private onError(error) {
+        this.alertService.error(error.message, null, null);
     }
 
     private dateToNumber(date: Date) {

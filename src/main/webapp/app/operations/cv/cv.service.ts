@@ -61,6 +61,14 @@ export class CVService {
             .map((res: Response) => res);
     }
 
+    findLimitedNumberOfEntries(id: string, numberOfEntries: number): Observable<CV> {
+        return this.http.get(`${this.resourceUrl}/${id}/${numberOfEntries}`).map((res: Response) => {
+            const jsonResponse = res.json();
+            this.convertItemFromServer(jsonResponse);
+            return jsonResponse;
+        });
+    }
+
     query(req?: any): Observable<ResponseWrapper> {
         const options = createRequestOption(req);
         return this.http.get(this.resourceUrl, options)

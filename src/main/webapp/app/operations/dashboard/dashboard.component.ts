@@ -27,7 +27,6 @@ import * as $ from 'jquery';
     itemsPerPage: number;
     pageSettings: any;
     loaded: boolean;
-
     interval: string;
 
     constructor(
@@ -88,6 +87,9 @@ import * as $ from 'jquery';
                         displayFormats: {
                             day: 'll'
                         }
+                    },
+                    ticks: {
+                        display: true
                     }
                 }],
                 yAxes: [{
