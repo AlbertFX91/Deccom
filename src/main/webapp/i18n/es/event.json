@@ -9,7 +9,7 @@
             "name": "Nombre",
             "creationMoment": "Desde",
             "startingDate": "Fecha de inicio",
-            "endingDate": "Fecha de fin",
+            "endingDate": "Fecha de finalización",
             "created": "El evento ha sido creado",
             "updated": "El evento ha sido actualizado",
             "confirmDelete": "¿Está seguro de que quiere borrar este evento?",
