@@ -58,11 +58,11 @@ import { CV } from '../cv/cv.model';
                         unit: 'minute',
                         unitStepSize: 1,
                         displayFormats: {
-                            day: 'hh:mm:ss'
+                            day: 'HH:mm:ss'
                         }
                     },
                     ticks: {
-                        display: true
+                        display: false
                     }
                 }],
                 yAxes: [{
