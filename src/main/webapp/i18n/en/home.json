@@ -29,7 +29,8 @@
         "contact": {
             "hello": "Hello from Seville",
             "contact": "Contact us",
-            "find": "Find us"
+            "find": "Find us",
+            "about": "About us"
         },
         "title": "Deccom",
         "subtitle": "This is your homepage",

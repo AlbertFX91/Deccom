@@ -4,7 +4,8 @@
             "home": {
                 "title": "Cuadro de mando"
             },
-            "noCVs": "No hay variables de control que mostrar en este momento"
+            "noCVs": "No hay variables de control que mostrar en este momento",
+            "noentries": "No hay entradas que mostrar en este momento"
         }
     }
 }

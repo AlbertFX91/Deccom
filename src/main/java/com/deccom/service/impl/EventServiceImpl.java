@@ -11,7 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.deccom.domain.Event;
+import com.deccom.domain.core.Event;
 import com.deccom.repository.EventRepository;
 import com.deccom.service.EventService;
 import com.deccom.service.impl.util.EventServiceException;

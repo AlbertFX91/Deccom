@@ -5,7 +5,7 @@ import java.text.ParseException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.deccom.domain.Event;
+import com.deccom.domain.core.Event;
 
 /**
  * Service Interface for managing Event.

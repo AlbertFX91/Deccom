@@ -62,8 +62,8 @@ public class ControlVariableResource {
 
 		restControlVariable.setName("restControlVariable");
 		sqlControlVariable.setName("sqlControlVariable");
-		restControlVariable.setFrequency("0/"+30+" * * * * *");
-		sqlControlVariable.setFrequency("0/"+15+" * * * * *");
+		restControlVariable.setFrequency("0/" + 30 + " * * * * *");
+		sqlControlVariable.setFrequency("0/" + 15 + " * * * * *");
 		restExtractor.setUrl("http://jsonplaceholder.typicode.com/users");
 		restExtractor.setJsonPath("$[2].phone");
 		sqlExtractor.setUsername("developer");
@@ -181,6 +181,22 @@ public class ControlVariableResource {
 	/**
 	 * Get all the controlvars with a limited number of entries.
 	 *
+	 * @param id
+	 *            the id of the controlvar to retrieve
+	 * @param numberOfEntries
+	 *            the number of entries included in the controlvar
+	 * @return the core_controlvar with a limited number of entries
+	 */
+	@GetMapping("/controlvar/{id}/{numberOfEntries}")
+	@Timed
+	public ControlVariable findLimitedNumberOfEntries(@PathVariable String id, @PathVariable Integer numberOfEntries) {
+		log.debug("Request to get a CV with limited entries");
+		return controlVariableService.findLimitedNumberOfEntries(id, numberOfEntries);
+	}
+
+	/**
+	 * Get a controlvar with a limited number of entries.
+	 *
 	 * @param pageable
 	 *            the pagination information
 	 * @param numberOfEntries
@@ -207,7 +223,7 @@ public class ControlVariableResource {
 	 */
 	@GetMapping("/controlvar/dates")
 	@Timed
-	public Page<ControlVariable> findRunningControlVariablelsBetweenDates(Pageable pageable, String startingDate) {
+	public Page<ControlVariable> findRunningControlVariablesBetweenDates(Pageable pageable, String startingDate) {
 		log.debug("Request to get the running CVs between two dates");
 		return controlVariableService.findRunningControlVariablesBetweenDates(pageable, startingDate);
 	}
@@ -282,7 +298,7 @@ public class ControlVariableResource {
 	 *            the id of the controlvar to delete
 	 * @return the ResponseEntity with status 200 (OK)
 	 */
-	@DeleteMapping("/controlvar/delete/{id}")
+	@DeleteMapping("/controlvar/{id}")
 	@Timed
 	public ResponseEntity<Void> deleteCV(@PathVariable String id) {
 		log.debug("REST request to delete CV : {}", id);

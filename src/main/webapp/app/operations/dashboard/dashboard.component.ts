@@ -15,6 +15,7 @@ import * as $ from 'jquery';
 }) export class DashboardComponent implements OnInit, OnDestroy {
 
     chart: any[];
+    chartType: string;
     CVs: any[];
     events: any[];
     chartDataAux: any[];
@@ -26,7 +27,6 @@ import * as $ from 'jquery';
     itemsPerPage: number;
     pageSettings: any;
     loaded: boolean;
-
     interval: string;
 
     constructor(
@@ -47,6 +47,7 @@ import * as $ from 'jquery';
 
     init() {
         this.chart = [];
+        this.chartType = 'scatter';
         this.CVs = [];
         this.events = [];
         this.chartDataAux = [];
@@ -86,6 +87,9 @@ import * as $ from 'jquery';
                         displayFormats: {
                             day: 'll'
                         }
+                    },
+                    ticks: {
+                        display: true
                     }
                 }],
                 yAxes: [{
@@ -94,6 +98,7 @@ import * as $ from 'jquery';
                     display: true,
                     min: 0,
                     ticks: {
+                        display: false,
                         beginAtZero: true
                     }
                 }]
@@ -147,16 +152,19 @@ import * as $ from 'jquery';
             const dataToInsert: any[] = [];
             for (let j = 0; j < data.content[i]['controlVarEntries'].length; j++) {
                 const date: Date = new Date(data.content[i]['controlVarEntries'][j]['creationMoment']);
-                date.setHours(date.getHours() + 2);
+                // date.setHours(date.getHours() + 2);
                 dataToInsert.push({
                     x: this.dateToNumber(date),
                     y: data.content[i]['controlVarEntries'][j]['value']
                 });
             }
+            const color = this.getRandomColor();
             const dato: any = {
                 data: dataToInsert,
                 label: data.content[i]['name'],
-                backgroundColor: data.content[i]['extractor']['style']['backgroundColor'],
+                backgroundColor: color,
+                borderColor: color,
+                borderWidth: '2px',
                 fill: false,
                 showLine: true
             }
@@ -264,7 +272,6 @@ import * as $ from 'jquery';
         this.init();
         this.interval = name;
         this.last = this.getDictIntervals()[name](new Date());
-        console.log(this.last);
         this.loadAll();
     }
 
@@ -273,15 +280,16 @@ import * as $ from 'jquery';
     }
 
     private dateToNumber(date: Date) {
+        date.setHours(date.getHours() + 2);
         return date.getTime();
     }
     getDictIntervals() {
         return {
-            'HOUR':  (today) => new Date(today.setHours(today.getHours() - 1)),
-            'DAY':   (today) => new Date(new Date().setDate(today.getDate() - 1)),
-            'WEEK':  (today) => new Date(new Date().setDate(today.getDate() - 7)),
+            'HOUR': (today) => new Date(today.setHours(today.getHours() - 1)),
+            'DAY': (today) => new Date(new Date().setDate(today.getDate() - 1)),
+            'WEEK': (today) => new Date(new Date().setDate(today.getDate() - 7)),
             'MONTH': (today) => new Date(today.setMonth(today.getMonth() - 1)),
-            'YEAR':  (today) => new Date(today.setFullYear(today.getFullYear() - 1)),
+            'YEAR': (today) => new Date(today.setFullYear(today.getFullYear() - 1)),
         };
     }
 
@@ -291,12 +299,16 @@ import * as $ from 'jquery';
 
     getUnitByInterval(interval: string) {
         const units = {
-            'HOUR':  'hour',
-            'DAY':   'hour',
-            'WEEK':  'day',
+            'HOUR': 'hour',
+            'DAY': 'hour',
+            'WEEK': 'day',
             'MONTH': 'day',
-            'YEAR':  'month',
+            'YEAR': 'month',
         }
         return units[interval];
+    }
+
+    private getRandomColor() {
+        return '#' + Math.floor(Math.random() * 16777215).toString(16);
     }
 }

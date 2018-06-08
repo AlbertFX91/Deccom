@@ -3,23 +3,16 @@ package com.deccom.config.dbmigrations;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.stream.IntStream;
 
 import org.springframework.data.mongodb.core.MongoTemplate;
 
-import com.deccom.domain.Acme;
 import com.deccom.domain.Authority;
-import com.deccom.domain.Event;
-import com.deccom.domain.RESTConnection;
-import com.deccom.domain.RESTControlVar;
-import com.deccom.domain.RESTControlVarEntry;
 import com.deccom.domain.User;
 import com.deccom.domain.core.ControlVariable;
+import com.deccom.domain.core.Event;
 import com.deccom.domain.core.Status;
-import com.deccom.domain.core.extractor.rest.RESTExtractor;
 import com.deccom.domain.core.extractor.rest.facebook.FacebookFansExtractor;
-import com.deccom.domain.core.extractor.sql.MySQLExtractor;
-import com.deccom.domain.core.extractor.sql.SQLExtractor;
+import com.deccom.domain.core.extractor.rest.twitter.TwitterFollowersExtractor;
 import com.deccom.security.AuthoritiesConstants;
 import com.github.mongobee.changeset.ChangeLog;
 import com.github.mongobee.changeset.ChangeSet;
@@ -106,6 +99,7 @@ public class InitialSetupMigration {
 		mongoTemplate.save(userUser);
 	}
 
+	/*
 	@ChangeSet(order = "03", author = "initiator", id = "03-addAcmes")
 	public void addAcmes(MongoTemplate mongoTemplate) {
 		Integer numAcmes = 40;
@@ -120,7 +114,9 @@ public class InitialSetupMigration {
 		});
 
 	}
-	
+	*/
+
+	/*
 	@ChangeSet(order = "05", author = "initiator", id = "05-addRESTControlVars")
 	public void addRESTControlVars(MongoTemplate mongoTemplate) {
 		RESTControlVar r = new RESTControlVar();
@@ -147,7 +143,9 @@ public class InitialSetupMigration {
 
 		mongoTemplate.save(r);
 	}
+	*/
 
+	/*
 	@ChangeSet(order = "06", author = "initiator", id = "06-addCoreControlVars")
 	public void addCoreControlVars(MongoTemplate mongoTemplate) {
 		RESTExtractor rest1 = new RESTExtractor();
@@ -175,7 +173,7 @@ public class InitialSetupMigration {
 		c1.setExtractor(rest1);
 		c1.setCreationMoment(LocalDateTime.now());
 		c1.setStatus(Status.RUNNING);
-		c1.setFrequency("0/"+10+" * * * * *");
+		c1.setFrequency("0/" + 10 + " * * * * *");
 		c1.setName("RESTControlVar1");
 		c1.setControlVarEntries(Lists.newArrayList());
 
@@ -183,7 +181,7 @@ public class InitialSetupMigration {
 		c2.setExtractor(rest2);
 		c2.setCreationMoment(LocalDateTime.now());
 		c2.setStatus(Status.BLOCKED);
-		c2.setFrequency("0/"+10+" * * * * *");
+		c2.setFrequency("0/" + 10 + " * * * * *");
 		c2.setName("RESTControlVar2");
 		c2.setControlVarEntries(Lists.newArrayList());
 
@@ -191,7 +189,7 @@ public class InitialSetupMigration {
 		c3.setExtractor(sql3);
 		c3.setCreationMoment(LocalDateTime.now());
 		c3.setStatus(Status.RUNNING);
-		c3.setFrequency("0/"+10+" * * * * *");
+		c3.setFrequency("0/" + 10 + " * * * * *");
 		c3.setName("MySQLControlVar");
 		c3.setControlVarEntries(Lists.newArrayList());
 
@@ -199,7 +197,7 @@ public class InitialSetupMigration {
 		c4.setExtractor(sql4);
 		c4.setCreationMoment(LocalDateTime.now());
 		c4.setStatus(Status.RUNNING);
-		c4.setFrequency("0/"+10+" * * * * *");
+		c4.setFrequency("0/" + 10 + " * * * * *");
 		c4.setName("SQLControlVar");
 		c4.setControlVarEntries(Lists.newArrayList());
 
@@ -209,7 +207,9 @@ public class InitialSetupMigration {
 		mongoTemplate.save(c4);
 
 	}
+	*/
 
+	/*
 	@ChangeSet(order = "07", author = "initiator", id = "07-addFacebookFansControlVars")
 	public void addFacebookFansControlVars(MongoTemplate mongoTemplate) {
 
@@ -217,20 +217,21 @@ public class InitialSetupMigration {
 
 		facebookFansExtractor = new FacebookFansExtractor();
 
-		facebookFansExtractor.setFacebookPageID("546664955726052");
-		
+		facebookFansExtractor.setFacebookPageURL("https://www.facebook.com/Deccom-546664955726052");
+
 		ControlVariable controlVariable = new ControlVariable();
 		controlVariable.setExtractor(facebookFansExtractor);
 		controlVariable.setCreationMoment(LocalDateTime.now());
 		controlVariable.setStatus(Status.RUNNING);
-		controlVariable.setFrequency("0/"+10+" * * * * *");
+		controlVariable.setFrequency("0/" + 10 + " * * * * *");
 		controlVariable.setName("FBFansControlVar");
 		controlVariable.setControlVarEntries(Lists.newArrayList());
 
 		mongoTemplate.save(controlVariable);
 
 	}
-	
+	*/
+	/*
 	@ChangeSet(order = "08", author = "initiator", id = "08-addEvents")
 	public void addEvents(MongoTemplate mongoTemplate) {
 
@@ -238,7 +239,7 @@ public class InitialSetupMigration {
 		String event1Name, event2Name;
 		LocalDateTime event1CreationMoment, event2CreationMoment;
 		LocalDate event1StartingDate, event2StartingDate, event2EndingDate;
-		
+
 		event1 = new Event();
 		event2 = new Event();
 		event1Name = "event1Name";
@@ -248,7 +249,7 @@ public class InitialSetupMigration {
 		event1StartingDate = LocalDate.of(2018, 12, 18);
 		event2StartingDate = LocalDate.of(2018, 03, 18);
 		event2EndingDate = LocalDate.of(2018, 05, 01);
-		
+
 		event1.setName(event1Name);
 		event2.setName(event2Name);
 		event1.setCreationMoment(event1CreationMoment);
@@ -260,6 +261,71 @@ public class InitialSetupMigration {
 		mongoTemplate.save(event1);
 		mongoTemplate.save(event2);
 
+	}
+	*/
+	
+	@ChangeSet(order = "07", author = "initiator", id = "09-addPoliticiansTwitterAccounts")
+	public void addPoliticiansTwitterAccounts(MongoTemplate mongoTemplate) {
+
+		ControlVariable rajoyCV = createTwitterFollowersCV("marianorajoy", "Mariano Rajoy followers");
+		ControlVariable sanchezCV = createTwitterFollowersCV("sanchezcastejon", "Pedro Sánchez followers");
+		ControlVariable riveraCV = createTwitterFollowersCV("Albert_Rivera", "Albert Rivera followers");
+		ControlVariable iglesiasCV = createTwitterFollowersCV("Pablo_Iglesias_", "Pablo Iglesias followers");
+		
+		mongoTemplate.save(rajoyCV);
+		mongoTemplate.save(sanchezCV);
+		mongoTemplate.save(riveraCV);
+		mongoTemplate.save(iglesiasCV);
+
+	}
+	
+	@ChangeSet(order = "08", author = "initiator", id = "10-addPoliticalPartyFacebookAccounts")
+	public void addPoliticalPartyFacebookAccounts(MongoTemplate mongoTemplate) {
+
+		ControlVariable ppCV = createFacebookFansCV("pp", "PP fans");
+		ControlVariable psoeCV = createFacebookFansCV("psoe", "PSOE fans");
+		ControlVariable csCV = createFacebookFansCV("Cs.Ciudadanos", "Ciudadanos fans");
+		ControlVariable pCV = createFacebookFansCV("ahorapodemos", "PODEMOS fans");
+		
+		mongoTemplate.save(ppCV);
+		mongoTemplate.save(psoeCV);
+		mongoTemplate.save(csCV);
+		mongoTemplate.save(pCV);
+
+	}
+	
+	public ControlVariable createTwitterFollowersCV(String username, String cvName) {
+		TwitterFollowersExtractor extractor = new TwitterFollowersExtractor();
+		ControlVariable res = new ControlVariable();
+
+		extractor.setUsername(username);
+		
+		res.setExtractor(extractor);
+		res.setCreationMoment(LocalDateTime.now());
+		res.setStatus(Status.RUNNING);
+		res.setFrequency("0/"+30+" * * * * *");
+		res.setName(cvName);
+		res.setControlVarEntries(Lists.newArrayList());
+		
+		return res;
+	}
+	
+	public ControlVariable createFacebookFansCV(String page, String cvName) {
+		FacebookFansExtractor extractor = new FacebookFansExtractor();
+		ControlVariable res = new ControlVariable();
+
+		String url = "https://www.facebook.com/"+page+"/";
+		
+		extractor.setFacebookPageURL(url);
+		
+		res.setExtractor(extractor);
+		res.setCreationMoment(LocalDateTime.now());
+		res.setStatus(Status.RUNNING);
+		res.setFrequency("0/"+60+" * * * * *");
+		res.setName(cvName);
+		res.setControlVarEntries(Lists.newArrayList());
+		
+		return res;
 	}
 
 }

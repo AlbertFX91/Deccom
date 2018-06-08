@@ -29,7 +29,8 @@
         "contact": {
             "hello": "Saludos desde Sevilla",
             "contact": "Contacta con nosotros",
-            "find": "Encuéntranos"
+            "find": "Encuéntranos",
+            "about": "Sobre nosotros"
         },
         "title": "Deccom",
         "subtitle": "Esta es su página de inicio",

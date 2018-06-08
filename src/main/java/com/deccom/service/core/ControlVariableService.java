@@ -57,10 +57,10 @@ public class ControlVariableService {
 		try {
 
 			// Checking the frequency expresion
-			if(!CronSequenceGenerator.isValidExpression(controlVariable.getFrequency())) {
+			if (!CronSequenceGenerator.isValidExpression(controlVariable.getFrequency())) {
 				throwException("Frequency: Cron expresion is not valid", "notValidCronExpresion", new Exception());
 			}
-			
+
 			// Checking the extractor
 			controlVariable.getExtractor().getData();
 
@@ -100,6 +100,11 @@ public class ControlVariableService {
 		return controlVariableRepository.findAllLimitedNumberOfEntriesQuery(pageable, -numberOfEntries);
 	}
 
+	public ControlVariable findLimitedNumberOfEntries(String id, Integer numberOfEntries) {
+		log.debug("Request to get a CV with limited entries");
+		return controlVariableRepository.findLimitedNumberOfEntries(id, -numberOfEntries);
+	}
+
 	public Page<ControlVariable> findRunningControlVariablesBetweenDates(Pageable pageable, String startingDate) {
 		log.debug("Request to get the running CVs between two dates");
 
@@ -112,11 +117,13 @@ public class ControlVariableService {
 		date = LocalDateTime.parse(startingDate, formatter);
 
 		for (ControlVariable controlVariable : result) {
+			List<ControlVariableEntry> controlVariableEntries = new ArrayList<ControlVariableEntry>();
 			for (ControlVariableEntry controlVariableEntry : controlVariable.getControlVarEntries()) {
 				if (controlVariableEntry.getCreationMoment().isBefore(date)) {
-					controlVariable.getControlVarEntries().remove(controlVariableEntry);
+					controlVariableEntries.add(controlVariableEntry);
 				}
 			}
+			controlVariable.getControlVarEntries().removeAll(controlVariableEntries);
 		}
 
 		return result;
@@ -129,24 +136,24 @@ public class ControlVariableService {
 
 	public ControlVariable updateGeneral(ControlVariable cv) {
 		ControlVariable res = findOne(cv.getId());
-		
-		if(!CronSequenceGenerator.isValidExpression(cv.getFrequency())) {
+
+		if (!CronSequenceGenerator.isValidExpression(cv.getFrequency())) {
 			throwException("Frequency: Cron expresion is not valid", "notValidCronExpresion", new Exception());
 		}
-		
+
 		res.setFrequency(cv.getFrequency());
 		res.setName(cv.getName());
-		
+
 		res = controlVariableRepository.save(res);
-		
+
 		if (schedulingService.isRunning(res)) {
 			schedulingService.stopJob(res);
 			schedulingService.newJob(res);
 		}
-		
+
 		return res;
 	}
-	
+
 	public void testLaunchCVS() {
 		for (ControlVariable cv : findAll()) {
 			System.out.println(cv.getName() + ": " + cv.getExtractor().getData());
@@ -233,14 +240,14 @@ public class ControlVariableService {
 		res.setExtractor(extractor);
 		return res;
 	}
-	
-    public void delete(String id) {
-        log.debug("Request to remove ControlVariable : {}", id);
-    	ControlVariable cv = controlVariableRepository.findOne(id);
-    	cv.setStatus(Status.BLOCKED);
-        schedulingService.stopJob(cv);
-        controlVariableRepository.delete(id);
-    } 
+
+	public void delete(String id) {
+		log.debug("Request to remove ControlVariable : {}", id);
+		ControlVariable cv = controlVariableRepository.findOne(id);
+		cv.setStatus(Status.BLOCKED);
+		schedulingService.stopJob(cv);
+		controlVariableRepository.delete(id);
+	}
 
 	private ControlVariableExtractor getExtractor(New_ControlVariable ncv) {
 		ControlVariableExtractor res = null;

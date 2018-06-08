@@ -4,7 +4,8 @@
             "home": {
                 "title": "Dashboard"
             },
-            "noCVs": "There are no control variables to display at this moment"
+            "noCVs": "There are no control variables to display at this moment",
+            "noentries": "There are no entries to display at this moment"
         }
     }
 }

@@ -58,7 +58,11 @@ import { PaginationConfig } from '../../../../../blocks/config/uib-pagination.co
         const type = typeof (value);
         // Get type if value is not an array, dict or null (string, number or boolean)
         if (type !== 'object' && type !== 'undefined') {
-            return type;
+            if (!isNaN(value)) {
+                return 'number';
+            } else {
+                return type;
+            }
         }
         // Get type of value when value is array
         if (Array.isArray(value)) {
@@ -137,7 +141,12 @@ import { PaginationConfig } from '../../../../../blocks/config/uib-pagination.co
             return false;
         }
         const value = this.data[key];
-        const type = typeof (value);
+        let type = typeof (value);
+
+        if (!isNaN(value)) {
+            type = 'number';
+        }
+
         return type === 'number';
     }
 

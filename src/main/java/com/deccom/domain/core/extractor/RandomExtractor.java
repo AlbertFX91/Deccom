@@ -4,7 +4,8 @@ import javax.validation.constraints.NotNull;
 
 import com.deccom.domain.core.CVStyle;
 
-public class RandomExtractor implements ControlVariableExtractor {
+// public class RandomExtractor implements ControlVariableExtractor {
+public class RandomExtractor {
 
 	@NotNull
 	private CVStyle style;
@@ -13,12 +14,12 @@ public class RandomExtractor implements ControlVariableExtractor {
 		style = CVStyle.create("Random Extractor", "fa fa-asterisk", "#FF0000", "#FFFFFF");
 	}
 
-	@Override
+	// @Override
 	public Double getData() {
 		return (Math.random() * 10000);
 	}
 
-	@Override
+	// @Override
 	public CVStyle getStyle() {
 		return style;
 	}

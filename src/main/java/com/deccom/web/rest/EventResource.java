@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
-import com.deccom.domain.Event;
+import com.deccom.domain.core.Event;
 import com.deccom.service.EventService;
 import com.deccom.service.impl.util.EventServiceException;
 import com.deccom.web.rest.util.HeaderUtil;
@@ -172,7 +172,7 @@ public class EventResource {
 	 *            the id of the event to delete
 	 * @return the ResponseEntity with status 200 (OK)
 	 */
-	@DeleteMapping("/event/delete/{id}")
+	@DeleteMapping("/event/{id}")
 	@Timed
 	public ResponseEntity<Void> deleteEvent(@PathVariable String id) {
 		log.debug("REST request to delete Event : {}", id);

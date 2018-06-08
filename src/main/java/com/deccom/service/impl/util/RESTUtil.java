@@ -120,6 +120,17 @@ public class RESTUtil {
 		}
 
 	}
+	
+	public static String getFacebookPageID(String url, String facebookPageURL) {
+		String urlRequest, body, key, value;
+
+		urlRequest = url + "?ids=" + facebookPageURL;
+		body = RESTUtil.getResponseFacebook(urlRequest);
+		key = "\"id\":";
+		value = body.substring(body.indexOf(key) + key.length() + 1, body.lastIndexOf("\""));
+
+		return value;
+	}
 
 	public static String getResponseTwitter(String url) {
 
