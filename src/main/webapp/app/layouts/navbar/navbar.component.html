@@ -1,5 +1,4 @@
 <nav class="navbar deccom-navbar navbar-inverse navbar-toggleable-md jh-navbar">
-
     <div id="navbar-sidebar-icon" *ngIf="isAuthenticated()">
         <a class="fa fa-bars white-icon" href="javascript:void(0); " id="operation-menu" (click)="toggleSidebar()" style="text-decoration: none;">
             <i aria-hidden="true"></i>
@@ -11,12 +10,11 @@
     </div>
     <div id="navbar-buttons">
         <div id="navbar-signin" *ngIf="!isAuthenticated()">
-            <button type="button" class="navbar-button" id="signin" (click)="login()">Sign in</button>
+            <button type="button" class="navbar-button" id="signin" (click)="login()" jhiTranslate="home.signin">Sign in</button>
         </div>
         <div id="navbar-signup" *ngIf="!isAuthenticated()">
-            <button type="button" class="navbar-button" id="signup" routerLink="register">Sign up</button>
+            <button type="button" class="navbar-button" id="signup" routerLink="register" jhiTranslate="home.signup">Sign up</button>
         </div>
-
         <!--
         <div id="navbar-bell" *ngIf="isAuthenticated()">
             <div ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
@@ -84,7 +82,6 @@
                 </ul>
             </div>
         </div>
-
         <div id="navbar-languages">
             <div ngbDropdown class="nav-item dropdown pointer" *ngIf="languages" style="display: flex;">
                 <a class="dropdown-toggle navbar-a" ngbDropdownToggle href="javascript:void(0); " id="languagesnavBarDropdown" *ngIf="languages.length> 1">

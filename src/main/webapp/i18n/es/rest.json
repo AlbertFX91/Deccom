@@ -17,7 +17,7 @@
             "created": "Una nueva variable de control ha sido creada con el identificador {{ param }}"
         },
         "ControlVar": {
-            "running": "Funcionando",
+            "running": "En ejecución",
             "paused": "En pausa",
             "blocked": "Bloqueado"
         }

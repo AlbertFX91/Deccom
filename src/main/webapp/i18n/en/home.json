@@ -15,7 +15,7 @@
             "monitoring": "monitoring system allows your company to keep track of all of its data",
             "structuring": "structuring it to be exploited by your favourite data analysis tools",
             "easy": "Easy",
-            "analyzing": "Analyzing your data with us is a piece of cake!",
+            "analyzing": "Analyzing data with us is a piece of cake!",
             "social": "Social media",
             "check": "Check your impact on the main social media platforms and create your own extractors!",
             "predict": "Predict",
@@ -32,6 +32,8 @@
             "find": "Find us",
             "about": "About us"
         },
+        "signin": "Sign in",
+        "signup": "Sign up",
         "title": "Deccom",
         "subtitle": "This is your homepage",
         "logged": {
