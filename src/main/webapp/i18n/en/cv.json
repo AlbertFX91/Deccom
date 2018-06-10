@@ -2,7 +2,8 @@
     "deccomApp": {
         "ControlVar": {
             "home": {
-                "title": "Control variables"
+                "title": "Control variables",
+                "edit": "Edit a control variable"
             },
             "value": "Value",
             "entries": "Records",

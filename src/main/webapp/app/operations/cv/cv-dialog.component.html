@@ -1,53 +1,51 @@
 <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
-
     <div class="modal-header">
-        <h4 class="modal-title" id="myCVLabel">Edit CV</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-                (click)="clear()">&times;</button>
+        <h4 class="modal-title" id="myCVLabel" jhiTranslate="deccomApp.ControlVar.home.edit">Edit a CV</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="clear()">&times;</button>
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
         <div class="form-group">
             <label class="form-control-label" for="field_name">Name</label>
-            <input type="text" class="form-control" name="field_name" id="field_name"
-                [(ngModel)]="cv.name" required minlength="0"/>
+            <input type="text" class="form-control" name="field_name" id="field_name" [(ngModel)]="cv.name" required minlength="0" />
             <div [hidden]="!(editForm.controls.description?.dirty && editForm.controls.description?.invalid)">
-                <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.description?.errors?.required" jhiTranslate="entity.validation.required">
-                   This field is required.
+                <small class="form-text text-danger" [hidden]="!editForm.controls.description?.errors?.required" jhiTranslate="entity.validation.required">
+                    This field is required.
                 </small>
-                <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.description?.errors?.minlength" jhiTranslate="entity.validation.minlength" translateValues="{ min: 0 }">
-                   This field is required to be at least 0 characters.
+                <small class="form-text text-danger" [hidden]="!editForm.controls.description?.errors?.minlength" jhiTranslate="entity.validation.minlength"
+                    translateValues="{ min: 0 }">
+                    This field is required to be at least 0 characters.
                 </small>
             </div>
         </div>
         <div class="form-group">
-                <label class="form-control-label" for="field_frequency">{{ advanzed ? 'Cron Expression' : 'Frequency (sec)'}}</label>
-                <div class="row">
-                    <div class="col-10">
-                        <input type="{{advanzed ? 'text' : 'number'}}" class="form-control" name="field_frequency" id="frequency" [(ngModel)]="cv.frequency" required />
-                        <div [hidden]="!(editForm.controls.frequency?.dirty && editForm.controls.frequency?.invalid)">
-                            <small class="form-text text-danger" [hidden]="!editForm.controls.frequency?.errors?.required">
-                                This field is required.
-                            </small>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <button type="button" class="btn btn-success" (click)="toggleFrequency()">
-                            <span>{{advanzed ? 'Advanzed' : 'Simple'}}</span>
-                        </button>
+            <label class="form-control-label" for="field_frequency">{{ advanced ? 'Cron Expression' : 'Frequency (sec)'}}</label>
+            <div class="row">
+                <div class="col-10">
+                    <input type="{{advanced ? 'text' : 'number'}}" class="form-control" name="field_frequency" id="frequency" [(ngModel)]="cv.frequency"
+                        required />
+                    <div [hidden]="!(editForm.controls.frequency?.dirty && editForm.controls.frequency?.invalid)">
+                        <small class="form-text text-danger" [hidden]="!editForm.controls.frequency?.errors?.required">
+                            This field is required.
+                        </small>
                     </div>
                 </div>
+                <div class="col-2">
+                    <button type="button" class="btn btn-success" (click)="toggleFrequency()">
+                        <span>{{advanced ? 'Advanced' : 'Simple'}}</span>
+                    </button>
+                </div>
             </div>
-
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
-            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+            <span class="fa fa-ban"></span>&nbsp;
+            <span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>
         <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
-            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+            <span class="fa fa-save"></span>&nbsp;
+            <span jhiTranslate="entity.action.save">Save</span>
         </button>
     </div>
 </form>
