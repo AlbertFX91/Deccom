@@ -14,6 +14,7 @@ export class FieldRESTJsonPathComponent extends FieldBaseComponent implements On
   json: any;
   path: string;
   correct: boolean;
+  e: any;
 
   constructor(
     public jsonPathService: JSONPathService,

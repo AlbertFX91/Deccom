@@ -2,8 +2,8 @@
     "home": {
         "header": {
             "capture": "Captura los datos de tu",
-            "data": "compañia",
-            "easily": "facilmente",
+            "data": "empresa",
+            "easily": "fácilmente",
             "impact": "Comprueba el impacto de tus",
             "decisions": "decisiones",
             "predict": "Predice lo que tus",
@@ -15,7 +15,7 @@
             "monitoring": "y su sistema de monitorización permite a tu compañia hacer un seguimiento de todos sus datos",
             "structuring": "estructurándolos para ser explotados por tus herramientas favoritas de análisis de datos",
             "easy": "Facilidad",
-            "analyzing": "¡Analizar los datos con nosotros está chupado!",
+            "analyzing": "¡Analizar datos con nosotros está chupado!",
             "social": "Redes sociales",
             "check": "¡Comprueba el impacto en tus principales redes sociales y desarrolla tus propios extractores!",
             "predict": "Predecir",
@@ -32,6 +32,8 @@
             "find": "Encuéntranos",
             "about": "Sobre nosotros"
         },
+        "signin": "Acceder",
+        "signup": "Registrarse",
         "title": "Deccom",
         "subtitle": "Esta es su página de inicio",
         "logged": {

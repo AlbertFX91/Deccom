@@ -7,7 +7,7 @@
         </div>
         
         <jhi-jsonvisualizer-entry [parentType]="typeByKey(k)" [data]="data[k]" style="margin-left:20px" 
-            *ngIf="cantBeVisualized(k)" (selected)="fireSelected($event, k)" (correctPath)="onCorrectPath($event, e)">
+            *ngIf="cantBeVisualized(k)" (selected)="fireSelected($event, k)" (correctPath)="onCorrectPath($event)">
         </jhi-jsonvisualizer-entry>
         
     </div>

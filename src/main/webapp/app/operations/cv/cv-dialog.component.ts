@@ -19,8 +19,7 @@ export class CVDialogComponent implements OnInit {
     cv: CV;
     isSaving: boolean;
     publication_dateDp: any;
-
-    advanzed: boolean;
+    advanced: boolean;
 
     constructor(
         public activeModal: NgbActiveModal,
@@ -33,7 +32,7 @@ export class CVDialogComponent implements OnInit {
     ngOnInit() {
         const f: any = this.cv.frequency
         this.isSaving = false;
-        this.advanzed = isNaN(f);
+        this.advanced = isNaN(f);
     }
 
     clear() {
@@ -48,7 +47,7 @@ export class CVDialogComponent implements OnInit {
         }
     }
     toggleFrequency() {
-        this.advanzed = !this.advanzed;
+        this.advanced = !this.advanced;
     }
 
     private subscribeToSaveResponse(result: Observable<CV>) {
@@ -57,7 +56,7 @@ export class CVDialogComponent implements OnInit {
     }
 
     private onSaveSuccess(result: CV) {
-        this.eventManager.broadcast({ name: 'cvListModification', content: 'OK'});
+        this.eventManager.broadcast({ name: 'cvListModification', content: 'OK' });
         this.isSaving = false;
         this.activeModal.dismiss(result);
     }
@@ -88,11 +87,11 @@ export class CVPopupComponent implements OnInit, OnDestroy {
     constructor(
         private route: ActivatedRoute,
         private cvPopupService: CVPopupService
-    ) {}
+    ) { }
 
     ngOnInit() {
         this.routeSub = this.route.params.subscribe((params) => {
-            if ( params['id'] ) {
+            if (params['id']) {
                 this.cvPopupService
                     .open(CVDialogComponent as Component, params['id']);
             }

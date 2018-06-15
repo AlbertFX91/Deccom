@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild, ComponentFactoryResolver } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription, Observable} from 'rxjs/Rx';
+import { Subscription, Observable } from 'rxjs/Rx';
 import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, JhiAlertService } from 'ng-jhipster';
 
 import { ExtractorItem, DeccomField } from './extractor.model';
@@ -24,9 +24,7 @@ export class ExtractorCreationComponent implements OnInit, OnDestroy {
     extractorFields: DeccomField[];
     extractorDisableFields: DeccomField[];
     isSaving: boolean;
-
-    advanzed: boolean;
-
+    advanced: boolean;
     currentField: DeccomField;
 
     constructor(
@@ -42,7 +40,7 @@ export class ExtractorCreationComponent implements OnInit, OnDestroy {
     ) {
         this.controlvar = new CV();
         this.currentField = null;
-        this.advanzed = false;
+        this.advanced = false;
     }
 
     loadExtractor() {
@@ -62,7 +60,7 @@ export class ExtractorCreationComponent implements OnInit, OnDestroy {
         });
     }
 
-    ngOnDestroy() {}
+    ngOnDestroy() { }
 
     printExtractor() {
         return JSON.stringify(this.controlvar, undefined, 2);
@@ -101,7 +99,7 @@ export class ExtractorCreationComponent implements OnInit, OnDestroy {
     }
 
     private onSaveSuccess(result: NewCV) {
-        this.eventManager.broadcast({ name: 'acmeListModification', content: 'OK'});
+        this.eventManager.broadcast({ name: 'acmeListModification', content: 'OK' });
         this.isSaving = false;
         this.mainRouter.navigateByUrl('/cv');
     }
@@ -137,7 +135,7 @@ export class ExtractorCreationComponent implements OnInit, OnDestroy {
 
     fieldsToList() {
         if (this.extractorFields) {
-            return this.extractorFields.filter( (f) => f.display);
+            return this.extractorFields.filter((f) => f.display);
         }
     }
 
@@ -157,7 +155,7 @@ export class ExtractorCreationComponent implements OnInit, OnDestroy {
     }
 
     toggleFrequency() {
-        this.advanzed = !this.advanzed;
+        this.advanced = !this.advanced;
     }
 
     formatLabel(label: string) {
