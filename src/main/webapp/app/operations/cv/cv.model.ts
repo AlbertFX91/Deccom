@@ -10,7 +10,8 @@ export class CV {
         public lastUpdate?: any,
         public controlVarEntries?: any,
         public frequency?: string,
-        public extractor?: ExtractorItem
+        public extractor?: ExtractorItem,
+        public value?: any
     ) {
         this.id = null;
         this.name = null;

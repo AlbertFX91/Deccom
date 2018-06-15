@@ -37,13 +37,7 @@ const slideRight = [
     templateUrl: './main.component.html',
     styleUrls: [
         'main.css'
-    ],
-    animations: [
-        trigger('routerAnimations', [
-          transition('extractors => extractors-create', slideRight),
-          transition('extractors-create => extractors', slideLeft),
-        ])
-      ]
+    ]
 })
 export class JhiMainComponent implements OnInit {
 

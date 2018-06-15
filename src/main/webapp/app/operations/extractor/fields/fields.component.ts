@@ -70,7 +70,8 @@ export class FieldComponent implements OnInit, OnDestroy, OnChanges {
 }
 
 @Component({
-    selector: 'jhi-fields-base'
+    selector: 'jhi-fields-base',
+    template: '<div></div>'
 })
 export class FieldBaseComponent implements OnInit, OnDestroy {
     @Input() field: DeccomField;

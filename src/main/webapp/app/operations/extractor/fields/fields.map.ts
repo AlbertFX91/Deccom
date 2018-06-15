@@ -14,13 +14,23 @@ export const moduleMap = {
     'sql.query.field': DeccomFieldsSQLQueryModule,
 }
 
-export const components = function(){
+export const componentsList = [
+    FieldRESTJsonPathComponent,
+    FieldSQLQueryComponent
+];
+
+export const modulesList = [
+    DeccomFieldsJsonPathModule,
+    DeccomFieldsSQLQueryModule
+];
+
+export const components = () => {
     return Object.keys(fieldMap).map(function(key){
         return fieldMap[key];
     });
 }
 
-export const modules = function(){
+export const modules = () => {
     return Object.keys(fieldMap).map(function(key){
         return moduleMap[key];
     });
