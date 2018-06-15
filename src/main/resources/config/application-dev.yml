@@ -115,3 +115,9 @@ jhipster:
 # ===================================================================
 
 application:
+    twitterUsername: XXXXXXXX
+    twitterConsumerKey: XXXXXXXX
+    twitterConsumerSecret: XXXXXXXX
+    facebookPageID: XXXXXXXX
+    facebookApplicationKey: XXXXXXXX
+    facebookSecretKey: XXXXXXXX
